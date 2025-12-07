@@ -583,34 +583,32 @@ function renderFilterModal() {
 function populateFilterOptions() {
     if (typeof DB === 'undefined') return;
 
-    const allCats = new Set(typeof CATEGORY_LIST !== 'undefined' ? CATEGORY_LIST : []);
-    const allLinks = new Set(typeof LINKS !== 'undefined' ? Object.keys(LINKS) : []);
-    
-    if (allCats.size === 0 || allLinks.size === 0) {
-        DB.forEach(c => {
-            if(c.categories) c.categories.forEach(cat => allCats.add(cat));
-            if(c.links) c.links.forEach(l => allLinks.add(l)); 
-            if(c.forms) c.forms.forEach(f => {
-                if(f.links) f.links.forEach(l => allLinks.add(l));
-            });
-        });
+    // Task 3: Use source files for order
+    const catsSource = (typeof CATEGORY_LIST !== 'undefined' && CATEGORY_LIST.length > 0) ? CATEGORY_LIST : null;
+    const linksSource = (typeof LINKS !== 'undefined' && Object.keys(LINKS).length > 0) ? Object.keys(LINKS) : null;
+
+    let catsToRender = [];
+    if (catsSource) {
+        catsToRender = catsSource;
+    } else {
+        const allCats = new Set();
+        DB.forEach(c => { if(c.categories) c.categories.forEach(cat => allCats.add(cat)); });
+        catsToRender = Array.from(allCats).sort();
     }
 
     const catList = document.getElementById('category-list');
     if(catList) {
         catList.innerHTML = '';
-        const sortedCats = Array.from(allCats).sort();
-        sortedCats.forEach(cat => {
+        catsToRender.forEach(cat => {
             const op = document.createElement('option'); 
             op.value = cat; 
             catList.appendChild(op); 
         });
 
-        // Populate All Items Container for UI update
         const allCatsContainer = document.getElementById('all-cats-container');
         if (allCatsContainer) {
             allCatsContainer.innerHTML = '';
-            sortedCats.forEach(cat => {
+            catsToRender.forEach(cat => {
                 const item = document.createElement('div');
                 item.className = 'all-item-chip';
                 item.innerText = cat;
@@ -625,21 +623,33 @@ function populateFilterOptions() {
         }
     }
     
+    let linksToRender = [];
+    if (linksSource) {
+        linksToRender = linksSource;
+    } else {
+        const allLinks = new Set();
+        DB.forEach(c => {
+            if(c.links) c.links.forEach(l => allLinks.add(l));
+            if(c.forms) c.forms.forEach(f => {
+                if(f.links) f.links.forEach(l => allLinks.add(l));
+            });
+        });
+        linksToRender = Array.from(allLinks).sort();
+    }
+
     const linkList = document.getElementById('link-list');
     if(linkList) {
         linkList.innerHTML = '';
-        const sortedLinks = Array.from(allLinks).sort();
-        sortedLinks.forEach(l => {
+        linksToRender.forEach(l => {
             const op = document.createElement('option'); 
             op.value = l; 
             linkList.appendChild(op); 
         });
 
-        // Populate All Links Container
         const allLinksContainer = document.getElementById('all-links-container');
         if (allLinksContainer) {
             allLinksContainer.innerHTML = '';
-            sortedLinks.forEach(l => {
+            linksToRender.forEach(l => {
                 const item = document.createElement('div');
                 item.className = 'all-item-chip';
                 item.innerText = l;
@@ -712,6 +722,17 @@ function toggleMiniLogic(type) {
 
 function setSort(value) { 
     state.filter.sort = value; 
+
+    // Task 2: Maintain Sort Order on Back Navigation
+    // Update history state to include the new sort option
+    const url = new URL(window.location);
+    const currentState = window.history.state || {};
+    const newState = {
+        ...currentState,
+        filter: state.filter
+    };
+    window.history.replaceState(newState, '', url);
+
     renderZukanList(); 
 }
 
@@ -1001,7 +1022,7 @@ function renderZukanList(targetGrid) {
             const getStat = (c, k) => (c.forms && c.forms[0] && c.forms[0].stats && c.forms[0].stats[k]) ? c.forms[0].stats[k] : (c.stats ? c.stats[k] : 0);
             const getRank = (r) => RARITY_RANK[r] !== undefined ? RARITY_RANK[r] : -1;
             
-            // Updated Date Sort Logic
+            // Task 1: Fix Sorting Logic (Latest Date)
             const getDate = (c) => {
                 let d = c.release || "0000.00.00";
                 if (c.eza_release && c.eza_release > d) d = c.eza_release;
@@ -1009,10 +1030,12 @@ function renderZukanList(targetGrid) {
                 return d;
             };
 
-            const dateDiff = getDate(b).localeCompare(getDate(a));
+            const dateA = getDate(a);
+            const dateB = getDate(b);
+            const dateDiff = dateB.localeCompare(dateA); // Newest first
 
             if(f.sort === 'releaseDesc') return dateDiff;
-            if(f.sort === 'releaseAsc') return getDate(a).localeCompare(getDate(b));
+            if(f.sort === 'releaseAsc') return dateA.localeCompare(dateB);
 
             // For other sorts, use Date as tie-breaker
             let diff = 0;
@@ -1025,7 +1048,7 @@ function renderZukanList(targetGrid) {
             if(f.sort === 'defDesc') diff = getStat(b,'def') - getStat(a,'def');
 
             if (diff !== 0) return diff;
-            return dateDiff; // Tie breaker: Newest first
+            return dateDiff; // Task 1: Tie breaker: Newest first
         });
     }
 
