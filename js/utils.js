@@ -4,7 +4,15 @@ function getCharIconHtml(char, formData) {
     const displayId = (formData && formData.id) ? formData.id : char.id;
     const displayType = (formData && formData.type) ? formData.type : char.type;
     const displayRarity = (formData && formData.rarity) ? formData.rarity : char.rarity;
-    const displayClass = (formData && formData.class) ? formData.class : char.class;
+    let displayClass = (formData && formData.class) ? formData.class : char.class;
+
+    // Task 5: If character starts as SSR (no SR/R/N in awakening), use generic type icon
+    if (char.awakening && displayClass) {
+        const hasLowerRank = char.awakening.some(s => ['SR', 'R', 'N'].includes(s.rank));
+        if (!hasLowerRank) {
+            displayClass = null; // Forces generic icon
+        }
+    }
 
     let typeColor = getAttributeColor(displayType);
     // Access state via global variable or passed arg (here assuming global state for simplicity in this refactor)
