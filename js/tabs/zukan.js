@@ -1023,12 +1023,7 @@ function renderZukanList(targetGrid) {
             const getRank = (r) => RARITY_RANK[r] !== undefined ? RARITY_RANK[r] : -1;
             
             // Task 1: Fix Sorting Logic (Latest Date)
-            const getDate = (c) => {
-                let d = c.release || "0000.00.00";
-                if (c.eza_release && c.eza_release > d) d = c.eza_release;
-                if (c.seza_release && c.seza_release > d) d = c.seza_release;
-                return d;
-            };
+            const getDate = (c) => [c.release, c.eza, c.seza].filter(d => d).sort().pop() || "";
 
             const dateA = getDate(a);
             const dateB = getDate(b);

@@ -7,11 +7,17 @@ function getCharIconHtml(char, formData) {
     let displayClass = (formData && formData.class) ? formData.class : char.class;
 
     // Task 3: If character starts as SSR (no SR/R/N in awakening), use generic type icon ONLY for SSR form
-    if (char.awakening && displayClass && displayRarity === 'SSR') {
-        const hasLowerRank = char.awakening.some(s => ['SR', 'R', 'N'].includes(s.rank));
-        if (!hasLowerRank) {
-            displayClass = null; // Forces generic icon
+    let useGenericIcon = false;
+    if (displayRarity === 'SSR') {
+        // Check if it's a "Native SSR" (No 'SR', 'R', or 'N' in awakening steps)
+        const hasLowerForms = char.awakening && char.awakening.some(step => ['SR', 'R', 'N'].includes(step.rank));
+        if (!hasLowerForms) {
+            useGenericIcon = true;
         }
+    }
+
+    if (useGenericIcon) {
+        displayClass = null;
     }
 
     let typeColor = getAttributeColor(displayType);
