@@ -17,7 +17,6 @@ const state = {
     searchQuery: '',
     filter: { 
         sort: 'releaseDesc',
-        logic: 'AND', // Top level logic if needed
         rarities: [], rarityLogic: 'OR',
         types: [], typeLogic: 'OR',
         classes: [], classLogic: 'OR',

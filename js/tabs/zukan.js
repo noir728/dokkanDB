@@ -55,11 +55,9 @@ function getSpecsHtml(specs) {
 function parseLinkStats(description, stats) {
     if (!description) return;
 
-    // 気力+X
     const kiMatch = description.match(/気力\+(\d+)/);
     if (kiMatch) stats.ki += parseInt(kiMatch[1], 10);
 
-    // ATKとDEF複合
     const bothMatch = description.match(/(?:ATK|DEF)(?:,|と|&)(?:ATK|DEF)(\d+)%UP/);
     if (bothMatch) {
         const val = parseInt(bothMatch[1], 10);
@@ -73,23 +71,18 @@ function parseLinkStats(description, stats) {
         if (defMatch) stats.def += parseInt(defMatch[1], 10);
     }
 
-    // 敵のDEF X%DOWN
     const defDownMatch = description.match(/敵(?:の)?DEF(\d+)%DOWN/);
     if (defDownMatch) stats.def_down += parseInt(defDownMatch[1], 10);
 
-    // HP回復
     const hpRecMatch = description.match(/HP(\d+)%回復/);
     if (hpRecMatch) stats.hp_rec += parseInt(hpRecMatch[1], 10);
 
-    // 会心率
     const critMatch = description.match(/会心(?:率)?(\d+)%UP/);
     if (critMatch) stats.crit += parseInt(critMatch[1], 10);
 
-    // ダメージ軽減
     const reduceMatch = description.match(/ダメージ軽減(?:率)?(\d+)%UP/) || description.match(/被ダメージを(\d+)%軽減/);
     if (reduceMatch) stats.reduce += parseInt(reduceMatch[1], 10);
 
-    // 回避率
     const dodgeMatch = description.match(/回避(?:率)?(\d+)%UP/);
     if (dodgeMatch) stats.dodge += parseInt(dodgeMatch[1], 10);
 }
@@ -443,75 +436,273 @@ function calcFarmCards(targetChar) {
 
 // --- 2. Initialization & Filter Logic ---
 
+function renderFilterModal() {
+    if (document.getElementById('filter-modal')) return;
+
+    const html = `
+    <div id="filter-modal" class="modal-overlay">
+        <div class="filter-modal">
+            <h2 style="font-size:16px; font-weight:bold; margin-bottom:20px; text-align:center;">絞り込み条件</h2>
+
+            <!-- Removed Global Logic Toggle -->
+
+            <!-- 属性 (Type) -->
+            <div class="filter-section">
+                <div class="filter-header">
+                    <span class="filter-label">属性 (Type)</span>
+                    <div class="toggle-mini" onclick="toggleMiniLogic('type')" id="logic-btn-type">
+                        <span class="toggle-mini-opt">AND</span>
+                        <span class="toggle-mini-opt active">OR</span>
+                        <div class="toggle-mini-slider" style="transform:translateX(33px); background-color: var(--accent-str);"></div>
+                    </div>
+                </div>
+                <div class="filter-chips" id="filter-types">
+                    <div class="filter-chip" onclick="toggleFilter('type', 'AGL')">速属性</div>
+                    <div class="filter-chip" onclick="toggleFilter('type', 'TEQ')">技属性</div>
+                    <div class="filter-chip" onclick="toggleFilter('type', 'INT')">知属性</div>
+                    <div class="filter-chip" onclick="toggleFilter('type', 'STR')">力属性</div>
+                    <div class="filter-chip" onclick="toggleFilter('type', 'PHY')">体属性</div>
+                </div>
+            </div>
+
+            <!-- 属性区分 (Class) -->
+            <div class="filter-section">
+                <div class="filter-header">
+                    <span class="filter-label">属性区分 (Class)</span>
+                    <div class="toggle-mini" onclick="toggleMiniLogic('class')" id="logic-btn-class">
+                        <span class="toggle-mini-opt">AND</span>
+                        <span class="toggle-mini-opt active">OR</span>
+                        <div class="toggle-mini-slider" style="transform:translateX(33px); background-color: var(--accent-str);"></div>
+                    </div>
+                </div>
+                <div class="filter-chips" id="filter-classes">
+                    <div class="filter-chip" onclick="toggleFilter('class', 'Super')">超系</div>
+                    <div class="filter-chip" onclick="toggleFilter('class', 'Extreme')">極系</div>
+                </div>
+            </div>
+
+            <!-- レアリティ -->
+            <div class="filter-section">
+                <div class="filter-header">
+                    <span class="filter-label">レアリティ</span>
+                    <div class="toggle-mini" onclick="toggleMiniLogic('rarity')" id="logic-btn-rarity">
+                        <span class="toggle-mini-opt">AND</span>
+                        <span class="toggle-mini-opt active">OR</span>
+                        <div class="toggle-mini-slider" style="transform:translateX(33px); background-color: var(--accent-str);"></div>
+                    </div>
+                </div>
+                <div class="filter-chips" id="filter-rarities">
+                    <div class="filter-chip" onclick="toggleFilter('rarity', 'LR')">LR</div>
+                    <div class="filter-chip" onclick="toggleFilter('rarity', 'UR')">UR</div>
+                    <div class="filter-chip" onclick="toggleFilter('rarity', 'SSR')">SSR</div>
+                    <div class="filter-chip" onclick="toggleFilter('rarity', 'SR')">SR</div>
+                </div>
+            </div>
+
+            <!-- 所持・お気に入り状態 -->
+            <div class="filter-section">
+                <span class="filter-label">状態 (Status)</span>
+                <div class="filter-chips" id="filter-status">
+                    <div class="filter-chip" onclick="toggleFilter('status', 'owned')">所持済み</div>
+                    <div class="filter-chip" onclick="toggleFilter('status', 'favorite')">お気に入り</div>
+                </div>
+            </div>
+
+            <!-- 極限覚醒状態 -->
+            <div class="filter-section">
+                <span class="filter-label">極限状態</span>
+                <div class="filter-chips" id="filter-eza">
+                    <div class="filter-chip" onclick="toggleFilter('eza', 'none')">通常</div>
+                    <div class="filter-chip" onclick="toggleFilter('eza', 'eza')">極限Z覚醒</div>
+                    <div class="filter-chip" onclick="toggleFilter('eza', 'seza')">超極限</div>
+                </div>
+            </div>
+
+            <!-- 必殺技区分 -->
+            <div class="filter-section">
+                <span class="filter-label">必殺技の種類</span>
+                <div class="filter-chips" id="filter-sa-type">
+                    <div class="filter-chip" onclick="toggleFilter('saType', '気弾')">気弾</div>
+                    <div class="filter-chip" onclick="toggleFilter('saType', '格闘')">格闘</div>
+                    <div class="filter-chip" onclick="toggleFilter('saType', '物理')">物理</div>
+                    <div class="filter-chip" onclick="toggleFilter('saType', 'その他')">その他</div>
+                </div>
+            </div>
+
+            <!-- カテゴリ検索 -->
+            <div class="filter-section">
+                <div class="filter-header">
+                    <span class="filter-label">カテゴリ</span>
+                    <div class="toggle-mini" onclick="toggleMiniLogic('category')" id="logic-btn-category">
+                        <span class="toggle-mini-opt active">AND</span>
+                        <span class="toggle-mini-opt">OR</span>
+                        <div class="toggle-mini-slider"></div>
+                    </div>
+                </div>
+                <div class="filter-input-row">
+                    <input list="category-list" id="cat-input" class="filter-select-input" placeholder="カテゴリを検索..." onchange="addFilterFromInput('category', this)" style="flex:1;">
+                    <button class="btn-sm" onclick="toggleAllItems('category')">一覧</button>
+                </div>
+                <datalist id="category-list"></datalist>
+                <div class="filter-chips" id="selected-cats" style="margin-top:10px;"></div>
+                <div id="all-cats-container" class="all-items-container" style="display:none;"></div>
+            </div>
+
+            <!-- リンクスキル検索 -->
+            <div class="filter-section">
+                <div class="filter-header">
+                    <span class="filter-label">リンクスキル</span>
+                    <div class="toggle-mini" onclick="toggleMiniLogic('link')" id="logic-btn-link">
+                        <span class="toggle-mini-opt active">AND</span>
+                        <span class="toggle-mini-opt">OR</span>
+                        <div class="toggle-mini-slider"></div>
+                    </div>
+                </div>
+                <div class="filter-input-row">
+                    <input list="link-list" id="link-input" class="filter-select-input" placeholder="リンクスキルを検索..." onchange="addFilterFromInput('link', this)" style="flex:1;">
+                    <button class="btn-sm" onclick="toggleAllItems('link')">一覧</button>
+                </div>
+                <datalist id="link-list"></datalist>
+                <div class="filter-chips" id="selected-links" style="margin-top:10px;"></div>
+                <div id="all-links-container" class="all-items-container" style="display:none;"></div>
+            </div>
+
+            <!-- アクションボタン -->
+            <div class="filter-actions">
+                <button class="btn-reset" onclick="resetFilters()">リセット</button>
+                <button class="btn-apply" onclick="closeFilterModal()">完了</button>
+            </div>
+        </div>
+    </div>`;
+
+    document.body.insertAdjacentHTML('beforeend', html);
+    populateFilterOptions();
+    updateFilterUI();
+}
+
 function populateFilterOptions() {
     if (typeof DB === 'undefined') return;
 
-    const allCats = new Set(typeof CATEGORY_LIST !== 'undefined' ? CATEGORY_LIST : []);
-    const allLinks = new Set(typeof LINKS !== 'undefined' ? Object.keys(LINKS) : []);
+    // Task 3: Use source files for order
+    const catsSource = (typeof CATEGORY_LIST !== 'undefined' && CATEGORY_LIST.length > 0) ? CATEGORY_LIST : null;
+    const linksSource = (typeof LINKS !== 'undefined' && Object.keys(LINKS).length > 0) ? Object.keys(LINKS) : null;
 
-    if (allCats.size === 0 || allLinks.size === 0) {
-        DB.forEach(c => {
-            if(c.categories) c.categories.forEach(cat => allCats.add(cat));
-            if(c.links) c.links.forEach(l => allLinks.add(l));
-            if(c.forms) c.forms.forEach(f => {
-                if(f.links) f.links.forEach(l => allLinks.add(l));
-            });
-        });
+    let catsToRender = [];
+    if (catsSource) {
+        catsToRender = catsSource;
+    } else {
+        const allCats = new Set();
+        DB.forEach(c => { if(c.categories) c.categories.forEach(cat => allCats.add(cat)); });
+        catsToRender = Array.from(allCats).sort();
     }
 
     const catList = document.getElementById('category-list');
     if(catList) {
         catList.innerHTML = '';
-        Array.from(allCats).sort().forEach(cat => {
-            const op = document.createElement('option');
-            op.value = cat;
-            catList.appendChild(op);
+        catsToRender.forEach(cat => {
+            const op = document.createElement('option'); 
+            op.value = cat; 
+            catList.appendChild(op); 
         });
+
+        const allCatsContainer = document.getElementById('all-cats-container');
+        if (allCatsContainer) {
+            allCatsContainer.innerHTML = '';
+            catsToRender.forEach(cat => {
+                const item = document.createElement('div');
+                item.className = 'all-item-chip';
+                item.innerText = cat;
+                item.onclick = () => {
+                    if (!state.filter.categories.includes(cat)) {
+                        state.filter.categories.push(cat);
+                        updateFilterUI();
+                    }
+                };
+                allCatsContainer.appendChild(item);
+            });
+        }
+    }
+    
+    let linksToRender = [];
+    if (linksSource) {
+        linksToRender = linksSource;
+    } else {
+        const allLinks = new Set();
+        DB.forEach(c => {
+            if(c.links) c.links.forEach(l => allLinks.add(l));
+            if(c.forms) c.forms.forEach(f => {
+                if(f.links) f.links.forEach(l => allLinks.add(l));
+            });
+        });
+        linksToRender = Array.from(allLinks).sort();
     }
 
     const linkList = document.getElementById('link-list');
     if(linkList) {
         linkList.innerHTML = '';
-        Array.from(allLinks).sort().forEach(l => {
-            const op = document.createElement('option');
-            op.value = l;
-            linkList.appendChild(op);
+        linksToRender.forEach(l => {
+            const op = document.createElement('option'); 
+            op.value = l; 
+            linkList.appendChild(op); 
         });
+
+        const allLinksContainer = document.getElementById('all-links-container');
+        if (allLinksContainer) {
+            allLinksContainer.innerHTML = '';
+            linksToRender.forEach(l => {
+                const item = document.createElement('div');
+                item.className = 'all-item-chip';
+                item.innerText = l;
+                item.onclick = () => {
+                     if (!state.filter.links.includes(l)) {
+                        state.filter.links.push(l);
+                        updateFilterUI();
+                    }
+                };
+                allLinksContainer.appendChild(item);
+            });
+        }
     }
 }
 
-function openFilterModal() {
+function openFilterModal() { 
+    renderFilterModal(); // Ensure modal exists
     const modal = document.getElementById('filter-modal');
-    if(modal) modal.classList.add('open');
+    if(modal) modal.classList.add('open'); 
 }
 
-function closeFilterModal() {
+function closeFilterModal() { 
     const modal = document.getElementById('filter-modal');
-    if(modal) modal.classList.remove('open');
-    renderZukanList();
+    if(modal) modal.classList.remove('open'); 
+    renderZukanList(); 
 }
 
-function setFilterLogic(logic) {
-    state.filter.logic = logic;
-    const btnAnd = document.getElementById('logic-and');
-    const btnOr = document.getElementById('logic-or');
-    if(btnAnd) btnAnd.classList.toggle('selected', logic === 'AND');
-    if(btnOr) btnOr.classList.toggle('selected', logic === 'OR');
+function toggleAllItems(type) {
+    const id = type === 'category' ? 'all-cats-container' : 'all-links-container';
+    const container = document.getElementById(id);
+    if(container) {
+         const isHidden = container.style.display === 'none';
+         container.style.display = isHidden ? 'grid' : 'none';
+    }
+}
+
+function setFilterLogic(logic) { 
+    // Deprecated global logic
 }
 
 function toggleMiniLogic(type) {
     const key = type + 'Logic';
     const current = state.filter[key];
     state.filter[key] = (current === 'AND') ? 'OR' : 'AND';
-
+    
     const btn = document.getElementById(`logic-btn-${type}`);
     if (btn) {
         const opts = btn.querySelectorAll('.toggle-mini-opt');
         const slider = btn.querySelector('.toggle-mini-slider');
-
+        
         if(state.filter[key] === 'OR') {
             btn.classList.add('state-or');
-            if(opts[0]) opts[0].classList.remove('active');
+            if(opts[0]) opts[0].classList.remove('active'); 
             if(opts[1]) opts[1].classList.add('active');
             if(slider) {
                 slider.style.transform = 'translateX(33px)';
@@ -519,7 +710,7 @@ function toggleMiniLogic(type) {
             }
         } else {
             btn.classList.remove('state-or');
-            if(opts[0]) opts[0].classList.add('active');
+            if(opts[0]) opts[0].classList.add('active'); 
             if(opts[1]) opts[1].classList.remove('active');
             if(slider) {
                 slider.style.transform = 'translateX(0px)';
@@ -529,9 +720,20 @@ function toggleMiniLogic(type) {
     }
 }
 
-function setSort(value) {
-    state.filter.sort = value;
-    renderZukanList();
+function setSort(value) { 
+    state.filter.sort = value; 
+
+    // Task 2: Maintain Sort Order on Back Navigation
+    // Update history state to include the new sort option
+    const url = new URL(window.location);
+    const currentState = window.history.state || {};
+    const newState = {
+        ...currentState,
+        filter: state.filter
+    };
+    window.history.replaceState(newState, '', url);
+
+    renderZukanList(); 
 }
 
 function toggleFilter(key, value) {
@@ -559,21 +761,17 @@ function removeArrayFilter(type, value) {
 }
 
 function resetFilters() {
-    state.filter = {
-        sort: 'releaseDesc', logic: 'AND',
-        rarities: [], rarityLogic:'OR', types: [], typeLogic:'OR', classes: [], classLogic:'OR',
-        status: [], eza: [], ezaLogic:'OR', saTypes: [], saTypeLogic:'OR',
-        categories: [], categoryLogic:'AND', links: [], linkLogic:'AND'
+    state.filter = { 
+        sort: 'releaseDesc',
+        rarities: [], rarityLogic:'OR', types: [], typeLogic:'OR', classes: [], classLogic:'OR', 
+        status: [], eza: [], ezaLogic:'OR', saTypes: [], saTypeLogic:'OR', 
+        categories: [], categoryLogic:'AND', links: [], linkLogic:'AND' 
     };
     
     const sortSelect = document.getElementById('sort-select');
     if(sortSelect) sortSelect.value = 'releaseDesc';
-
-    const btnAnd = document.getElementById('logic-and');
-    const btnOr = document.getElementById('logic-or');
-    if(btnAnd) { btnAnd.classList.add('selected'); }
-    if(btnOr) { btnOr.classList.remove('selected'); }
-
+    
+    // Reset Logic Buttons
     const allLogics = ['type', 'class', 'rarity', 'eza', 'saType', 'category', 'link'];
     allLogics.forEach(t => {
         state.filter[t+'Logic'] = (t === 'category' || t === 'link') ? 'AND' : 'OR';
@@ -582,7 +780,7 @@ function resetFilters() {
             const isOr = state.filter[t+'Logic'] === 'OR';
             const opts = btn.querySelectorAll('.toggle-mini-opt');
             const slider = btn.querySelector('.toggle-mini-slider');
-
+            
             if(isOr) {
                 btn.classList.add('state-or');
                 if(opts[0]) opts[0].classList.remove('active');
@@ -629,46 +827,57 @@ function updateFilterUI() {
     const catContainer = document.getElementById('selected-cats');
     if(catContainer) {
         catContainer.innerHTML = '';
-        state.filter.categories.forEach(c => {
-            const chip = document.createElement('div');
-            chip.className = 'filter-chip selected';
-            chip.innerText = c + ' ×';
-            chip.onclick = () => removeArrayFilter('category', c);
-            catContainer.appendChild(chip);
+        state.filter.categories.forEach(c => { 
+            const chip = document.createElement('div'); 
+            chip.className = 'filter-chip selected'; 
+            chip.innerText = c + ' ×'; 
+            chip.onclick = () => removeArrayFilter('category', c); 
+            catContainer.appendChild(chip); 
         });
     }
     
     const linkContainer = document.getElementById('selected-links');
     if(linkContainer) {
         linkContainer.innerHTML = '';
-        state.filter.links.forEach(l => {
-            const chip = document.createElement('div');
-            chip.className = 'filter-chip selected';
-            chip.innerText = l + ' ×';
-            chip.onclick = () => removeArrayFilter('link', l);
-            linkContainer.appendChild(chip);
+        state.filter.links.forEach(l => { 
+            const chip = document.createElement('div'); 
+            chip.className = 'filter-chip selected'; 
+            chip.innerText = l + ' ×'; 
+            chip.onclick = () => removeArrayFilter('link', l); 
+            linkContainer.appendChild(chip); 
         });
     }
+
+    // Update All Item Chips selection state
+    const updateAllItemChips = (containerId, arr) => {
+        const container = document.getElementById(containerId);
+        if(!container) return;
+        Array.from(container.children).forEach(chip => {
+             chip.classList.toggle('selected', arr.includes(chip.innerText));
+        });
+    };
+    updateAllItemChips('all-cats-container', state.filter.categories);
+    updateAllItemChips('all-links-container', state.filter.links);
 }
 
 // --- 3. Navigation & Rendering ---
 
 function applyFilter(type, value) {
-    resetFilters();
+    resetFilters(); 
     state.searchQuery = '';
-
+    
     if (type === 'name') state.searchQuery = value;
     else if (type === 'category') state.filter.categories = [value];
     else if (type === 'link') state.filter.links = [value];
-
+    
     updateFilterUI();
-
+    
     state.detailCharId = null;
     state.animDirection = 'left';
-
+    
     const url = new URL(window.location);
     url.searchParams.delete('id');
-
+    
     window.history.pushState({ filter: state.filter, searchQuery: state.searchQuery }, '', url);
 
     if(typeof updateTabUI === 'function') updateTabUI();
@@ -676,15 +885,15 @@ function applyFilter(type, value) {
     if(typeof window.scrollToTop === 'function') window.scrollToTop();
 }
 
-function clearSearch() {
-    state.searchQuery = '';
+function clearSearch() { 
+    state.searchQuery = ''; 
     const input = document.getElementById('zukan-search-input');
-    if(input) input.value = '';
-    renderZukanList();
+    if(input) input.value = ''; 
+    renderZukanList(); 
 }
 
-function setListMode(mode) {
-    state.listMode = mode;
+function setListMode(mode) { 
+    state.listMode = mode; 
     const btns = document.querySelectorAll('.mode-btn');
     if(btns.length > 1) {
         btns[0].className = `mode-btn ${mode==='icon'?'active':''}`;
@@ -703,17 +912,32 @@ function renderZukanLayout() {
         header = document.createElement('div');
         header.id = 'zukan-header-el';
         header.className = 'zukan-header';
+
+        // Removed Filter Button from header
         header.innerHTML = `
             <div class="search-container"><div class="search-wrapper"><input type="text" id="zukan-search-input" class="search-bar" placeholder="名前、二つ名で検索..." value="${state.searchQuery}"><button id="search-clear-btn" class="search-clear-btn" onclick="clearSearch()">×</button></div></div>
-            <div class="action-row"><button id="zukan-filter-btn" class="filter-btn" onclick="openFilterModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>絞り込み<span id="filter-badge" style="display:none; background:var(--highlight);color:black;font-size:10px;padding:2px 5px;border-radius:10px;margin-left:4px;"></span></button><div class="sort-select-wrapper"><select id="sort-select" class="sort-select-main" onchange="setSort(this.value)"><option value="releaseDesc">実装日: 新しい順</option><option value="releaseAsc">実装日: 古い順</option><option value="rarityDesc">レアリティ: 高い順</option><option value="rarityAsc">レアリティ: 低い順</option><option value="costDesc">コスト: 高い順</option><option value="costAsc">コスト: 低い順</option><option value="hpDesc">HP: 高い順</option><option value="atkDesc">ATK: 高い順</option><option value="defDesc">DEF: 高い順</option></select></div><div class="mode-switch"><div class="mode-btn ${state.listMode === 'icon' ? 'active' : ''}" onclick="setListMode('icon')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 4h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 16h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4z"/></svg></div><div class="mode-btn ${state.listMode === 'detail' ? 'active' : ''}" onclick="setListMode('detail')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg></div></div></div><div class="text-xs text-gray-500" id="zukan-count" style="margin-top:4px; text-align:right;">---</div>
+            <div class="action-row" style="justify-content: flex-end;">
+                <div class="sort-select-wrapper"><select id="sort-select" class="sort-select-main" onchange="setSort(this.value)"><option value="releaseDesc">実装日: 新しい順</option><option value="releaseAsc">実装日: 古い順</option><option value="rarityDesc">レアリティ: 高い順</option><option value="rarityAsc">レアリティ: 低い順</option><option value="costDesc">コスト: 高い順</option><option value="costAsc">コスト: 低い順</option><option value="hpDesc">HP: 高い順</option><option value="atkDesc">ATK: 高い順</option><option value="defDesc">DEF: 高い順</option></select></div>
+                <div class="mode-switch"><div class="mode-btn ${state.listMode === 'icon' ? 'active' : ''}" onclick="setListMode('icon')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 4h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 16h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4z"/></svg></div><div class="mode-btn ${state.listMode === 'detail' ? 'active' : ''}" onclick="setListMode('detail')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg></div></div>
+            </div>
+            <div class="text-xs text-gray-500" id="zukan-count" style="margin-top:4px; text-align:right;">---</div>
             `;
         header.querySelector('input').addEventListener('input', (e) => { state.searchQuery = e.target.value; renderZukanList(); });
         contentDiv.appendChild(header);
-
+        
         const grid = document.createElement('div');
         grid.id = 'zukan-grid';
         contentDiv.appendChild(grid);
         renderZukanList(grid);
+
+        // Add FAB
+        const fab = document.createElement('div');
+        fab.id = 'filter-fab';
+        fab.className = 'filter-fab';
+        fab.onclick = openFilterModal;
+        fab.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg><span id="fab-badge" class="fab-badge" style="display:none;">0</span>`;
+        contentDiv.appendChild(fab);
+
     } else {
         renderZukanList();
     }
@@ -771,7 +995,7 @@ function renderZukanList(targetGrid) {
                  if (val === 'seza') return isSeza;
                  return false;
             });
-            if (!match) return false;
+            if (!match) return false; 
         }
 
         if (!check(f.categories, f.categoryLogic, c => char.categories?.includes(c))) return false;
@@ -797,29 +1021,48 @@ function renderZukanList(targetGrid) {
          displayDB.sort((a, b) => {
             const getStat = (c, k) => (c.forms && c.forms[0] && c.forms[0].stats && c.forms[0].stats[k]) ? c.forms[0].stats[k] : (c.stats ? c.stats[k] : 0);
             const getRank = (r) => RARITY_RANK[r] !== undefined ? RARITY_RANK[r] : -1;
+            
+            // Task 1: Fix Sorting Logic (Latest Date)
+            const getDate = (c) => [c.release, c.eza, c.seza].filter(d => d).sort().pop() || "";
 
-            if(f.sort === 'releaseDesc') return (b.release||"").localeCompare(a.release||"");
-            if(f.sort === 'releaseAsc') return (a.release||"").localeCompare(b.release||"");
-            if(f.sort === 'rarityDesc') return getRank(b.rarity) - getRank(a.rarity);
-            if(f.sort === 'rarityAsc') return getRank(a.rarity) - getRank(b.rarity);
-            if(f.sort === 'costDesc') return (b.cost||0) - (a.cost||0);
-            if(f.sort === 'costAsc') return (a.cost||0) - (b.cost||0);
-            if(f.sort === 'hpDesc') return getStat(b,'hp') - getStat(a,'hp');
-            if(f.sort === 'atkDesc') return getStat(b,'atk') - getStat(a,'atk');
-            if(f.sort === 'defDesc') return getStat(b,'def') - getStat(a,'def');
-            return 0;
+            const dateA = getDate(a);
+            const dateB = getDate(b);
+            const dateDiff = dateB.localeCompare(dateA); // Newest first
+
+            if(f.sort === 'releaseDesc') return dateDiff;
+            if(f.sort === 'releaseAsc') return dateA.localeCompare(dateB);
+
+            // For other sorts, use Date as tie-breaker
+            let diff = 0;
+            if(f.sort === 'rarityDesc') diff = getRank(b.rarity) - getRank(a.rarity);
+            if(f.sort === 'rarityAsc') diff = getRank(a.rarity) - getRank(b.rarity);
+            if(f.sort === 'costDesc') diff = (b.cost||0) - (a.cost||0);
+            if(f.sort === 'costAsc') diff = (a.cost||0) - (b.cost||0);
+            if(f.sort === 'hpDesc') diff = getStat(b,'hp') - getStat(a,'hp');
+            if(f.sort === 'atkDesc') diff = getStat(b,'atk') - getStat(a,'atk');
+            if(f.sort === 'defDesc') diff = getStat(b,'def') - getStat(a,'def');
+
+            if (diff !== 0) return diff;
+            return dateDiff; // Task 1: Tie breaker: Newest first
         });
     }
 
     const countEl = document.getElementById('zukan-count');
     if(countEl) countEl.innerText = `${displayDB.length}体 表示中`;
 
-    const badge = document.getElementById('filter-badge');
-    const btn = document.getElementById('zukan-filter-btn');
-    if(badge && btn) {
+    // Update FAB Badge
+    const badge = document.getElementById('fab-badge');
+    const fab = document.getElementById('filter-fab');
+    if(badge && fab) {
         const activeCount = f.rarities.length + f.types.length + f.classes.length + f.status.length + f.eza.length + f.saTypes.length + f.categories.length + f.links.length;
-        if (activeCount > 0) { badge.style.display = 'inline-block'; badge.innerText = activeCount; btn.classList.add('active'); }
-        else { badge.style.display = 'none'; btn.classList.remove('active'); }
+        if (activeCount > 0) {
+            badge.style.display = 'flex';
+            badge.innerText = activeCount;
+            fab.classList.add('active');
+        } else {
+            badge.style.display = 'none';
+            fab.classList.remove('active');
+        }
     }
 
     const grid = targetGrid || document.getElementById('zukan-grid');
@@ -830,7 +1073,7 @@ function renderZukanList(targetGrid) {
     
     displayDB.forEach(char => {
         const item = document.createElement('div');
-        const iconHtml = (typeof getCharIconHtml === 'function') ? getCharIconHtml(char) : 'IMG';
+        const iconHtml = (typeof getCharIconHtml === 'function') ? getCharIconHtml(char) : 'IMG'; 
 
         if (state.listMode === 'icon') {
             item.className = 'char-item-icon'; item.innerHTML = iconHtml;
@@ -842,7 +1085,7 @@ function renderZukanList(targetGrid) {
                 if (rawStats.rainbow) displayStats = rawStats.rainbow;
                 else if (rawStats.hp) displayStats = rawStats;
             }
-            const ezaBadge = (char.eza)
+            const ezaBadge = (char.eza) 
                 ? `<span class="eza-badge-mini">極限</span>` : '';
 
             item.innerHTML = `
@@ -877,7 +1120,7 @@ function openDetail(id) {
     state.detailFormIndex = 0;
     state.detailEzaMode = 'normal';
     state.animDirection = 'right';
-
+    
     if(typeof render === 'function') render();
     if(typeof scrollToTop === 'function') scrollToTop();
 }
@@ -888,7 +1131,7 @@ function closeDetail() {
         window.history.back();
         return;
     }
-
+    
     state.detailCharId = null;
     state.animDirection = 'left';
     if(typeof render === 'function') render();
@@ -901,12 +1144,12 @@ function setDetailForm(index) {
 
 function setEzaMode(mode) {
     state.detailEzaMode = mode;
-
+    
     const char = DB.find(c => c.id === state.detailCharId);
     let targetForms = char.forms;
     if (mode === 'eza' && char.forms_eza) targetForms = char.forms_eza;
     if (mode === 'seza' && char.forms_seza) targetForms = char.forms_seza;
-
+    
     if (!targetForms || !targetForms[state.detailFormIndex]) {
         state.detailFormIndex = 0;
     }
@@ -1697,6 +1940,7 @@ function renderCharacterDetail(id) {
 
 // --- 5. Expose to Window ---
 
+window.renderFilterModal = renderFilterModal;
 window.populateFilterOptions = populateFilterOptions;
 window.openFilterModal = openFilterModal;
 window.closeFilterModal = closeFilterModal;
@@ -1724,3 +1968,4 @@ window.closeLeaderModal = closeLeaderModal;
 window.openLinkPartnerModal = openLinkPartnerModal;
 window.closeLinkModal = closeLinkModal;
 window.toggleFieldInfo = toggleFieldInfo;
+window.toggleAllItems = toggleAllItems;

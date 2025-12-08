@@ -4,7 +4,21 @@ function getCharIconHtml(char, formData) {
     const displayId = (formData && formData.id) ? formData.id : char.id;
     const displayType = (formData && formData.type) ? formData.type : char.type;
     const displayRarity = (formData && formData.rarity) ? formData.rarity : char.rarity;
-    const displayClass = (formData && formData.class) ? formData.class : char.class;
+    let displayClass = (formData && formData.class) ? formData.class : char.class;
+
+    // Task 3: If character starts as SSR (no SR/R/N in awakening), use generic type icon ONLY for SSR form
+    let useGenericIcon = false;
+    if (displayRarity === 'SSR') {
+        // Check if it's a "Native SSR" (No 'SR', 'R', or 'N' in awakening steps)
+        const hasLowerForms = char.awakening && char.awakening.some(step => ['SR', 'R', 'N'].includes(step.rank));
+        if (!hasLowerForms) {
+            useGenericIcon = true;
+        }
+    }
+
+    if (useGenericIcon) {
+        displayClass = null;
+    }
 
     let typeColor = getAttributeColor(displayType);
     // Access state via global variable or passed arg (here assuming global state for simplicity in this refactor)
@@ -18,7 +32,14 @@ function getCharIconHtml(char, formData) {
     const frameHtml = `<img src="${frameSrc}" class="icon-layer layer-frame" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"><div class="icon-layer layer-frame" style="display:none; border: 2px solid ${typeColor}; box-sizing:border-box;"></div>`;
     const raritySrc = `assets/rarities/${displayRarity}.png`;
     const rarityHtml = `<div class="layer-rarity"><img src="${raritySrc}" class="rarity-img" onerror="this.parentElement.style.background='rgba(0,0,0,0.8)'; this.parentElement.innerHTML='${displayRarity}';"></div>`;
-    const typeSrc = `assets/types/${displayClass}_${displayType}.png`;
+
+    let typeSrc = '';
+    if (displayClass) {
+        typeSrc = `assets/types/${displayClass}_${displayType}.png`;
+    } else {
+        typeSrc = `assets/types/${displayType}.png`;
+    }
+
     const typeHtml = `<div class="layer-type"><img src="${typeSrc}" class="type-img" onerror="this.parentElement.style.background='${typeColor}'; this.parentElement.innerHTML='${getShortType(displayType)}';"></div>`;
     
     let statusHtml = '';
