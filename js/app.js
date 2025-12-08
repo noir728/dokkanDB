@@ -11,8 +11,6 @@ const state = {
     listMode: 'icon',
     owned: [],
     favorites: [],
-    zukanScrollTop: 0,
-
     
     searchQuery: '',
     filter: { 
@@ -25,7 +23,8 @@ const state = {
         saTypes: [], saTypeLogic: 'OR',
         categories: [], categoryLogic: 'AND',
         links: [], linkLogic: 'AND'
-    }
+    },
+    scrollPositions: { zukan: 0, detail: 0 }
 };
 
 const contentDiv = document.getElementById('main-content');
@@ -151,14 +150,20 @@ function saveState() {
 }
 
 function switchTab(tabName) { 
-
-    // ★追加: タブ切り替え時はスクロール位置をリセット
     if (state.currentTab !== tabName) {
-        state.zukanScrollTop = 0;
+        // Save current scroll position
+        if (contentDiv) state.scrollPositions[state.currentTab] = contentDiv.scrollTop;
     }
 
     state.currentTab = tabName; 
     
+    // Animate transition
+    if (contentDiv) {
+        contentDiv.classList.remove('fade-in');
+        void contentDiv.offsetWidth; // Trigger reflow
+        contentDiv.classList.add('fade-in');
+    }
+
     // Clear Detail State when switching tabs
     if (state.detailCharId) {
         state.detailCharId = null;
@@ -169,6 +174,11 @@ function switchTab(tabName) {
     }
     updateTabUI(); 
     render(); 
+
+    // Restore scroll position
+    if (contentDiv) {
+        contentDiv.scrollTop = state.scrollPositions[tabName] || 0;
+    }
 }
 
 function updateTabUI() {

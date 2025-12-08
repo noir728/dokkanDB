@@ -76,7 +76,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超激戦",
@@ -569,7 +569,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超激戦",
@@ -826,7 +826,7 @@ const CHARACTER_DATA = [
         ],
         "forms_seza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超激戦",
@@ -1157,7 +1157,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "BOSSキャラ",
@@ -1288,7 +1288,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "BOSSキャラ",
@@ -1345,7 +1345,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "BOSSキャラ",
@@ -1410,7 +1410,7 @@ const CHARACTER_DATA = [
         ],
         "forms_seza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "BOSSキャラ",
@@ -1596,7 +1596,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "金色の戦士",
@@ -1732,7 +1732,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "金色の戦士",
@@ -1788,7 +1788,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "金色の戦士",
@@ -1850,7 +1850,7 @@ const CHARACTER_DATA = [
         ],
         "forms_seza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "金色の戦士",
@@ -1978,7 +1978,7 @@ const CHARACTER_DATA = [
             "地球育ちの戦士",
             "地球を守りし英雄"
         ],
-        "leaderSkill": "超力属性の気力+2、HPとATKとDEF100%UP\n&極力属性のHPとATKとDEF40%UP",
+        "leaderSkill": "超力属性の気力+2、HPとATKとDEF100%UP\\n&極力属性のHPとATKとDEF40%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -2034,7 +2034,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -2124,9 +2124,9 @@ const CHARACTER_DATA = [
             "地球育ちの戦士",
             "地球を守りし英雄"
         ],
-        "leaderSkill": "超力属性の気力+3、HPとATKとDEF120%UP\n&極力属性の気力+1、HPとATKとDEF50%UP",
-        "leaderSkill_eza": "超力属性の気力+3、HPとATKとDEF130%UP\n&極力属性の気力+3、HPとATKとDEF90%UP",
-        "leaderSkill_seza": "超力属性の気力+3、HPとATKとDEF130%UP\n&極力属性の気力+3、HPとATKとDEF90%UP",
+        "leaderSkill": "超力属性の気力+3、HPとATKとDEF120%UP\\n&極力属性の気力+1、HPとATKとDEF50%UP",
+        "leaderSkill_eza": "超力属性の気力+3、HPとATKとDEF130%UP\\n&極力属性の気力+3、HPとATKとDEF90%UP",
+        "leaderSkill_seza": "超力属性の気力+3、HPとATKとDEF130%UP\\n&極力属性の気力+3、HPとATKとDEF90%UP",
         "awakening": [
             {
                 "rank": "SSR",
@@ -2180,7 +2180,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -2242,7 +2242,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -2312,7 +2312,7 @@ const CHARACTER_DATA = [
         ],
         "forms_seza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -2432,7 +2432,7 @@ const CHARACTER_DATA = [
             "地球を守りし英雄",
             "継承する者"
         ],
-        "leaderSkill": "超速属性の気力+2、HPとATKとDEF100%UP\n&極速属性のHPとATKとDEF40%UP",
+        "leaderSkill": "超速属性の気力+2、HPとATKとDEF100%UP\\n&極速属性のHPとATKとDEF40%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -2488,7 +2488,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -2578,9 +2578,9 @@ const CHARACTER_DATA = [
             "地球を守りし英雄",
             "継承する者"
         ],
-        "leaderSkill": "超速属性の気力+3、HPとATKとDEF120%UP\n&極速属性の気力+1、HPとATKとDEF50%UP",
-        "leaderSkill_eza": "超速属性の気力+3、HPとATKとDEF130%UP\n&極速属性の気力+3、HPとATKとDEF90%UP",
-        "leaderSkill_seza": "超速属性の気力+3、HPとATKとDEF130%UP\n&極速属性の気力+3、HPとATKとDEF90%UP",
+        "leaderSkill": "超速属性の気力+3、HPとATKとDEF120%UP\\n&極速属性の気力+1、HPとATKとDEF50%UP",
+        "leaderSkill_eza": "超速属性の気力+3、HPとATKとDEF130%UP\\n&極速属性の気力+3、HPとATKとDEF90%UP",
+        "leaderSkill_seza": "超速属性の気力+3、HPとATKとDEF130%UP\\n&極速属性の気力+3、HPとATKとDEF90%UP",
         "awakening": [
             {
                 "rank": "SSR",
@@ -2634,7 +2634,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -2696,7 +2696,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -2766,7 +2766,7 @@ const CHARACTER_DATA = [
         ],
         "forms_seza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -2927,7 +2927,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "かめはめ波",
@@ -3049,7 +3049,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "かめはめ波",
@@ -3128,8 +3128,8 @@ const CHARACTER_DATA = [
             "融合/合体戦士",
             "親子の絆"
         ],
-        "leaderSkill": "「ポタラ」カテゴリの\n気力+3、HPとATK170%UP、DEF130%UP\nまたは知属性の気力+3、HPとATKとDEF90%UP",
-        "leaderSkill_eza": "「ポタラ」カテゴリの\n気力+3、HPとATKとDEF180%UP\nまたは知属性の気力+3、HPとATKとDEF120%UP",
+        "leaderSkill": "「ポタラ」カテゴリの\\n気力+3、HPとATK170%UP、DEF130%UP\\nまたは知属性の気力+3、HPとATKとDEF90%UP",
+        "leaderSkill_eza": "「ポタラ」カテゴリの\\n気力+3、HPとATKとDEF180%UP\\nまたは知属性の気力+3、HPとATKとDEF120%UP",
         "leaderSkill_seza": "",
         "awakening": [
             {
@@ -3178,7 +3178,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "かめはめ波",
@@ -3316,7 +3316,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "かめはめ波",
@@ -3541,7 +3541,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "かめはめ波",
@@ -3664,7 +3664,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "かめはめ波",
@@ -3746,8 +3746,8 @@ const CHARACTER_DATA = [
             "親子の絆",
             "地球を守りし英雄"
         ],
-        "leaderSkill": "「フュージョン」カテゴリの\n気力+3、HPとATK170%UP、DEF130%UP\nまたは体属性の気力+3、HPとATKとDEF90%UP",
-        "leaderSkill_eza": "「フュージョン」カテゴリの\n気力+3、HPとATKとDEF180%UP\nまたは体属性の気力+3、HPとATKとDEF120%UP",
+        "leaderSkill": "「フュージョン」カテゴリの\\n気力+3、HPとATK170%UP、DEF130%UP\\nまたは体属性の気力+3、HPとATKとDEF90%UP",
+        "leaderSkill_eza": "「フュージョン」カテゴリの\\n気力+3、HPとATKとDEF180%UP\\nまたは体属性の気力+3、HPとATKとDEF120%UP",
         "leaderSkill_seza": "",
         "awakening": [
             {
@@ -3796,7 +3796,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "かめはめ波",
@@ -3929,7 +3929,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "かめはめ波",
@@ -4109,7 +4109,7 @@ const CHARACTER_DATA = [
             "地球育ちの戦士",
             "地球を守りし英雄"
         ],
-        "leaderSkill": "「孫悟空の系譜」カテゴリの\n気力+2、HPとATK130%UP、DEF100%UP、\nまたは超速属性の気力+2、HPとATKとDEF100%UP",
+        "leaderSkill": "「孫悟空の系譜」カテゴリの\\n気力+2、HPとATK130%UP、DEF100%UP、\\nまたは超速属性の気力+2、HPとATKとDEF100%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -4159,7 +4159,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -4253,7 +4253,7 @@ const CHARACTER_DATA = [
             "地球育ちの戦士",
             "地球を守りし英雄"
         ],
-        "leaderSkill": "「孫悟空の系譜」カテゴリの\n気力+3、HPとATK150%UP、DEF110%UP、\nまたは超速属性の気力+2、HPとATKとDEF110%UP",
+        "leaderSkill": "「孫悟空の系譜」カテゴリの\\n気力+3、HPとATK150%UP、DEF110%UP、\\nまたは超速属性の気力+2、HPとATKとDEF110%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -4303,7 +4303,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -4400,8 +4400,8 @@ const CHARACTER_DATA = [
             "地球育ちの戦士",
             "地球を守りし英雄"
         ],
-        "leaderSkill": "「孫悟空の系譜」カテゴリの\n気力+3、HPとATK170%UP、DEF130%UP、\nまたは超速属性の気力+3、HPとATKとDEF120%UP",
-        "leaderSkill_eza": "「孫悟空の系譜」カテゴリの\n気力+3、HPとATKとDEF180%UP、\nまたは超速属性の気力+3、HPとATKとDEF130%UP",
+        "leaderSkill": "「孫悟空の系譜」カテゴリの\\n気力+3、HPとATK170%UP、DEF130%UP、\\nまたは超速属性の気力+3、HPとATKとDEF120%UP",
+        "leaderSkill_eza": "「孫悟空の系譜」カテゴリの\\n気力+3、HPとATKとDEF180%UP、\\nまたは超速属性の気力+3、HPとATKとDEF130%UP",
         "leaderSkill_seza": "",
         "awakening": [
             {
@@ -4450,7 +4450,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -4532,7 +4532,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -4648,7 +4648,7 @@ const CHARACTER_DATA = [
             "地球を守りし英雄",
             "継承する者"
         ],
-        "leaderSkill": "「ベジータの系譜」カテゴリの\n気力+2、HP100%UP、ATKとDEF130%UP、\nまたは超力属性の気力+2、HPとATKとDEF100%UP",
+        "leaderSkill": "「ベジータの系譜」カテゴリの\\n気力+2、HP100%UP、ATKとDEF130%UP、\\nまたは超力属性の気力+2、HPとATKとDEF100%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -4698,7 +4698,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -4793,7 +4793,7 @@ const CHARACTER_DATA = [
             "地球を守りし英雄",
             "継承する者"
         ],
-        "leaderSkill": "「ベジータの系譜」カテゴリの\n気力+3、HP110%UP、ATKとDEF150%UP、\nまたは超力属性の気力+2、HPとATKとDEF110%UP",
+        "leaderSkill": "「ベジータの系譜」カテゴリの\\n気力+3、HP110%UP、ATKとDEF150%UP、\\nまたは超力属性の気力+2、HPとATKとDEF110%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -4843,7 +4843,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -4940,8 +4940,8 @@ const CHARACTER_DATA = [
             "地球を守りし英雄",
             "継承する者"
         ],
-        "leaderSkill": "「ベジータの系譜」カテゴリの\n気力+3、HP130%UP、ATKとDEF170%UP、\nまたは超力属性の気力+3、HPとATKとDEF120%UP",
-        "leaderSkill_eza": "「ベジータの系譜」カテゴリの 気力+3、HPとATKとDEF180%UP、\nまたは超力属性の気力+3、HPとATKとDEF130%UP",
+        "leaderSkill": "「ベジータの系譜」カテゴリの\\n気力+3、HP130%UP、ATKとDEF170%UP、\\nまたは超力属性の気力+3、HPとATKとDEF120%UP",
+        "leaderSkill_eza": "「ベジータの系譜」カテゴリの 気力+3、HPとATKとDEF180%UP、\\nまたは超力属性の気力+3、HPとATKとDEF130%UP",
         "leaderSkill_seza": "",
         "awakening": [
             {
@@ -4990,7 +4990,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -5072,7 +5072,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "超サイヤ人",
@@ -5184,7 +5184,7 @@ const CHARACTER_DATA = [
             "地球を守りし英雄",
             "高速戦闘"
         ],
-        "leaderSkill": "「最後の切り札」または「フュージョン」カテゴリの\n気力+2、HPとATKとDEF100%UP",
+        "leaderSkill": "「最後の切り札」または「フュージョン」カテゴリの\\n気力+2、HPとATKとDEF100%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -5234,7 +5234,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "戦闘民族サイヤ人",
@@ -5318,7 +5318,7 @@ const CHARACTER_DATA = [
             "地球を守りし英雄",
             "高速戦闘"
         ],
-        "leaderSkill": "「最後の切り札」または「フュージョン」カテゴリの\n気力+3、HPとATKとDEF120%UP",
+        "leaderSkill": "「最後の切り札」または「フュージョン」カテゴリの\\n気力+3、HPとATKとDEF120%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -5368,7 +5368,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "戦闘民族サイヤ人",
@@ -5457,8 +5457,8 @@ const CHARACTER_DATA = [
             "地球を守りし英雄",
             "高速戦闘"
         ],
-        "leaderSkill": "「最後の切り札」または「フュージョン」カテゴリの\n気力+3、HPとATKとDEF150%UP",
-        "leaderSkill_eza": "「最後の切り札」または「フュージョン」カテゴリの\n気力+3、HPとATKとDEF170%UP",
+        "leaderSkill": "「最後の切り札」または「フュージョン」カテゴリの\\n気力+3、HPとATKとDEF150%UP",
+        "leaderSkill_eza": "「最後の切り札」または「フュージョン」カテゴリの\\n気力+3、HPとATKとDEF170%UP",
         "leaderSkill_seza": "",
         "awakening": [
             {
@@ -5507,7 +5507,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "戦闘民族サイヤ人",
@@ -5675,7 +5675,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "戦闘民族サイヤ人",
@@ -5891,7 +5891,7 @@ const CHARACTER_DATA = [
             "融合/合体戦士",
             "超HERO"
         ],
-        "leaderSkill": "「最後の切り札」または「ポタラ」カテゴリの\n気力+2、HPとATKとDEF100%UP",
+        "leaderSkill": "「最後の切り札」または「ポタラ」カテゴリの\\n気力+2、HPとATKとDEF100%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -5941,7 +5941,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "戦闘民族サイヤ人",
@@ -6025,7 +6025,7 @@ const CHARACTER_DATA = [
             "融合/合体戦士",
             "超HERO"
         ],
-        "leaderSkill": "「最後の切り札」または「ポタラ」カテゴリの\n気力+3、HPとATKとDEF120%UP",
+        "leaderSkill": "「最後の切り札」または「ポタラ」カテゴリの\\n気力+3、HPとATKとDEF120%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -6075,7 +6075,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "戦闘民族サイヤ人",
@@ -6167,8 +6167,8 @@ const CHARACTER_DATA = [
             "超サイヤ人を超えた力",
             "超HERO"
         ],
-        "leaderSkill": "「最後の切り札」または「ポタラ」カテゴリの\n気力+3、HPとATKとDEF150%UP",
-        "leaderSkill_eza": "「最後の切り札」または「ポタラ」カテゴリの\n気力+3、HPとATKとDEF170%UP",
+        "leaderSkill": "「最後の切り札」または「ポタラ」カテゴリの\\n気力+3、HPとATKとDEF150%UP",
+        "leaderSkill_eza": "「最後の切り札」または「ポタラ」カテゴリの\\n気力+3、HPとATKとDEF170%UP",
         "leaderSkill_seza": "",
         "awakening": [
             {
@@ -6217,7 +6217,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "戦闘民族サイヤ人",
@@ -6385,7 +6385,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "戦闘民族サイヤ人",
@@ -6610,7 +6610,7 @@ const CHARACTER_DATA = [
             "超HERO",
             "大会出場者"
         ],
-        "leaderSkill": "「奇跡の覚醒」または「第7宇宙代表」カテゴリの\n気力+2、HPとATKとDEF130%UP",
+        "leaderSkill": "「奇跡の覚醒」または「第7宇宙代表」カテゴリの\\n気力+2、HPとATKとDEF130%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -6660,7 +6660,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "驚異的なスピード",
@@ -6751,7 +6751,7 @@ const CHARACTER_DATA = [
             "超HERO",
             "大会出場者"
         ],
-        "leaderSkill": "「奇跡の覚醒」または「第7宇宙代表」カテゴリの\n気力+3、HPとATKとDEF150%UP",
+        "leaderSkill": "「奇跡の覚醒」または「第7宇宙代表」カテゴリの\\n気力+3、HPとATKとDEF150%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -6801,7 +6801,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "驚異的なスピード",
@@ -6901,8 +6901,8 @@ const CHARACTER_DATA = [
             "超HERO",
             "大会出場者"
         ],
-        "leaderSkill": "「奇跡の覚醒」または「第7宇宙代表」カテゴリの\n気力+3、HPとATKとDEF170%UP",
-        "leaderSkill_eza": "「奇跡の覚醒」または「第7宇宙代表」カテゴリの\n気力+3、HPとATKとDEF180%UP",
+        "leaderSkill": "「奇跡の覚醒」または「第7宇宙代表」カテゴリの\\n気力+3、HPとATKとDEF170%UP",
+        "leaderSkill_eza": "「奇跡の覚醒」または「第7宇宙代表」カテゴリの\\n気力+3、HPとATKとDEF180%UP",
         "leaderSkill_seza": "",
         "awakening": [
             {
@@ -6951,7 +6951,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "驚異的なスピード",
@@ -7029,7 +7029,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "驚異的なスピード",
@@ -7168,7 +7168,7 @@ const CHARACTER_DATA = [
             "大会出場者",
             "継承する者"
         ],
-        "leaderSkill": "「再起する力」または「第7宇宙代表」カテゴリの\n気力+2、HPとATKとDEF130%UP",
+        "leaderSkill": "「再起する力」または「第7宇宙代表」カテゴリの\\n気力+2、HPとATKとDEF130%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -7223,7 +7223,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "天才",
@@ -7315,7 +7315,7 @@ const CHARACTER_DATA = [
             "大会出場者",
             "継承する者"
         ],
-        "leaderSkill": "「再起する力」または「第7宇宙代表」カテゴリの\n気力+3、HPとATKとDEF150%UP",
+        "leaderSkill": "「再起する力」または「第7宇宙代表」カテゴリの\\n気力+3、HPとATKとDEF150%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -7370,7 +7370,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "天才",
@@ -7470,8 +7470,8 @@ const CHARACTER_DATA = [
             "大会出場者",
             "継承する者"
         ],
-        "leaderSkill": "「再起する力」または「第7宇宙代表」カテゴリの\n気力+3、HPとATKとDEF170%UP",
-        "leaderSkill_eza": "「再起する力」または「第7宇宙代表」カテゴリの\n気力+3、HPとATKとDEF180%UP",
+        "leaderSkill": "「再起する力」または「第7宇宙代表」カテゴリの\\n気力+3、HPとATKとDEF170%UP",
+        "leaderSkill_eza": "「再起する力」または「第7宇宙代表」カテゴリの\\n気力+3、HPとATKとDEF180%UP",
         "leaderSkill_seza": "",
         "awakening": [
             {
@@ -7525,7 +7525,7 @@ const CHARACTER_DATA = [
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "天才",
@@ -7704,7 +7704,7 @@ const CHARACTER_DATA = [
         ],
         "forms_eza": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
                     "天才",
@@ -7963,7 +7963,7 @@ const CHARACTER_DATA = [
             "親子の絆",
             "超HERO"
         ],
-        "leaderSkill": "「超サイヤ人を超えた力」または「劇場版HERO」 カテゴリの\n気力+2、HPとATKとDEF130%UP、\n「かめはめ波」カテゴリを含む場合は\n更にHPとATKとDEF10%UP",
+        "leaderSkill": "「超サイヤ人を超えた力」または「劇場版HERO」 カテゴリの\\n気力+2、HPとATKとDEF130%UP、\\n「かめはめ波」カテゴリを含む場合は\\n更にHPとATKとDEF10%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -8091,7 +8091,7 @@ const CHARACTER_DATA = [
             "親子の絆",
             "超HERO"
         ],
-        "leaderSkill": "「超サイヤ人を超えた力」または「劇場版HERO」 カテゴリの\n気力+3、HPとATKとDEF150%UP、\n「かめはめ波」カテゴリを含む場合は\n更にHPとATKとDEF20%UP",
+        "leaderSkill": "「超サイヤ人を超えた力」または「劇場版HERO」 カテゴリの\\n気力+3、HPとATKとDEF150%UP、\\n「かめはめ波」カテゴリを含む場合は\\n更にHPとATKとDEF20%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -8229,8 +8229,8 @@ const CHARACTER_DATA = [
             "超HERO",
             "地球を守りし英雄"
         ],
-        "leaderSkill": "「超サイヤ人を超えた力」または「劇場版HERO」カテゴリの\n気力+3、HPとATKとDEF170%UP、\n「かめはめ波」カテゴリを含む場合は\n更にHPとATKとDEF30%UP",
-        "leaderSkill_eza": "「超サイヤ人を超えた力」または「劇場版HERO」カテゴリの\n気力+3、HPとATKとDEF170%UP、\n「かめはめ波」カテゴリを含む場合は\n更に気力+1、HPとATKとDEF30%UP",
+        "leaderSkill": "「超サイヤ人を超えた力」または「劇場版HERO」カテゴリの\\n気力+3、HPとATKとDEF170%UP、\\n「かめはめ波」カテゴリを含む場合は\\n更にHPとATKとDEF30%UP",
+        "leaderSkill_eza": "「超サイヤ人を超えた力」または「劇場版HERO」カテゴリの\\n気力+3、HPとATKとDEF170%UP、\\n「かめはめ波」カテゴリを含む場合は\\n更に気力+1、HPとATKとDEF30%UP",
         "leaderSkill_seza": "",
         "awakening": [
             {
@@ -8713,7 +8713,7 @@ const CHARACTER_DATA = [
             "親子の絆",
             "地球を守りし英雄"
         ],
-        "leaderSkill": "「融合/合体戦士」または「GT HERO」 カテゴリの\n気力+2、HPとATKとDEF130%UP、\n「かめはめ波」カテゴリを含む場合は\n更にHPとATKとDEF10%UP",
+        "leaderSkill": "「融合/合体戦士」または「GT HERO」 カテゴリの\\n気力+2、HPとATKとDEF130%UP、\\n「かめはめ波」カテゴリを含む場合は\\n更にHPとATKとDEF10%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -8845,7 +8845,7 @@ const CHARACTER_DATA = [
             "親子の絆",
             "地球を守りし英雄"
         ],
-        "leaderSkill": "「融合/合体戦士」または「GT HERO」 カテゴリの\n気力+3、HPとATKとDEF150%UP、\n「かめはめ波」カテゴリを含む場合は\n更にHPとATKとDEF20%UP",
+        "leaderSkill": "「融合/合体戦士」または「GT HERO」 カテゴリの\\n気力+3、HPとATKとDEF150%UP、\\n「かめはめ波」カテゴリを含む場合は\\n更にHPとATKとDEF20%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
         "awakening": [
@@ -8979,8 +8979,8 @@ const CHARACTER_DATA = [
             "親子の絆",
             "地球を守りし英雄"
         ],
-        "leaderSkill": "「融合/合体戦士」または「GT HERO」 カテゴリの\n気力+3、HPとATKとDEF170%UP、\n「かめはめ波」カテゴリを含む場合は\n更にHPとATKとDEF30%UP",
-        "leaderSkill_eza": "「融合/合体戦士」または「GT HERO」 カテゴリの\n気力+3、HPとATKとDEF170%UP、\n「かめはめ波」カテゴリを含む場合は\n更に気力+1、HPとATKとDEF30%UP",
+        "leaderSkill": "「融合/合体戦士」または「GT HERO」 カテゴリの\\n気力+3、HPとATKとDEF170%UP、\\n「かめはめ波」カテゴリを含む場合は\\n更にHPとATKとDEF30%UP",
+        "leaderSkill_eza": "「融合/合体戦士」または「GT HERO」 カテゴリの\\n気力+3、HPとATKとDEF170%UP、\\n「かめはめ波」カテゴリを含む場合は\\n更に気力+1、HPとATKとDEF30%UP",
         "leaderSkill_seza": "",
         "awakening": [
             {
@@ -9437,124 +9437,85 @@ const CHARACTER_DATA = [
         "drop_event": "",
         "categories": [
             "願いの力",
+            "命運をかけた戦い",
             "最後の切り札",
-            "つながる希望",
             "魔人ブウ編",
-            "純粋サイヤ人",
             "コンビネーション",
-            "頭脳戦",
-            "体得した進化",
-            "命運をかけた闘い",
-            "超サイヤ人を超えた力",
-            "親子の絆",
-            "地球を守りし英雄"
+            "純粋サイヤ人",
+            "復活戦士",
+            "超サイヤ人3",
+            "超サイヤ人2",
+            "高速戦闘",
+            "親友の絆",
+            "地球育ちの戦士",
+            "語り継がれし者",
+            "力戦奮闘"
         ],
-        "leaderSkill": "「願いの力」または「最後の切り札」カテゴリの\n気力+3、HPとATKとDEF130%UP、\n「つながる希望」または「魔人ブウ編」カテゴリを含む場合は\n更にHPとATKとDEF10%UP",
+        "leaderSkill": "「願いの力」または「命運をかけた戦い」カテゴリの気力+2、HPとATKとDEF120%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
-        "awakening": [
-            {
-                "rank": "SSR",
-                "id": 1025710
-            },
-            {
-                "rank": "UR",
-                "id": 1025720,
-                "medals": [
-                    {
-                        "name": "超激戦/勝利の輝き！希望の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            },
-            {
-                "rank": "LR",
-                "id": 1025730,
-                "medals": [
-                    {
-                        "name": "超激戦/勝利の輝き！希望の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    },
-                    {
-                        "name": "超激戦/破壊と殺戮の純真/2",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            }
-        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
-                    "戦闘民族サイヤ人",
-                    "金色の戦士",
                     "超サイヤ人",
-                    "歴戦の戦士",
-                    "臨戦態勢"
+                    "金色の戦士",
+                    "かめはめ波",
+                    "短期決戦",
+                    "限界突破"
                 ],
                 "stats": {
-                    "hp": 7570,
-                    "atk": 8602,
-                    "def": 4124
+                    "rainbow": {
+                        "hp": 10575,
+                        "atk": 8690,
+                        "def": 4235
+                    },
+                    "fifty": {
+                        "hp": 8575,
+                        "atk": 6690,
+                        "def": 2235
+                    },
+                    "base": {
+                        "hp": 7575,
+                        "atk": 5690,
+                        "def": 1235
+                    }
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 10,
-                        "type": "格闘",
-                        "name": "ライバル同士の共闘",
-                        "effect": "1ターンATKが上昇し、相手に超特大ダメージを与える",
-                        "specs": {
-                            "atk_up": "30%"
-                        }
+                        "type": "物理",
+                        "name": "連携連撃",
+                        "effect": "1ターンATKが上昇し、相手に超特大ダメージを与える"
                     }
                 ],
                 "passive": {
-                    "name": "激闘開始",
+                    "name": "限界を超えた協力",
                     "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "ATK/DEF120%[img:up]"
+                                "自身の気力+2、ATKとDEF120%UP"
                             ]
                         },
                         {
-                            "title": "HP50%以上",
+                            "title": "攻撃時",
                             "effects": [
-                                "ATK/DEF30%[img:up]"
+                                "攻撃するたびに更に気力+1(最大+3)、ATKとDEF10%UP(最大30%)"
                             ]
                         },
                         {
-                            "title": "1番目にいるとき",
+                            "title": "気力メーター12",
                             "effects": [
-                                "DEF50%[img:up]",
-                                "気玉取得時の気力上昇量+1"
-                            ]
-                        },
-                        {
-                            "title": "2番目か3番目にいるとき",
-                            "effects": [
-                                "ATK50%[img:up]",
-                                "気玉取得時の気力上昇量+2"
-                            ]
-                        },
-                        {
-                            "title": "必殺技を発動するたび",
-                            "effects": [
-                                "[img:infinity]会心率10%[img:up](最大30%)"
+                                "会心発動率10%UP"
                             ]
                         }
-                    ],
-                    "maxValues": {
-                        "crit": "30%"
-                    }
+                    ]
                 }
             }
         ]
@@ -9573,125 +9534,86 @@ const CHARACTER_DATA = [
         "drop_event": "",
         "categories": [
             "願いの力",
+            "命運をかけた戦い",
             "最後の切り札",
-            "つながる希望",
             "魔人ブウ編",
-            "純粋サイヤ人",
             "コンビネーション",
-            "頭脳戦",
-            "体得した進化",
-            "命運をかけた闘い",
-            "超サイヤ人を超えた力",
-            "親子の絆",
-            "地球を守りし英雄"
+            "純粋サイヤ人",
+            "復活戦士",
+            "超サイヤ人3",
+            "超サイヤ人2",
+            "高速戦闘",
+            "親友の絆",
+            "地球育ちの戦士",
+            "語り継がれし者",
+            "力戦奮闘"
         ],
-        "leaderSkill": "「願いの力」または「最後の切り札」カテゴリの\n気力+3、HPとATKとDEF150%UP、「つながる希望」または「魔人ブウ編」カテゴリを含む場合は\n更にHPとATKとDEF20%UP",
+        "leaderSkill": "「願いの力」または「命運をかけた戦い」カテゴリの気力+2、HPとATKとDEF150%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
-        "awakening": [
-            {
-                "rank": "SSR",
-                "id": 1025710
-            },
-            {
-                "rank": "UR",
-                "id": 1025720,
-                "medals": [
-                    {
-                        "name": "超激戦/勝利の輝き！希望の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            },
-            {
-                "rank": "LR",
-                "id": 1025730,
-                "medals": [
-                    {
-                        "name": "超激戦/勝利の輝き！希望の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    },
-                    {
-                        "name": "超激戦/破壊と殺戮の純真/2",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            }
-        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
-                    "戦闘民族サイヤ人",
-                    "金色の戦士",
                     "超サイヤ人",
-                    "歴戦の戦士",
-                    "臨戦態勢",
-                    "超激戦"
+                    "金色の戦士",
+                    "かめはめ波",
+                    "短期決戦",
+                    "超激戦",
+                    "限界突破"
                 ],
                 "stats": {
-                    "hp": 8931,
-                    "atk": 9620,
-                    "def": 4822
+                    "rainbow": {
+                        "hp": 12225,
+                        "atk": 11990,
+                        "def": 5885
+                    },
+                    "fifty": {
+                        "hp": 10225,
+                        "atk": 9990,
+                        "def": 3885
+                    },
+                    "base": {
+                        "hp": 9225,
+                        "atk": 8990,
+                        "def": 2885
+                    }
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 10,
-                        "type": "格闘",
-                        "name": "ライバル同士の共闘",
-                        "effect": "1ターンATKが上昇し、相手に超特大ダメージを与える",
-                        "specs": {
-                            "atk_up": "30%"
-                        }
+                        "type": "物理",
+                        "name": "連携連撃",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える"
                     }
                 ],
                 "passive": {
-                    "name": "フルパワー共振",
+                    "name": "死力を尽くした攻防",
                     "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "ATK/DEF150%[img:up]"
+                                "自身の気力+3、ATKとDEF150%UP"
                             ]
                         },
                         {
-                            "title": "HP50%以上",
+                            "title": "攻撃時",
                             "effects": [
-                                "ATK/DEF40%[img:up]"
+                                "攻撃するたびに更に気力+1(最大+4)、ATKとDEF10%UP(最大40%)"
                             ]
                         },
                         {
-                            "title": "1番目にいるとき",
+                            "title": "気力メーター12",
                             "effects": [
-                                "DEF70%[img:up]",
-                                "気玉取得時の気力上昇量+1"
-                            ]
-                        },
-                        {
-                            "title": "2番目か3番目にいるとき",
-                            "effects": [
-                                "ATK70%[img:up]",
-                                "気玉取得時の気力上昇量+2"
-                            ]
-                        },
-                        {
-                            "title": "必殺技を発動するたび",
-                            "effects": [
-                                "会心率10%[img:up](最大40%)"
+                                "会心発動率10%UP"
                             ]
                         }
-                    ],
-                    "maxValues": {
-                        "crit": "40%"
-                    }
+                    ]
                 }
             }
         ]
@@ -9710,242 +9632,204 @@ const CHARACTER_DATA = [
         "drop_event": "",
         "categories": [
             "願いの力",
+            "命運をかけた戦い",
             "最後の切り札",
-            "つながる希望",
             "魔人ブウ編",
-            "純粋サイヤ人",
             "コンビネーション",
-            "頭脳戦",
-            "体得した進化",
-            "命運をかけた闘い",
-            "超サイヤ人を超えた力",
-            "親子の絆",
-            "力戦奮闘",
-            "地球を守りし英雄"
+            "純粋サイヤ人",
+            "復活戦士",
+            "超サイヤ人3",
+            "超サイヤ人2",
+            "高速戦闘",
+            "親友の絆",
+            "地球育ちの戦士",
+            "語り継がれし者",
+            "力戦奮闘"
         ],
-        "leaderSkill": "「願いの力」または「最後の切り札」カテゴリの\n気力+3、HPとATKとDEF170%UP、\n「つながる希望」または「魔人ブウ編」カテゴリを含む場合は\n更にHPとATKとDEF30%UP",
+        "leaderSkill": "「願いの力」または「命運をかけた戦い」カテゴリの気力+3、HPとATKとDEF170%UP、さらに「最後の切り札」または「魔人ブウ編」カテゴリを含む場合はHPとATKとDEF30%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
-        "awakening": [
-            {
-                "rank": "SSR",
-                "id": 1025710
-            },
-            {
-                "rank": "UR",
-                "id": 1025720,
-                "medals": [
-                    {
-                        "name": "超激戦/勝利の輝き！希望の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            },
-            {
-                "rank": "LR",
-                "id": 1025730,
-                "medals": [
-                    {
-                        "name": "超激戦/勝利の輝き！希望の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    },
-                    {
-                        "name": "超激戦/破壊と殺戮の純真/2",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            }
-        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
-                    "戦闘民族サイヤ人",
-                    "金色の戦士",
-                    "超サイヤ人",
-                    "歴戦の戦士",
-                    "臨戦態勢",
-                    "超激戦",
-                    "伝説の力"
+                    "超サイヤ人"
                 ],
                 "stats": {
-                    "hp": 17113,
-                    "atk": 16040,
-                    "def": 9019
+                    "rainbow": {
+                        "hp": 22938,
+                        "atk": 17513,
+                        "def": 11756
+                    },
+                    "fifty": {
+                        "hp": 19938,
+                        "atk": 14113,
+                        "def": 9156
+                    },
+                    "base": {
+                        "hp": 17938,
+                        "atk": 12113,
+                        "def": 7156
+                    }
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 20,
-                        "type": "格闘",
-                        "name": "ライバル同士の共闘",
-                        "effect": "DEFが上昇、1ターンATKが上昇し、相手に極大ダメージを与える",
-                        "specs": {
-                            "def_up": "30%",
-                            "atk_up": "30%"
-                        }
+                        "type": "物理",
+                        "name": "連携連撃",
+                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える"
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
-                        "type": "格闘",
-                        "name": "フルパワーエネルギーラッシュ",
-                        "effect": "DEFが大幅上昇、1ターンATKが大幅上昇し、相手に超極大ダメージを与える",
-                        "specs": {
-                            "def_up": "50%",
-                            "atk_up": "50%"
-                        }
+                        "type": "気弾",
+                        "name": "超かめはめ波&ビッグバンアタック",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超極大ダメージを与える"
                     }
                 ],
                 "passive": {
-                    "name": "全力のファイナルバトル",
+                    "name": "最後の切り札",
                     "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "ATK/DEF200%[img:up]"
+                                "自身の気力+3、ATKとDEF200%UP"
                             ]
                         },
                         {
-                            "title": "HP50%以上",
+                            "title": "攻撃時",
                             "effects": [
-                                "ATK/DEF50%[img:up]"
+                                "攻撃するたびに更に気力+1(最大+5)、ATKとDEF20%UP(最大100%)"
                             ]
                         },
                         {
-                            "title": "1番目にいるとき",
+                            "title": "会心率",
                             "effects": [
-                                "DEF100%[img:up]",
-                                "気玉取得時の気力上昇量+1"
+                                "会心発動率20%UP"
                             ]
                         },
                         {
-                            "title": "2番目か3番目にいるとき",
+                            "title": "気力メーター18以上",
                             "effects": [
-                                "ATK100%[img:up]",
-                                "気玉取得時の気力上昇量+2"
+                                "更にATKとDEF50%UP"
                             ]
                         },
                         {
-                            "title": "気力メーター18以上で攻撃時",
+                            "title": "気力メーター24",
                             "effects": [
-                                "必ず追加攻撃し超高確率で必殺技が発動"
+                                "全属性に効果抜群で攻撃"
                             ]
                         },
                         {
-                            "title": "気力メーター24で攻撃時",
+                            "title": "HP条件",
                             "effects": [
-                                "必殺技が追加発動"
-                            ]
-                        },
-                        {
-                            "title": "必殺技を発動するたび",
-                            "effects": [
-                                "[img:infinity]気力+1",
-                                "[img:infinity]会心率10%[img:up](最大50%)"
+                                "HP50%以下のとき1度だけ登場時演出が発動し、7ターンの間、高確率で会心が発動"
                             ]
                         }
                     ],
                     "maxValues": {
-                        "crit": "50%",
-                        "add": "2回"
+                        "crit": "70%",
+                        "add": "0回"
                     }
                 },
                 "standby": {
-                    "name": "スタンバイに移行する",
-                    "condition": "自身のHP50%以下で発動可能、\nまたはバトル開始から4ターン目以降、バトル中自身が4回以上攻撃すると発動可能 (1回のみ)",
-                    "effect": "5ターンの間スタンバイし、チームの味方の取得気玉1個につき チャージカウントが1増加する",
+                    "name": "元気玉の準備",
+                    "type": "復活スキル",
+                    "condition": "バトル開始から4ターン目以降、HP50%以下のとき、またはバトル開始から6ターン目以降、攻撃参加中の味方全員が「願いの力」カテゴリのとき発動可能",
+                    "effect": "5ターンの間、スタンバイモードになる",
                     "finish": [
                         {
                             "type": "チャージフィニッシュ",
-                            "name": "元気玉",
-                            "condition": "チャージカウント38以下で発動可能 (1回のみ)",
-                            "effect": "チャージカウント1つにつき一時的にATK15%UPし、\n相手に究極ダメージを与える"
+                            "name": "超元気玉",
+                            "condition": "チャージカウント39以上で発動可能",
+                            "effect": "一時的にATKが超大幅上昇し、相手に究極ダメージを与え、攻撃したターン中、必ず会心が発動"
                         },
                         {
-                            "type": "チャージフィニッシュ",
-                            "name": "超元気玉",
-                            "condition": "チャージカウント39以上で発動可能 (1回のみ)",
-                            "effect": "チャージカウント1つにつき一時的にATK20%UPし、\n相手に超究極ダメージを与える"
+                            "type": "フィニッシュ",
+                            "name": "元気玉",
+                            "condition": "チャージカウント38以下で発動可能",
+                            "effect": "一時的にATKが大幅上昇し、相手に超極大ダメージを与える"
                         }
                     ]
                 }
             },
             {
                 "label": "スタンバイ",
-                "name": "孫悟空&ベジータ",
+                "name": "超サイヤ人2ベジータ",
                 "id": 4025740,
                 "links": [
-                    "戦闘民族サイヤ人",
-                    "歴戦の戦士",
-                    "サイヤ人の血",
-                    "タフネス戦士",
-                    "臨戦態勢",
-                    "超激戦",
-                    "伝説の力"
+                    "超サイヤ人"
                 ],
                 "stats": {
-                    "hp": 17113,
-                    "atk": 16040,
-                    "def": 9019
+                    "rainbow": {
+                        "hp": 22938,
+                        "atk": 17513,
+                        "def": 11756
+                    }
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 20,
-                        "type": "",
-                        "name": "なし",
-                        "effect": "-",
-                        "specs": {}
+                        "type": "物理",
+                        "name": "時間稼ぎ",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与える"
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "物理",
+                        "name": "命懸けの猛攻",
+                        "effect": "1ターンATKとDEFが超大幅上昇し、相手に超極大ダメージを与える"
                     }
                 ],
                 "passive": {
-                    "name": "希望をつなげ！！",
+                    "name": "プライドを捨てた覚悟",
                     "intro": null,
                     "details": [
                         {
-                            "title": "フィニッシュ発動時以外",
-                            "effects": [
-                                "攻撃不可"
-                            ]
-                        },
-                        {
                             "title": "基本効果",
                             "effects": [
-                                "DEF250%[img:up]"
+                                "自身の気力+8、DEF250%UP",
+                                "全ての攻撃をガード"
                             ]
                         },
                         {
-                            "title": "登場から4ターンの間",
+                            "title": "被弾時",
                             "effects": [
-                                "全ての攻撃をガード",
-                                "ランダム気玉変化：属性気玉1種→虹"
+                                "攻撃を受けるとそのターン中味方全員の気力+3、DEF50%UP"
                             ]
                         },
                         {
-                            "title": "取得気玉1個につき",
+                            "title": "1番目で攻撃時",
                             "effects": [
-                                "ダメージ軽減率8%[img:up]"
+                                "1番目にいるとき受けるダメージを30%軽減"
                             ]
                         },
                         {
-                            "title": "フィニッシュ発動時",
+                            "title": "気玉取得時",
                             "effects": [
-                                "ATK500%[img:up]"
+                                "味方全員の気力+1、チャージカウントを1つ増やす"
                             ]
                         }
                     ],
                     "maxValues": {
-                        "reduce": "100%",
+                        "crit": "0%",
+                        "add": "0回",
+                        "reduce": "30%",
                         "guard": true
                     }
+                },
+                "standby": {
+                    "name": "元気玉の準備",
+                    "type": "チャージ",
+                    "condition": "味方が気玉を取得するたびにチャージカウントが増加",
+                    "effect": "チャージカウント数に応じてフィニッシュ効果が変化"
                 }
             }
         ]
@@ -9964,122 +9848,84 @@ const CHARACTER_DATA = [
         "drop_event": "",
         "categories": [
             "願いの力",
-            "命運をかけた闘い",
-            "最後の切り札",
+            "命運をかけた戦い",
+            "コンビネーション",
             "邪悪龍編",
             "純粋サイヤ人",
-            "コンビネーション",
-            "力戦奮闘",
+            "ドラゴンボールを求めし者",
             "GT HERO",
-            "親子の絆",
-            "地球を守りし英雄"
+            "親友の絆",
+            "地球育ちの戦士",
+            "語り継がれし者",
+            "最後の切り札",
+            "フルパワー",
+            "力戦奮闘"
         ],
-        "leaderSkill": "「願いの力」または「命運をかけた闘い」カテゴリの\n気力+3、HPとATKとDEF130%UP、\n「最後の切り札」または「邪悪龍編」カテゴリを含む場合は\n更にHPとATKとDEF10%UP",
+        "leaderSkill": "「願いの力」または「命運をかけた戦い」カテゴリの気力+2、HPとATKとDEF120%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
-        "awakening": [
-            {
-                "rank": "SSR",
-                "id": 1025750
-            },
-            {
-                "rank": "UR",
-                "id": 1025760,
-                "medals": [
-                    {
-                        "name": "超激戦/みんなの願い！奇跡の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            },
-            {
-                "rank": "LR",
-                "id": 1025770,
-                "medals": [
-                    {
-                        "name": "超激戦/みんなの願い！奇跡の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    },
-                    {
-                        "name": "超激戦/絶望を呼ぶ邪悪龍/2",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            }
-        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
-                    "戦闘民族サイヤ人",
-                    "サイヤ人の血",
-                    "歴戦の戦士",
+                    "サイヤの咆哮",
                     "GT",
-                    "臨戦態勢"
+                    "かめはめ波",
+                    "短期決戦",
+                    "限界突破"
                 ],
                 "stats": {
-                    "hp": 7482,
-                    "atk": 8177,
-                    "def": 4699
+                    "rainbow": {
+                        "hp": 10075,
+                        "atk": 9190,
+                        "def": 4735
+                    },
+                    "fifty": {
+                        "hp": 8075,
+                        "atk": 7190,
+                        "def": 2735
+                    },
+                    "base": {
+                        "hp": 7075,
+                        "atk": 6190,
+                        "def": 1735
+                    }
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 10,
-                        "type": "格闘",
-                        "name": "ライバル同士の共闘",
-                        "effect": "1ターンDEFが上昇し、相手に超特大ダメージを与える",
-                        "specs": {
-                            "def_up": "30%"
-                        }
+                        "type": "気弾",
+                        "name": "かめはめ波&ファイナルシャインアタック",
+                        "effect": "1ターンATKが上昇し、相手に超特大ダメージを与える"
                     }
                 ],
                 "passive": {
-                    "name": "死闘開幕",
+                    "name": "逆転への賭け",
                     "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "ATK/DEF120%[img:up]"
+                                "自身の気力+2、ATKとDEF120%UP"
                             ]
                         },
                         {
-                            "title": "HP50%以上",
+                            "title": "攻撃時",
                             "effects": [
-                                "ATK/DEF30%[img:up]"
+                                "攻撃するたびに更に気力+1(最大+3)、ATKとDEF10%UP(最大30%)"
                             ]
                         },
                         {
-                            "title": "1番目にいるとき",
+                            "title": "気力メーター12",
                             "effects": [
-                                "DEF50%[img:up]",
-                                "気玉取得時の気力上昇量+1"
-                            ]
-                        },
-                        {
-                            "title": "2番目か3番目にいるとき",
-                            "effects": [
-                                "ATK50%[img:up]",
-                                "気玉取得時の気力上昇量+2"
-                            ]
-                        },
-                        {
-                            "title": "必殺技を発動するたび",
-                            "effects": [
-                                "[img:infinity]ダメージ軽減率10%[img:up](最大30%)"
+                                "ダメージ軽減率10%UP"
                             ]
                         }
-                    ],
-                    "maxValues": {
-                        "reduce": "30%"
-                    }
+                    ]
                 }
             }
         ]
@@ -10098,123 +9944,85 @@ const CHARACTER_DATA = [
         "drop_event": "",
         "categories": [
             "願いの力",
-            "命運をかけた闘い",
-            "最後の切り札",
+            "命運をかけた戦い",
+            "コンビネーション",
             "邪悪龍編",
             "純粋サイヤ人",
-            "コンビネーション",
-            "力戦奮闘",
+            "ドラゴンボールを求めし者",
             "GT HERO",
-            "親子の絆",
-            "地球を守りし英雄"
+            "親友の絆",
+            "地球育ちの戦士",
+            "語り継がれし者",
+            "最後の切り札",
+            "フルパワー",
+            "力戦奮闘"
         ],
-        "leaderSkill": "「願いの力」または「命運をかけた闘い」カテゴリの\n気力+3、HPとATKとDEF150%UP、\n「最後の切り札」または「邪悪龍編」カテゴリを含む場合は\n更にHPとATKとDEF20%UP",
+        "leaderSkill": "「願いの力」または「命運をかけた戦い」カテゴリの気力+2、HPとATKとDEF150%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
-        "awakening": [
-            {
-                "rank": "SSR",
-                "id": 1025750
-            },
-            {
-                "rank": "UR",
-                "id": 1025760,
-                "medals": [
-                    {
-                        "name": "超激戦/みんなの願い！奇跡の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            },
-            {
-                "rank": "LR",
-                "id": 1025770,
-                "medals": [
-                    {
-                        "name": "超激戦/みんなの願い！奇跡の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    },
-                    {
-                        "name": "超激戦/絶望を呼ぶ邪悪龍/2",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            }
-        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
-                    "戦闘民族サイヤ人",
-                    "サイヤ人の血",
-                    "歴戦の戦士",
+                    "サイヤの咆哮",
                     "GT",
-                    "臨戦態勢",
-                    "超激戦"
+                    "かめはめ波",
+                    "短期決戦",
+                    "超激戦",
+                    "限界突破"
                 ],
                 "stats": {
-                    "hp": 8825,
-                    "atk": 9110,
-                    "def": 5513
+                    "rainbow": {
+                        "hp": 11725,
+                        "atk": 12490,
+                        "def": 6385
+                    },
+                    "fifty": {
+                        "hp": 9725,
+                        "atk": 10490,
+                        "def": 4385
+                    },
+                    "base": {
+                        "hp": 8725,
+                        "atk": 9490,
+                        "def": 3385
+                    }
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 10,
-                        "type": "格闘",
-                        "name": "ライバル同士の共闘",
-                        "effect": "1ターンDEFが上昇し、相手に超特大ダメージを与える",
-                        "specs": {
-                            "def_up": "30%"
-                        }
+                        "type": "気弾",
+                        "name": "かめはめ波&ファイナルシャインアタック",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える"
                     }
                 ],
                 "passive": {
-                    "name": "サイヤパワー共鳴",
+                    "name": "邪悪龍との激戦",
                     "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "ATK/DEF150%[img:up]"
+                                "自身の気力+3、ATKとDEF150%UP"
                             ]
                         },
                         {
-                            "title": "HP50%以上",
+                            "title": "攻撃時",
                             "effects": [
-                                "ATK/DEF40%[img:up]"
+                                "攻撃するたびに更に気力+1(最大+4)、ATKとDEF10%UP(最大40%)"
                             ]
                         },
                         {
-                            "title": "1番目にいるとき",
+                            "title": "気力メーター12",
                             "effects": [
-                                "DEF70%[img:up]",
-                                "気玉取得時の気力上昇量+1"
-                            ]
-                        },
-                        {
-                            "title": "2番目か3番目にいるとき",
-                            "effects": [
-                                "ATK70%[img:up]",
-                                "気玉取得時の気力上昇量+2"
-                            ]
-                        },
-                        {
-                            "title": "必殺技を発動するたび",
-                            "effects": [
-                                "[img:infinity]ダメージ軽減率10%[img:up](最大40%)"
+                                "ダメージ軽減率10%UP"
                             ]
                         }
-                    ],
-                    "maxValues": {
-                        "reduce": "40%"
-                    }
+                    ]
                 }
             }
         ]
@@ -10233,243 +10041,203 @@ const CHARACTER_DATA = [
         "drop_event": "",
         "categories": [
             "願いの力",
-            "命運をかけた闘い",
-            "最後の切り札",
+            "命運をかけた戦い",
+            "コンビネーション",
             "邪悪龍編",
             "純粋サイヤ人",
-            "コンビネーション",
-            "力戦奮闘",
+            "ドラゴンボールを求めし者",
             "GT HERO",
-            "親子の絆",
-            "つながる希望",
-            "再起する力",
-            "地球を守りし英雄"
+            "親友の絆",
+            "地球育ちの戦士",
+            "語り継がれし者",
+            "最後の切り札",
+            "フルパワー",
+            "力戦奮闘"
         ],
-        "leaderSkill": "「願いの力」または「命運をかけた闘い」カテゴリの\n気力+3、HPとATKとDEF170%UP、\n「最後の切り札」または「邪悪龍編」カテゴリを含む場合は\n更にHPとATKとDEF30%UP",
+        "leaderSkill": "「願いの力」または「命運をかけた戦い」カテゴリの気力+3、HPとATKとDEF170%UP、さらに「コンビネーション」または「邪悪龍編」カテゴリを含む場合はHPとATKとDEF30%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
-        "awakening": [
-            {
-                "rank": "SSR",
-                "id": 1025750
-            },
-            {
-                "rank": "UR",
-                "id": 1025760,
-                "medals": [
-                    {
-                        "name": "超激戦/みんなの願い！奇跡の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            },
-            {
-                "rank": "LR",
-                "id": 1025770,
-                "medals": [
-                    {
-                        "name": "超激戦/みんなの願い！奇跡の元気玉/1",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    },
-                    {
-                        "name": "超激戦/絶望を呼ぶ邪悪龍/2",
-                        "bg": "超激戦/bg",
-                        "count": 35
-                    }
-                ]
-            }
-        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常",
+                "label": "通常形態",
                 "name": "",
                 "links": [
-                    "戦闘民族サイヤ人",
-                    "サイヤ人の血",
-                    "歴戦の戦士",
-                    "GT",
-                    "臨戦態勢",
-                    "超激戦",
-                    "伝説の力"
+                    "サイヤの咆哮"
                 ],
                 "stats": {
-                    "hp": 16900,
-                    "atk": 15020,
-                    "def": 10400
+                    "rainbow": {
+                        "hp": 21688,
+                        "atk": 18763,
+                        "def": 12756
+                    },
+                    "fifty": {
+                        "hp": 18688,
+                        "atk": 15363,
+                        "def": 10156
+                    },
+                    "base": {
+                        "hp": 16688,
+                        "atk": 13363,
+                        "def": 8156
+                    }
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 20,
-                        "type": "格闘",
-                        "name": "ライバル同士の共闘",
-                        "effect": "ATKが上昇、1ターンDEFが上昇し、相手に極大ダメージを与える",
-                        "specs": {
-                            "atk_up": "30%",
-                            "def_up": "30%"
-                        }
+                        "type": "気弾",
+                        "name": "かめはめ波&ファイナルシャインアタック",
+                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える"
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
-                        "name": "悟空とベジータの二段攻撃",
-                        "effect": "ATKが大幅上昇、1ターンDEFが大幅上昇し、相手に超極大ダメージを与える",
-                        "specs": {
-                            "atk_up": "50%",
-                            "def_up": "50%"
-                        }
+                        "name": "超ウルトラ元気玉",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超極大ダメージを与える"
                     }
                 ],
                 "passive": {
-                    "name": "決死のファイナルバトル",
+                    "name": "奇跡を起こす最終決戦",
                     "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "ATK/DEF200%[img:up]"
+                                "自身の気力+3、ATKとDEF200%UP"
                             ]
                         },
                         {
-                            "title": "HP50%以上",
+                            "title": "攻撃時",
                             "effects": [
-                                "ATK/DEF50%[img:up]"
+                                "攻撃するたびに更に気力+1(最大+5)、ATKとDEF20%UP(最大100%)"
                             ]
                         },
                         {
-                            "title": "1番目にいるとき",
+                            "title": "軽減率",
                             "effects": [
-                                "DEF100%[img:up]",
-                                "気玉取得時の気力上昇量+1"
+                                "ダメージ軽減率20%UP"
                             ]
                         },
                         {
-                            "title": "2番目か3番目にいるとき",
+                            "title": "気力メーター18以上",
                             "effects": [
-                                "ATK100%[img:up]",
-                                "気玉取得時の気力上昇量+2"
+                                "更にATKとDEF50%UP"
                             ]
                         },
                         {
-                            "title": "気力メーター18以上で攻撃時",
+                            "title": "気力メーター24",
                             "effects": [
-                                "必ず追加攻撃し超高確率で必殺技が発動"
+                                "全属性に効果抜群で攻撃"
                             ]
                         },
                         {
-                            "title": "気力メーター24で攻撃時",
+                            "title": "HP条件",
                             "effects": [
-                                "必ず必殺技が追加発動"
-                            ]
-                        },
-                        {
-                            "title": "必殺技を発動するたび",
-                            "effects": [
-                                "[img:infinity]気力+1",
-                                "[img:infinity]ダメージ軽減率10%[img:up](最大50%)"
+                                "HP50%以下のとき1度だけ登場時演出が発動し、7ターンの間、ダメージ軽減率が更に20%UP"
                             ]
                         }
                     ],
                     "maxValues": {
-                        "add": "2回",
-                        "reduce": "50%"
+                        "crit": "0%",
+                        "add": "0回",
+                        "reduce": "40%"
                     }
                 },
                 "standby": {
-                    "name": "スタンバイに移行する",
-                    "condition": "自身のHP50%以下で発動可能、\nまたはバトル開始から4ターン目以降、バトル中自身が4回以上攻撃を受けると発動可能 (1回のみ)",
-                    "effect": "5ターンの間、スタンバイする",
+                    "name": "みんなの願い",
+                    "condition": "バトル開始から4ターン目以降、HP50%以下のとき、またはバトル開始から6ターン目以降、攻撃参加中の味方全員が「GT HERO」カテゴリのとき発動可能",
+                    "effect": "5ターンの間、スタンバイモードになる",
                     "finish": [
                         {
                             "type": "復活カウンター",
                             "name": "超ウルトラ元気玉",
-                            "condition": "自身の復活スキルが発動したとき発動 (1回のみ)",
-                            "effect": "攻撃参加中の自身を含む味方をKOした相手に超激烈な威力で反撃"
+                            "condition": "自身がKOされて復活したときに発動",
+                            "effect": "HPが80%回復し復活＆敵全体に究極ダメージを与え、攻撃したターン中、敵の必殺技を封じる"
+                        },
+                        {
+                            "type": "フィニッシュ",
+                            "name": "元気玉",
+                            "condition": "スタンバイ中、自身が攻撃する、または攻撃を受けるたびにチャージカウントが1増加(最大10まで)し、チャージカウントMAXのとき発動可能",
+                            "effect": "一時的にATKが超大幅上昇し、相手に究極ダメージを与え、味方全員のDEF50%UP"
                         }
                     ]
                 }
             },
             {
                 "label": "スタンバイ",
-                "name": "超サイヤ人ベジータ(GT)",
+                "name": "超フルパワーサイヤ人4孫悟空",
                 "id": 4025780,
                 "links": [
-                    "戦闘民族サイヤ人",
-                    "超サイヤ人",
-                    "歴戦の戦士",
-                    "GT",
-                    "臨戦態勢",
-                    "超激戦",
-                    "伝説の力"
+                    "サイヤの咆哮"
                 ],
                 "stats": {
-                    "hp": 16900,
-                    "atk": 15020,
-                    "def": 10400
+                    "rainbow": {
+                        "hp": 21688,
+                        "atk": 18763,
+                        "def": 12756
+                    }
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 20,
-                        "type": "格闘",
-                        "name": "悟空の意志を受け継ぐ闘い",
-                        "effect": "1ターンATKが大幅上昇し、相手に極大ダメージを与える",
-                        "specs": {
-                            "atk_up": "50%"
-                        }
+                        "type": "気弾",
+                        "name": "時間稼ぎ",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与える"
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
-                        "type": "気弾",
-                        "name": "地球を守るサイヤの誇り",
-                        "effect": "1ターンATKが大幅上昇し、相手に超極大ダメージを与える\n&1ターン超系の仲間ATK40%UP",
-                        "specs": {
-                            "atk_up": "40%"
-                        }
+                        "type": "格闘",
+                        "name": "命懸けの猛攻",
+                        "effect": "1ターンATKとDEFが超大幅上昇し、相手に超極大ダメージを与える"
                     }
                 ],
                 "passive": {
-                    "name": "奇跡を起こせ！！",
-                    "intro": {
-                        "condition": "",
-                        "effect": ""
-                    },
+                    "name": "不屈の闘志",
+                    "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "ATK250%[img:up]",
-                                "味方全員の気力+8、ATK80%[img:up]"
+                                "自身の気力+8、ATK250%UP",
+                                "全ての攻撃をガード"
                             ]
                         },
                         {
-                            "title": "HP50%以上",
+                            "title": "被弾時",
                             "effects": [
-                                "DEF150%[img:up]"
+                                "攻撃を受けるとそのターン中味方全員の気力+3、ATK50%UP"
                             ]
                         },
                         {
-                            "title": "攻撃参加中の自身を含む味方がKO",
+                            "title": "1番目で攻撃時",
                             "effects": [
-                                "[img:one_time]HPが全回復し復活する"
+                                "1番目にいるとき高確率で会心が発動"
                             ]
                         },
                         {
-                            "title": "フィニッシュ発動時",
+                            "title": "行動時",
                             "effects": [
-                                "ATK39%[img:up]"
+                                "自身が攻撃する、または攻撃を受けるたびにチャージカウントを1つ増やす"
                             ]
                         }
                     ],
                     "maxValues": {
-                        "revival": true
+                        "crit": "50%",
+                        "add": "0回",
+                        "reduce": "0%",
+                        "guard": true
                     }
+                },
+                "standby": {
+                    "name": "みんなの願い",
+                    "type": "チャージ",
+                    "condition": "自身が攻撃する、または攻撃を受けるたびにチャージカウントが増加",
+                    "effect": "自身がKOされると復活カウンターが発動、またはチャージMAXでフィニッシュが発動可能"
                 }
             }
         ]

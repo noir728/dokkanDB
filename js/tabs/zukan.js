@@ -441,7 +441,7 @@ function renderFilterModal() {
 
     const html = `
     <div id="filter-modal" class="modal-overlay">
-        <div class="filter-modal">
+        <div class="filter-modal scale-in">
             <h2 style="font-size:16px; font-weight:bold; margin-bottom:20px; text-align:center;">絞り込み条件</h2>
 
             <!-- Removed Global Logic Toggle -->
@@ -722,6 +722,7 @@ function toggleMiniLogic(type) {
 
 function setSort(value) { 
     state.filter.sort = value; 
+    state.scrollPositions['zukan'] = 0; // Reset scroll on sort change
 
     // Task 2: Maintain Sort Order on Back Navigation
     // Update history state to include the new sort option
@@ -874,6 +875,7 @@ function applyFilter(type, value) {
     
     state.detailCharId = null;
     state.animDirection = 'left';
+    state.scrollPositions['zukan'] = 0; // Reset scroll on new filter
     
     const url = new URL(window.location);
     url.searchParams.delete('id');
@@ -950,9 +952,7 @@ function renderZukanLayout() {
         }
     }
 
-    if (state.detailCharId === null && state.zukanScrollTop > 0) {
-        contentDiv.scrollTop = state.zukanScrollTop;
-    }
+    // Scroll restoration removed from layout render, it's in list render now
 }
 
 function renderZukanList(targetGrid) {
@@ -1085,14 +1085,24 @@ function renderZukanList(targetGrid) {
                 if (rawStats.rainbow) displayStats = rawStats.rainbow;
                 else if (rawStats.hp) displayStats = rawStats;
             }
-            const ezaBadge = (char.eza) 
-                ? `<span class="eza-badge-mini">極限</span>` : '';
+
+            let badgeHtml = '';
+            if (char.seza || (char.awakening && char.awakening.some(a => a.rank === 'SEZA'))) {
+                badgeHtml = `<span class="seza-badge-mini">超極限</span>`;
+            } else if (char.eza || (char.awakening && char.awakening.some(a => a.rank === 'EZA'))) {
+                badgeHtml = `<span class="eza-badge-mini">極限</span>`;
+            }
+
+            const nameLen = char.name.length;
+            let nameClass = 'char-row-name';
+            if (nameLen > 20) nameClass += ' text-xs';
+            else if (nameLen > 15) nameClass += ' text-sm';
 
             item.innerHTML = `
                 <div class="list-icon-wrapper">${iconHtml}</div>
                 <div class="char-row-info">
                     <div class="char-row-header"><div class="char-row-title">${char.title || ''}</div><div class="char-row-date">${char.release || ''}</div></div>
-                    <div class="char-row-name">${char.name.replace(/\n/g, ' ')}${ezaBadge}</div>
+                    <div class="${nameClass}">${char.name.replace(/\n/g, ' ')}${badgeHtml}</div>
                     <div class="char-row-details">
                         <div class="list-cost">コスト ${char.cost || '-'}</div>
                         <div class="char-row-stats"><span>HP ${displayStats.hp}</span><span>ATK ${displayStats.atk}</span><span>DEF ${displayStats.def}</span></div>
@@ -1102,18 +1112,32 @@ function renderZukanList(targetGrid) {
         item.onclick = () => openDetail(char.id);
         grid.appendChild(item);
     });
+
+    if (state.detailCharId === null && state.scrollPositions && state.scrollPositions['zukan'] > 0) {
+        requestAnimationFrame(() => {
+            const content = document.getElementById('main-content');
+            if (content) {
+                content.scrollTo(0, state.scrollPositions['zukan']);
+            }
+        });
+    }
 }
 
 // --- 4. Detail View Logic & UI Actions ---
 
 function openDetail(id) {
+    // Save scroll position BEFORE changing state
+    const content = document.getElementById('main-content');
+    if (content) {
+        state.scrollPositions['zukan'] = content.scrollTop;
+    }
+
     const url = new URL(window.location);
     url.searchParams.set('id', id);
     window.history.pushState({ id: id }, '', url);
 
-    const content = document.getElementById('main-content');
     if (content) {
-        state.zukanScrollTop = content.scrollTop;
+        content.scrollTop = 0;
     }
 
     state.detailCharId = id;
@@ -1132,6 +1156,10 @@ function closeDetail() {
         return;
     }
     
+    // Save current detail scroll just in case
+    const content = document.getElementById('main-content');
+    if (content) state.scrollPositions['detail'] = content.scrollTop;
+
     state.detailCharId = null;
     state.animDirection = 'left';
     if(typeof render === 'function') render();
@@ -1210,7 +1238,7 @@ function openLeaderDetailModal(leaderId) {
 
     const modalHtml = `
         <div id="leader-detail-modal" class="modal-overlay open" style="z-index: 1200;">
-            <div class="filter-modal" style="height: auto; max-height: 80vh; padding-bottom: 30px;">
+            <div class="filter-modal scale-in" style="height: auto; max-height: 80vh; padding-bottom: 30px;">
                 <div class="link-modal-content">
                     <h2 style="font-size:14px; font-weight:bold; text-align:center; padding-bottom:10px; border-bottom:1px solid #333;">リーダー詳細</h2>
                     
@@ -1322,7 +1350,7 @@ function openLinkPartnerModal(partnerId, formType, formIndex) {
 
     const modalHtml = `
         <div id="link-partner-modal" class="modal-overlay open" style="z-index: 1100;">
-            <div class="filter-modal" style="height: 70vh; max-height: 600px;">
+            <div class="filter-modal scale-in" style="height: 70vh; max-height: 600px;">
                 <div class="link-modal-content">
                     <h2 style="font-size:14px; font-weight:bold; text-align:center; padding-bottom:10px; border-bottom:1px solid #333;">リンクスキル相性確認</h2>
                     
@@ -1785,7 +1813,7 @@ function renderCharacterDetail(id) {
                 if(l.stats.atk >= 200) badgeClass += " full-link"; 
                 
                 leaderHtml += `
-                    <div class="scroll-item-wrapper" onclick="openLeaderDetailModal(${l.char.id})">
+                    <div class="scroll-item-wrapper leader-scroll-item" onclick="openLeaderDetailModal(${l.char.id})">
                         <div class="scroll-icon-box">${iconHtml}</div>
                         <div class="scroll-item-info">
                             <span class="${badgeClass}">ATK ${l.stats.atk}%</span>
@@ -1853,8 +1881,8 @@ function renderCharacterDetail(id) {
     container.appendChild(body);
     contentDiv.appendChild(container);
 
-    if (state.detailCharId === null && state.zukanScrollTop > 0) {
-        contentDiv.scrollTop = state.zukanScrollTop;
+    if (state.detailCharId === null && state.scrollPositions && state.scrollPositions['zukan'] > 0) {
+        contentDiv.scrollTop = state.scrollPositions['zukan'];
     }
 
     const fabContainer = document.createElement('div');

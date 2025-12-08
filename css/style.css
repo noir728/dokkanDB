@@ -833,12 +833,8 @@ body {
     padding: 4px;
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 1px 4px;
-    border-radius: 3px;
+    justify-content: center;
     border: 1px solid #555;
-    color: #aaa;
-    font-size: 12px;
 }
 
 .passive-effect-icon {
@@ -1446,6 +1442,10 @@ body {
     position: relative;
 }
 
+.leader-scroll-item {
+    justify-content: flex-start;
+}
+
 .scroll-icon-box {
     width: 60px;
     height: 60px;
@@ -1906,6 +1906,22 @@ body {
 
 .slide-in-left {
     animation: slideInLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.fade-in {
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+.scale-in {
+    animation: scaleIn 0.2s ease-out;
 }
 
 @keyframes slideInRight {
