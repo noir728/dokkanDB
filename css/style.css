@@ -833,8 +833,12 @@ body {
     padding: 4px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 4px;
+    padding: 1px 4px;
+    border-radius: 3px;
     border: 1px solid #555;
+    color: #aaa;
+    font-size: 12px;
 }
 
 .passive-effect-icon {
