@@ -2077,3 +2077,13 @@ body {
     border-color: #4cd964;
     color: #4cd964;
 }
+
+.seza-badge-mini {
+    font-size: 9px;
+    padding: 1px 4px;
+    border-radius: 4px;
+    background: linear-gradient(45deg, #2a004a, #4a0080);
+    color: #e080ff;
+    border: 1px solid #d300ff;
+    flex-shrink: 0;
+}

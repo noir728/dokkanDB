@@ -1093,10 +1093,12 @@ function renderZukanList(targetGrid) {
                 badgeHtml = `<span class="eza-badge-mini">極限</span>`;
             }
 
-            const nameLen = char.name.length;
+            let totalLen = char.name.length;
+            if (badgeHtml) totalLen += 4;
+
             let nameClass = 'char-row-name';
-            if (nameLen > 20) nameClass += ' text-xs';
-            else if (nameLen > 15) nameClass += ' text-sm';
+            if (totalLen > 18) nameClass += ' text-xs';
+            else if (totalLen > 14) nameClass += ' text-sm';
 
             item.innerHTML = `
                 <div class="list-icon-wrapper">${iconHtml}</div>
@@ -1113,12 +1115,14 @@ function renderZukanList(targetGrid) {
         grid.appendChild(item);
     });
 
-    if (state.detailCharId === null && state.scrollPositions && state.scrollPositions['zukan'] > 0) {
+    if (state.detailCharId === null && state.scrollPositions && state.scrollPositions['zukan'] !== undefined) {
         requestAnimationFrame(() => {
-            const content = document.getElementById('main-content');
-            if (content) {
-                content.scrollTo(0, state.scrollPositions['zukan']);
-            }
+            requestAnimationFrame(() => {
+                const content = document.getElementById('main-content');
+                if (content) {
+                    content.scrollTop = state.scrollPositions['zukan'];
+                }
+            });
         });
     }
 }
@@ -1813,7 +1817,7 @@ function renderCharacterDetail(id) {
                 if(l.stats.atk >= 200) badgeClass += " full-link"; 
                 
                 leaderHtml += `
-                    <div class="scroll-item-wrapper leader-scroll-item" onclick="openLeaderDetailModal(${l.char.id})">
+                    <div class="scroll-item-wrapper" onclick="openLeaderDetailModal(${l.char.id})">
                         <div class="scroll-icon-box">${iconHtml}</div>
                         <div class="scroll-item-info">
                             <span class="${badgeClass}">ATK ${l.stats.atk}%</span>
@@ -1880,10 +1884,6 @@ function renderCharacterDetail(id) {
 
     container.appendChild(body);
     contentDiv.appendChild(container);
-
-    if (state.detailCharId === null && state.scrollPositions && state.scrollPositions['zukan'] > 0) {
-        contentDiv.scrollTop = state.scrollPositions['zukan'];
-    }
 
     const fabContainer = document.createElement('div');
     fabContainer.className = 'field-floating-container';
