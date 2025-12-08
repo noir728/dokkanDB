@@ -1189,7 +1189,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "気弾",
                         "name": "羅刹爪",
-                        "effect": "超特大ダメージ&DEFを低下させる"
+                        "effect": "超特大ダメージ&DEFを低下させる",
+                        "specs": {
+                            "def_down": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -1322,7 +1325,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "気弾",
                         "name": "ライトニングシャワーレイン",
-                        "effect": "超特大ダメージ&DEFを大幅低下させる"
+                        "effect": "超特大ダメージ&DEFを大幅低下させる",
+                        "specs": {
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -1379,7 +1385,10 @@ const CHARACTER_DATA = [
                         "maxLv": 15,
                         "type": "気弾",
                         "name": "ライトニングシャワーレイン(極限)",
-                        "effect": "超絶特大ダメージ&DEFを大幅低下させる"
+                        "effect": "超絶特大ダメージ&DEFを大幅低下させる",
+                        "specs": {
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -1444,7 +1453,10 @@ const CHARACTER_DATA = [
                         "maxLv": 15,
                         "type": "気弾",
                         "name": "ライトニングシャワーレイン(極限)",
-                        "effect": "超絶特大ダメージ&DEFを大幅低下させる"
+                        "effect": "超絶特大ダメージ&DEFを大幅低下させる",
+                        "specs": {
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -1821,7 +1833,11 @@ const CHARACTER_DATA = [
                         "maxLv": 15,
                         "type": "気弾",
                         "name": "ソウルパニッシャー(極限)",
-                        "effect": "相手に超絶特大ダメージを与え、ATKとDEFを低下させる"
+                        "effect": "相手に超絶特大ダメージを与え、ATKとDEFを低下させる",
+                        "specs": {
+                            "atk_down": "30%",
+                            "def_down": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -1883,7 +1899,11 @@ const CHARACTER_DATA = [
                         "maxLv": 15,
                         "type": "気弾",
                         "name": "ソウルパニッシャー(極限)",
-                        "effect": "相手に超絶特大ダメージを与え、ATKとDEFを低下させる"
+                        "effect": "相手に超絶特大ダメージを与え、ATKとDEFを低下させる",
+                        "specs": {
+                            "atk_down": "30%",
+                            "def_down": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -2067,7 +2087,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "気弾",
                         "name": "10倍かめはめ波",
-                        "effect": "超絶特大ダメージを与え、6ターンDEF30%上昇"
+                        "effect": "超絶特大ダメージを与え、6ターンDEF30%上昇",
+                        "specs": {
+                            "def_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -2214,7 +2237,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "気弾",
                         "name": "10倍かめはめ波",
-                        "effect": "超絶特大ダメージを与え、6ターンDEF30%上昇"
+                        "effect": "超絶特大ダメージを与え、6ターンDEF30%上昇",
+                        "specs": {
+                            "def_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -2276,7 +2302,12 @@ const CHARACTER_DATA = [
                         "maxLv": 15,
                         "type": "気弾",
                         "name": "10倍かめはめ波(極限)",
-                        "effect": "1ターンATKが大幅上昇し、相手に超絶特大ダメージを与え、DEFを大幅に低下させる\n&6ターンDEFが30%上昇"
+                        "effect": "1ターンATKが大幅上昇し、相手に超絶特大ダメージを与え、DEFを大幅に低下させる\n&6ターンDEFが30%上昇",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "30%",
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -2346,7 +2377,12 @@ const CHARACTER_DATA = [
                         "maxLv": 15,
                         "type": "気弾",
                         "name": "10倍かめはめ波(極限)",
-                        "effect": "1ターンATKが大幅上昇し、相手に超絶特大ダメージを与え、DEFを大幅に低下させる\n&6ターンDEFが30%上昇"
+                        "effect": "1ターンATKが大幅上昇し、相手に超絶特大ダメージを与え、DEFを大幅に低下させる\n&6ターンDEFが30%上昇",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "30%",
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -2521,7 +2557,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "気弾",
                         "name": "ファイナルシャインアタック",
-                        "effect": "相手に超絶特大ダメージを与え、DEFを大幅に低下させる"
+                        "effect": "相手に超絶特大ダメージを与え、DEFを大幅に低下させる",
+                        "specs": {
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -2668,7 +2707,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "気弾",
                         "name": "ファイナルシャインアタック",
-                        "effect": "超絶特大ダメージを与え、DEFを大幅に低下させる"
+                        "effect": "超絶特大ダメージを与え、DEFを大幅に低下させる",
+                        "specs": {
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -2730,7 +2772,12 @@ const CHARACTER_DATA = [
                         "maxLv": 15,
                         "type": "気弾",
                         "name": "ファイナルシャインアタック(極限)",
-                        "effect": "1ターンDEFが大幅上昇し、相手に超絶特大ダメージを与え、DEFを大幅に低下させる\n&6ターンATKが30%上昇"
+                        "effect": "1ターンDEFが大幅上昇し、相手に超絶特大ダメージを与え、DEFを大幅に低下させる\n&6ターンATKが30%上昇",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "50%",
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -2800,7 +2847,12 @@ const CHARACTER_DATA = [
                         "maxLv": 15,
                         "type": "気弾",
                         "name": "ファイナルシャインアタック(極限)",
-                        "effect": "1ターンDEFが大幅上昇し、相手に超絶特大ダメージを与え、DEFを大幅に低下させる\n&6ターンATKが30%上昇"
+                        "effect": "1ターンDEFが大幅上昇し、相手に超絶特大ダメージを与え、DEFを大幅に低下させる\n&6ターンATKが30%上昇",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "50%",
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -3219,7 +3271,10 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "最後の秘策",
-                        "effect": "1ターンATKが上昇し、相手に超極大ダメージを与える"
+                        "effect": "1ターンATKが上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -3286,7 +3341,10 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "ファイナルかめはめ波",
-                        "effect": "相手に超極大ダメージを与える\n&1ターン仲間ATK30%UP"
+                        "effect": "相手に超極大ダメージを与える\n&1ターン仲間ATK30%UP",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -3350,14 +3408,22 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "かめはめ波&ビッグ・バン・アタック(極限)",
-                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "最後の秘策(極限)",
-                        "effect": "1ターンATKとDEFが上昇し、相手に超極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -3422,14 +3488,22 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "ビッグ・バン・アタック(極限)",
-                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "ファイナルかめはめ波(極限)",
-                        "effect": "1ターンDEFが大幅上昇し、相手に超極大ダメージを与える\n&1ターン仲間ATK30%UP"
+                        "effect": "1ターンDEFが大幅上昇し、相手に超極大ダメージを与える\n&1ターン仲間ATK30%UP",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -3837,7 +3911,10 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "かめはめ波&ファイナルフラッシュ",
-                        "effect": "1ターンATKが上昇し、相手に超極大ダメージを与える"
+                        "effect": "1ターンATKが上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -3904,7 +3981,11 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "ソウルパニッシャー",
-                        "effect": "相手に超極大ダメージを与え、ATKとDEFを大幅低下させる"
+                        "effect": "相手に超極大ダメージを与え、ATKとDEFを大幅低下させる",
+                        "specs": {
+                            "atk_down": "30%",
+                            "def_down": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -3963,14 +4044,22 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "かめはめ波&ビッグ・バン・アタック(極限)",
-                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "かめはめ波&ファイナルフラッシュ(極限)",
-                        "effect": "1ターンATKとDEFが上昇し、相手に超極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -4035,14 +4124,23 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "ビッグバンかめはめ波(極限)",
-                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "ソウルパニッシャー(極限)",
-                        "effect": "1ターンDEFが大幅上昇し、相手に超極大ダメージを与え、ATKとDEFを大幅低下させる"
+                        "effect": "1ターンDEFが大幅上昇し、相手に超極大ダメージを与え、ATKとDEFを大幅低下させる",
+                        "specs": {
+                            "def_up": "50%",
+                            "atk_down": "50%",
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -4191,7 +4289,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "気弾",
                         "name": "メテオスマッシュ",
-                        "effect": "1ターンDEFが超大幅上昇し、相手に超特大ダメージを与える"
+                        "effect": "1ターンDEFが超大幅上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "def_up": "100%"
+                        }
                     }
                 ],
                 "passive": {
@@ -4336,7 +4437,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "気弾",
                         "name": "メテオスマッシュ",
-                        "effect": "1ターンDEFが超大幅上昇し、相手に超特大ダメージを与える"
+                        "effect": "1ターンDEFが超大幅上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "def_up": "100%"
+                        }
                     }
                 ],
                 "passive": {
@@ -4484,14 +4588,21 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "メテオスマッシュ",
-                        "effect": "1ターンDEFが超大幅上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンDEFが超大幅上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "def_up": "100%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "かめはめ波",
-                        "effect": "1ターンATKとDEFが超大幅上昇し、相手に超極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが超大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "100%",
+                            "def_up": "100%"
+                        }
                     }
                 ],
                 "passive": {
@@ -4566,14 +4677,23 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "メテオスマッシュ(極限)",
-                        "effect": "1ターンDEFが超大幅上昇、ATKが上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンDEFが超大幅上昇、ATKが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "100%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "かめはめ波(極限)",
-                        "effect": "1ターンATKとDEFが超大幅上昇し、相手に超極大ダメージを与え、DEFを大幅低下させる"
+                        "effect": "1ターンATKとDEFが超大幅上昇し、相手に超極大ダメージを与え、DEFを大幅低下させる",
+                        "specs": {
+                            "atk_up": "100%",
+                            "def_up": "100%",
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -4730,7 +4850,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "気弾",
                         "name": "スピリットブレイクキャノン",
-                        "effect": "1ターンATKが超大幅上昇し、相手に超特大ダメージを与える"
+                        "effect": "1ターンATKが超大幅上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "100%"
+                        }
                     }
                 ],
                 "passive": {
@@ -4876,7 +4999,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "気弾",
                         "name": "スピリットブレイクキャノン",
-                        "effect": "1ターンATKが超大幅上昇し、相手に超特大ダメージを与える"
+                        "effect": "1ターンATKが超大幅上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "100%"
+                        }
                     }
                 ],
                 "passive": {
@@ -5024,14 +5150,21 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "スピリットブレイクキャノン",
-                        "effect": "1ターンATKが超大幅上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンATKが超大幅上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "100%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "ファイナルフラッシュ",
-                        "effect": "1ターンATKとDEFが超大幅上昇し、相手に超極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが超大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "100%",
+                            "def_up": "100%"
+                        }
                     }
                 ],
                 "passive": {
@@ -5106,14 +5239,23 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "スピリットブレイクキャノン(極限)",
-                        "effect": "1ターンATKが超大幅上昇、DEFが上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンATKが超大幅上昇、DEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "100%",
+                            "def_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "ファイナルフラッシュ(極限)",
-                        "effect": "1ターンATKとDEFが超大幅上昇し、相手に超極大ダメージを与え、DEFを大幅低下させる"
+                        "effect": "1ターンATKとDEFが超大幅上昇し、相手に超極大ダメージを与え、DEFを大幅低下させる",
+                        "specs": {
+                            "atk_up": "100%",
+                            "def_up": "100%",
+                            "def_down": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -5267,7 +5409,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "格闘",
                         "name": "メトロアタック",
-                        "effect": "ATKが上昇し、相手に超特大ダメージを与える"
+                        "effect": "ATKが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -5401,7 +5546,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "格闘",
                         "name": "メトロアタック",
-                        "effect": "ATKが上昇し、相手に超特大ダメージを与える"
+                        "effect": "ATKが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -5541,14 +5689,20 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "格闘",
                         "name": "メトロアタック",
-                        "effect": "ATKが上昇し、相手に極大ダメージを与える"
+                        "effect": "ATKが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "かめはめ波",
-                        "effect": "ATKが上昇し、相手に超極大ダメージを与える"
+                        "effect": "ATKが上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -5623,14 +5777,21 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "スターダストフォール",
-                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "メテオエクスプロージョン",
-                        "effect": "1ターンDEFが上昇し、相手に超極大ダメージを与える"
+                        "effect": "1ターンDEFが上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "def_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -5709,14 +5870,22 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "格闘",
                         "name": "メトロアタック(極限)",
-                        "effect": "ATKが上昇、1ターンDEFが上昇し、相手に極大ダメージを与える"
+                        "effect": "ATKが上昇、1ターンDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "かめはめ波(極限)",
-                        "effect": "ATKが上昇、1ターンDEFが大幅上昇し、相手に超極大ダメージを与える"
+                        "effect": "ATKが上昇、1ターンDEFが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -5798,14 +5967,21 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "スターダストフォール(極限)",
-                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "メテオエクスプロージョン(極限)",
-                        "effect": "3ターンDEFが大幅上昇し、相手に超極大ダメージを与える"
+                        "effect": "3ターンDEFが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "def_up": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -5973,7 +6149,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "格闘",
                         "name": "ベジットコンビネーション",
-                        "effect": "ATKが上昇し、相手に超特大ダメージを与える"
+                        "effect": "ATKが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -6108,7 +6287,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "格闘",
                         "name": "ベジットコンビネーション",
-                        "effect": "ATKが上昇し、相手に超特大ダメージを与える"
+                        "effect": "ATKが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -6251,14 +6433,20 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "格闘",
                         "name": "ベジットコンビネーション",
-                        "effect": "ATKが上昇し、相手に極大ダメージを与える"
+                        "effect": "ATKが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "ビッグ・バン・アタック",
-                        "effect": "ATKが上昇し、相手に超極大ダメージを与える"
+                        "effect": "ATKが上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -6334,14 +6522,21 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "格闘",
                         "name": "ベジットソード",
-                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "オメガフィニッシュブロー",
-                        "effect": "1ターンDEFが上昇し、相手に超極大ダメージを与える"
+                        "effect": "1ターンDEFが上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "def_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -6419,14 +6614,22 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "格闘",
                         "name": "ベジットコンビネーション(極限)",
-                        "effect": "ATKが上昇、1ターンDEFが上昇し、相手に極大ダメージを与える"
+                        "effect": "ATKが上昇、1ターンDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "ビッグ・バン・アタック(極限)",
-                        "effect": "ATKが上昇、1ターンDEFが大幅上昇し、相手に超極大ダメージを与える"
+                        "effect": "ATKが上昇、1ターンDEFが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -6509,14 +6712,21 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "ベジットソード(極限)",
-                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与える"
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "オメガフィニッシュブロー(極限)",
-                        "effect": "3ターンDEFが大幅上昇し、相手に超極大ダメージを与える"
+                        "effect": "3ターンDEFが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "def_up": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -6692,7 +6902,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "格闘",
                         "name": "完全なる極意",
-                        "effect": "相手に超特大ダメージを与え、1ターン中確率で会心が発動"
+                        "effect": "相手に超特大ダメージを与え、1ターン中確率で会心が発動",
+                        "specs": {
+                            "crit": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -6834,7 +7047,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "格闘",
                         "name": "完全なる極意",
-                        "effect": "相手に超特大ダメージを与え、1ターン中確率で会心が発動"
+                        "effect": "相手に超特大ダメージを与え、1ターン中確率で会心が発動",
+                        "specs": {
+                            "crit": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -6973,14 +7189,20 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "格闘",
                         "name": "完全なる極意",
-                        "effect": "相手に極大ダメージを与え、1ターン高確率で会心が発動"
+                        "effect": "相手に極大ダメージを与え、1ターン高確率で会心が発動",
+                        "specs": {
+                            "crit": "50%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "超極限かめはめ波",
-                        "effect": "相手に超極大ダメージを与え、1ターン高確率で会心が発動"
+                        "effect": "相手に超極大ダメージを与え、1ターン高確率で会心が発動",
+                        "specs": {
+                            "crit": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -7051,14 +7273,22 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "格闘",
                         "name": "完全なる極意(極限)",
-                        "effect": "1ターンATKが大幅上昇し、相手に極大ダメージを与え、1ターン高確率で会心が発動\n&1ターン仲間の会心率7%UP"
+                        "effect": "1ターンATKが大幅上昇し、相手に極大ダメージを与え、1ターン高確率で会心が発動\n&1ターン仲間の会心率7%UP",
+                        "specs": {
+                            "atk_up": "50%",
+                            "crit": "50%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "超極限かめはめ波(極限)",
-                        "effect": "1ターンATKが超大幅上昇し、相手に超極大ダメージを与え、1ターン高確率で会心が発動\n&2ターン仲間の会心率7%UP"
+                        "effect": "1ターンATKが超大幅上昇し、相手に超極大ダメージを与え、1ターン高確率で会心が発動\n&2ターン仲間の会心率7%UP",
+                        "specs": {
+                            "atk_up": "100%",
+                            "crit": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -7255,7 +7485,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "格闘",
                         "name": "戦闘民族の誇り",
-                        "effect": "相手に超特大ダメージを与え、1ターン中確率で会心が発動"
+                        "effect": "相手に超特大ダメージを与え、1ターン中確率で会心が発動",
+                        "specs": {
+                            "crit": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -7403,7 +7636,10 @@ const CHARACTER_DATA = [
                         "maxLv": 10,
                         "type": "格闘",
                         "name": "戦闘民族の誇り",
-                        "effect": "相手に超特大ダメージを与え、1ターン中確率で会心が発動"
+                        "effect": "相手に超特大ダメージを与え、1ターン中確率で会心が発動",
+                        "specs": {
+                            "crit": "30%"
+                        }
                     }
                 ],
                 "passive": {
@@ -7559,14 +7795,20 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "格闘",
                         "name": "戦闘民族の誇り",
-                        "effect": "相手に極大ダメージを与え、1ターン高確率で会心が発動"
+                        "effect": "相手に極大ダメージを与え、1ターン高確率で会心が発動",
+                        "specs": {
+                            "crit": "50%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "ファイナルフラッシュ",
-                        "effect": "相手に超極大ダメージを与え、1ターン高確率で会心が発動"
+                        "effect": "相手に超極大ダメージを与え、1ターン高確率で会心が発動",
+                        "specs": {
+                            "crit": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -7648,14 +7890,20 @@ const CHARACTER_DATA = [
                         "maxLv": 20,
                         "type": "格闘",
                         "name": "戦闘民族の誇り",
-                        "effect": "相手に極大ダメージを与え、1ターン高確率で会心が発動"
+                        "effect": "相手に極大ダメージを与え、1ターン高確率で会心が発動",
+                        "specs": {
+                            "crit": "50%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
                         "name": "ファイナルフラッシュ",
-                        "effect": "相手に超極大ダメージを与え、1ターン高確率で会心が発動"
+                        "effect": "相手に超極大ダメージを与え、1ターン高確率で会心が発動",
+                        "specs": {
+                            "crit": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -7738,14 +7986,23 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "格闘",
                         "name": "戦闘民族の誇り(極限)",
-                        "effect": "1ターンDEFが大幅上昇し、相手に極大ダメージを与え、1ターン高確率で会心が発動\n&1ターン仲間の会心率7%UP"
+                        "effect": "1ターンDEFが大幅上昇し、相手に極大ダメージを与え、1ターン高確率で会心が発動\n&1ターン仲間の会心率7%UP",
+                        "specs": {
+                            "def_up": "50%",
+                            "crit": "50%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "ファイナルフラッシュ(極限)",
-                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超極大ダメージを与え、1ターン高確率で会心が発動\n&2ターン仲間の会心率7%UP"
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超極大ダメージを与え、1ターン高確率で会心が発動\n&2ターン仲間の会心率7%UP",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%",
+                            "crit": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -7857,14 +8114,23 @@ const CHARACTER_DATA = [
                         "maxLv": 25,
                         "type": "格闘",
                         "name": "戦闘民族の誇り(極限)",
-                        "effect": "1ターンDEFが大幅上昇し、相手に極大ダメージを与え、1ターン高確率で会心が発動\n&1ターン仲間の会心率7%UP"
+                        "effect": "1ターンDEFが大幅上昇し、相手に極大ダメージを与え、1ターン高確率で会心が発動\n&1ターン仲間の会心率7%UP",
+                        "specs": {
+                            "def_up": "50%",
+                            "crit": "50%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 25,
                         "type": "気弾",
                         "name": "ファイナルフラッシュ(極限)",
-                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超極大ダメージを与え、1ターン高確率で会心が発動\n&2ターン仲間の会心率7%UP"
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超極大ダメージを与え、1ターン高確率で会心が発動\n&2ターン仲間の会心率7%UP",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%",
+                            "crit": "50%"
+                        }
                     }
                 ],
                 "passive": {
@@ -10436,10 +10702,7 @@ const CHARACTER_DATA = [
                 ],
                 "passive": {
                     "name": "奇跡を起こせ！！",
-                    "intro": {
-                        "condition": "",
-                        "effect": ""
-                    },
+                    "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
@@ -10487,76 +10750,118 @@ const CHARACTER_DATA = [
         "source_type": "gasha",
         "drop_event": "",
         "categories": [
-            "超サイヤ人",
             "劇場版HERO",
-            "融合/合体戦士",
-            "あの世の戦士",
-            "超サイヤ人を超えた力",
-            "かめはめ波",
-            "変身強化",
-            "時間制限",
-            "つながる希望",
-            "好敵手",
-            "伝説の存在",
-            "高速戦闘",
+            "フュージョン",
+            "超サイヤ人",
             "最後の切り札",
-            "体得した進化",
-            "命運をかけた戦い"
+            "再起する力",
+            "時間制限",
+            "融合/合体戦士",
+            "超HERO",
+            "地球を守りし英雄",
+            "高速戦闘"
         ],
-        "leaderSkill": "「超サイヤ人」または「劇場版HERO」カテゴリの気力+2、HPとATKとDEF120%UP",
+        "leaderSkill": "「劇場版HERO」カテゴリの\n気力+2、HPとATKとDEF150%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
-        "awakening": null,
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1027960
+            },
+            {
+                "rank": "UR",
+                "id": 1027970,
+                "medals": [
+                    {
+                        "name": "超激戦/全てを照らす最強の光臨/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1027980,
+                "medals": [
+                    {
+                        "name": "超激戦/全てを照らす最強の光臨/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/激闘で紡がれたサイヤ人/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常形態",
+                "label": "通常",
                 "name": "",
                 "links": [
                     "金色の戦士",
                     "超サイヤ人",
                     "臨戦態勢",
-                    "合体戦士",
-                    "かめはめ波"
+                    "短期決戦",
+                    "合体戦士"
                 ],
                 "stats": {
-                    "hp": 7625,
-                    "atk": 7390,
-                    "def": 1785
+                    "hp": 7570,
+                    "atk": 7893,
+                    "def": 5009
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 10,
-                        "type": "気弾",
-                        "name": "ソウルパニッシャー",
-                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える"
+                        "type": "格闘",
+                        "name": "メトロアタック",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
-                    "name": "ソウルパニッシャー",
+                    "name": "ゴジータの自信",
                     "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "自身の気力+2、ATKとDEF120%UP"
+                                "気力+2、ATK/DEF100%[img:up]",
+                                "全属性に効果抜群で攻撃",
+                                "属性気玉取得時の気力上昇量+1"
                             ]
                         },
                         {
-                            "title": "属性気玉取得時",
+                            "title": "気力メーター12以上で攻撃時",
                             "effects": [
-                                "属性気玉取得で気力が上がるたびに更に気力+1"
+                                "ATK/DEF50%[img:up]"
                             ]
                         },
                         {
-                            "title": "攻撃時",
+                            "title": "取得虹気玉1個以上",
                             "effects": [
-                                "必ず追加攻撃し中確率で必殺技が発動"
+                                "必ず追加攻撃し高確率で必殺技が発動"
                             ]
                         }
-                    ]
+                    ],
+                    "maxValues": {
+                        "add": "1回",
+                        "effective": true
+                    }
                 }
             }
         ]
@@ -10574,76 +10879,120 @@ const CHARACTER_DATA = [
         "source_type": "gasha",
         "drop_event": "",
         "categories": [
-            "超サイヤ人",
             "劇場版HERO",
-            "融合/合体戦士",
-            "あの世の戦士",
-            "超サイヤ人を超えた力",
-            "かめはめ波",
-            "変身強化",
-            "時間制限",
-            "つながる希望",
-            "好敵手",
-            "伝説の存在",
-            "高速戦闘",
+            "フュージョン",
+            "超サイヤ人",
             "最後の切り札",
-            "体得した進化",
-            "命運をかけた戦い"
+            "再起する力",
+            "時間制限",
+            "融合/合体戦士",
+            "超HERO",
+            "地球を守りし英雄",
+            "高速戦闘"
         ],
-        "leaderSkill": "「超サイヤ人」または「劇場版HERO」カテゴリの気力+2、HPとATKとDEF150%UP",
+        "leaderSkill": "「劇場版HERO」カテゴリの\n気力+3、HPとATKとDEF170%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1027960
+            },
+            {
+                "rank": "UR",
+                "id": 1027970,
+                "medals": [
+                    {
+                        "name": "超激戦/全てを照らす最強の光臨/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1027980,
+                "medals": [
+                    {
+                        "name": "超激戦/全てを照らす最強の光臨/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/激闘で紡がれたサイヤ人/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常形態",
+                "label": "通常",
                 "name": "",
                 "links": [
                     "金色の戦士",
                     "超サイヤ人",
                     "臨戦態勢",
+                    "短期決戦",
                     "合体戦士",
-                    "かめはめ波",
                     "超激戦"
                 ],
                 "stats": {
-                    "hp": 10275,
-                    "atk": 10350,
-                    "def": 3435
+                    "hp": 8931,
+                    "atk": 8770,
+                    "def": 5884
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 10,
-                        "type": "気弾",
-                        "name": "ソウルパニッシャー",
-                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える"
+                        "type": "格闘",
+                        "name": "メトロアタック",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
-                    "name": "ソウルパニッシャー",
+                    "name": "ゴジータの気合い",
                     "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "自身の気力+3、ATKとDEF150%UP"
+                                "気力+2、ATK/DEF120%[img:up]",
+                                "全属性に効果抜群で攻撃",
+                                "属性気玉取得時の気力上昇量+1",
+                                "必ず追加攻撃し高確率で必殺技が発動"
                             ]
                         },
                         {
-                            "title": "属性気玉取得時",
+                            "title": "気力メーター12以上で攻撃時",
                             "effects": [
-                                "属性気玉取得で気力が上がるたびに更に気力+1"
+                                "ATK/DEF80%[img:up]"
                             ]
                         },
                         {
-                            "title": "攻撃時",
+                            "title": "取得虹気玉1個以上",
                             "effects": [
-                                "必ず追加攻撃し中確率で必殺技が発動"
+                                "必ず追加攻撃し高確率で必殺技が発動"
                             ]
                         }
-                    ]
+                    ],
+                    "maxValues": {
+                        "add": "2回",
+                        "effective": true
+                    }
                 }
             }
         ]
@@ -10661,112 +11010,149 @@ const CHARACTER_DATA = [
         "source_type": "gasha",
         "drop_event": "",
         "categories": [
-            "超サイヤ人",
             "劇場版HERO",
-            "融合/合体戦士",
-            "あの世の戦士",
-            "超サイヤ人を超えた力",
-            "かめはめ波",
-            "変身強化",
-            "時間制限",
-            "つながる希望",
-            "好敵手",
-            "伝説の存在",
-            "高速戦闘",
+            "フュージョン",
+            "超サイヤ人",
             "最後の切り札",
-            "体得した進化",
-            "命運をかけた戦い"
+            "再起する力",
+            "時間制限",
+            "融合/合体戦士",
+            "超HERO",
+            "神次元",
+            "変身強化",
+            "超サイヤ人を超えた力",
+            "地球を守りし英雄",
+            "高速戦闘"
         ],
-        "leaderSkill": "「超サイヤ人」または「劇場版HERO」カテゴリの気力+3、HPとATKとDEF170%UP、さらに「かめはめ波」カテゴリを含む場合はHPとATKとDEF30%UP",
+        "leaderSkill": "「劇場版HERO」カテゴリの\n気力+3、HPとATKとDEF200%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1027960
+            },
+            {
+                "rank": "UR",
+                "id": 1027970,
+                "medals": [
+                    {
+                        "name": "超激戦/全てを照らす最強の光臨/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1027980,
+                "medals": [
+                    {
+                        "name": "超激戦/全てを照らす最強の光臨/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/激闘で紡がれたサイヤ人/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常形態",
+                "label": "通常",
                 "name": "",
                 "links": [
-                    "金色の戦士"
+                    "金色の戦士",
+                    "超サイヤ人",
+                    "臨戦態勢",
+                    "短期決戦",
+                    "合体戦士",
+                    "超激戦",
+                    "伝説の力"
                 ],
                 "stats": {
-                    "hp": 16950,
-                    "atk": 14138,
-                    "def": 7656
+                    "hp": 17113,
+                    "atk": 14340,
+                    "def": 11144
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 20,
-                        "type": "気弾",
-                        "name": "ソウルパニッシャー",
-                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える"
+                        "type": "格闘",
+                        "name": "メトロアタック",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
-                        "type": "格闘",
-                        "name": "メテオエクスプロージョン",
-                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超極大ダメージを与える"
+                        "type": "気弾",
+                        "name": "スターダストフォール",
+                        "effect": "DEFが上昇 1ターンATKが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
-                    "name": "とっておきの変身",
-                    "intro": {
-                        "condition": "登場から1ターンの間",
-                        "effect": "全ての攻撃を回避、属性気玉のうちランダムで1種類を虹気玉に変化させる"
-                    },
+                    "name": "ゴジータが放つ光",
+                    "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "自身の気力+5、ATKとDEF150%UP"
+                                "気力+2、ATK/DEF154%[img:up]",
+                                "全属性に効果抜群で攻撃",
+                                "ランダム気玉変化：体を除く属性気玉1種→虹",
+                                "属性気玉取得時の気力上昇量+1",
+                                "虹気玉取得時の気力上昇量+2",
+                                "必ず追加攻撃し超高確率で必殺技が発動"
                             ]
                         },
                         {
-                            "title": "攻撃時",
+                            "title": "登場から3ターンの間",
                             "effects": [
-                                "攻撃するたびに更に気力+1(最大+5)、ATKとDEF30%UP(最大150%)",
-                                "必ず追加攻撃し高確率で必殺技が発動"
+                                "全ての攻撃をガード"
                             ]
                         },
                         {
-                            "title": "気力メーター",
+                            "title": "気力メーター12以上で攻撃時",
                             "effects": [
-                                "気力メーター18以上で更にATKとDEF50%UP",
-                                "気力メーター24で必ず会心が発動"
+                                "ATK/DEF100%[img:up]"
                             ]
                         },
                         {
-                            "title": "気玉取得",
+                            "title": "取得虹気玉1個以上",
                             "effects": [
-                                "虹気玉取得で気力が上がるたびに更に気力+2"
-                            ]
-                        },
-                        {
-                            "title": "回避",
-                            "effects": [
-                                "高確率で敵の攻撃を回避",
-                                "3番目にいるとき更に回避率20%UPし、必ず必殺技が追加発動"
-                            ]
-                        },
-                        {
-                            "title": "回復",
-                            "effects": [
-                                "変身時HP54%回復"
+                                "必ず必殺技が追加発動"
                             ]
                         }
                     ],
                     "maxValues": {
-                        "crit": "100%",
                         "add": "2回",
-                        "dodge": "70%"
+                        "guard": true,
+                        "effective": true
                     }
                 },
                 "active": {
                     "name": "変身",
-                    "condition": "バトル開始から4ターン目以降変身可能",
-                    "effect": "超サイヤ人ゴッドSSに変身する"
+                    "condition": "登場から4ターン目以降発動可能(1回のみ)",
+                    "effect": "変身する"
                 }
             },
             {
@@ -10774,97 +11160,104 @@ const CHARACTER_DATA = [
                 "name": "超サイヤ人ゴッドSSゴジータ",
                 "id": 4027990,
                 "links": [
-                    "神戦士"
+                    "神戦士",
+                    "超サイヤ人",
+                    "臨戦態勢",
+                    "短期決戦",
+                    "合体戦士",
+                    "超激戦",
+                    "伝説の力"
                 ],
                 "stats": {
-                    "hp": 16950,
-                    "atk": 14138,
-                    "def": 7656
+                    "hp": 17113,
+                    "atk": 14340,
+                    "def": 11144
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 20,
-                        "type": "気弾",
-                        "name": "スターダストフォール",
-                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与える"
+                        "type": "格闘",
+                        "name": "ゴッドメテオストライク",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
-                        "name": "メテオエクスプロージョン",
-                        "effect": "1ターンDEFが大幅上昇し、相手に超極大ダメージを与え、アクションブレイクさせる"
+                        "name": "エクシードブレイザー",
+                        "effect": "4ターンATKが超大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "100%"
+                        }
                     }
                 ],
                 "passive": {
-                    "name": "究極のフュージョン",
-                    "intro": {
-                        "condition": "変身時",
-                        "effect": "1ターンの間、全ての攻撃を回避、属性気玉のうちランダムで1種類を虹気玉に変化させる"
-                    },
+                    "name": "ゴジータの青き光",
+                    "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "自身の気力+5、ATKとDEF250%UP"
+                                "気力+3、ATK/DEF200%[img:up]",
+                                "全属性に効果抜群で攻撃",
+                                "気玉取得時の気力上昇量+2",
+                                "ランダム気玉変化：体を除く属性気玉1種→虹",
+                                "必ず必殺技が追加発動",
+                                "超高確率で敵の攻撃を回避"
                             ]
                         },
                         {
-                            "title": "攻撃時",
+                            "title": "登場から4ターンの間",
                             "effects": [
-                                "攻撃するたびに更に気力+2(最大+10)、ATKとDEF40%UP(最大200%)",
-                                "必ず追加攻撃し超高確率で必殺技が発動"
+                                "自身の攻撃参加ターン開始時にHP54%回復"
                             ]
                         },
                         {
-                            "title": "気力メーター",
+                            "title": "気力メーター12以上で攻撃時",
                             "effects": [
-                                "気力メーター18以上で全属性に効果抜群で攻撃",
-                                "気力メーター24で必ず会心が発動"
+                                "ATK/DEF100%[img:up]"
                             ]
                         },
                         {
-                            "title": "気玉取得",
+                            "title": "取得虹気玉1個以上",
                             "effects": [
-                                "虹気玉取得で気力が上がるたびに更に気力+2"
+                                "必ず必殺技が追加発動"
                             ]
                         },
                         {
-                            "title": "1番目か2番目",
+                            "title": "回避するたび",
                             "effects": [
-                                "1番目か2番目にいるとき敵の攻撃を高確率で回避、敵の必殺技を見極める"
+                                "[img:infinity]会心率20%[img:up]"
                             ]
                         },
                         {
-                            "title": "3番目",
+                            "title": "敵の気弾系必殺技を受けるとき",
                             "effects": [
-                                "3番目にいるとき必ず必殺技が追加発動、超高確率で敵の攻撃を回避"
+                                "超高確率で無効化し、超絶大な威力で反撃"
                             ]
                         }
                     ],
                     "maxValues": {
                         "crit": "100%",
-                        "add": "3回",
-                        "dodge": "100%",
-                        "action_break": true
+                        "add": "2回",
+                        "dodge": "700%",
+                        "effective": true,
+                        "counter": true
                     }
                 },
                 "active": {
-                    "name": "究極のかめはめ波",
-                    "condition": "変身した次の攻撃参加ターン以降、HP50%以下のとき、または攻撃参加中の味方全員が「劇場版HERO」カテゴリのとき発動可能",
-                    "effect": "一時的にATKが超大幅上昇し、相手に究極ダメージを与え、攻撃したターン中、必ず会心が発動"
-                },
-                "standby": {
-                    "name": "ターゲット集中",
-                    "type": "ターゲット集中",
-                    "condition": "変身した次の攻撃参加ターン以降、HP50%以上のとき発動可能",
-                    "effect": "4ターンの間、味方全員のATKとDEF20%UPし、自身への敵の攻撃を無効化するターゲット集中状態となる",
-                    "finish": {
-                        "type": "回避カウンター",
-                        "name": "回避カウンター",
-                        "condition": "ターゲット集中状態で敵の攻撃を回避すると発動",
-                        "effect": "相手に超極大ダメージを与える"
+                    "name": "オレにどこまでついてこれるかな？",
+                    "condition": "次の攻撃参加ターンから発動可能 (1回のみ)",
+                    "effect": "一時的にATKが超大幅上昇し、相手に究極ダメージを与える\n&1ターンの間、敵の攻撃を自身に集中させ回避する",
+                    "specs": {
+                        "atk_up": "100%",
+                        "dodge": "100%",
+                        "target": true
                     }
                 }
             }
@@ -10886,71 +11279,116 @@ const CHARACTER_DATA = [
             "超BOSS",
             "変身強化",
             "フルパワー",
+            "怒り爆発",
             "劇場版BOSS",
             "純粋サイヤ人",
             "超サイヤ人",
-            "怒り爆発",
-            "ターゲット孫悟空",
-            "リベンジ",
-            "惑星破壊",
-            "高速戦闘",
-            "制御不能の力",
-            "伝説の存在"
+            "奇跡の覚醒",
+            "天才戦士",
+            "制御不能の力"
         ],
-        "leaderSkill": "「超BOSS」または「変身強化」または「フルパワー」カテゴリの気力+2、HPとATKとDEF120%UP",
+        "leaderSkill": "「超BOSS」または「変身強化」または「フルパワー」カテゴリの\n気力+2、HPとATKとDEF130%UP、\n「怒り爆発」または「劇場版BOSS」カテゴリを含む場合は\n更にHPとATKとDEF10%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
-        "awakening": null,
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1028000
+            },
+            {
+                "rank": "UR",
+                "id": 1028010,
+                "medals": [
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1028020,
+                "medals": [
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常形態",
+                "label": "通常",
                 "name": "",
                 "links": [
-                    "サイヤ人の血",
-                    "戦闘民族サイヤ人",
+                    "天才",
                     "超サイヤ人",
-                    "臨戦態勢",
-                    "バーサーカー"
+                    "バーサーカー",
+                    "驚異的なスピード",
+                    "臨戦態勢"
                 ],
                 "stats": {
-                    "hp": 7875,
-                    "atk": 6890,
-                    "def": 2235
+                    "hp": 6242,
+                    "atk": 8779,
+                    "def": 4567
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 10,
-                        "type": "気弾",
-                        "name": "ブラスターメテオ",
-                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える"
+                        "type": "格闘",
+                        "name": "ギガンティックインパクト",
+                        "effect": "ATKが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
-                    "name": "凶暴なサイヤ人",
+                    "name": "激化する戦況",
                     "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "自身の気力+2、ATKとDEF120%UP"
+                                "ATK/DEF130%[img:up]",
+                                "全ての攻撃をガード"
                             ]
                         },
                         {
-                            "title": "攻撃時",
+                            "title": "気力メーター12以上で攻撃時",
                             "effects": [
-                                "必ず追加攻撃し中確率で必殺技が発動"
+                                "ATK30%[img:up]"
                             ]
                         },
                         {
-                            "title": "被弾時",
+                            "title": "1番目か2番目で攻撃すると",
                             "effects": [
-                                "攻撃を受けるたびにATKとDEF10%UP(最大50%)"
+                                "気力+1",
+                                "高確率で必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "3番目で攻撃すると",
+                            "effects": [
+                                "気力+3",
+                                "必ず必殺技が追加発動"
                             ]
                         }
-                    ]
+                    ],
+                    "maxValues": {
+                        "add": "2回",
+                        "guard": true
+                    }
                 }
             }
         ]
@@ -10971,71 +11409,117 @@ const CHARACTER_DATA = [
             "超BOSS",
             "変身強化",
             "フルパワー",
+            "怒り爆発",
             "劇場版BOSS",
             "純粋サイヤ人",
             "超サイヤ人",
-            "怒り爆発",
-            "ターゲット孫悟空",
-            "リベンジ",
-            "惑星破壊",
-            "高速戦闘",
-            "制御不能の力",
-            "伝説の存在"
+            "奇跡の覚醒",
+            "天才戦士",
+            "制御不能の力"
         ],
-        "leaderSkill": "「超BOSS」または「変身強化」または「フルパワー」カテゴリの気力+2、HPとATKとDEF150%UP",
+        "leaderSkill": "「超BOSS」または「変身強化」または「フルパワー」カテゴリの\n気力+3、HPとATKとDEF150%UP、\n「怒り爆発」または「劇場版BOSS」カテゴリを含む場合は\n更にHPとATKとDEF20%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1028000
+            },
+            {
+                "rank": "UR",
+                "id": 1028010,
+                "medals": [
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1028020,
+                "medals": [
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常形態",
+                "label": "通常",
                 "name": "",
                 "links": [
-                    "サイヤ人の血",
-                    "戦闘民族サイヤ人",
+                    "天才",
                     "超サイヤ人",
-                    "臨戦態勢",
                     "バーサーカー",
+                    "驚異的なスピード",
+                    "臨戦態勢",
                     "超激戦"
                 ],
                 "stats": {
-                    "hp": 9525,
-                    "atk": 10350,
-                    "def": 3885
+                    "hp": 7338,
+                    "atk": 9833,
+                    "def": 5353
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 10,
-                        "type": "気弾",
-                        "name": "ブラスターメテオ",
-                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える"
+                        "type": "格闘",
+                        "name": "ギガンティックインパクト",
+                        "effect": "ATKが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
                     }
                 ],
                 "passive": {
-                    "name": "破壊と殺戮の超戦士",
+                    "name": "激化する怒り",
                     "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "自身の気力+3、ATKとDEF150%UP"
+                                "ATK/DEF140%[img:up]",
+                                "全ての攻撃をガード"
                             ]
                         },
                         {
-                            "title": "攻撃時",
+                            "title": "気力メーター12以上で攻撃時",
                             "effects": [
-                                "必ず追加攻撃し中確率で必殺技が発動"
+                                "ATK40%[img:up]"
                             ]
                         },
                         {
-                            "title": "被弾時",
+                            "title": "1番目か2番目で攻撃すると",
                             "effects": [
-                                "攻撃を受けるたびにATKとDEF10%UP(最大50%)"
+                                "気力+2",
+                                "高確率で必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "3番目で攻撃すると",
+                            "effects": [
+                                "気力+4",
+                                "必ず必殺技が追加発動"
                             ]
                         }
-                    ]
+                    ],
+                    "maxValues": {
+                        "add": "2回",
+                        "guard": true
+                    }
                 }
             }
         ]
@@ -11056,100 +11540,151 @@ const CHARACTER_DATA = [
             "超BOSS",
             "変身強化",
             "フルパワー",
+            "怒り爆発",
             "劇場版BOSS",
             "純粋サイヤ人",
             "超サイヤ人",
-            "怒り爆発",
-            "ターゲット孫悟空",
-            "リベンジ",
-            "惑星破壊",
-            "高速戦闘",
-            "制御不能の力",
-            "伝説の存在"
+            "奇跡の覚醒",
+            "天才戦士",
+            "超サイヤ人を超えた力",
+            "制御不能の力"
         ],
-        "leaderSkill": "「超BOSS」または「変身強化」または「フルパワー」カテゴリの気力+3、HPとATKとDEF170%UP、さらに「劇場版BOSS」または「純粋サイヤ人」カテゴリを含む場合はHPとATKとDEF30%UP",
+        "leaderSkill": "「超BOSS」または「変身強化」または「フルパワー」カテゴリの\n気力+3、HPとATKとDEF170%UP、\n「怒り爆発」または「劇場版BOSS」カテゴリを含む場合は\n更にHPとATKとDEF30%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1028000
+            },
+            {
+                "rank": "UR",
+                "id": 1028010,
+                "medals": [
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1028020,
+                "medals": [
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/そびえ立つ最大の敵/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
         "forms": [
             {
-                "label": "通常形態",
+                "label": "通常",
                 "name": "",
                 "links": [
-                    "サイヤ人の血"
+                    "天才",
+                    "超サイヤ人",
+                    "バーサーカー",
+                    "驚異的なスピード",
+                    "臨戦態勢",
+                    "超激戦",
+                    "伝説の力"
                 ],
                 "stats": {
-                    "hp": 16575,
-                    "atk": 14850,
-                    "def": 9538
+                    "hp": 13925,
+                    "atk": 16465,
+                    "def": 10081
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 20,
-                        "type": "気弾",
-                        "name": "ブラスターメテオ",
-                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与え、DEFを低下させる"
+                        "type": "格闘",
+                        "name": "ギガンティックインパクト",
+                        "effect": "ATKが上昇、1ターンDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
-                        "name": "ギガンティッククラスター",
-                        "effect": "1ターンATKとDEFが上昇し、相手に超極大ダメージを与え、DEFを大幅に低下させる"
+                        "name": "マッシブブラスター",
+                        "effect": "ATKが大幅上昇、4ターンDEFが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
                     }
                 ],
                 "passive": {
-                    "name": "暴走する本能",
+                    "name": "激化する戦闘力",
                     "intro": {
-                        "condition": "登場から1ターンの間",
-                        "effect": "全ての攻撃をガード、属性気玉のうちランダムで1種類を虹気玉に変化させる"
+                        "condition": "自身の登場時、登場時演出が発動",
+                        "effect": "[img:one_time]4ターンの間、気力+5、ATK/DEF100%[img:up]\n[img:one_time]4ターンの間、必ず必殺技が追加発動"
                     },
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "自身の気力+5、ATKとDEF100%UP"
+                                "ATK/DEF150%[img:up]",
+                                "全ての攻撃をガード",
+                                "気玉取得時の気力上昇量+1"
                             ]
                         },
                         {
-                            "title": "攻撃時",
+                            "title": "気力メーター12以上で攻撃時",
                             "effects": [
-                                "攻撃するたびに更に気力+1(最大+5)、ATKとDEF10%UP(最大100%)",
-                                "必ず追加攻撃し超高確率で必殺技が発動"
+                                "ATK50%[img:up]"
                             ]
                         },
                         {
-                            "title": "気力メーター",
+                            "title": "気力メーター18以上で攻撃時",
                             "effects": [
-                                "気力メーター18以上で更にATKとDEF50%UP",
-                                "気力メーター24で全属性に効果抜群で攻撃"
+                                "DEF50%[img:up]"
                             ]
                         },
                         {
-                            "title": "被弾時",
+                            "title": "1番目か2番目で攻撃すると",
                             "effects": [
-                                "攻撃を受けるたびに更にATKとDEF20%UP(最大100%)"
+                                "気力+2",
+                                "必ず必殺技が追加発動"
                             ]
                         },
                         {
-                            "title": "ガード",
+                            "title": "3番目で攻撃すると",
                             "effects": [
-                                "ガードが決まるとそのターン中更に追加攻撃し超高確率で必殺技が発動"
+                                "気力+6",
+                                "必ず必殺技が追加発動し高確率で更に必殺技が追加発動"
                             ]
                         }
                     ],
                     "maxValues": {
-                        "crit": "0%",
-                        "add": "2回",
+                        "add": "4回",
                         "guard": true
                     }
                 },
                 "active": {
                     "name": "変身",
-                    "condition": "バトル開始から4ターン目以降変身可能",
-                    "effect": "超サイヤ人ブロリー(フルパワー)に変身する"
+                    "condition": "登場から5ターン目以降発動可能(1回のみ)",
+                    "effect": "変身する\n&4ターンの間 「異次元空間」フィールドを生成し、極系の味方全員の気力+4"
+                },
+                "field": {
+                    "name": "異次元空間",
+                    "icon": "field_Button",
+                    "effect": "極系の敵と味方全員のATKとDEF10%UP\n「怒り爆発」または「劇場版BOSS」カテゴリを含む場合は\n更にATKとDEF10%UP\n&超系の敵と味方全員の受けるダメージ10%UP"
                 }
             },
             {
@@ -11157,80 +11692,100 @@ const CHARACTER_DATA = [
                 "name": "超サイヤ人ブロリー(フルパワー)",
                 "id": 4028030,
                 "links": [
-                    "サイヤ人の血"
+                    "天才",
+                    "超サイヤ人",
+                    "バーサーカー",
+                    "驚異的なスピード",
+                    "臨戦態勢",
+                    "超激戦",
+                    "伝説の力"
                 ],
                 "stats": {
-                    "hp": 16575,
-                    "atk": 14850,
-                    "def": 9538
+                    "hp": 13925,
+                    "atk": 16465,
+                    "def": 10081
                 },
                 "superAttacks": [
                     {
                         "ki": "12~",
                         "maxLv": 20,
                         "type": "気弾",
-                        "name": "ギガンティックカタストロフィ",
-                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与え、DEFを低下させる"
+                        "name": "アウェイキングテンペスト",
+                        "effect": "1ターンATKとDEFが上昇し 敵全体に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
                     },
                     {
                         "ki": "18~",
                         "maxLv": 20,
                         "type": "気弾",
-                        "name": "オメガブラスター",
-                        "effect": "1ターンATKが大幅上昇、DEFが上昇し、相手に超極大ダメージを与え、DEFを大幅に低下させる"
+                        "name": "ギガンティックカタストロフィ",
+                        "effect": "1ターンATKとDEFが大幅上昇し 相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
                     }
                 ],
                 "passive": {
-                    "name": "死を超えた力",
-                    "intro": {
-                        "condition": "変身時",
-                        "effect": "1ターンの間、全ての攻撃をガード、属性気玉のうちランダムで1種類を虹気玉に変化させる"
-                    },
+                    "name": "激化する闘争本能",
+                    "intro": null,
                     "details": [
                         {
                             "title": "基本効果",
                             "effects": [
-                                "自身の気力+6、ATKとDEF200%UP",
-                                "全ての攻撃をガード"
+                                "気力+6、ATK/DEF300%[img:up]",
+                                "全ての攻撃をガード",
+                                "気玉取得時の気力上昇量+1",
+                                "必ず必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "「異次元空間」フィールドが生成されている間",
+                            "effects": [
+                                "攻撃するまでダメージ軽減率26%[img:up]"
                             ]
                         },
                         {
                             "title": "攻撃時",
                             "effects": [
-                                "攻撃するたびに更に気力+2(最大+10)、ATKとDEF20%UP(最大100%)",
-                                "必ず追加攻撃し超高確率で必殺技が発動"
+                                "ATK50%[img:up]"
                             ]
                         },
                         {
-                            "title": "気力メーター",
+                            "title": "攻撃を受けるとき",
                             "effects": [
-                                "気力メーター18以上で更にATKとDEF50%UP",
-                                "気力メーター24で高確率で会心が発動"
+                                "DEF50%[img:up]"
                             ]
                         },
                         {
-                            "title": "被弾時",
+                            "title": "気力メーター12以上で攻撃時",
                             "effects": [
-                                "攻撃を受けるたびに更にATKとDEF20%UP(最大100%)"
+                                "会心率26%[img:up]"
                             ]
                         },
                         {
-                            "title": "ガード",
+                            "title": "気力メーター18以上で攻撃時",
                             "effects": [
-                                "ガードが決まるとそのターン中更に追加攻撃し超高確率で必殺技が発動"
+                                "必ず必殺技が追加発動",
+                                "会心率26%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター24で攻撃時",
+                            "effects": [
+                                "必ず必殺技が追加発動"
                             ]
                         }
                     ],
                     "maxValues": {
-                        "crit": "50%",
+                        "crit": "52%",
                         "add": "3回",
+                        "reduce": "26%",
                         "guard": true
                     }
-                },
-                "field": {
-                    "name": "領域展開",
-                    "condition": "変身した次の攻撃参加ターン以降、HP50%以下のとき、または攻撃参加中の味方全員が「超BOSS」カテゴリのとき発動可能",
-                    "effect": "4ターンの間、「異次元空間」のフィールドを生成し、敵味方全員の回避を無効化し、敵味方の「超BOSS」カテゴリのATKとDEF10%UP"
                 }
             }
         ]
