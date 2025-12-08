@@ -319,12 +319,17 @@ body {
     font-weight: bold;
     line-height: 1.3;
     color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     display: flex;
     align-items: center;
     gap: 6px;
+    min-width: 0;
+}
+
+.char-name-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .char-row-details {
@@ -1446,6 +1451,19 @@ body {
     justify-content: flex-start;
 }
 
+.leader-candidate-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 80px;
+    margin: 0 auto;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+}
+
 .scroll-icon-box {
     width: 60px;
     height: 60px;
@@ -1780,6 +1798,7 @@ body {
     color: #ffae42;
     border: 1px solid #ff8c00;
     flex-shrink: 0;
+    margin-left: 4px;
 }
 
 /* Link Modal */
@@ -2086,4 +2105,5 @@ body {
     color: #e080ff;
     border: 1px solid #d300ff;
     flex-shrink: 0;
+    margin-left: 4px;
 }

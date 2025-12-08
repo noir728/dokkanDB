@@ -1087,9 +1087,9 @@ function renderZukanList(targetGrid) {
             }
 
             let badgeHtml = '';
-            if (char.seza || (char.awakening && char.awakening.some(a => a.rank === 'SEZA'))) {
+            if (char.seza) {
                 badgeHtml = `<span class="seza-badge-mini">超極限</span>`;
-            } else if (char.eza || (char.awakening && char.awakening.some(a => a.rank === 'EZA'))) {
+            } else if (char.eza && !char.seza) {
                 badgeHtml = `<span class="eza-badge-mini">極限</span>`;
             }
 
@@ -1104,7 +1104,7 @@ function renderZukanList(targetGrid) {
                 <div class="list-icon-wrapper">${iconHtml}</div>
                 <div class="char-row-info">
                     <div class="char-row-header"><div class="char-row-title">${char.title || ''}</div><div class="char-row-date">${char.release || ''}</div></div>
-                    <div class="${nameClass}">${char.name.replace(/\n/g, ' ')}${badgeHtml}</div>
+                    <div class="${nameClass}"><span class="char-name-text">${char.name.replace(/\n/g, ' ')}</span>${badgeHtml}</div>
                     <div class="char-row-details">
                         <div class="list-cost">コスト ${char.cost || '-'}</div>
                         <div class="char-row-stats"><span>HP ${displayStats.hp}</span><span>ATK ${displayStats.atk}</span><span>DEF ${displayStats.def}</span></div>
@@ -1817,7 +1817,7 @@ function renderCharacterDetail(id) {
                 if(l.stats.atk >= 200) badgeClass += " full-link"; 
                 
                 leaderHtml += `
-                    <div class="scroll-item-wrapper" onclick="openLeaderDetailModal(${l.char.id})">
+                    <div class="leader-candidate-item" onclick="openLeaderDetailModal(${l.char.id})">
                         <div class="scroll-icon-box">${iconHtml}</div>
                         <div class="scroll-item-info">
                             <span class="${badgeClass}">ATK ${l.stats.atk}%</span>
