@@ -1452,6 +1452,8 @@ function renderCharacterDetail(id) {
 
     const displayName = (currentData.name || char.name || "").replace(/\n/g, '<br>');
     const displayRawName = (currentData.name || char.name || "").split('\n')[0];
+    const isLongName = displayRawName.length > 15;
+    const nameClass = isLongName ? 'header-marquee-text' : '';
 
     // Task 3: Persistence Fallback
     let navList = state.currentList;
@@ -1477,7 +1479,7 @@ function renderCharacterDetail(id) {
             <button class="back-btn" onclick="closeDetail()">←</button>
             <div style="flex: 1; min-width: 0;">
                 <div class="char-sub-header text-truncate">${char.title || ''}</div>
-                <div class="char-name-header clickable-tag text-truncate" onclick="applyFilter('name', '${displayRawName}')">${displayName}</div>
+                <div class="char-name-header clickable-tag" onclick="applyFilter('name', '${displayRawName}')"><span class="${nameClass}">${displayName}</span></div>
                 <div class="date-info-compact">
                     <span class="date-tag">実装: ${char.release || '---'}</span>
                     ${char.eza ? `<span class="date-tag eza">極限: ${char.eza}</span>` : ''}
