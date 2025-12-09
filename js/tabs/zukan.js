@@ -1099,6 +1099,12 @@ function renderZukanList(targetGrid) {
             if (badgeHtml) totalLen += 4;
 
             let nameClass = 'char-row-name';
+            let marqueeClass = '';
+            // Task 2: Marquee Animation for long names
+            if (totalLen > 20) {
+                 marqueeClass = ' marquee-scroll';
+            }
+
             if (totalLen > 18) nameClass += ' text-xs';
             else if (totalLen > 14) nameClass += ' text-sm';
 
@@ -1106,7 +1112,7 @@ function renderZukanList(targetGrid) {
                 <div class="list-icon-wrapper">${iconHtml}</div>
                 <div class="char-row-info">
                     <div class="char-row-header"><div class="char-row-title">${char.title || ''}</div><div class="char-row-date">${char.release || ''}</div></div>
-                    <div class="${nameClass}"><span class="char-name-text">${char.name.replace(/\n/g, ' ')}</span>${badgeHtml}</div>
+                    <div class="${nameClass}"><span class="char-name-text${marqueeClass}">${char.name.replace(/\n/g, ' ')}</span>${badgeHtml}</div>
                     <div class="char-row-details">
                         <div class="list-cost">コスト ${char.cost || '-'}</div>
                         <div class="char-row-stats"><span>HP ${displayStats.hp}</span><span>ATK ${displayStats.atk}</span><span>DEF ${displayStats.def}</span></div>
@@ -1215,12 +1221,19 @@ function toggleFieldInfo(btn) {
 function togglePartnerSection(id, btn) {
     const el = document.getElementById(id);
     if (!el) return;
-    const isHidden = el.style.display === 'none';
-    el.style.display = isHidden ? 'flex' : 'none';
+
+    // Task 1: Accordion Animation
+    // Toggle the 'open' class
+    const isOpen = el.classList.contains('open');
+    if (isOpen) {
+        el.classList.remove('open');
+    } else {
+        el.classList.add('open');
+    }
     
     if(btn) {
         const arrow = btn.querySelector('.toggle-arrow');
-        if(arrow) arrow.textContent = isHidden ? '▲' : '▼';
+        if(arrow) arrow.textContent = !isOpen ? '▲' : '▼';
     }
 }
 
@@ -1626,7 +1639,8 @@ function renderCharacterDetail(id) {
                 <span>相性の良いキャラ (タップで開く)</span>
                 <span class="toggle-arrow" style="font-size:12px; color:#888;">▼</span>
             </div>
-            <div id="${toggleId}" class="partner-scroll" style="display:none;">${partnersHtml}</div>
+                <!-- Task 1: Accordion Animation - added accordion-content, removed display:none -->
+                <div id="${toggleId}" class="partner-scroll accordion-content">${partnersHtml}</div>
         `;
     }
 
@@ -1850,7 +1864,8 @@ function renderCharacterDetail(id) {
                     <span>リーダー候補 (タップで開く)</span>
                     <span class="toggle-arrow" style="font-size:12px; color:#888;">▼</span>
                 </div>
-                <div id="${toggleId}" class="partner-scroll" style="display:none; padding-top:10px;">${leaderHtml}</div>
+                <!-- Task 1: Accordion Animation - added accordion-content, removed display:none -->
+                <div id="${toggleId}" class="partner-scroll accordion-content" style="padding-top:10px;">${leaderHtml}</div>
             `;
         }
     }

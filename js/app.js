@@ -226,7 +226,10 @@ window.addEventListener('popstate', (event) => {
     }
 
     // Force Render
-    render();
+    // Task 3: Defer render to unblock UI thread during swipe transition
+    setTimeout(() => {
+        render();
+    }, 50);
 });
 
 function saveState() {
