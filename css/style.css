@@ -608,6 +608,23 @@ body {
     color: var(--accent-teq);
     line-height: 1.2;
     text-shadow: 0 0 5px rgba(76, 217, 100, 0.3);
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 10px;
+    text-overflow: clip; /* Ensure child can animate out */
+}
+
+.header-marquee-text {
+    display: inline-block;
+    animation: header-scroll 10s linear infinite;
+    padding-left: 0;
+    white-space: nowrap;
+}
+
+@keyframes header-scroll {
+    0%, 20% { transform: translateX(0); }
+    80%, 100% { transform: translateX(-100%); }
 }
 
 .char-sub-header {
