@@ -1096,13 +1096,14 @@ function renderZukanList(targetGrid) {
             }
 
             let totalLen = char.name.length;
-            if (badgeHtml) totalLen += 4;
+            if (badgeHtml) totalLen += 3;
 
             let nameClass = 'char-row-name';
             let marqueeClass = '';
-            // Task 2: Marquee Animation for long names
-            if (totalLen > 20) {
-                 marqueeClass = ' marquee-scroll';
+
+            // Task 1: Fix Marquee (Stricter threshold & separated badge)
+            if (totalLen > 15) {
+                 marqueeClass = ' marquee-text';
             }
 
             if (totalLen > 18) nameClass += ' text-xs';
@@ -1112,7 +1113,14 @@ function renderZukanList(targetGrid) {
                 <div class="list-icon-wrapper">${iconHtml}</div>
                 <div class="char-row-info">
                     <div class="char-row-header"><div class="char-row-title">${char.title || ''}</div><div class="char-row-date">${char.release || ''}</div></div>
-                    <div class="${nameClass}"><span class="char-name-text${marqueeClass}">${char.name.replace(/\n/g, ' ')}</span>${badgeHtml}</div>
+
+                    <div class="char-name-badge-flex" style="display:flex; align-items:center; width:100%;">
+                        <div class="${nameClass}" style="flex:1; display:block; padding-right:4px;">
+                            <span class="char-name-text${marqueeClass}">${char.name.replace(/\n/g, ' ')}</span>
+                        </div>
+                        ${badgeHtml}
+                    </div>
+
                     <div class="char-row-details">
                         <div class="list-cost">コスト ${char.cost || '-'}</div>
                         <div class="char-row-stats"><span>HP ${displayStats.hp}</span><span>ATK ${displayStats.atk}</span><span>DEF ${displayStats.def}</span></div>
