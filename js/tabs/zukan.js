@@ -1912,19 +1912,46 @@ function renderCharacterDetail(id) {
     container.appendChild(body);
     contentDiv.appendChild(container);
 
-    // Task 1: Floating Nav Buttons
-    if (prevCharId) {
-        const btn = document.createElement('div');
-        btn.className = "nav-btn nav-prev";
-        btn.onclick = () => openDetail(prevCharId);
-        contentDiv.appendChild(btn);
-    }
-    if (nextCharId) {
-        const btn = document.createElement('div');
-        btn.className = "nav-btn nav-next";
-        btn.onclick = () => openDetail(nextCharId);
-        contentDiv.appendChild(btn);
-    }
+    // Task 2: Implement Swipe Navigation
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isHorizontalScroll = false;
+
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+
+        // Critical: Check if touching a horizontal scroll area
+        if (e.target.closest('.scroll-container-x, .partner-scroll')) {
+            isHorizontalScroll = true;
+        } else {
+            isHorizontalScroll = false;
+        }
+    }, { passive: true });
+
+    container.addEventListener('touchend', (e) => {
+        if (isHorizontalScroll) return;
+
+        const touchEndX = e.changedTouches[0].screenX;
+        const touchEndY = e.changedTouches[0].screenY;
+
+        const diffX = touchStartX - touchEndX;
+        const diffY = touchStartY - touchEndY;
+
+        // Vertical check (ignore if scrolling down/up)
+        if (Math.abs(diffY) > 30) return;
+
+        // Threshold check (> 50px)
+        if (Math.abs(diffX) > 50) {
+            if (diffX > 0) {
+                // Swipe Left -> Next (Start > End)
+                if (nextCharId) openDetail(nextCharId);
+            } else {
+                // Swipe Right -> Prev (Start < End)
+                if (prevCharId) openDetail(prevCharId);
+            }
+        }
+    }, { passive: true });
 
     const fabContainer = document.createElement('div');
     fabContainer.className = 'field-floating-container';
