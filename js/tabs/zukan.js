@@ -1047,6 +1047,8 @@ function renderZukanList(targetGrid) {
         });
     }
 
+    state.currentList = displayDB;
+
     const countEl = document.getElementById('zukan-count');
     if(countEl) countEl.innerText = `${displayDB.length}体 表示中`;
 
@@ -1430,6 +1432,16 @@ function renderCharacterDetail(id) {
     const displayName = (currentData.name || char.name || "").replace(/\n/g, '<br>');
     const displayRawName = (currentData.name || char.name || "").split('\n')[0];
 
+    let prevCharId = null;
+    let nextCharId = null;
+    if (state.currentList) {
+        const idx = state.currentList.findIndex(c => c.id === id);
+        if (idx !== -1) {
+            if (idx > 0) prevCharId = state.currentList[idx - 1].id;
+            if (idx < state.currentList.length - 1) nextCharId = state.currentList[idx + 1].id;
+        }
+    }
+
     const header = document.createElement('div');
     header.className = 'detail-header';
     header.innerHTML = `
@@ -1446,6 +1458,8 @@ function renderCharacterDetail(id) {
             </div>
         </div>
         <div class="action-buttons">
+            ${prevCharId ? `<button class="icon-btn nav-arrow-btn" onclick="openDetail(${prevCharId})">←</button>` : ''}
+            ${nextCharId ? `<button class="icon-btn nav-arrow-btn" onclick="openDetail(${nextCharId})">→</button>` : ''}
             <button class="icon-btn ${state.favorites.includes(id)?'active':''}" onclick="toggleFav(this, ${id})">★</button>
             <button class="icon-btn owned-btn ${state.owned.includes(id)?'active':''}" onclick="toggleOwned(this, ${id})">BOX</button>
         </div>
@@ -1881,6 +1895,14 @@ function renderCharacterDetail(id) {
 
         body.innerHTML += farmHtml;
     }
+
+    // Ad Slot
+    body.innerHTML += `
+        <div class="detail-ad-slot">
+            <div style="width: 300px; height: 250px; background: #444; color: #888; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                [Advertisement Area]
+            </div>
+        </div>`;
 
     container.appendChild(body);
     contentDiv.appendChild(container);
