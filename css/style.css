@@ -81,6 +81,53 @@ body {
 /* =========================================
    4. Navigation
    ========================================= */
+
+/* Floating Navigation Buttons */
+.nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 120px;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 900;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    pointer-events: auto;
+}
+
+.nav-btn:active {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-btn::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-top: 4px solid rgba(255, 255, 255, 0.5);
+    border-right: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+.nav-prev {
+    left: 0;
+}
+.nav-prev::before {
+    transform: rotate(-135deg);
+    margin-left: 10px;
+}
+
+.nav-next {
+    right: 0;
+}
+.nav-next::before {
+    transform: rotate(45deg);
+    margin-right: 10px;
+}
+
 #tab-bar {
     height: 60px;
     background-color: #18181b;
@@ -609,6 +656,37 @@ body {
 .char-sub-header {
     font-size: 10px;
     color: #888;
+}
+
+/* Compact Header adjustments */
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.date-info-compact {
+    display: flex;
+    gap: 4px;
+    margin-top: 2px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+.date-tag {
+    font-size: 9px;
+    color: #888;
+    border: 1px solid #444;
+    padding: 0 4px;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+.date-tag.eza {
+    background:#4a2c00; color:#ffa500; border-color:#804000;
+}
+.date-tag.seza {
+    background:#2a004a; color:#e080ff; border-color:#d300ff;
 }
 
 .action-buttons {

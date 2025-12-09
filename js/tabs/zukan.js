@@ -1432,34 +1432,39 @@ function renderCharacterDetail(id) {
     const displayName = (currentData.name || char.name || "").replace(/\n/g, '<br>');
     const displayRawName = (currentData.name || char.name || "").split('\n')[0];
 
+    // Task 3: Persistence Fallback
+    let navList = state.currentList;
+    if (!navList || navList.length === 0) {
+        navList = DB;
+    }
+
     let prevCharId = null;
     let nextCharId = null;
-    if (state.currentList) {
-        const idx = state.currentList.findIndex(c => c.id === id);
+    if (navList) {
+        const idx = navList.findIndex(c => c.id === id);
         if (idx !== -1) {
-            if (idx > 0) prevCharId = state.currentList[idx - 1].id;
-            if (idx < state.currentList.length - 1) nextCharId = state.currentList[idx + 1].id;
+            if (idx > 0) prevCharId = navList[idx - 1].id;
+            if (idx < navList.length - 1) nextCharId = navList[idx + 1].id;
         }
     }
 
     const header = document.createElement('div');
     header.className = 'detail-header';
+    // Task 2: Compact Header & Removed Nav Arrows
     header.innerHTML = `
         <div class="header-left">
             <button class="back-btn" onclick="closeDetail()">←</button>
-            <div>
-                <div class="date-info" style="font-size:10px; color:#888; display:flex; gap:5px; margin-bottom:2px; flex-wrap: wrap;">
-                    <span style="border:1px solid #444; padding:1px 4px; border-radius:3px;">実装: ${char.release || '---'}</span>
-                    ${char.eza ? `<span style="background:#4a2c00; color:#ffa500; border:1px solid #804000; padding:1px 4px; border-radius:3px;">極限: ${char.eza}</span>` : ''}
-                    ${char.seza ? `<span style="background:#2a004a; color:#e080ff; border:1px solid #d300ff; padding:1px 4px; border-radius:3px;">超極限: ${char.seza}</span>` : ''}
+            <div style="flex: 1; min-width: 0;">
+                <div class="char-sub-header text-truncate">${char.title || ''}</div>
+                <div class="char-name-header clickable-tag text-truncate" onclick="applyFilter('name', '${displayRawName}')">${displayName}</div>
+                <div class="date-info-compact">
+                    <span class="date-tag">実装: ${char.release || '---'}</span>
+                    ${char.eza ? `<span class="date-tag eza">極限: ${char.eza}</span>` : ''}
+                    ${char.seza ? `<span class="date-tag seza">超極限: ${char.seza}</span>` : ''}
                 </div>
-                <div class="char-sub-header">${char.title || ''}</div>
-                <div class="char-name-header clickable-tag" onclick="applyFilter('name', '${displayRawName}')">${displayName}</div>
             </div>
         </div>
         <div class="action-buttons">
-            ${prevCharId ? `<button class="icon-btn nav-arrow-btn" onclick="openDetail(${prevCharId})">←</button>` : ''}
-            ${nextCharId ? `<button class="icon-btn nav-arrow-btn" onclick="openDetail(${nextCharId})">→</button>` : ''}
             <button class="icon-btn ${state.favorites.includes(id)?'active':''}" onclick="toggleFav(this, ${id})">★</button>
             <button class="icon-btn owned-btn ${state.owned.includes(id)?'active':''}" onclick="toggleOwned(this, ${id})">BOX</button>
         </div>
@@ -1906,6 +1911,20 @@ function renderCharacterDetail(id) {
 
     container.appendChild(body);
     contentDiv.appendChild(container);
+
+    // Task 1: Floating Nav Buttons
+    if (prevCharId) {
+        const btn = document.createElement('div');
+        btn.className = "nav-btn nav-prev";
+        btn.onclick = () => openDetail(prevCharId);
+        contentDiv.appendChild(btn);
+    }
+    if (nextCharId) {
+        const btn = document.createElement('div');
+        btn.className = "nav-btn nav-next";
+        btn.onclick = () => openDetail(nextCharId);
+        contentDiv.appendChild(btn);
+    }
 
     const fabContainer = document.createElement('div');
     fabContainer.className = 'field-floating-container';
