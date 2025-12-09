@@ -347,6 +347,7 @@ body {
     align-items: center;
     gap: 6px;
     min-width: 0;
+    width: 100%;
     overflow: hidden;
     white-space: nowrap;
     mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
@@ -354,10 +355,7 @@ body {
 }
 
 .char-name-text {
-    flex: 1;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .char-row-details {
@@ -2324,15 +2322,13 @@ body {
     }
 }
 
-@keyframes scroll-left {
+@keyframes marquee {
     0% { transform: translateX(0); }
-    20% { transform: translateX(0); }
-    80% { transform: translateX(-100%); }
-    100% { transform: translateX(-100%); }
+    100% { transform: translateX(-200%); }
 }
 
-.marquee-scroll {
+.marquee-text {
     display: inline-block;
-    animation: scroll-left 10s linear infinite;
+    animation: marquee 8s linear infinite;
     padding-left: 100%;
 }
