@@ -45,13 +45,7 @@ function init() {
     const urlParams = new URLSearchParams(window.location.search);
     const charId = urlParams.get('id');
     if (charId && DB.some(c => c.id == charId)) {
-        // 詳細画面を開く (zukan.jsの関数)
         if(typeof openDetail === 'function') {
-            // 初期表示なのでpushStateはしない（現在のURLをそのまま使う）
-            // ただし openDetail はデフォルトで pushState するので、
-            // 履歴に追加したくない場合は flag を渡す設計にしてもよいが、
-            // ここでは簡易的にそのまま呼ぶ (履歴が1つ増えるが許容)
-            // あるいは zukan.js の openDetail に skipPushState 引数を追加する（実装済み）
             openDetail(Number(charId), true); 
         }
     } else {
@@ -62,28 +56,70 @@ function init() {
         if (contentDiv.scrollTop > 300) scrollTopBtn.classList.add('visible');
         else scrollTopBtn.classList.remove('visible');
     });
+
+    // --- Task 2: Pull to Refresh ---
+    const pullIndicator = document.getElementById('pull-refresh-indicator');
+    let pullStartY = 0;
+    let isPulling = false;
+
+    if (pullIndicator) {
+        contentDiv.addEventListener('touchstart', (e) => {
+            if (contentDiv.scrollTop === 0) {
+                pullStartY = e.touches[0].clientY;
+                isPulling = true;
+            } else {
+                isPulling = false;
+            }
+        }, { passive: true });
+
+        contentDiv.addEventListener('touchmove', (e) => {
+            if (!isPulling) return;
+            const y = e.touches[0].clientY;
+            const diff = y - pullStartY;
+
+            if (diff > 0 && contentDiv.scrollTop <= 0) {
+                // Threshold to show indicator (e.g. 80px)
+                if (diff > 80) {
+                    pullIndicator.classList.add('visible');
+                } else {
+                    pullIndicator.classList.remove('visible');
+                }
+            }
+        }, { passive: true });
+
+        contentDiv.addEventListener('touchend', (e) => {
+            if (!isPulling) return;
+            isPulling = false;
+            if (pullIndicator.classList.contains('visible')) {
+                // Keep visible and reload
+                window.location.reload();
+            }
+        });
+    }
     
-    // ▼▼▼ Service Worker 更新検知ロジック ▼▼▼
+    // --- Task 1: Service Worker Logic ---
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('service-worker.js').then(reg => {
             
-            // アップデートが見つかった場合（ダウンロード開始）
+            // 1. Waiting Handling
+            if (reg.waiting) {
+                showUpdateLoading();
+                reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+                return;
+            }
+
+            // 2. Update Found Handling
             reg.onupdatefound = () => {
                 const installingWorker = reg.installing;
                 if (!installingWorker) return;
 
-                // 既にコントロールされている場合（=初回アクセスではなく更新の場合）のみロード画面を出す
-                if (navigator.serviceWorker.controller) {
-                    showUpdateLoading();
-                }
-
+                // Wait for installed state
                 installingWorker.onstatechange = () => {
-                    // インストール完了（待機状態）になったら
                     if (installingWorker.state === 'installed') {
                         if (navigator.serviceWorker.controller) {
-                            console.log('New content is available; please refresh.');
-                            // service-worker.js 側で skipWaiting しているので、
-                            // 自動的に controllerchange が発火してリロードされるはず
+                            // Update available
+                            showUpdateLoading();
+                            installingWorker.postMessage({ type: 'SKIP_WAITING' });
                         } else {
                             console.log('Content is cached for offline use.');
                         }
@@ -94,13 +130,62 @@ function init() {
             console.error('Service Worker registration failed:', err);
         });
 
-        // 新しいSWがアクティブになったらリロード
+        // 3. Controller Change Reload
         let refreshing = false;
         navigator.serviceWorker.addEventListener('controllerchange', () => {
             if (refreshing) return;
             refreshing = true;
             window.location.reload();
         });
+    }
+
+    // --- Task 3: PWA Install Banner ---
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    const banner = document.getElementById('pwa-install-banner');
+
+    if (!isStandalone && banner) {
+        // Android/Chrome
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            banner.classList.remove('hidden');
+
+            const installBtn = document.getElementById('pwa-install-btn');
+            if(installBtn) {
+                installBtn.onclick = () => {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User accepted the A2HS prompt');
+                        }
+                        deferredPrompt = null;
+                        banner.classList.add('hidden');
+                    });
+                };
+            }
+        });
+
+        // iOS Detection
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+             // Show iOS instructions
+             banner.classList.remove('hidden');
+             const title = banner.querySelector('.pwa-title');
+             const desc = banner.querySelector('.pwa-desc');
+             const installBtn = document.getElementById('pwa-install-btn');
+
+             if(title) title.innerText = "ホーム画面に追加";
+             if(desc) desc.innerText = "「共有」ボタン → 「ホーム画面に追加」";
+             if(installBtn) installBtn.style.display = 'none';
+        }
+
+        const closeBtn = document.getElementById('pwa-close-btn');
+        if(closeBtn) {
+            closeBtn.onclick = () => {
+                banner.classList.add('hidden');
+            };
+        }
     }
 }
 

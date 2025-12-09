@@ -2107,3 +2107,105 @@ body {
     flex-shrink: 0;
     margin-left: 4px;
 }
+
+/* Pull to Refresh */
+.pull-refresh-indicator {
+    position: fixed; /* Fixed so it stays relative to viewport */
+    top: 60px; /* Below header roughly */
+    left: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 900;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.pull-refresh-indicator.visible {
+    opacity: 1;
+    transform: translateY(10px);
+}
+
+.pull-spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid var(--highlight);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* PWA Banner */
+.pwa-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1f1f22;
+    border-top: 1px solid var(--highlight);
+    padding: 15px;
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
+    animation: slideUp 0.3s ease-out;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 15px);
+}
+
+.pwa-banner.hidden {
+    display: none;
+}
+
+.pwa-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.pwa-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.pwa-title {
+    font-weight: bold;
+    color: var(--highlight);
+    font-size: 14px;
+}
+
+.pwa-desc {
+    font-size: 11px;
+    color: #ccc;
+}
+
+.pwa-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.pwa-btn-install {
+    background: var(--highlight);
+    color: #000;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pwa-btn-close {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 5px;
+}
