@@ -232,7 +232,7 @@ window.addEventListener('popstate', (event) => {
         setTimeout(() => {
             render();
             // Scroll restoration happens inside renderZukanList logic
-        }, 300); // 300ms delay to let the swipe finish
+        }, 400); // 400ms delay to let the swipe finish
     } else {
         render(); // Detail-to-Detail can be instant
     }
