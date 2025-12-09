@@ -1,30 +1,42 @@
-/* --- Global Variables --- */
+/* =========================================
+   1. Global Variables
+   ========================================= */
 :root {
     --bg-color: #101012;
     --card-bg: #222225;
     --text-main: #ffffff;
     --text-sub: #a0a0a0;
+
+    /* Accents */
     --accent-str: #ff4d4d;
     --accent-teq: #4cd964;
     --accent-agl: #00ccff;
     --accent-int: #ba55d3;
     --accent-phy: #ffa500;
+
+    /* Common UI Colors */
     --border-color: #3a3a3e;
     --highlight: #ffd700;
+
+    /* Entry Animation Colors */
     --entry-bg: #2a1f30;
     --entry-border: #9c27b0;
+
+    /* Dimensions */
     --nav-height: 60px;
 
     /* Standby Colors */
-    --standby-border: #00e5ff; /* シアン系 */
+    --standby-border: #00e5ff; /* Cyan */
     --standby-bg: rgba(0, 229, 255, 0.05);
 
     /* Field Colors */
-    --field-border: #ff00ff; /* マゼンタ系 */
+    --field-border: #ff00ff; /* Magenta */
     --field-bg: #2d1f2d;
 }
 
-/* --- Base Styles & Resets --- */
+/* =========================================
+   2. Base Styles & Resets
+   ========================================= */
 body {
     margin: 0;
     padding: 0;
@@ -32,10 +44,12 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     -webkit-font-smoothing: antialiased;
-    overflow: hidden;
+    overflow: hidden; /* App-like behavior */
 }
 
-/* --- Layout Containers --- */
+/* =========================================
+   3. Layout Containers
+   ========================================= */
 #app {
     display: flex;
     flex-direction: column;
@@ -64,7 +78,56 @@ body {
     z-index: 90;
 }
 
-/* --- Navigation --- */
+/* =========================================
+   4. Navigation
+   ========================================= */
+
+/* Floating Navigation Buttons */
+.nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 120px;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 900;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    pointer-events: auto;
+}
+
+.nav-btn:active {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-btn::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-top: 4px solid rgba(255, 255, 255, 0.5);
+    border-right: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+.nav-prev {
+    left: 0;
+}
+.nav-prev::before {
+    transform: rotate(-135deg);
+    margin-left: 10px;
+}
+
+.nav-next {
+    right: 0;
+}
+.nav-next::before {
+    transform: rotate(45deg);
+    margin-right: 10px;
+}
+
 #tab-bar {
     height: 60px;
     background-color: #18181b;
@@ -109,7 +172,11 @@ body {
     stroke-linejoin: round;
 }
 
-/* --- Zukan List --- */
+/* =========================================
+   5. Zukan List (Header, Filters, List)
+   ========================================= */
+
+/* --- Header & Search --- */
 .zukan-header {
     padding: 10px 15px;
     background-color: var(--bg-color);
@@ -165,6 +232,7 @@ body {
     display: flex;
 }
 
+/* --- Action Row (Sort/Mode) --- */
 .action-row {
     display: flex;
     justify-content: space-between;
@@ -255,6 +323,7 @@ body {
     cursor: pointer;
 }
 
+/* --- Grid & Items --- */
 .char-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
@@ -268,7 +337,7 @@ body {
     gap: 8px;
 }
 
-/* List Mode Adjustments */
+/* List Mode Rows */
 .char-item-row {
     display: flex;
     background-color: var(--card-bg);
@@ -319,12 +388,17 @@ body {
     font-weight: bold;
     line-height: 1.3;
     color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     display: flex;
     align-items: center;
     gap: 6px;
+    min-width: 0;
+}
+
+.char-name-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .char-row-details {
@@ -360,7 +434,9 @@ body {
     opacity: 0.6;
 }
 
-/* --- Character Icons --- */
+/* =========================================
+   6. Character Icons
+   ========================================= */
 .dokkan-icon {
     position: relative;
     width: 100%;
@@ -400,6 +476,7 @@ body {
     margin: 0;
 }
 
+/* Icon Layers */
 .icon-layer {
     position: absolute;
     top: 0;
@@ -532,7 +609,9 @@ body {
     border: 1px solid #555;
 }
 
-/* --- Character Detail View --- */
+/* =========================================
+   7. Character Detail View (Header & Layout)
+   ========================================= */
 .sticky-header-wrapper {
     position: sticky;
     top: 0;
@@ -579,6 +658,37 @@ body {
     color: #888;
 }
 
+/* Compact Header adjustments */
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.date-info-compact {
+    display: flex;
+    gap: 4px;
+    margin-top: 2px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+.date-tag {
+    font-size: 9px;
+    color: #888;
+    border: 1px solid #444;
+    padding: 0 4px;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+.date-tag.eza {
+    background:#4a2c00; color:#ffa500; border-color:#804000;
+}
+.date-tag.seza {
+    background:#2a004a; color:#e080ff; border-color:#d300ff;
+}
+
 .action-buttons {
     display: flex;
     gap: 8px;
@@ -609,6 +719,12 @@ body {
     background: rgba(76, 217, 100, 0.1);
 }
 
+.nav-arrow-btn {
+    font-weight: bold;
+    font-size: 14px;
+    margin-right: 4px;
+}
+
 .detail-container {
     padding: 15px;
 }
@@ -622,7 +738,17 @@ body {
     font-weight: bold;
 }
 
-/* Tabs & EZA Switch */
+.detail-ad-slot {
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    background-color: rgba(0,0,0,0.2);
+    margin-top: 30px;
+    margin-bottom: 80px; /* Ensure space for bottom nav/FAB */
+    border-top: 1px solid var(--border-color);
+}
+
+/* --- Tabs & EZA Switch --- */
 .tabs-control-row {
     display: flex;
     justify-content: space-between;
@@ -705,7 +831,11 @@ body {
     pointer-events: none;
 }
 
-/* Skill Cards */
+/* =========================================
+   8. Skills & Abilities
+   ========================================= */
+
+/* Generic Skill Card */
 .skill-card {
     background-color: var(--card-bg);
     border-radius: 8px;
@@ -728,6 +858,7 @@ body {
     white-space: normal;
 }
 
+/* Passive Bullet Points */
 .passive-bullet {
     display: block;
     margin-bottom: 4px;
@@ -756,6 +887,7 @@ body {
     transform: translateY(-1.5px);
 }
 
+/* Passive Groups */
 .passive-group {
     margin-bottom: 10px;
 }
@@ -779,6 +911,7 @@ body {
     padding-left: 4px;
 }
 
+/* Skill Footer (Stats) */
 .skill-footer {
     margin-top: 12px;
     padding-top: 10px;
@@ -833,12 +966,8 @@ body {
     padding: 4px;
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 1px 4px;
-    border-radius: 3px;
+    justify-content: center;
     border: 1px solid #555;
-    color: #aaa;
-    font-size: 12px;
 }
 
 .passive-effect-icon {
@@ -858,6 +987,7 @@ body {
     background: rgba(76, 217, 100, 0.2);
 }
 
+/* Entry Animation Box */
 .entry-effect-box {
     background-color: var(--entry-bg);
     border: 1px solid var(--entry-border);
@@ -1146,50 +1276,9 @@ body {
     border-top: 6px solid var(--field-border);
 }
 
-/* Link Table */
-.link-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 11px;
-    margin-top: 5px;
-}
-
-.link-table th,
-.link-table td {
-    padding: 8px 4px;
-    border-bottom: 1px solid #3a3a3e;
-    text-align: left;
-    vertical-align: top;
-}
-
-.link-table tr:last-child td {
-    border-bottom: none;
-}
-
-.link-name {
-    font-weight: bold;
-    color: #f0f0f0;
-    display: block;
-    margin-bottom: 2px;
-    font-size: 12px;
-}
-
-.link-effect-row {
-    display: flex;
-    gap: 6px;
-    font-size: 10px;
-    color: #aaa;
-    margin-top: 1px;
-}
-
-.link-lv-tag {
-    color: #666;
-    font-size: 9px;
-    min-width: 24px;
-    display: inline-block;
-}
-
-/* --- Awakening & Partners --- */
+/* =========================================
+   9. Awakening & Partners
+   ========================================= */
 .partner-scroll {
     display: flex;
     overflow-x: auto;
@@ -1446,6 +1535,23 @@ body {
     position: relative;
 }
 
+.leader-scroll-item {
+    justify-content: flex-start;
+}
+
+.leader-candidate-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 80px;
+    margin: 0 auto;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+}
+
 .scroll-icon-box {
     width: 60px;
     height: 60px;
@@ -1518,8 +1624,54 @@ body {
     padding-left: 6px;
 }
 
-/* --- UI Components --- */
-/* Modals */
+/* Link Table */
+.link-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.link-table th,
+.link-table td {
+    padding: 8px 4px;
+    border-bottom: 1px solid #3a3a3e;
+    text-align: left;
+    vertical-align: top;
+}
+
+.link-table tr:last-child td {
+    border-bottom: none;
+}
+
+.link-name {
+    font-weight: bold;
+    color: #f0f0f0;
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+}
+
+.link-effect-row {
+    display: flex;
+    gap: 6px;
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 1px;
+}
+
+.link-lv-tag {
+    color: #666;
+    font-size: 9px;
+    min-width: 24px;
+    display: inline-block;
+}
+
+/* =========================================
+   10. UI Components
+   ========================================= */
+
+/* --- Modals --- */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -1625,11 +1777,12 @@ body {
     font-weight: bold;
 }
 
+/* --- Toggles & Inputs --- */
 .toggle-group {
     display: flex;
     background: #333;
     border-radius: 8px;
-    pading: 2px;
+    padding: 2px; /* Fixed typo: pading -> padding */
 }
 
 .toggle-item {
@@ -1691,7 +1844,107 @@ body {
     background-color: var(--accent-str);
 }
 
-/* Loading Overlay */
+.filter-input-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.btn-sm {
+    padding: 0 12px;
+    font-size: 12px;
+    background: #444;
+    color: #fff;
+    border: 1px solid #666;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.all-items-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 6px;
+    max-height: 250px;
+    overflow-y: auto;
+    background: #18181b;
+    border-radius: 8px;
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #444;
+}
+
+.all-item-chip {
+    font-size: 10px;
+    background: #333;
+    padding: 6px;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid transparent;
+    color: #aaa;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.all-item-chip:hover {
+    background: #444;
+}
+
+.all-item-chip.selected {
+    background: rgba(76, 217, 100, 0.2);
+    border-color: #4cd964;
+    color: #4cd964;
+}
+
+/* --- Floating Action Button (FAB) --- */
+.filter-fab {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--highlight);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    z-index: 950;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid #fff;
+}
+
+.filter-fab:active {
+    transform: scale(0.95);
+}
+
+.filter-fab.active {
+    background-color: var(--accent-teq);
+    animation: pulse 2s infinite;
+}
+
+.fab-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff4d4d;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-color);
+}
+
+/* --- Loading Overlay --- */
 .loading-overlay {
     position: fixed;
     top: 0;
@@ -1743,7 +1996,7 @@ body {
     line-height: 1.5;
 }
 
-/* Scroll Top Btn */
+/* --- Scroll Top Button --- */
 #scroll-top-btn {
     position: fixed;
     bottom: 80px;
@@ -1772,6 +2025,7 @@ body {
     pointer-events: auto;
 }
 
+/* --- Small Badges --- */
 .eza-badge-mini {
     font-size: 9px;
     padding: 1px 4px;
@@ -1780,9 +2034,21 @@ body {
     color: #ffae42;
     border: 1px solid #ff8c00;
     flex-shrink: 0;
+    margin-left: 4px;
 }
 
-/* Link Modal */
+.seza-badge-mini {
+    font-size: 9px;
+    padding: 1px 4px;
+    border-radius: 4px;
+    background: linear-gradient(45deg, #2a004a, #4a0080);
+    color: #e080ff;
+    border: 1px solid #d300ff;
+    flex-shrink: 0;
+    margin-left: 4px;
+}
+
+/* --- Link Partner Modal Specifics --- */
 .link-modal-content {
     display: flex;
     flex-direction: column;
@@ -1899,13 +2165,135 @@ body {
     color: #ccc;
 }
 
-/* --- Animations --- */
+/* --- Pull to Refresh --- */
+.pull-refresh-indicator {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 900;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.pull-refresh-indicator.visible {
+    opacity: 1;
+    transform: translateY(10px);
+}
+
+.pull-spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid var(--highlight);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* --- PWA Banner --- */
+.pwa-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1f1f22;
+    border-top: 1px solid var(--highlight);
+    padding: 15px;
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
+    animation: slideUp 0.3s ease-out;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 15px);
+}
+
+.pwa-banner.hidden {
+    display: none;
+}
+
+.pwa-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.pwa-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.pwa-title {
+    font-weight: bold;
+    color: var(--highlight);
+    font-size: 14px;
+}
+
+.pwa-desc {
+    font-size: 11px;
+    color: #ccc;
+}
+
+.pwa-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.pwa-btn-install {
+    background: var(--highlight);
+    color: #000;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pwa-btn-close {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+/* =========================================
+   11. Animations
+   ========================================= */
 .slide-in-right {
     animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .slide-in-left {
     animation: slideInLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.fade-in {
+    animation: fadeIn 0.2s ease-out;
+}
+
+.scale-in {
+    animation: scaleIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
 
 @keyframes slideInRight {
@@ -1960,104 +2348,4 @@ body {
     100% {
         transform: scale(1);
     }
-}
-
-/* --- FAB & New Filter UI --- */
-.filter-fab {
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background-color: var(--highlight);
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    z-index: 950;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    border: 2px solid #fff;
-}
-
-.filter-fab:active {
-    transform: scale(0.95);
-}
-
-.filter-fab.active {
-    background-color: var(--accent-teq); /* Indicate active */
-    animation: pulse 2s infinite;
-}
-
-.fab-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: #ff4d4d;
-    color: white;
-    font-size: 11px;
-    font-weight: bold;
-    min-width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--bg-color);
-}
-
-.filter-input-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
-}
-
-.btn-sm {
-    padding: 0 12px;
-    font-size: 12px;
-    background: #444;
-    color: #fff;
-    border: 1px solid #666;
-    border-radius: 6px;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.all-items-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 6px;
-    max-height: 250px;
-    overflow-y: auto;
-    background: #18181b;
-    border-radius: 8px;
-    padding: 8px;
-    margin-top: 10px;
-    border: 1px solid #444;
-}
-
-.all-item-chip {
-    font-size: 10px;
-    background: #333;
-    padding: 6px;
-    border-radius: 4px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid transparent;
-    color: #aaa;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.all-item-chip:hover {
-    background: #444;
-}
-
-.all-item-chip.selected {
-    background: rgba(76, 217, 100, 0.2);
-    border-color: #4cd964;
-    color: #4cd964;
 }

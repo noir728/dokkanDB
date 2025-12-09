@@ -441,7 +441,7 @@ function renderFilterModal() {
 
     const html = `
     <div id="filter-modal" class="modal-overlay">
-        <div class="filter-modal">
+        <div class="filter-modal scale-in">
             <h2 style="font-size:16px; font-weight:bold; margin-bottom:20px; text-align:center;">絞り込み条件</h2>
 
             <!-- Removed Global Logic Toggle -->
@@ -722,6 +722,7 @@ function toggleMiniLogic(type) {
 
 function setSort(value) { 
     state.filter.sort = value; 
+    state.scrollPositions['zukan'] = 0; // Reset scroll on sort change
 
     // Task 2: Maintain Sort Order on Back Navigation
     // Update history state to include the new sort option
@@ -874,6 +875,7 @@ function applyFilter(type, value) {
     
     state.detailCharId = null;
     state.animDirection = 'left';
+    state.scrollPositions['zukan'] = 0; // Reset scroll on new filter
     
     const url = new URL(window.location);
     url.searchParams.delete('id');
@@ -950,9 +952,7 @@ function renderZukanLayout() {
         }
     }
 
-    if (state.detailCharId === null && state.zukanScrollTop > 0) {
-        contentDiv.scrollTop = state.zukanScrollTop;
-    }
+    // Scroll restoration removed from layout render, it's in list render now
 }
 
 function renderZukanList(targetGrid) {
@@ -1047,6 +1047,8 @@ function renderZukanList(targetGrid) {
         });
     }
 
+    state.currentList = displayDB;
+
     const countEl = document.getElementById('zukan-count');
     if(countEl) countEl.innerText = `${displayDB.length}体 表示中`;
 
@@ -1085,14 +1087,26 @@ function renderZukanList(targetGrid) {
                 if (rawStats.rainbow) displayStats = rawStats.rainbow;
                 else if (rawStats.hp) displayStats = rawStats;
             }
-            const ezaBadge = (char.eza) 
-                ? `<span class="eza-badge-mini">極限</span>` : '';
+
+            let badgeHtml = '';
+            if (char.seza) {
+                badgeHtml = `<span class="seza-badge-mini">超極限</span>`;
+            } else if (char.eza && !char.seza) {
+                badgeHtml = `<span class="eza-badge-mini">極限</span>`;
+            }
+
+            let totalLen = char.name.length;
+            if (badgeHtml) totalLen += 4;
+
+            let nameClass = 'char-row-name';
+            if (totalLen > 18) nameClass += ' text-xs';
+            else if (totalLen > 14) nameClass += ' text-sm';
 
             item.innerHTML = `
                 <div class="list-icon-wrapper">${iconHtml}</div>
                 <div class="char-row-info">
                     <div class="char-row-header"><div class="char-row-title">${char.title || ''}</div><div class="char-row-date">${char.release || ''}</div></div>
-                    <div class="char-row-name">${char.name.replace(/\n/g, ' ')}${ezaBadge}</div>
+                    <div class="${nameClass}"><span class="char-name-text">${char.name.replace(/\n/g, ' ')}</span>${badgeHtml}</div>
                     <div class="char-row-details">
                         <div class="list-cost">コスト ${char.cost || '-'}</div>
                         <div class="char-row-stats"><span>HP ${displayStats.hp}</span><span>ATK ${displayStats.atk}</span><span>DEF ${displayStats.def}</span></div>
@@ -1102,18 +1116,34 @@ function renderZukanList(targetGrid) {
         item.onclick = () => openDetail(char.id);
         grid.appendChild(item);
     });
+
+    if (state.detailCharId === null && state.scrollPositions && state.scrollPositions['zukan'] !== undefined) {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                const content = document.getElementById('main-content');
+                if (content) {
+                    content.scrollTop = state.scrollPositions['zukan'];
+                }
+            });
+        });
+    }
 }
 
 // --- 4. Detail View Logic & UI Actions ---
 
 function openDetail(id) {
+    // Save scroll position BEFORE changing state
+    const content = document.getElementById('main-content');
+    if (content) {
+        state.scrollPositions['zukan'] = content.scrollTop;
+    }
+
     const url = new URL(window.location);
     url.searchParams.set('id', id);
     window.history.pushState({ id: id }, '', url);
 
-    const content = document.getElementById('main-content');
     if (content) {
-        state.zukanScrollTop = content.scrollTop;
+        content.scrollTop = 0;
     }
 
     state.detailCharId = id;
@@ -1132,6 +1162,10 @@ function closeDetail() {
         return;
     }
     
+    // Save current detail scroll just in case
+    const content = document.getElementById('main-content');
+    if (content) state.scrollPositions['detail'] = content.scrollTop;
+
     state.detailCharId = null;
     state.animDirection = 'left';
     if(typeof render === 'function') render();
@@ -1210,7 +1244,7 @@ function openLeaderDetailModal(leaderId) {
 
     const modalHtml = `
         <div id="leader-detail-modal" class="modal-overlay open" style="z-index: 1200;">
-            <div class="filter-modal" style="height: auto; max-height: 80vh; padding-bottom: 30px;">
+            <div class="filter-modal scale-in" style="height: auto; max-height: 80vh; padding-bottom: 30px;">
                 <div class="link-modal-content">
                     <h2 style="font-size:14px; font-weight:bold; text-align:center; padding-bottom:10px; border-bottom:1px solid #333;">リーダー詳細</h2>
                     
@@ -1322,7 +1356,7 @@ function openLinkPartnerModal(partnerId, formType, formIndex) {
 
     const modalHtml = `
         <div id="link-partner-modal" class="modal-overlay open" style="z-index: 1100;">
-            <div class="filter-modal" style="height: 70vh; max-height: 600px;">
+            <div class="filter-modal scale-in" style="height: 70vh; max-height: 600px;">
                 <div class="link-modal-content">
                     <h2 style="font-size:14px; font-weight:bold; text-align:center; padding-bottom:10px; border-bottom:1px solid #333;">リンクスキル相性確認</h2>
                     
@@ -1398,19 +1432,36 @@ function renderCharacterDetail(id) {
     const displayName = (currentData.name || char.name || "").replace(/\n/g, '<br>');
     const displayRawName = (currentData.name || char.name || "").split('\n')[0];
 
+    // Task 3: Persistence Fallback
+    let navList = state.currentList;
+    if (!navList || navList.length === 0) {
+        navList = DB;
+    }
+
+    let prevCharId = null;
+    let nextCharId = null;
+    if (navList) {
+        const idx = navList.findIndex(c => c.id === id);
+        if (idx !== -1) {
+            if (idx > 0) prevCharId = navList[idx - 1].id;
+            if (idx < navList.length - 1) nextCharId = navList[idx + 1].id;
+        }
+    }
+
     const header = document.createElement('div');
     header.className = 'detail-header';
+    // Task 2: Compact Header & Removed Nav Arrows
     header.innerHTML = `
         <div class="header-left">
             <button class="back-btn" onclick="closeDetail()">←</button>
-            <div>
-                <div class="date-info" style="font-size:10px; color:#888; display:flex; gap:5px; margin-bottom:2px; flex-wrap: wrap;">
-                    <span style="border:1px solid #444; padding:1px 4px; border-radius:3px;">実装: ${char.release || '---'}</span>
-                    ${char.eza ? `<span style="background:#4a2c00; color:#ffa500; border:1px solid #804000; padding:1px 4px; border-radius:3px;">極限: ${char.eza}</span>` : ''}
-                    ${char.seza ? `<span style="background:#2a004a; color:#e080ff; border:1px solid #d300ff; padding:1px 4px; border-radius:3px;">超極限: ${char.seza}</span>` : ''}
+            <div style="flex: 1; min-width: 0;">
+                <div class="char-sub-header text-truncate">${char.title || ''}</div>
+                <div class="char-name-header clickable-tag text-truncate" onclick="applyFilter('name', '${displayRawName}')">${displayName}</div>
+                <div class="date-info-compact">
+                    <span class="date-tag">実装: ${char.release || '---'}</span>
+                    ${char.eza ? `<span class="date-tag eza">極限: ${char.eza}</span>` : ''}
+                    ${char.seza ? `<span class="date-tag seza">超極限: ${char.seza}</span>` : ''}
                 </div>
-                <div class="char-sub-header">${char.title || ''}</div>
-                <div class="char-name-header clickable-tag" onclick="applyFilter('name', '${displayRawName}')">${displayName}</div>
             </div>
         </div>
         <div class="action-buttons">
@@ -1785,7 +1836,7 @@ function renderCharacterDetail(id) {
                 if(l.stats.atk >= 200) badgeClass += " full-link"; 
                 
                 leaderHtml += `
-                    <div class="scroll-item-wrapper" onclick="openLeaderDetailModal(${l.char.id})">
+                    <div class="leader-candidate-item" onclick="openLeaderDetailModal(${l.char.id})">
                         <div class="scroll-icon-box">${iconHtml}</div>
                         <div class="scroll-item-info">
                             <span class="${badgeClass}">ATK ${l.stats.atk}%</span>
@@ -1850,11 +1901,29 @@ function renderCharacterDetail(id) {
         body.innerHTML += farmHtml;
     }
 
+    // Ad Slot
+    body.innerHTML += `
+        <div class="detail-ad-slot">
+            <div style="width: 300px; height: 250px; background: #444; color: #888; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                [Advertisement Area]
+            </div>
+        </div>`;
+
     container.appendChild(body);
     contentDiv.appendChild(container);
 
-    if (state.detailCharId === null && state.zukanScrollTop > 0) {
-        contentDiv.scrollTop = state.zukanScrollTop;
+    // Task 1: Floating Nav Buttons
+    if (prevCharId) {
+        const btn = document.createElement('div');
+        btn.className = "nav-btn nav-prev";
+        btn.onclick = () => openDetail(prevCharId);
+        contentDiv.appendChild(btn);
+    }
+    if (nextCharId) {
+        const btn = document.createElement('div');
+        btn.className = "nav-btn nav-next";
+        btn.onclick = () => openDetail(nextCharId);
+        contentDiv.appendChild(btn);
     }
 
     const fabContainer = document.createElement('div');
