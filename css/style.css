@@ -37,6 +37,10 @@
 /* =========================================
    2. Base Styles & Resets
    ========================================= */
+html, body {
+    overscroll-behavior-y: auto; /* Allow vertical pull-to-refresh if needed */
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -347,13 +351,13 @@ body {
     align-items: center;
     gap: 6px;
     min-width: 0;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .char-name-text {
-    flex: 1;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .char-row-details {
@@ -588,7 +592,9 @@ body {
 .header-left {
     display: flex;
     align-items: center;
-    gap: 10px;
+    flex: 1;
+    min-width: 0; /* Critical for text truncation in flex item */
+    margin-right: 8px;
 }
 
 .back-btn {
@@ -606,6 +612,26 @@ body {
     color: var(--accent-teq);
     line-height: 1.2;
     text-shadow: 0 0 5px rgba(76, 217, 100, 0.3);
+    /* Reset display to block/inline-block if needed, or keep flex but restrict width */
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* Default state */
+}
+
+/* Animation Class */
+.header-scroll-anim {
+    display: inline-block;
+    animation: scroll-fade-in 10s linear infinite;
+}
+
+@keyframes scroll-fade-in {
+    0% { transform: translateX(0); opacity: 1; }
+    70% { transform: translateX(-150%); opacity: 1; } /* Scroll out */
+    70.1% { transform: translateX(0); opacity: 0; } /* Reset pos instantly hidden */
+    80% { transform: translateX(0); opacity: 1; } /* Fade in */
+    100% { transform: translateX(0); opacity: 1; } /* Wait */
 }
 
 .char-sub-header {
@@ -620,12 +646,20 @@ body {
     text-overflow: ellipsis;
 }
 
-.date-info-compact {
+.date-info {
     display: flex;
-    gap: 4px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
     margin-top: 2px;
-    flex-wrap: nowrap;
-    overflow: hidden;
+}
+
+.date-row-primary, .date-row-secondary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+    width: fit-content;
 }
 
 .date-tag {
@@ -647,6 +681,8 @@ body {
 .action-buttons {
     display: flex;
     gap: 8px;
+    flex-shrink: 0;
+    margin-left: 8px;
 }
 
 .icon-btn {
@@ -1239,6 +1275,24 @@ body {
     overflow-x: auto;
     gap: 12px;
     padding: 5px 0 10px 0;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+    opacity: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.accordion-content.open {
+    max-height: 1000px; /* Arbitrary large value */
+    opacity: 1;
+    transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease-in-out;
+    padding-top: 5px !important;
+    padding-bottom: 10px !important;
+    overflow-x: auto;
 }
 
 .partner-item {
@@ -1954,22 +2008,20 @@ body {
 /* --- Scroll Top Button --- */
 #scroll-top-btn {
     position: fixed;
-    bottom: 80px;
-    left: 20px;
-    right: auto;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background-color: rgba(255, 215, 0, 0.9);
-    color: #000;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 24px;
+    border-radius: 12px;
+    background-color: rgba(60, 60, 60, 0.7);
+    color: #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-    border: 2px solid #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    font-size: 10px;
     z-index: 900;
+    backdrop-filter: blur(4px);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s;
@@ -2303,4 +2355,9 @@ body {
     100% {
         transform: scale(1);
     }
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-200%); }
 }

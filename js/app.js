@@ -197,35 +197,26 @@ function showUpdateLoading() {
     }
 }
 
-// ▼▼▼ Popstate Handler (Improved) ▼▼▼
 window.addEventListener('popstate', (event) => {
-    // 1. Restore Filters
+    // Restore State
     if (event.state) {
         if (event.state.filter) state.filter = event.state.filter;
         if (event.state.searchQuery !== undefined) state.searchQuery = event.state.searchQuery;
-    } else {
-        // Reset if no state (e.g. back to initial)
-        if (typeof resetFilters === 'function') resetFilters(); 
     }
 
-    // 2. Navigation Logic
-    // Compare new desired ID (event.state.id) with current (state.detailCharId)
+    // Update IDs
     const newId = (event.state && event.state.id) ? event.state.id : null;
-    const currentId = state.detailCharId;
-
     if (newId) {
-        // Moving to Detail (from List or another Detail)
         state.detailCharId = newId;
         state.detailFormIndex = 0;
         state.detailEzaMode = 'normal';
-        state.animDirection = 'right'; // Entering detail
+        state.animDirection = 'right';
     } else {
-        // Moving to List
         state.detailCharId = null;
-        state.animDirection = 'left'; // Returning to list
+        state.animDirection = 'left';
     }
 
-    // Force Render
+    // Render Immediately
     render();
 });
 

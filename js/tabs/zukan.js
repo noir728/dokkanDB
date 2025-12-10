@@ -1096,9 +1096,10 @@ function renderZukanList(targetGrid) {
             }
 
             let totalLen = char.name.length;
-            if (badgeHtml) totalLen += 4;
+            if (badgeHtml) totalLen += 3;
 
             let nameClass = 'char-row-name';
+
             if (totalLen > 18) nameClass += ' text-xs';
             else if (totalLen > 14) nameClass += ' text-sm';
 
@@ -1106,7 +1107,14 @@ function renderZukanList(targetGrid) {
                 <div class="list-icon-wrapper">${iconHtml}</div>
                 <div class="char-row-info">
                     <div class="char-row-header"><div class="char-row-title">${char.title || ''}</div><div class="char-row-date">${char.release || ''}</div></div>
-                    <div class="${nameClass}"><span class="char-name-text">${char.name.replace(/\n/g, ' ')}</span>${badgeHtml}</div>
+
+                    <div class="char-name-badge-flex" style="display:flex; align-items:center; width:100%;">
+                        <div class="${nameClass}" style="flex:1; display:block; padding-right:4px;">
+                            <span class="char-name-text">${char.name.replace(/\n/g, ' ')}</span>
+                        </div>
+                        ${badgeHtml}
+                    </div>
+
                     <div class="char-row-details">
                         <div class="list-cost">コスト ${char.cost || '-'}</div>
                         <div class="char-row-stats"><span>HP ${displayStats.hp}</span><span>ATK ${displayStats.atk}</span><span>DEF ${displayStats.def}</span></div>
@@ -1215,12 +1223,19 @@ function toggleFieldInfo(btn) {
 function togglePartnerSection(id, btn) {
     const el = document.getElementById(id);
     if (!el) return;
-    const isHidden = el.style.display === 'none';
-    el.style.display = isHidden ? 'flex' : 'none';
+
+    // Task 1: Accordion Animation
+    // Toggle the 'open' class
+    const isOpen = el.classList.contains('open');
+    if (isOpen) {
+        el.classList.remove('open');
+    } else {
+        el.classList.add('open');
+    }
     
     if(btn) {
         const arrow = btn.querySelector('.toggle-arrow');
-        if(arrow) arrow.textContent = isHidden ? '▲' : '▼';
+        if(arrow) arrow.textContent = !isOpen ? '▲' : '▼';
     }
 }
 
@@ -1431,6 +1446,8 @@ function renderCharacterDetail(id) {
 
     const displayName = (currentData.name || char.name || "").replace(/\n/g, '<br>');
     const displayRawName = (currentData.name || char.name || "").split('\n')[0];
+    const isLongName = displayRawName.length > 15;
+    const nameClass = isLongName ? 'header-scroll-anim' : '';
 
     // Task 3: Persistence Fallback
     let navList = state.currentList;
@@ -1456,10 +1473,12 @@ function renderCharacterDetail(id) {
             <button class="back-btn" onclick="closeDetail()">←</button>
             <div style="flex: 1; min-width: 0;">
                 <div class="char-sub-header text-truncate">${char.title || ''}</div>
-                <div class="char-name-header clickable-tag text-truncate" onclick="applyFilter('name', '${displayRawName}')">${displayName}</div>
-                <div class="date-info-compact">
-                    <span class="date-tag">実装: ${char.release || '---'}</span>
-                    ${char.eza ? `<span class="date-tag eza">極限: ${char.eza}</span>` : ''}
+                <div class="char-name-header clickable-tag" onclick="applyFilter('name', '${displayRawName}')"><span class="${nameClass}">${displayName}</span></div>
+                <div class="date-info">
+                    <div class="date-row-primary">
+                        <span class="date-tag">実装: ${char.release || '---'}</span>
+                        ${char.eza ? `<span class="date-tag eza">極限: ${char.eza}</span>` : ''}
+                    </div>
                     ${char.seza ? `<span class="date-tag seza">超極限: ${char.seza}</span>` : ''}
                 </div>
             </div>
@@ -1598,7 +1617,7 @@ function renderCharacterDetail(id) {
             if (state.detailEzaMode === 'eza' || state.detailEzaMode === 'seza') maxLv = 140; else maxLv = 120;
         } else if (char.rarity === 'SSR') maxLv = 80;
 
-        body.innerHTML += `<div class="section-title">ステータス</div><div style="display:flex; gap:10px;"><div style="display:flex; flex-direction:column; align-items:center;"><div class="detail-icon-large">${getCharIconHtml(char, currentData)}</div><div class="text-xs text-gray-300 mt-1">最大Lv.${maxLv}</div>${char.cost ? `<div class="char-cost">コスト: ${char.cost}</div>` : ''}</div><table style="width:100%; font-size:11px; text-align:center; border-collapse:collapse; border:1px solid #444; border-radius:4px; overflow:hidden;"><tr style="background:#333; color:#aaa;"><th></th><th>HP</th><th>ATK</th><th>DEF</th></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">LvMax</td><td>${sBase.hp}</td><td>${sBase.atk}</td><td>${sBase.def}</td></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">55%</td><td>${sFifty.hp}</td><td>${sFifty.atk}</td><td>${sFifty.def}</td></tr><tr style="background:#222;"><td style="background:#2a2a2e;font-weight:bold;">100%</td><td>${sRainbow.hp}</td><td>${sRainbow.atk}</td><td>${sRainbow.def}</td></tr></table></div>`;
+        body.innerHTML += `<div id="char-swipe-area" style="touch-action: pan-y;"><div class="section-title">ステータス</div><div style="display:flex; gap:10px;"><div style="display:flex; flex-direction:column; align-items:center;"><div class="detail-icon-large">${getCharIconHtml(char, currentData)}</div><div class="text-xs text-gray-300 mt-1">最大Lv.${maxLv}</div>${char.cost ? `<div class="char-cost">コスト: ${char.cost}</div>` : ''}</div><table style="width:100%; font-size:11px; text-align:center; border-collapse:collapse; border:1px solid #444; border-radius:4px; overflow:hidden;"><tr style="background:#333; color:#aaa;"><th></th><th>HP</th><th>ATK</th><th>DEF</th></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">LvMax</td><td>${sBase.hp}</td><td>${sBase.atk}</td><td>${sBase.def}</td></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">55%</td><td>${sFifty.hp}</td><td>${sFifty.atk}</td><td>${sFifty.def}</td></tr><tr style="background:#222;"><td style="background:#2a2a2e;font-weight:bold;">100%</td><td>${sRainbow.hp}</td><td>${sRainbow.atk}</td><td>${sRainbow.def}</td></tr></table></div></div>`;
     }
 
     let displayLeaderSkill = char.leaderSkill;
@@ -1626,7 +1645,8 @@ function renderCharacterDetail(id) {
                 <span>相性の良いキャラ (タップで開く)</span>
                 <span class="toggle-arrow" style="font-size:12px; color:#888;">▼</span>
             </div>
-            <div id="${toggleId}" class="partner-scroll" style="display:none;">${partnersHtml}</div>
+                <!-- Task 1: Accordion Animation - added accordion-content, removed display:none -->
+                <div id="${toggleId}" class="partner-scroll accordion-content">${partnersHtml}</div>
         `;
     }
 
@@ -1850,7 +1870,8 @@ function renderCharacterDetail(id) {
                     <span>リーダー候補 (タップで開く)</span>
                     <span class="toggle-arrow" style="font-size:12px; color:#888;">▼</span>
                 </div>
-                <div id="${toggleId}" class="partner-scroll" style="display:none; padding-top:10px;">${leaderHtml}</div>
+                <!-- Task 1: Accordion Animation - added accordion-content, removed display:none -->
+                <div id="${toggleId}" class="partner-scroll accordion-content" style="padding-top:10px;">${leaderHtml}</div>
             `;
         }
     }
@@ -1911,47 +1932,6 @@ function renderCharacterDetail(id) {
 
     container.appendChild(body);
     contentDiv.appendChild(container);
-
-    // Task 2: Implement Swipe Navigation
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let isHorizontalScroll = false;
-
-    container.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-        touchStartY = e.changedTouches[0].screenY;
-
-        // Critical: Check if touching a horizontal scroll area
-        if (e.target.closest('.scroll-container-x, .partner-scroll')) {
-            isHorizontalScroll = true;
-        } else {
-            isHorizontalScroll = false;
-        }
-    }, { passive: true });
-
-    container.addEventListener('touchend', (e) => {
-        if (isHorizontalScroll) return;
-
-        const touchEndX = e.changedTouches[0].screenX;
-        const touchEndY = e.changedTouches[0].screenY;
-
-        const diffX = touchStartX - touchEndX;
-        const diffY = touchStartY - touchEndY;
-
-        // Vertical check (ignore if scrolling down/up)
-        if (Math.abs(diffY) > 30) return;
-
-        // Threshold check (> 50px)
-        if (Math.abs(diffX) > 50) {
-            if (diffX > 0) {
-                // Swipe Left -> Next (Start > End)
-                if (nextCharId) openDetail(nextCharId);
-            } else {
-                // Swipe Right -> Prev (Start < End)
-                if (prevCharId) openDetail(prevCharId);
-            }
-        }
-    }, { passive: true });
 
     const fabContainer = document.createElement('div');
     fabContainer.className = 'field-floating-container';
