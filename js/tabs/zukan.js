@@ -238,14 +238,16 @@ function calcLeaderCandidates(subChar) {
     return candidates.slice(0, 30);
 }
 
-function calcLeaderBoost(leaderChar, subChar) {
+function calcLeaderBoost(leaderChar, subChar, forcedMode = null) {
     let lsText = "";
     if (leaderChar.leaderSkill) lsText = leaderChar.leaderSkill;
 
-    if (state.detailEzaMode === 'eza' || state.detailEzaMode === 'seza') {
+    const mode = forcedMode || state.detailEzaMode;
+
+    if (mode === 'eza' || mode === 'seza') {
         if (leaderChar.leader_skill_eza) lsText = leaderChar.leader_skill_eza;
         else if (leaderChar.leaderSkill_eza) lsText = leaderChar.leaderSkill_eza;
-        else if (leaderChar.leader_skill_seza && state.detailEzaMode === 'seza') lsText = leaderChar.leader_skill_seza;
+        else if (leaderChar.leader_skill_seza && mode === 'seza') lsText = leaderChar.leader_skill_seza;
     }
 
     if (!lsText || !subChar) return 0;
@@ -1077,7 +1079,7 @@ function renderZukanList(targetGrid) {
         const item = document.createElement('div');
         const iconHtml = (typeof getCharIconHtml === 'function') ? getCharIconHtml(char) : 'IMG'; 
 
-        if (state.listMode === 'icon') {
+        if (state.listMode === 'icon' || state.listMode === 'select') {
             item.className = 'char-item-icon'; item.innerHTML = iconHtml;
         } else {
             item.className = 'char-item-row';
@@ -1121,7 +1123,13 @@ function renderZukanList(targetGrid) {
                     </div>
                 </div>`;
         }
-        item.onclick = () => openDetail(char.id);
+        item.onclick = () => {
+            if (state.listMode === 'select' && typeof selectCharForTeam === 'function') {
+                selectCharForTeam(char.id);
+            } else {
+                openDetail(char.id);
+            }
+        };
         grid.appendChild(item);
     });
 
@@ -2045,3 +2053,4 @@ window.openLinkPartnerModal = openLinkPartnerModal;
 window.closeLinkModal = closeLinkModal;
 window.toggleFieldInfo = toggleFieldInfo;
 window.toggleAllItems = toggleAllItems;
+window.calcLeaderBoost = calcLeaderBoost;
