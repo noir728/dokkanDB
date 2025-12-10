@@ -197,23 +197,14 @@ function showUpdateLoading() {
     }
 }
 
-// ▼▼▼ Popstate Handler (Improved) ▼▼▼
-window.addEventListener('popstate', async (event) => {
-    // 1. Show Loader
-    const loader = document.getElementById('page-loading');
-    if (loader) loader.classList.remove('hidden');
-
-    // 2. Critical: Give the browser 50ms to PAINT the loader before blocking with render
-    await new Promise(resolve => setTimeout(resolve, 50));
-
-    // 3. Update State
+window.addEventListener('popstate', (event) => {
+    // Restore State
     if (event.state) {
         if (event.state.filter) state.filter = event.state.filter;
         if (event.state.searchQuery !== undefined) state.searchQuery = event.state.searchQuery;
-    } else {
-        if (typeof resetFilters === 'function') resetFilters();
     }
 
+    // Update IDs
     const newId = (event.state && event.state.id) ? event.state.id : null;
     if (newId) {
         state.detailCharId = newId;
@@ -225,11 +216,8 @@ window.addEventListener('popstate', async (event) => {
         state.animDirection = 'left';
     }
 
-    // 4. Render (Heavy task)
+    // Render Immediately
     render();
-
-    // 5. Hide Loader
-    if (loader) loader.classList.add('hidden');
 });
 
 function saveState() {
