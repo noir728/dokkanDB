@@ -609,8 +609,8 @@ body {
     line-height: 1.2;
     text-shadow: 0 0 5px rgba(76, 217, 100, 0.3);
     /* Reset display to block/inline-block if needed, or keep flex but restrict width */
-    display: block;
-    width: 100%;
+    flex: 1;
+    min-width: 0;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis; /* Default state */
@@ -619,13 +619,15 @@ body {
 /* Animation Class */
 .header-scroll-anim {
     display: inline-block;
-    padding-left: 0;
-    animation: header-marquee 8s linear infinite;
+    animation: scroll-fade-in 10s linear infinite;
 }
 
-@keyframes header-marquee {
-    0%, 25% { transform: translateX(0); } /* Wait 2s (approx 25% of 8s) */
-    100% { transform: translateX(-100%); }
+@keyframes scroll-fade-in {
+    0% { transform: translateX(0); opacity: 1; }
+    70% { transform: translateX(-150%); opacity: 1; } /* Scroll out */
+    70.1% { transform: translateX(0); opacity: 0; } /* Reset pos instantly hidden */
+    80% { transform: translateX(0); opacity: 1; } /* Fade in */
+    100% { transform: translateX(0); opacity: 1; } /* Wait */
 }
 
 .char-sub-header {
@@ -640,12 +642,12 @@ body {
     text-overflow: ellipsis;
 }
 
-.date-info-compact {
+.date-info {
     display: flex;
-    gap: 4px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
     margin-top: 2px;
-    flex-wrap: nowrap;
-    overflow: hidden;
 }
 
 .date-tag {
@@ -667,7 +669,8 @@ body {
 .action-buttons {
     display: flex;
     gap: 8px;
-    flex-shrink: 0; /* Never collapse */
+    flex-shrink: 0;
+    margin-left: 8px;
 }
 
 .icon-btn {
@@ -2344,10 +2347,4 @@ body {
 @keyframes marquee {
     0% { transform: translateX(0); }
     100% { transform: translateX(-200%); }
-}
-
-.marquee-text {
-    display: inline-block;
-    animation: marquee 8s linear infinite;
-    padding-left: 100%;
 }
