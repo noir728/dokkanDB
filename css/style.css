@@ -1292,6 +1292,7 @@ body {
     transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease-in-out;
     padding-top: 5px !important;
     padding-bottom: 10px !important;
+    overflow-x: auto;
 }
 
 .partner-item {
