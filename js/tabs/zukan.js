@@ -1943,7 +1943,7 @@ function renderCharacterDetail(id) {
         touchStartY = e.changedTouches[0].screenY;
 
         // Critical: Check if touching a horizontal scroll area
-        if (e.target.closest('.scroll-container-x, .partner-scroll')) {
+        if (e.target.closest('.scroll-container-x, .partner-scroll, .scroll-item-wrapper')) {
             isHorizontalScroll = true;
         } else {
             isHorizontalScroll = false;
