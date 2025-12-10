@@ -1475,8 +1475,10 @@ function renderCharacterDetail(id) {
                 <div class="char-sub-header text-truncate">${char.title || ''}</div>
                 <div class="char-name-header clickable-tag" onclick="applyFilter('name', '${displayRawName}')"><span class="${nameClass}">${displayName}</span></div>
                 <div class="date-info">
-                    <span class="date-tag">実装: ${char.release || '---'}</span>
-                    ${char.eza ? `<span class="date-tag eza">極限: ${char.eza}</span>` : ''}
+                    <div class="date-row-primary">
+                        <span class="date-tag">実装: ${char.release || '---'}</span>
+                        ${char.eza ? `<span class="date-tag eza">極限: ${char.eza}</span>` : ''}
+                    </div>
                     ${char.seza ? `<span class="date-tag seza">超極限: ${char.seza}</span>` : ''}
                 </div>
             </div>
