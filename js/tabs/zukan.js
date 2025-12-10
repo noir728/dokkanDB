@@ -1453,7 +1453,7 @@ function renderCharacterDetail(id) {
     const displayName = (currentData.name || char.name || "").replace(/\n/g, '<br>');
     const displayRawName = (currentData.name || char.name || "").split('\n')[0];
     const isLongName = displayRawName.length > 15;
-    const nameClass = isLongName ? 'header-marquee-text' : '';
+    const nameClass = isLongName ? 'header-scroll-anim' : '';
 
     // Task 3: Persistence Fallback
     let navList = state.currentList;
