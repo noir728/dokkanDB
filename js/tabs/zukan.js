@@ -1617,7 +1617,7 @@ function renderCharacterDetail(id) {
             if (state.detailEzaMode === 'eza' || state.detailEzaMode === 'seza') maxLv = 140; else maxLv = 120;
         } else if (char.rarity === 'SSR') maxLv = 80;
 
-        body.innerHTML += `<div class="section-title">ステータス</div><div style="display:flex; gap:10px;"><div style="display:flex; flex-direction:column; align-items:center;"><div class="detail-icon-large">${getCharIconHtml(char, currentData)}</div><div class="text-xs text-gray-300 mt-1">最大Lv.${maxLv}</div>${char.cost ? `<div class="char-cost">コスト: ${char.cost}</div>` : ''}</div><table style="width:100%; font-size:11px; text-align:center; border-collapse:collapse; border:1px solid #444; border-radius:4px; overflow:hidden;"><tr style="background:#333; color:#aaa;"><th></th><th>HP</th><th>ATK</th><th>DEF</th></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">LvMax</td><td>${sBase.hp}</td><td>${sBase.atk}</td><td>${sBase.def}</td></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">55%</td><td>${sFifty.hp}</td><td>${sFifty.atk}</td><td>${sFifty.def}</td></tr><tr style="background:#222;"><td style="background:#2a2a2e;font-weight:bold;">100%</td><td>${sRainbow.hp}</td><td>${sRainbow.atk}</td><td>${sRainbow.def}</td></tr></table></div>`;
+        body.innerHTML += `<div id="char-swipe-area" style="touch-action: pan-y;"><div class="section-title">ステータス</div><div style="display:flex; gap:10px;"><div style="display:flex; flex-direction:column; align-items:center;"><div class="detail-icon-large">${getCharIconHtml(char, currentData)}</div><div class="text-xs text-gray-300 mt-1">最大Lv.${maxLv}</div>${char.cost ? `<div class="char-cost">コスト: ${char.cost}</div>` : ''}</div><table style="width:100%; font-size:11px; text-align:center; border-collapse:collapse; border:1px solid #444; border-radius:4px; overflow:hidden;"><tr style="background:#333; color:#aaa;"><th></th><th>HP</th><th>ATK</th><th>DEF</th></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">LvMax</td><td>${sBase.hp}</td><td>${sBase.atk}</td><td>${sBase.def}</td></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">55%</td><td>${sFifty.hp}</td><td>${sFifty.atk}</td><td>${sFifty.def}</td></tr><tr style="background:#222;"><td style="background:#2a2a2e;font-weight:bold;">100%</td><td>${sRainbow.hp}</td><td>${sRainbow.atk}</td><td>${sRainbow.def}</td></tr></table></div></div>`;
     }
 
     let displayLeaderSkill = char.leaderSkill;
@@ -1934,45 +1934,38 @@ function renderCharacterDetail(id) {
     contentDiv.appendChild(container);
 
     // Task 2: Implement Swipe Navigation
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let isHorizontalScroll = false;
+    const swipeTarget = document.getElementById('char-swipe-area');
 
-    container.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-        touchStartY = e.changedTouches[0].screenY;
+    if (swipeTarget) {
+        let touchStartX = 0;
+        let touchStartY = 0;
 
-        // Critical: Check if touching a horizontal scroll area
-        if (e.target.closest('.scroll-container-x, .partner-scroll, .scroll-item-wrapper')) {
-            isHorizontalScroll = true;
-        } else {
-            isHorizontalScroll = false;
-        }
-    }, { passive: true });
+        swipeTarget.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
 
-    container.addEventListener('touchend', (e) => {
-        if (isHorizontalScroll) return;
+        swipeTarget.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const touchEndY = e.changedTouches[0].screenY;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
 
-        const touchEndX = e.changedTouches[0].screenX;
-        const touchEndY = e.changedTouches[0].screenY;
+            // Vertical check (ignore if scrolling down/up)
+            if (Math.abs(diffY) > 30) return;
 
-        const diffX = touchStartX - touchEndX;
-        const diffY = touchStartY - touchEndY;
-
-        // Vertical check (ignore if scrolling down/up)
-        if (Math.abs(diffY) > 30) return;
-
-        // Threshold check (> 50px)
-        if (Math.abs(diffX) > 50) {
-            if (diffX > 0) {
-                // Swipe Left -> Next (Start > End)
-                if (nextCharId) openDetail(nextCharId);
-            } else {
-                // Swipe Right -> Prev (Start < End)
-                if (prevCharId) openDetail(prevCharId);
+            // Threshold check (> 50px)
+            if (Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    // Swipe Left -> Next
+                    if (nextCharId) openDetail(nextCharId);
+                } else {
+                    // Swipe Right -> Prev
+                    if (prevCharId) openDetail(prevCharId);
+                }
             }
-        }
-    }, { passive: true });
+        }, { passive: true });
+    }
 
     const fabContainer = document.createElement('div');
     fabContainer.className = 'field-floating-container';
