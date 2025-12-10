@@ -1933,40 +1933,6 @@ function renderCharacterDetail(id) {
     container.appendChild(body);
     contentDiv.appendChild(container);
 
-    // Task 2: Implement Swipe Navigation
-    const swipeTarget = document.getElementById('char-swipe-area');
-
-    if (swipeTarget) {
-        let touchStartX = 0;
-        let touchStartY = 0;
-
-        swipeTarget.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-        }, { passive: true });
-
-        swipeTarget.addEventListener('touchend', (e) => {
-            const touchEndX = e.changedTouches[0].screenX;
-            const touchEndY = e.changedTouches[0].screenY;
-            const diffX = touchStartX - touchEndX;
-            const diffY = touchStartY - touchEndY;
-
-            // Vertical check (ignore if scrolling down/up)
-            if (Math.abs(diffY) > 30) return;
-
-            // Threshold check (> 50px)
-            if (Math.abs(diffX) > 50) {
-                if (diffX > 0) {
-                    // Swipe Left -> Next
-                    if (nextCharId) openDetail(nextCharId);
-                } else {
-                    // Swipe Right -> Prev
-                    if (prevCharId) openDetail(prevCharId);
-                }
-            }
-        }, { passive: true });
-    }
-
     const fabContainer = document.createElement('div');
     fabContainer.className = 'field-floating-container';
     let hasFab = false;

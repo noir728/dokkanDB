@@ -38,7 +38,6 @@
    2. Base Styles & Resets
    ========================================= */
 html, body {
-    overscroll-behavior-x: none !important;
     overscroll-behavior-y: auto; /* Allow vertical pull-to-refresh if needed */
 }
 
