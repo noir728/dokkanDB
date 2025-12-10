@@ -12,6 +12,10 @@ const state = {
     owned: [],
     favorites: [],
     
+    // Team Builder State
+    team: [null, null, null, null, null, null, null],
+    selectingSlot: null,
+
     searchQuery: '',
     filter: { 
         sort: 'releaseDesc',
@@ -39,6 +43,9 @@ function init() {
     const savedFav = localStorage.getItem('dokkan_fav');
     if(savedFav) state.favorites = JSON.parse(savedFav);
     
+    const savedTeam = localStorage.getItem('dokkan_team');
+    if(savedTeam) state.team = JSON.parse(savedTeam);
+
     if(typeof populateFilterOptions === 'function') populateFilterOptions();
     
     // ▼▼▼ 初期ロード: URLパラメータのチェック ▼▼▼
@@ -274,6 +281,8 @@ function render() {
     
     if (state.currentTab === 'zukan') {
         if(typeof renderZukanLayout === 'function') renderZukanLayout();
+    } else if (state.currentTab === 'team') {
+        if(typeof renderTeamLayout === 'function') renderTeamLayout();
     } else {
         contentDiv.innerHTML = `<div style="padding:20px;text-align:center;color:#888;">${state.currentTab} (開発中)</div>`;
     }
