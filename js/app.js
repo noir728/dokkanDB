@@ -226,16 +226,7 @@ window.addEventListener('popstate', (event) => {
     }
 
     // Force Render
-    // Task 2: Fix UI Freeze on "Swipe Back" to List
-    // If we are returning to the list (detailCharId is null), delay rendering
-    if (!state.detailCharId) {
-        setTimeout(() => {
-            render();
-            // Scroll restoration happens inside renderZukanList logic
-        }, 400); // 400ms delay to let the swipe finish
-    } else {
-        render(); // Detail-to-Detail can be instant
-    }
+    render();
 });
 
 function saveState() {

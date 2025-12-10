@@ -1099,12 +1099,6 @@ function renderZukanList(targetGrid) {
             if (badgeHtml) totalLen += 3;
 
             let nameClass = 'char-row-name';
-            let marqueeClass = '';
-
-            // Task 1: Fix Marquee (Stricter threshold & separated badge)
-            if (totalLen > 15) {
-                 marqueeClass = ' marquee-text';
-            }
 
             if (totalLen > 18) nameClass += ' text-xs';
             else if (totalLen > 14) nameClass += ' text-sm';
@@ -1116,7 +1110,7 @@ function renderZukanList(targetGrid) {
 
                     <div class="char-name-badge-flex" style="display:flex; align-items:center; width:100%;">
                         <div class="${nameClass}" style="flex:1; display:block; padding-right:4px;">
-                            <span class="char-name-text${marqueeClass}">${char.name.replace(/\n/g, ' ')}</span>
+                            <span class="char-name-text">${char.name.replace(/\n/g, ' ')}</span>
                         </div>
                         ${badgeHtml}
                     </div>
@@ -1480,7 +1474,7 @@ function renderCharacterDetail(id) {
             <div style="flex: 1; min-width: 0;">
                 <div class="char-sub-header text-truncate">${char.title || ''}</div>
                 <div class="char-name-header clickable-tag" onclick="applyFilter('name', '${displayRawName}')"><span class="${nameClass}">${displayName}</span></div>
-                <div class="date-info-compact">
+                <div class="date-info">
                     <span class="date-tag">実装: ${char.release || '---'}</span>
                     ${char.eza ? `<span class="date-tag eza">極限: ${char.eza}</span>` : ''}
                     ${char.seza ? `<span class="date-tag seza">超極限: ${char.seza}</span>` : ''}
