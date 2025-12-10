@@ -199,34 +199,39 @@ function showUpdateLoading() {
 
 // ▼▼▼ Popstate Handler (Improved) ▼▼▼
 window.addEventListener('popstate', (event) => {
-    // 1. Restore Filters
+    // 1. Show Loading Spinner
+    const loader = document.getElementById('page-loading');
+    if (loader) loader.classList.remove('hidden');
+
+    // 2. Restore State
     if (event.state) {
         if (event.state.filter) state.filter = event.state.filter;
         if (event.state.searchQuery !== undefined) state.searchQuery = event.state.searchQuery;
     } else {
-        // Reset if no state (e.g. back to initial)
-        if (typeof resetFilters === 'function') resetFilters(); 
+        if (typeof resetFilters === 'function') resetFilters();
     }
 
-    // 2. Navigation Logic
-    // Compare new desired ID (event.state.id) with current (state.detailCharId)
-    const newId = (event.state && event.state.id) ? event.state.id : null;
-    const currentId = state.detailCharId;
+    // 3. Defer Render (e.g., 100ms) to allow UI update
+    setTimeout(() => {
+        // Update State for View
+        const newId = (event.state && event.state.id) ? event.state.id : null;
+        if (newId) {
+            state.detailCharId = newId;
+            state.detailFormIndex = 0;
+            state.detailEzaMode = 'normal';
+            state.animDirection = 'right';
+        } else {
+            state.detailCharId = null;
+            state.animDirection = 'left';
+        }
 
-    if (newId) {
-        // Moving to Detail (from List or another Detail)
-        state.detailCharId = newId;
-        state.detailFormIndex = 0;
-        state.detailEzaMode = 'normal';
-        state.animDirection = 'right'; // Entering detail
-    } else {
-        // Moving to List
-        state.detailCharId = null;
-        state.animDirection = 'left'; // Returning to list
-    }
+        // Render
+        render();
 
-    // Force Render
-    render();
+        // 4. Hide Loading Spinner
+        if (loader) loader.classList.add('hidden');
+
+    }, 100); // Short delay to visually show loading and unblock transition
 });
 
 function saveState() {

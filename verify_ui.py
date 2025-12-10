@@ -1,48 +1,84 @@
 from playwright.sync_api import sync_playwright
 
-def verify_changes():
+def verify_ui_changes():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        context = browser.new_context(
-            viewport={'width': 375, 'height': 812},
-            device_scale_factor=2
-        )
-        page = context.new_page()
+        page = browser.new_page()
 
-        # Load the app
-        page.goto("http://localhost:8080/index.html")
-        page.wait_for_selector("#zukan-grid")
+        # Navigate to the app
+        page.goto("http://localhost:8080")
 
-        # 1. Verify Zukan List View (No marquee)
-        # We need to find a character with a long name.
-        # Based on previous knowledge or just scanning, we'll try to find one.
-        # Or just take a screenshot of the list.
-        page.screenshot(path="verification_screenshots/list_view.png")
+        # Default mode is 'icon', so we might not see .char-item-row.
+        # Check for .char-item-icon instead or switch to list mode.
+        try:
+             # Try switching to list mode first (the second button in .mode-switch)
+            page.wait_for_selector(".mode-btn", timeout=3000)
+            mode_btns = page.locator(".mode-btn")
+            if mode_btns.count() > 1:
+                print("Switching to List Mode...")
+                mode_btns.nth(1).click()
 
-        # 2. Verify Detail Header
-        # Click on a character. Let's pick the first one.
-        first_char = page.locator(".char-item-icon").first
-        first_char.click()
+            page.wait_for_selector(".char-item-row", timeout=5000)
+            print("Found .char-item-row")
+        except Exception as e:
+            print(f"List mode switch or wait failed: {e}")
+            # If default is icon, we might need to click an icon
+            if page.locator(".char-item-icon").count() > 0:
+                print("Found .char-item-icon, clicking first one...")
+                page.click(".char-item-icon:first-child")
+            else:
+                 print("No character items found.")
+                 return
 
-        page.wait_for_selector(".detail-header")
+        # --- Verify Task 1: Detail Header Dates ---
+        # If we clicked row, we are navigating.
+        # If we clicked icon, we are navigating.
+        # Wait for detail view to open
+        try:
+            page.wait_for_selector(".detail-header", timeout=5000)
+        except:
+             # If click didn't happen (maybe we are already in detail view?)
+             pass
 
-        # Verify stacking of dates (visual check via screenshot)
-        # Verify flex behavior of buttons
-        page.screenshot(path="verification_screenshots/detail_view.png")
+        # Verify .date-info styles
+        date_info = page.locator(".date-info")
+        if date_info.count() > 0:
+            # Check flex-direction is column
+            direction = date_info.evaluate("element => window.getComputedStyle(element).flexDirection")
+            if direction != "column":
+                print(f"FAILED: .date-info flex-direction is {direction}, expected 'column'")
+            else:
+                print("SUCCESS: .date-info flex-direction is column")
 
-        # 3. Test Swipe Back Delay Removal
-        # This is hard to test visually with a static screenshot,
-        # but we can verify the back navigation works without crashing.
-        page.go_back()
-        page.wait_for_selector("#zukan-grid")
+            # Check Order: Release, EZA, SEZA
+            # We can check text content order
+            text_content = date_info.inner_text()
+            print(f"Date Info Content:\n{text_content}")
 
-        # Take another screenshot to ensure we are back at list
-        page.screenshot(path="verification_screenshots/back_to_list.png")
+        else:
+            print("FAILED: .date-info not found")
+
+        # Take screenshot of detail header
+        page.screenshot(path="verification_detail.png")
+
+        # --- Verify Task 2: Loading Spinner ---
+        # Inject script to show spinner manually to verify its styles
+        page.evaluate("document.getElementById('page-loading').classList.remove('hidden')")
+
+        # Wait a bit for visibility
+        page.wait_for_timeout(500)
+
+        # Check if visible
+        is_visible = page.is_visible("#page-loading")
+        if not is_visible:
+            print("FAILED: #page-loading is not visible after removing 'hidden' class")
+        else:
+            print("SUCCESS: #page-loading is visible")
+
+        # Take screenshot of spinner
+        page.screenshot(path="verification_spinner.png")
 
         browser.close()
 
 if __name__ == "__main__":
-    import os
-    if not os.path.exists("verification_screenshots"):
-        os.makedirs("verification_screenshots")
-    verify_changes()
+    verify_ui_changes()
