@@ -198,12 +198,15 @@ function showUpdateLoading() {
 }
 
 // ▼▼▼ Popstate Handler (Improved) ▼▼▼
-window.addEventListener('popstate', (event) => {
-    // 1. Show Loading Spinner
+window.addEventListener('popstate', async (event) => {
+    // 1. Show Loader
     const loader = document.getElementById('page-loading');
     if (loader) loader.classList.remove('hidden');
 
-    // 2. Restore State
+    // 2. Critical: Give the browser 50ms to PAINT the loader before blocking with render
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    // 3. Update State
     if (event.state) {
         if (event.state.filter) state.filter = event.state.filter;
         if (event.state.searchQuery !== undefined) state.searchQuery = event.state.searchQuery;
@@ -211,27 +214,22 @@ window.addEventListener('popstate', (event) => {
         if (typeof resetFilters === 'function') resetFilters();
     }
 
-    // 3. Defer Render (e.g., 100ms) to allow UI update
-    setTimeout(() => {
-        // Update State for View
-        const newId = (event.state && event.state.id) ? event.state.id : null;
-        if (newId) {
-            state.detailCharId = newId;
-            state.detailFormIndex = 0;
-            state.detailEzaMode = 'normal';
-            state.animDirection = 'right';
-        } else {
-            state.detailCharId = null;
-            state.animDirection = 'left';
-        }
+    const newId = (event.state && event.state.id) ? event.state.id : null;
+    if (newId) {
+        state.detailCharId = newId;
+        state.detailFormIndex = 0;
+        state.detailEzaMode = 'normal';
+        state.animDirection = 'right';
+    } else {
+        state.detailCharId = null;
+        state.animDirection = 'left';
+    }
 
-        // Render
-        render();
+    // 4. Render (Heavy task)
+    render();
 
-        // 4. Hide Loading Spinner
-        if (loader) loader.classList.add('hidden');
-
-    }, 100); // Short delay to visually show loading and unblock transition
+    // 5. Hide Loader
+    if (loader) loader.classList.add('hidden');
 });
 
 function saveState() {
