@@ -10145,7 +10145,7 @@ const CHARACTER_DATA = [
                     {
                         "ki": "12~",
                         "maxLv": 20,
-                        "type": "",
+                        "type": "その他",
                         "name": "なし",
                         "effect": "-",
                         "specs": {}
@@ -12171,8 +12171,8 @@ const CHARACTER_DATA = [
                         "name": "師弟魔貫光殺砲",
                         "effect": "ATKが大幅上昇、4ターンDEFが上昇し、相手に超極大ダメージを与え、1ターン仲間の会心率20%UP\n&敵の行動をそのターンのみ1回無効化する\n[発動条件:名称に「ピッコロ」(大魔王、魔人ブウを除く)を含むキャラが攻撃参加中の味方にいるとき気力18以上で発動]",
                         "specs": {
-                            "atk_up": "%",
-                            "def_up": "%",
+                            "atk_up": "50%",
+                            "def_up": "30%",
                             "crit": "20%",
                             "action_break": true
                         }
@@ -12880,22 +12880,133 @@ const CHARACTER_DATA = [
     },
     {
         "id": 1030320,
-        "title": "仲間の心を取り戻す戦い",
+        "title": "仲間の心を取り戻す闘い",
         "name": "超サイヤ人3孫悟空(GT)",
         "yomi": "すーぱーさいやじん3そんごくう(GT)",
         "rarity": "SSR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 26,
+        "type": "AGL",
+        "class": "Super",
+        "release": "2025/01/29",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "大猿パワー",
+            "超サイヤ人3",
+            "純粋サイヤ人",
+            "孫悟空の系譜",
+            "亀仙流",
+            "GT HERO",
+            "親友の絆",
+            "高速戦闘",
+            "超サイヤ人を超えた力",
+            "親子の絆",
+            "地球育ちの戦士",
+            "リベンジ"
+        ],
+        "leaderSkill": "「大猿パワー」カテゴリの\n気力+2、HPとATKとDEF160%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030320
+            },
+            {
+                "rank": "UR",
+                "id": 1030330,
+                "medals": [
+                    {
+                        "name": "超激戦/真紅に燃える最強のサイヤ人/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030340,
+                "medals": [
+                    {
+                        "name": "超激戦/真紅に燃える最強のサイヤ人/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/真紅に燃える最強のサイヤ人/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/超進化！銀河を駆けるサイヤ人/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "超サイヤ人",
+                    "サイヤの咆哮",
+                    "臨戦態勢",
+                    "孫一族",
+                    "GT"
+                ],
+                "stats": {
+                    "hp": 7482,
+                    "atk": 8141,
+                    "def": 4744
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "格闘",
+                        "name": "超龍撃拳",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "何度でも闘うぞ！",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+2、ATK/DEF100%[img:up]",
+                                "「超サイヤ人を超えた力」カテゴリの味方全員のDEF30%[img:up]",
+                                "速気玉取得時の気力上昇量+1"
+                            ]
+                        },
+                        {
+                            "title": "登場から3ターンの間",
+                            "effects": [
+                                "高確率で敵の攻撃を回避"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター3につき攻撃時",
+                            "effects": [
+                                "ATK/DEF20%[img:up]"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "dodge": "50%"
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030330,
@@ -12903,18 +13014,130 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人3孫悟空(GT)",
         "yomi": "すーぱーさいやじん3そんごくう(GT)",
         "rarity": "UR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 50,
+        "type": "AGL",
+        "class": "Super",
+        "release": "2025/01/29",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "大猿パワー",
+            "超サイヤ人3",
+            "純粋サイヤ人",
+            "孫悟空の系譜",
+            "亀仙流",
+            "GT HERO",
+            "親友の絆",
+            "高速戦闘",
+            "超サイヤ人を超えた力",
+            "親子の絆",
+            "地球育ちの戦士",
+            "リベンジ"
+        ],
+        "leaderSkill": "「大猿パワー」カテゴリの\n気力+3、HPとATKとDEF190%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030320
+            },
+            {
+                "rank": "UR",
+                "id": 1030330,
+                "medals": [
+                    {
+                        "name": "超激戦/真紅に燃える最強のサイヤ人/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030340,
+                "medals": [
+                    {
+                        "name": "超激戦/真紅に燃える最強のサイヤ人/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/真紅に燃える最強のサイヤ人/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/超進化！銀河を駆けるサイヤ人/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "超サイヤ人",
+                    "サイヤの咆哮",
+                    "臨戦態勢",
+                    "孫一族",
+                    "GT",
+                    "超激戦"
+                ],
+                "stats": {
+                    "hp": 8825,
+                    "atk": 9068,
+                    "def": 5566
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "格闘",
+                        "name": "超龍撃拳",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "今度は負けねえ！",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+2、ATK/DEF150%[img:up]",
+                                "「超サイヤ人を超えた力」カテゴリの味方全員のDEF40%[img:up]",
+                                "速気玉取得時の気力上昇量+1"
+                            ]
+                        },
+                        {
+                            "title": "登場から4ターンの間",
+                            "effects": [
+                                "高確率で敵の攻撃を回避"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター3につき攻撃時",
+                            "effects": [
+                                "ATK/DEF20%[img:up]"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "dodge": "50%"
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030340,
@@ -12922,18 +13145,321 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人3孫悟空(GT)(黄金大猿)",
         "yomi": "すーぱーさいやじん3そんごくう(GT)(おうごんおおざる)",
         "rarity": "LR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 77,
+        "type": "AGL",
+        "class": "Super",
+        "release": "2025/01/29",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "大猿パワー",
+            "超サイヤ人3",
+            "純粋サイヤ人",
+            "孫悟空の系譜",
+            "亀仙流",
+            "GT HERO",
+            "親友の絆",
+            "高速戦闘",
+            "超サイヤ人を超えた力",
+            "親子の絆",
+            "地球育ちの戦士",
+            "巨大化",
+            "変身強化",
+            "かめはめ波",
+            "力戦奮闘",
+            "奇跡の覚醒",
+            "託された意志",
+            "命運をかけた闘い",
+            "願いの力",
+            "制御不能の力",
+            "地球を守りし英雄",
+            "リベンジ"
+        ],
+        "leaderSkill": "「大猿パワー」カテゴリの\n気力+4、HPとATKとDEF220%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030320
+            },
+            {
+                "rank": "UR",
+                "id": 1030330,
+                "medals": [
+                    {
+                        "name": "超激戦/真紅に燃える最強のサイヤ人/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030340,
+                "medals": [
+                    {
+                        "name": "超激戦/真紅に燃える最強のサイヤ人/2",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/真紅に燃える最強のサイヤ人/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/超進化！銀河を駆けるサイヤ人/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "超サイヤ人",
+                    "サイヤの咆哮",
+                    "臨戦態勢",
+                    "かめはめ波",
+                    "GT",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 16900,
+                    "atk": 14935,
+                    "def": 10506
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 20,
+                        "type": "格闘",
+                        "name": "超龍撃拳",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "気弾",
+                        "name": "かめはめ波",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "シッポの復活！",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+3、ATK/DEF200%[img:up]",
+                                "高確率で会心が発動",
+                                "速気玉取得時の気力上昇量+2",
+                                "速気玉以外の気玉取得時の気力上昇量+1",
+                                "「超サイヤ人を超えた力」カテゴリの味方全員のDEF50%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "登場から4ターンの間",
+                            "effects": [
+                                "超高確率で敵の攻撃を回避",
+                                "全ての攻撃をガード"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター3につき攻撃時",
+                            "effects": [
+                                "ATK/DEF30%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター24で攻撃時",
+                            "effects": [
+                                "必ず会心が発動"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "crit": "100%",
+                        "dodge": "70%",
+                        "guard": true
+                    }
+                },
+                "active": {
+                    "name": "大猿化",
+                    "condition": "HP70%以下のとき発動可能\nまたはバトル開始から5ターン目以降発動可能(1回のみ)",
+                    "effect": "1ターンの間、大猿化する",
+                    "specs": {}
+                }
+            },
+            {
+                "label": "大猿化",
+                "name": "超サイヤ人3孫悟空(GT)(黄金大猿)",
+                "id": 4030340,
+                "links": [],
+                "stats": {
+                    "hp": 16900,
+                    "atk": 60000,
+                    "def": 10506
+                },
+                "superAttacks": [
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "その他",
+                        "name": "超火炎砲",
+                        "effect": "一時的にATKが超大幅上昇し、相手に破壊的ダメージを与える",
+                        "specs": {
+                            "atk_up": "100%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "黄金大猿大暴れ！",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK300%[img:up]",
+                                "気玉取得時の気力上昇量+2",
+                                "必ず会心が発動"
+                            ]
+                        },
+                        {
+                            "title": "大猿化終了時",
+                            "effects": [
+                                "超サイヤ人4孫悟空に変身する"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "crit": "100%"
+                    }
+                }
+            },
+            {
+                "label": "変身",
+                "name": "超サイヤ人4孫悟空",
+                "id": 4030350,
+                "links": [
+                    "超サイヤ人",
+                    "サイヤの咆哮",
+                    "臨戦態勢",
+                    "かめはめ波",
+                    "GT",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 16900,
+                    "atk": 14935,
+                    "def": 10506
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 20,
+                        "type": "格闘",
+                        "name": "龍撃円舞",
+                        "effect": "ATKとDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "20%",
+                            "def_up": "20%"
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "気弾",
+                        "name": "怒りのかめはめ波",
+                        "effect": "ATKとDEFが上昇し、相手に超極大ダメージを与え、2ターン自身を除く仲間ATKとDEF44%UP",
+                        "specs": {
+                            "atk_up": "20%",
+                            "def_up": "20%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "新たな姿と力",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+4、ATK/DEF200%[img:up]",
+                                "気玉取得時の気力上昇量+2",
+                                "「超サイヤ人を超えた力」または「大猿パワー」カテゴリの味方全員のDEF70%[img:up]、ダメージ軽減率10%[img:up]",
+                                "全ての攻撃をガード"
+                            ]
+                        },
+                        {
+                            "title": "登場から4ターンの間",
+                            "effects": [
+                                "必ず会心が発動"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK/DEF100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター4につき攻撃時",
+                            "effects": [
+                                "ATK/DEF44%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター24で攻撃時",
+                            "effects": [
+                                "必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "ターン開始時にHP44%以下",
+                            "effects": [
+                                "HP44%回復"
+                            ]
+                        },
+                        {
+                            "title": "攻撃するたび",
+                            "effects": [
+                                "[img:infinity]気力+1、会心率20%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるたび",
+                            "effects": [
+                                "[img:infinity]気力+1、会心率20%[img:up]"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "crit": "100%",
+                        "add": "1回",
+                        "reduce": "10%",
+                        "guard": true
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030370,
@@ -12941,18 +13467,135 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人2孫悟飯(少年期)",
         "yomi": "すーぱーさいやじん2そんごはん(しょうねんき)",
         "rarity": "SSR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 26,
+        "type": "PHY",
+        "class": "Super",
+        "release": "2025/02/15",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "フルパワー",
+            "混血サイヤ人",
+            "孫悟空の系譜",
+            "少年・少女",
+            "人造人間/セル編",
+            "師弟の絆",
+            "超サイヤ人2",
+            "怒り爆発",
+            "力戦奮闘",
+            "奇跡の覚醒",
+            "託された意志",
+            "命運をかけた闘い",
+            "超サイヤ人を超えた力",
+            "親子の絆",
+            "地球育ちの戦士",
+            "大会出場者",
+            "魔の力",
+            "地球を守りし英雄"
+        ],
+        "leaderSkill": "「フルパワー」カテゴリの\n気力+2、HPとATKとDEF160%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030370
+            },
+            {
+                "rank": "UR",
+                "id": 1030380,
+                "medals": [
+                    {
+                        "name": "超激戦/最強を超える超絶覚醒/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030390,
+                "medals": [
+                    {
+                        "name": "超激戦/最強を超える超絶覚醒/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/恐怖のセルゲーム/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/恐怖のセルゲーム/2",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "超サイヤ人",
+                    "戦闘民族サイヤ人",
+                    "尊敬の眼差し",
+                    "臨戦態勢",
+                    "驚異的なスピード"
+                ],
+                "stats": {
+                    "hp": 8013,
+                    "atk": 8460,
+                    "def": 4079
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "格闘",
+                        "name": "龍翔破",
+                        "effect": "1ターンATKが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "悟飯に集まる期待",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+2",
+                                "ATK/DEF100%[img:up]",
+                                "全ての攻撃をガード",
+                                "気玉取得時の気力上昇量+1"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK80%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるとき",
+                            "effects": [
+                                "DEF80%[img:up]"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "guard": true
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030380,
@@ -12960,18 +13603,137 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人2孫悟飯(少年期)",
         "yomi": "すーぱーさいやじん2そんごはん(しょうねんき)",
         "rarity": "UR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 58,
+        "type": "PHY",
+        "class": "Super",
+        "release": "2025/02/15",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "フルパワー",
+            "混血サイヤ人",
+            "孫悟空の系譜",
+            "少年・少女",
+            "人造人間/セル編",
+            "師弟の絆",
+            "超サイヤ人2",
+            "怒り爆発",
+            "力戦奮闘",
+            "奇跡の覚醒",
+            "託された意志",
+            "命運をかけた闘い",
+            "超サイヤ人を超えた力",
+            "親子の絆",
+            "地球育ちの戦士",
+            "大会出場者",
+            "魔の力",
+            "地球を守りし英雄"
+        ],
+        "leaderSkill": "「フルパワー」カテゴリの\n気力+3、HPとATKとDEF190%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030370
+            },
+            {
+                "rank": "UR",
+                "id": 1030380,
+                "medals": [
+                    {
+                        "name": "超激戦/最強を超える超絶覚醒/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030390,
+                "medals": [
+                    {
+                        "name": "超激戦/最強を超える超絶覚醒/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/恐怖のセルゲーム/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/恐怖のセルゲーム/2",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "超サイヤ人",
+                    "戦闘民族サイヤ人",
+                    "尊敬の眼差し",
+                    "臨戦態勢",
+                    "驚異的なスピード",
+                    "超激戦"
+                ],
+                "stats": {
+                    "hp": 9463,
+                    "atk": 9450,
+                    "def": 4769
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "格闘",
+                        "name": "龍翔破",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "悟飯に集まる希望",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+3",
+                                "ATK/DEF150%[img:up]",
+                                "全ての攻撃をガード",
+                                "気玉取得時の気力上昇量+1"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるとき",
+                            "effects": [
+                                "DEF100%[img:up]"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "guard": true
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030390,
@@ -12979,18 +13741,182 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人2孫悟飯(少年期)",
         "yomi": "すーぱーさいやじん2そんごはん(しょうねんき)",
         "rarity": "LR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 77,
+        "type": "PHY",
+        "class": "Super",
+        "release": "2025/02/15",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "フルパワー",
+            "混血サイヤ人",
+            "孫悟空の系譜",
+            "少年・少女",
+            "人造人間/セル編",
+            "師弟の絆",
+            "超サイヤ人2",
+            "怒り爆発",
+            "力戦奮闘",
+            "奇跡の覚醒",
+            "託された意志",
+            "命運をかけた闘い",
+            "超サイヤ人を超えた力",
+            "親子の絆",
+            "地球育ちの戦士",
+            "大会出場者",
+            "魔の力",
+            "地球を守りし英雄",
+            "変身強化",
+            "かめはめ波"
+        ],
+        "leaderSkill": "「フルパワー」カテゴリの\n気力+4、HPとATKとDEF220%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030370
+            },
+            {
+                "rank": "UR",
+                "id": 1030380,
+                "medals": [
+                    {
+                        "name": "超激戦/最強を超える超絶覚醒/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030390,
+                "medals": [
+                    {
+                        "name": "超激戦/最強を超える超絶覚醒/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/恐怖のセルゲーム/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/恐怖のセルゲーム/2",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "超サイヤ人",
+                    "戦闘民族サイヤ人",
+                    "かめはめ波",
+                    "臨戦態勢",
+                    "驚異的なスピード",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 18175,
+                    "atk": 15700,
+                    "def": 8913
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 20,
+                        "type": "格闘",
+                        "name": "龍翔破",
+                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与え、DEFを低下させる",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%",
+                            "def_down": "40%"
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "気弾",
+                        "name": "超かめはめ波",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超極大ダメージを与え、DEFを大幅低下させる",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%",
+                            "def_down": "50%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "悟飯に集まる願い",
+                    "intro": {
+                        "condition": "自身の登場時、チームに自身の他に「フルパワー」または「人造人間/セル編」カテゴリの味方がいるとき登場時演出が発動",
+                        "effect": "[img:one_time]4ターンの間、2回必殺技が追加発動、敵の数1体につき更に1回追加攻撃し中確率で必殺技が発動(ターン中最大5回)"
+                    },
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+5",
+                                "ATK/DEF258%[img:up]",
+                                "全ての攻撃をガード",
+                                "ダメージ軽減率20%[img:up]",
+                                "気玉取得時の気力上昇量+1"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK158%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃するたび",
+                            "effects": [
+                                "[img:infinity]気力+1(最大+5)",
+                                "[img:infinity]ATK/DEF10%[img:up](最大80%)"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるとき",
+                            "effects": [
+                                "DEF158%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "登場から5ターン目以降",
+                            "effects": [
+                                "・気力メーター18以上で攻撃時にATK158%[img:up]、DEF58%[img:up]",
+                                "アクティブスキル発動時または気力メーター24で攻撃時に必ず会心が発動"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "crit": "100%",
+                        "add": "7回",
+                        "reduce": "20%",
+                        "guard": true
+                    }
+                },
+                "active": {
+                    "name": "親子かめはめ波",
+                    "condition": "登場から5ターン目以降、自身の他にチームに「かめはめ波」カテゴリの味方がいるとき発動可能\nまたは登場から5ターン目以降、敵が1体で敵のHP89%以下のとき発動可能(1回のみ)",
+                    "effect": "一時的にATKが超大幅上昇し、相手に究極ダメージを与える\n&1ターン自身の気力+24、ATK58%UP",
+                    "specs": {
+                        "atk_up": "100%"
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030410,
@@ -12998,37 +13924,280 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人孫悟空",
         "yomi": "すーぱーさいやじんそんごくう",
         "rarity": "SSR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 26,
+        "type": "TEQ",
+        "class": "Super",
+        "release": "2025/01/29",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "地球を守りし英雄",
+            "融合/合体戦士",
+            "純粋サイヤ人",
+            "地球育ちの戦士",
+            "ポタラ",
+            "魔人ブウ編",
+            "孫悟空の系譜",
+            "超サイヤ人",
+            "亀仙流",
+            "親友の絆",
+            "高速戦闘",
+            "かめはめ波",
+            "親子の絆"
+        ],
+        "leaderSkill": "「地球を守りし英雄」または「融合/合体戦士」または「純粋サイヤ人」カテゴリの\n気力+2、HP150%UP、ATKとDEF130%UP、\n「地球育ちの戦士」または「ポタラ」カテゴリを含む場合は\n更にHPとATKとDEF20%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030320
+            },
+            {
+                "rank": "UR",
+                "id": 1030330,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030340,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/2",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "孫一族",
+                    "超サイヤ人",
+                    "歴戦の戦士",
+                    "かめはめ波",
+                    "臨戦態勢"
+                ],
+                "stats": {
+                    "hp": 7393,
+                    "atk": 8283,
+                    "def": 4611
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "かめはめ波",
+                        "effect": "ATKが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "光明",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF100%[img:up]",
+                                "属性気玉取得時の気力上昇量+1",
+                                "「地球を守りし英雄」カテゴリの味方全員のDEF30%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK100%[img:up]",
+                                "ダメージ軽減率10%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター10以上で攻撃時",
+                            "effects": [
+                                "全属性に効果抜群で攻撃"
+                            ]
+                        },
+                        {
+                            "title": "2番目か3番目にいるとき",
+                            "effects": [
+                                "ダメージ軽減率10%[img:up]",
+                                "必ず追加攻撃し中確率で必殺技が発動"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "1回",
+                        "reduce": "20%",
+                        "effective": true
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030420,
-        "title": "希望を守り抜く戦い",
+        "title": "希望を守り抜く闘い",
         "name": "超サイヤ人孫悟空",
         "yomi": "すーぱーさいやじんそんごくう",
         "rarity": "UR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 58,
+        "type": "TEQ",
+        "class": "Super",
+        "release": "2025/01/29",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "地球を守りし英雄",
+            "融合/合体戦士",
+            "純粋サイヤ人",
+            "地球育ちの戦士",
+            "ポタラ",
+            "魔人ブウ編",
+            "孫悟空の系譜",
+            "超サイヤ人",
+            "亀仙流",
+            "親友の絆",
+            "高速戦闘",
+            "かめはめ波",
+            "親子の絆"
+        ],
+        "leaderSkill": "「地球を守りし英雄」または「融合/合体戦士」または「純粋サイヤ人」カテゴリの\n気力+3、HP170%UP、ATKとDEF150%UP、\n「地球育ちの戦士」または「ポタラ」カテゴリを含む場合は\n更にHPとATKとDEF30%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030410
+            },
+            {
+                "rank": "UR",
+                "id": 1030420,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030430,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/2",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "孫一族",
+                    "超サイヤ人",
+                    "歴戦の戦士",
+                    "かめはめ波",
+                    "臨戦態勢",
+                    "超激戦"
+                ],
+                "stats": {
+                    "hp": 7755,
+                    "atk": 8544,
+                    "def": 4828
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "かめはめ波",
+                        "effect": "ATKが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "燃える命",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF150%[img:up]",
+                                "属性気玉取得時の気力上昇量+1",
+                                "「地球を守りし英雄」カテゴリの味方全員の気力+1、DEF30%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK150%up",
+                                "ダメージ軽減率15%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター10以上で攻撃時",
+                            "effects": [
+                                "全属性に効果抜群で攻撃"
+                            ]
+                        },
+                        {
+                            "title": "2番目か3番目にいるとき",
+                            "effects": [
+                                "ダメージ軽減率15%[img:up]",
+                                "必ず追加攻撃し高確率で必殺技が発動"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "1回",
+                        "reduce": "300%",
+                        "effective": true
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030430,
@@ -13036,18 +14205,382 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人孫悟空+超サイヤ人ベジータ(天使)",
         "yomi": "すーぱーさいやじんそんごくう+すーぱーさいやじんべじーた(てんし)",
         "rarity": "LR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 77,
+        "type": "TEQ",
+        "class": "Super",
+        "release": "2025/01/29",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "地球を守りし英雄",
+            "融合/合体戦士",
+            "純粋サイヤ人",
+            "地球育ちの戦士",
+            "ポタラ",
+            "魔人ブウ編",
+            "孫悟空の系譜",
+            "超サイヤ人",
+            "亀仙流",
+            "親友の絆",
+            "高速戦闘",
+            "かめはめ波",
+            "親子の絆",
+            "復活戦士",
+            "ベジータの系譜",
+            "好敵手",
+            "あの世の戦士",
+            "最後の切り札",
+            "頭脳戦",
+            "天才戦士",
+            "時間制限",
+            "体得した進化",
+            "継承する者"
+        ],
+        "leaderSkill": "「地球を守りし英雄」または「融合/合体戦士」または「純粋サイヤ人」カテゴリの\n気力+3、HP200%UP、ATKとDEF170%UP、\n「地球育ちの戦士」または「ポタラ」カテゴリを含む場合は\n更にHPとATKとDEF50%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030410
+            },
+            {
+                "rank": "UR",
+                "id": 1030420,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030430,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/2",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-この世編-/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "孫一族",
+                    "超サイヤ人",
+                    "歴戦の戦士",
+                    "かめはめ波",
+                    "臨戦態勢",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 16688,
+                    "atk": 15275,
+                    "def": 10188
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 20,
+                        "type": "気弾",
+                        "name": "かめはめ波",
+                        "effect": "ATKが上昇、1ターンDEFが大幅上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "50%"
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "格闘",
+                        "name": "決死の超サイヤ人3",
+                        "effect": "ATKが大幅上昇、1ターンDEFが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "老界王神の計らい",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF200%[img:up]",
+                                "属性気玉取得時の気力上昇量+2",
+                                "「地球を守りし英雄」または「ポタラ」カテゴリの味方全員の気力+1、DEF40%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "登場から3ターンの間",
+                            "effects": [
+                                "ダメージ軽減率50%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK200%[img:up]",
+                                "ダメージ軽減率20%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター10以上で攻撃時",
+                            "effects": [
+                                "全属性に効果抜群で攻撃"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター20以上で攻撃時",
+                            "effects": [
+                                "必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "2番目か3番目にいるとき",
+                            "effects": [
+                                "ダメージ軽減率20%[img:up]",
+                                "必ず追加攻撃し超高確率で必殺技が発動"
+                            ]
+                        },
+                        {
+                            "title": "バトル開始から4ターン目以降",
+                            "effects": [
+                                "超サイヤ人ベジータ(天使)と合流し、リバーシブルチェンジ可能になる"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "2回",
+                        "reduce": "90%",
+                        "effective": true
+                    }
+                },
+                "active": {
+                    "name": "合体",
+                    "condition": "バトル開始から5ターン目以降発動可能(リバーシブルチェンジ前後でいずれか1回のみ)",
+                    "effect": "4ターンの間、ポタラで合体する"
+                },
+                "reversible_icon": "RC_Button",
+                "reversible_type": "0"
+            },
+            {
+                "label": "合体",
+                "name": "超ベジット",
+                "id": 4030450,
+                "links": [
+                    "金色の戦士",
+                    "超サイヤ人",
+                    "神から授かりし力",
+                    "合体戦士",
+                    "臨戦態勢",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 16688,
+                    "atk": 15275,
+                    "def": 10188
+                },
+                "superAttacks": [
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "気弾",
+                        "name": "かめはめ波",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "みなぎる闘志のベジット",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "[img:one_time]HPが全回復",
+                                "ATK/DEF300%[img:up]",
+                                "属性気玉取得時の気力上昇量+3",
+                                "全ての攻撃をガード",
+                                "ダメージ軽減率60%[img:up]",
+                                "超必殺技が追加発動",
+                                "「地球を守りし英雄」または「ポタラ」カテゴリの味方全員の気力+2、ATK/DEF40%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃するたび",
+                            "effects": [
+                                "[img:infinity]会心率20%[img:up](最大100%)"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるたび",
+                            "effects": [
+                                "そのターン中ATK10%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "敵の通常攻撃を受けるとき",
+                            "effects": [
+                                "激烈な威力で反撃"
+                            ]
+                        },
+                        {
+                            "title": "登場から4ターンの間",
+                            "effects": [
+                                "敵の必殺技を見極める"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "crit": "100%",
+                        "add": "1回",
+                        "reduce": "60%",
+                        "guard": true,
+                        "counter": true
+                    }
+                },
+                "active": {
+                    "name": "スピリッツソード",
+                    "condition": "攻撃参加ターンになると発動可能(1回のみ)",
+                    "effect": "相手に究極ダメージを与える\n&1ターン自身のDEF300%UPし敵の攻撃を自身に集中させ、必ず会心が発動",
+                    "specs": {
+                        "def_up": "300%",
+                        "target": true,
+                        "crit": "100%"
+                    }
+                },
+                "reversible_icon": "RC_Button",
+                "reversible_type": "0"
+            },
+            {
+                "label": "通常",
+                "name": "超サイヤ人ベジータ(天使)+超サイヤ人孫悟空",
+                "id": 4030440,
+                "links": [
+                    "天才",
+                    "超サイヤ人",
+                    "歴戦の戦士",
+                    "戦闘民族サイヤ人",
+                    "臨戦態勢",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 16688,
+                    "atk": 15275,
+                    "def": 10188
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 20,
+                        "type": "気弾",
+                        "name": "ビッグ・バン・アタック",
+                        "effect": "DEFが上昇、1ターンATKが大幅上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "30%"
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "その他",
+                        "name": "アストロファイヤーキャノン",
+                        "effect": "DEFが大幅上昇、1ターンATKが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "閻魔大王の計らい",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "超サイヤ人孫悟空とリバーシブルチェンジ可能",
+                                "ATK/DEF200%[img:up]",
+                                "ダメージ軽減率50%[img:up]",
+                                "属性気玉取得時の気力上昇量+2",
+                                "「地球を守りし英雄」または「ポタラ」カテゴリの味方全員の気力+1、ATK40%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター10以上で攻撃を受けるとき",
+                            "effects": [
+                                "ダメージ軽減率20%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター20以上で攻撃時",
+                            "effects": [
+                                "必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "1番目にいるとき",
+                            "effects": [
+                                "全ての攻撃をガード",
+                                "必ず追加攻撃し超高確率で必殺技が発動"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "2回",
+                        "reduce": "70%",
+                        "guard": true
+                    }
+                },
+                "active": {
+                    "name": "純粋サイヤ人のプライド",
+                    "condition": "攻撃参加ターンになると発動可能(リバーシブルチェンジ前後でいずれか1回のみ)",
+                    "effect": "バトル中自身の気力+3、ATKとDEF18%UP、全ての攻撃をガード",
+                    "specs": {
+                        "atk_up": "18%",
+                        "def_up": "18%",
+                        "guard": true
+                    }
+                },
+                "reversible_icon": "RC_Button",
+                "reversible_type": "1"
+            }
+        ]
     },
     {
         "id": 1030460,
@@ -13055,37 +14588,278 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人ベジータ(天使)",
         "yomi": "すーぱーさいやじんべじーた(てんし)",
         "rarity": "SSR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 26,
+        "type": "AGL",
+        "class": "Super",
+        "release": "2025/02/15",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "継承する者",
+            "融合/合体戦士",
+            "純粋サイヤ人",
+            "天才戦士",
+            "フュージョン",
+            "劇場版HERO",
+            "ベジータの系譜",
+            "超サイヤ人",
+            "好敵手",
+            "あの世の戦士",
+            "体得した進化",
+            "親子の絆"
+        ],
+        "leaderSkill": "「継承する者」または「融合/合体戦士」または「純粋サイヤ人」カテゴリの\n気力+2、HP150%UP、ATKとDEF130%UP、\n「天才戦士」または「フュージョン」カテゴリを含む場合は\n更にHPとATKとDEF20%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030460
+            },
+            {
+                "rank": "UR",
+                "id": 1030470,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030480,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/2",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/2",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "天才",
+                    "超サイヤ人",
+                    "歴戦の戦士",
+                    "戦闘民族サイヤ人",
+                    "臨戦態勢"
+                ],
+                "stats": {
+                    "hp": 7393,
+                    "atk": 8460,
+                    "def": 4389
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "ファイナルブリッドアタック",
+                        "effect": "ATKが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "天佑",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF100%[img:up]",
+                                "虹気玉取得時の気力上昇量+2",
+                                "「継承する者」カテゴリの味方全員のDEF30%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK100%[img:up]",
+                                "DEF50%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター10以上で攻撃時",
+                            "effects": [
+                                "全属性に効果抜群で攻撃"
+                            ]
+                        },
+                        {
+                            "title": "2番目か3番目にいるとき",
+                            "effects": [
+                                "全ての攻撃をガード",
+                                "必ず追加攻撃し中確率で必殺技が発動"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "1回",
+                        "guard": true,
+                        "effective": true
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030470,
-        "title": "己の誇りを示す戦い",
+        "title": "己の誇りを示す闘い",
         "name": "超サイヤ人ベジータ(天使)",
         "yomi": "すーぱーさいやじんべじーた(てんし)",
         "rarity": "UR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 58,
+        "type": "AGL",
+        "class": "Super",
+        "release": "2025/02/15",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "継承する者",
+            "融合/合体戦士",
+            "純粋サイヤ人",
+            "天才戦士",
+            "フュージョン",
+            "劇場版HERO",
+            "ベジータの系譜",
+            "超サイヤ人",
+            "好敵手",
+            "あの世の戦士",
+            "体得した進化",
+            "親子の絆"
+        ],
+        "leaderSkill": "「継承する者」または「融合/合体戦士」または「純粋サイヤ人」カテゴリの\n気力+3、HP170%UP、ATKとDEF150%UP、「天才戦士」または「フュージョン」カテゴリを含む場合は\n更にHPとATKとDEF30%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030460
+            },
+            {
+                "rank": "UR",
+                "id": 1030470,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030480,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/2",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/2",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "天才",
+                    "超サイヤ人",
+                    "歴戦の戦士",
+                    "戦闘民族サイヤ人",
+                    "臨戦態勢",
+                    "超激戦"
+                ],
+                "stats": {
+                    "hp": 7755,
+                    "atk": 8730,
+                    "def": 4595
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "ファイナルブリッドアタック",
+                        "effect": "ATKが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "猛る魂",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF150%[img:up]",
+                                "虹気玉取得時の気力上昇量+2",
+                                "「継承する者」カテゴリの味方全員の気力+1、DEF30%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK150%[img:up]",
+                                "DEF70%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター10以上で攻撃時",
+                            "effects": [
+                                "全属性に効果抜群で攻撃"
+                            ]
+                        },
+                        {
+                            "title": "2番目か3番目にいるとき",
+                            "effects": [
+                                "全ての攻撃をガード",
+                                "必ず追加攻撃し高確率で必殺技が発動"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "1回",
+                        "guard": true,
+                        "effective": true
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030480,
@@ -13093,18 +14867,383 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人ベジータ(天使)+超サイヤ人孫悟空(天使)",
         "yomi": "すーぱーさいやじんべじーた(てんし)+すーぱーさいやじんそんごくう(てんし)",
         "rarity": "LR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 77,
+        "type": "AGL",
+        "class": "Super",
+        "release": "2025/02/15",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "継承する者",
+            "融合/合体戦士",
+            "純粋サイヤ人",
+            "天才戦士",
+            "フュージョン",
+            "劇場版HERO",
+            "ベジータの系譜",
+            "超サイヤ人",
+            "好敵手",
+            "あの世の戦士",
+            "体得した進化",
+            "親子の絆",
+            "孫悟空の系譜",
+            "最後の切り札",
+            "つながる希望",
+            "亀仙流",
+            "再起する力",
+            "時間制限",
+            "親友の絆",
+            "高速戦闘",
+            "地球育ちの戦士",
+            "地球を守りし英雄"
+        ],
+        "leaderSkill": "「継承する者」または「融合/合体戦士」または「純粋サイヤ人」カテゴリの\n気力+3、HP200%UP、ATKとDEF170%UP、\n「天才戦士」または「フュージョン」カテゴリを含む場合は\n更にHPとATKとDEF50%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030460
+            },
+            {
+                "rank": "UR",
+                "id": 1030470,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030480,
+                "medals": [
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/2",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/最強タッグ-あの世編-/2",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "天才",
+                    "超サイヤ人",
+                    "歴戦の戦士",
+                    "戦闘民族サイヤ人",
+                    "臨戦態勢",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 16688,
+                    "atk": 15700,
+                    "def": 9656
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 20,
+                        "type": "気弾",
+                        "name": "ファイナルブリッドアタック",
+                        "effect": "ATKが上昇、1ターンDEFが大幅上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "50%"
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "その他",
+                        "name": "ファイナルバーストキャノン",
+                        "effect": "ATKが大幅上昇、1ターンDEFが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "地獄に起きた奇跡",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+5、ATK/DEF200%[img:up]",
+                                "虹気玉取得時の気力上昇量+3",
+                                "「継承する者」または「フュージョン」カテゴリの味方全員の気力+1、DEF40%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "登場から3ターンの間",
+                            "effects": [
+                                "DEF300%[img:up]",
+                                "全ての攻撃をガード"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK200%[img:up]",
+                                "DEF100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター10以上で攻撃時",
+                            "effects": [
+                                "全属性に効果抜群で攻撃"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター20以上で攻撃時",
+                            "effects": [
+                                "必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "2番目か3番目にいるとき",
+                            "effects": [
+                                "全ての攻撃をガード",
+                                "必ず追加攻撃し超高確率で必殺技が発動"
+                            ]
+                        },
+                        {
+                            "title": "バトル開始から4ターン目以降",
+                            "effects": [
+                                "超サイヤ人孫悟空(天使)と合流し、リバーシブルチェンジ可能になる"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "2回",
+                        "guard": true,
+                        "effective": true
+                    }
+                },
+                "active": {
+                    "name": "融合",
+                    "condition": "バトル開始から5ターン目以降発動可能(リバーシブルチェンジ前後でいずれか1回のみ)",
+                    "effect": "4ターンの間、フュージョンで融合する"
+                },
+                "reversible_icon": "RC_Button",
+                "reversible_type": "0"
+            },
+            {
+                "label": "融合",
+                "name": "超ゴジータ",
+                "id": 4030500,
+                "links": [
+                    "金色の戦士",
+                    "超サイヤ人",
+                    "短期決戦",
+                    "合体戦士",
+                    "臨戦態勢",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 16688,
+                    "atk": 15700,
+                    "def": 9656
+                },
+                "superAttacks": [
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "気弾",
+                        "name": "ファイナルフラッシュ",
+                        "effect": "1ターンATKとDEFが超大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "100%",
+                            "def_up": "100%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "みなぎる闘志のゴジータ",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "[img:one_time]HPが全回復",
+                                "気力+5、ATK/DEF300%[img:up]",
+                                "虹気玉取得時の気力上昇量+4",
+                                "全ての攻撃をガード",
+                                "ダメージ軽減率60%[img:up]",
+                                "状態異常を無効化する",
+                                "2回超必殺技が追加発動",
+                                "必ず会心が発動",
+                                "「継承する者」または「フュージョン」カテゴリの味方全員の気力+2、ATK/DEF40%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるとき",
+                            "effects": [
+                                "DEF100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得虹気玉1個につき",
+                            "effects": [
+                                "ATK50%[img:up]",
+                                "ダメージ軽減率5%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "登場から4ターンの間",
+                            "effects": [
+                                "敵の必殺技を見極める"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "crit": "100%",
+                        "add": "2回",
+                        "reduce": "85%",
+                        "guard": true
+                    }
+                },
+                "active": {
+                    "name": "ソウルパニッシャー",
+                    "condition": "攻撃参加ターンになると発動可能(1回のみ)",
+                    "effect": "相手に究極ダメージを与える\n&1ターン自身を除く味方全員のATKとDEF54%UP、全属性に効果抜群で攻撃\n&速気玉を虹気玉に変化させる"
+                },
+                "reversible_icon": "RC_Button",
+                "reversible_type": "0"
+            },
+            {
+                "label": "通常",
+                "name": "超サイヤ人孫悟空(天使)+超サイヤ人ベジータ(天使)",
+                "id": 4030490,
+                "links": [
+                    "孫一族",
+                    "超サイヤ人",
+                    "歴戦の戦士",
+                    "戦闘民族サイヤ人",
+                    "臨戦態勢",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 16688,
+                    "atk": 15700,
+                    "def": 9656
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 20,
+                        "type": "格闘",
+                        "name": "激烈連脚",
+                        "effect": "DEFが上昇、1ターンATKが大幅上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "30%"
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "格闘",
+                        "name": "超龍双拳",
+                        "effect": "DEFが大幅上昇、1ターンATKが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "天国で鍛えた力",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "超サイヤ人ベジータ(天使)とリバーシブルチェンジ可能",
+                                "気力+5、ATK/DEF200%[img:up]",
+                                "虹気玉取得時の気力上昇量+3",
+                                "「継承する者」または「フュージョン」カテゴリの味方全員の気力+1、ATK40%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK100%[img:up]",
+                                "必ず追加攻撃し超高確率で必殺技が発動"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるとき",
+                            "effects": [
+                                "DEF200%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター10以上で攻撃を受けるとき",
+                            "effects": [
+                                "回避率10%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター20以上で攻撃時",
+                            "effects": [
+                                "必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "1番目にいるとき",
+                            "effects": [
+                                "全ての攻撃をガード",
+                                "超高確率で敵の攻撃を回避"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "2回",
+                        "dodge": "90%",
+                        "guard": true
+                    }
+                },
+                "active": {
+                    "name": "フュージョン失敗！？",
+                    "condition": "攻撃参加ターンになると発動可能(リバーシブルチェンジ前後でいずれか1回のみ)",
+                    "effect": "相手に究極ダメージを与え、ターゲットした敵1体の攻撃ターンを1のばす\n&3ターン敵の攻撃を回避する",
+                    "specs": {
+                        "dodge": "100%"
+                    }
+                },
+                "reversible_icon": "RC_Button",
+                "reversible_type": "1"
+            }
+        ]
     },
     {
         "id": 1030510,
@@ -13112,18 +15251,135 @@ const CHARACTER_DATA = [
         "name": "フリーザ(最終形態)(天使)",
         "yomi": "ふりーざ(さいしゅうけいたい)(てんし)",
         "rarity": "SSR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 26,
+        "type": "INT",
+        "class": "Extreme",
+        "release": "2025/02/15",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "命運をかけた闘い",
+            "宇宙サバイバル編",
+            "復活戦士",
+            "第7宇宙代表",
+            "変身強化",
+            "最凶の一族",
+            "あの世の戦士",
+            "天才戦士",
+            "時間制限",
+            "永遠の宿敵",
+            "大会出場者",
+            "継承する者"
+        ],
+        "leaderSkill": "「命運をかけた闘い」カテゴリの\n気力+2、HPとATKとDEF160%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030510
+            },
+            {
+                "rank": "UR",
+                "id": 1030520,
+                "medals": [
+                    {
+                        "name": "超激戦/極悪非道の宇宙皇帝/2",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/怒りの戦士!!超サイヤ人/2",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030530,
+                "medals": [
+                    {
+                        "name": "超激戦/地獄より舞い戻る最凶最悪/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/神越降臨!!身勝手の極意/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "天才",
+                    "宇宙最凶",
+                    "驚異的なスピード",
+                    "悪夢",
+                    "力の大会"
+                ],
+                "stats": {
+                    "hp": 8102,
+                    "atk": 8460,
+                    "def": 4035
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "デスビーム",
+                        "effect": "1ターンDEFが上昇し、相手に超特大ダメージを与え、ATKを低下させる",
+                        "specs": {
+                            "def_up": "30%",
+                            "atk_down": "20%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "フリーザの思惑",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+2",
+                                "ATK/DEF100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK/DEF77%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "自身を除く攻撃参加中の味方全員が超系の場合",
+                            "effects": [
+                                "高確率で会心が発動"
+                            ]
+                        },
+                        {
+                            "title": "自身を除く攻撃参加中の味方全員が極系の場合",
+                            "effects": [
+                                "高確率で必殺技が追加発動"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "crit": "50%",
+                        "add": "1回"
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030520,
@@ -13131,18 +15387,137 @@ const CHARACTER_DATA = [
         "name": "フリーザ(最終形態)(天使)",
         "yomi": "ふりーざ(さいしゅうけいたい)(てんし)",
         "rarity": "UR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 50,
+        "type": "INT",
+        "class": "Extreme",
+        "release": "2025/02/15",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "命運をかけた闘い",
+            "宇宙サバイバル編",
+            "復活戦士",
+            "第7宇宙代表",
+            "変身強化",
+            "最凶の一族",
+            "あの世の戦士",
+            "天才戦士",
+            "時間制限",
+            "永遠の宿敵",
+            "大会出場者",
+            "継承する者"
+        ],
+        "leaderSkill": "「命運をかけた闘い」カテゴリの\n気力+3、HPとATKとDEF190%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030510
+            },
+            {
+                "rank": "UR",
+                "id": 1030520,
+                "medals": [
+                    {
+                        "name": "超激戦/極悪非道の宇宙皇帝/2",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/怒りの戦士!!超サイヤ人/2",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030530,
+                "medals": [
+                    {
+                        "name": "超激戦/地獄より舞い戻る最凶最悪/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/神越降臨!!身勝手の極意/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "天才",
+                    "宇宙最凶",
+                    "驚異的なスピード",
+                    "悪夢",
+                    "力の大会",
+                    "超激戦"
+                ],
+                "stats": {
+                    "hp": 9569,
+                    "atk": 9450,
+                    "def": 4716
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "デスビーム",
+                        "effect": "1ターンDEFが上昇し、相手に超特大ダメージを与え、ATKを低下させる",
+                        "specs": {
+                            "def_up": "30%",
+                            "atk_down": "20%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "フリーザの野心",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+3",
+                                "ATK/DEF150%[img:up]",
+                                "虹気玉取得時の気力上昇量+1"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK/DEF100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "自身を除く攻撃参加中の味方全員が超系の場合",
+                            "effects": [
+                                "超高確率で会心が発動"
+                            ]
+                        },
+                        {
+                            "title": "自身を除く攻撃参加中の味方全員が極系の場合",
+                            "effects": [
+                                "超高確率で必殺技が追加発動"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "crit": "70%",
+                        "add": "1回"
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030530,
@@ -13150,18 +15525,289 @@ const CHARACTER_DATA = [
         "name": "フリーザ(最終形態)(天使)+孫悟空",
         "yomi": "ふりーざ(さいしゅうけいたい)(てんし)+そんごくう",
         "rarity": "LR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 77,
+        "type": "INT",
+        "class": "Extreme",
+        "release": "2025/02/15",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "命運をかけた闘い",
+            "宇宙サバイバル編",
+            "復活戦士",
+            "第7宇宙代表",
+            "変身強化",
+            "最凶の一族",
+            "あの世の戦士",
+            "天才戦士",
+            "時間制限",
+            "永遠の宿敵",
+            "大会出場者",
+            "継承する者",
+            "純粋サイヤ人",
+            "フルパワー",
+            "孫悟空の系譜",
+            "かめはめ波",
+            "力戦奮闘",
+            "亀仙流",
+            "再起する力",
+            "親友の絆",
+            "高速戦闘",
+            "親子の絆",
+            "超HERO",
+            "地球育ちの戦士"
+        ],
+        "leaderSkill": "「命運をかけた闘い」カテゴリの\n気力+4、HPとATKとDEF220%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030510
+            },
+            {
+                "rank": "UR",
+                "id": 1030520,
+                "medals": [
+                    {
+                        "name": "超激戦/極悪非道の宇宙皇帝/2",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/怒りの戦士!!超サイヤ人/2",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030530,
+                "medals": [
+                    {
+                        "name": "超激戦/地獄より舞い戻る最凶最悪/1",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/神越降臨!!身勝手の極意/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "天才",
+                    "宇宙最凶",
+                    "驚異的なスピード",
+                    "短期決戦",
+                    "力の大会",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 18388,
+                    "atk": 15700,
+                    "def": 8806
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 20,
+                        "type": "気弾",
+                        "name": "デスビーム",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に極大ダメージを与え、ATKを低下させる",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%",
+                            "atk_down": "20%"
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "格闘",
+                        "name": "恨みっこなしの一発",
+                        "effect": "1ターンATKが超大幅上昇、DEFが大幅上昇し、相手に超極大ダメージを与え、超高確率で気絶させる",
+                        "specs": {
+                            "atk_up": "100%",
+                            "def_up": "50%",
+                            "stun": "70%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "フリーザの闘志",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+7",
+                                "ATK/DEF200%[img:up]",
+                                "必ず追加攻撃し超高確率で必殺技が発動",
+                                "虹気玉取得時の気力上昇量+2",
+                                "登場から2ターンの間",
+                                "「第7宇宙代表」または「命運をかけた闘い」カテゴリの味方全員のATK/DEF77%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK/DEF150%[img:up]",
+                                "HP77%以下の場合、気力+7、ATK77%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるとき",
+                            "effects": [
+                                "HP77%以下の場合、ダメージ軽減率50%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "自身を除く攻撃参加中の味方全員が超系の場合",
+                            "effects": [
+                                "必ず会心が発動",
+                                "必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "自身を除く攻撃参加中の味方全員が極系の場合",
+                            "effects": [
+                                "2回必殺技が追加発動",
+                                "バトル開始から4ターン目以降",
+                                "孫悟空と合流し、リバーシブルチェンジ可能になる"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "crit": "100%",
+                        "add": "3回",
+                        "reduce": "50%"
+                    }
+                },
+                "active": {
+                    "name": "第７宇宙の奇跡",
+                    "condition": "バトル開始から4ターン目以降発動可能(リバーシブルチェンジ前後でいずれか1回のみ)",
+                    "effect": "一時的にATKが大幅上昇し、相手に究極ダメージを与え、発動したターン中必ず会心が発動",
+                    "specs": {
+                        "atk_up": "50%",
+                        "crit": "100%"
+                    }
+                },
+                "reversible_icon": "RC_Button",
+                "reversible_type": "0"
+            },
+            {
+                "label": "通常",
+                "name": "孫悟空+フリーザ(最終形態)(天使)",
+                "id": 4030540,
+                "links": [
+                    "臨戦態勢",
+                    "歴戦の戦士",
+                    "驚異的なスピード",
+                    "かめはめ波",
+                    "力の大会",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 18388,
+                    "atk": 15700,
+                    "def": 8806
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 20,
+                        "type": "気弾",
+                        "name": "かめはめ波",
+                        "effect": "ATKが大幅上昇、1ターンDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "30%"
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "格闘",
+                        "name": "恨みっこなしの一発",
+                        "effect": "1ターンATKが大幅上昇、DEFが超大幅上昇し、相手に超極大ダメージを与え、超高確率で気絶させる",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "100%",
+                            "stun": "70%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "悟空の闘志",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "フリーザ(最終形態)(天使)とリバーシブルチェンジ可能",
+                                "気力+7、ATK/DEF200%[img:up]",
+                                "全ての攻撃をガード",
+                                "虹気玉取得時の気力上昇量+2"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "HP77%以上の場合、必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるとき",
+                            "effects": [
+                                "ATK/DEF100%[img:up]",
+                                "HP77%以上の場合、DEF77%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得気玉1個につき",
+                            "effects": [
+                                "ATK/DEF17%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "虹気玉を取得すると",
+                            "effects": [
+                                "ダメージ軽減率59%[img:up]",
+                                "全属性に効果抜群で攻撃"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "1回",
+                        "reduce": "59%",
+                        "guard": true,
+                        "effective": true
+                    }
+                },
+                "active": {
+                    "name": "フリーザからのほどこし",
+                    "condition": "攻撃参加ターンになると発動可能(リバーシブルチェンジ前後でいずれか1回のみ)",
+                    "effect": "HPを77%回復し、1ターン自身のATK59%UP、体気玉を虹気玉に変化させる",
+                    "specs": {
+                        "atk_up": "59%"
+                    }
+                },
+                "reversible_icon": "RC_Button",
+                "reversible_type": "1"
+            }
+        ]
     },
     {
         "id": 1030550,
@@ -13169,18 +15815,143 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人ゴッドSSベジータ(進化)",
         "yomi": "すーぱーさいやじんごっどすーぱーさいやじんべじーた(しんか)",
         "rarity": "SSR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 26,
+        "type": "STR",
+        "class": "Super",
+        "release": "2025/01/29",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "宇宙サバイバル編",
+            "神次元",
+            "純粋サイヤ人",
+            "フルパワー",
+            "第7宇宙代表",
+            "ベジータの系譜",
+            "兄弟の絆",
+            "好敵手",
+            "師弟の絆",
+            "力戦奮闘",
+            "奇跡の覚醒",
+            "再起する力",
+            "天才戦士",
+            "超サイヤ人を超えた力",
+            "親子の絆",
+            "超HERO",
+            "大会出場者",
+            "継承する者"
+        ],
+        "leaderSkill": "「宇宙サバイバル編」カテゴリの\n気力+2、HPとATKとDEF160%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030550
+            },
+            {
+                "rank": "UR",
+                "id": 1030560,
+                "medals": [
+                    {
+                        "name": "超激戦/神をも凌ぐサイヤの境地/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030570,
+                "medals": [
+                    {
+                        "name": "超激戦/神をも凌ぐサイヤの境地/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/全身全霊全力解放！最強を目指す戦士/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/正義をすてた破壊の力/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "天才",
+                    "王の血筋",
+                    "神の次元",
+                    "臨戦態勢",
+                    "力の大会"
+                ],
+                "stats": {
+                    "hp": 7659,
+                    "atk": 8177,
+                    "def": 4611
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "格闘",
+                        "name": "戦闘民族の誇り",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "進化を重ねた力",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF100%[img:up]",
+                                "ランダム気玉変化：力を除く属性気玉1種→虹"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃するたび",
+                            "effects": [
+                                "[img:infinity]気力+1",
+                                "[img:infinity]DEF20%[img:up](最大100%)",
+                                "そのターン中、ダメージ軽減率5%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得気玉2個につき",
+                            "effects": [
+                                "必ず1回追加攻撃し中確率で必殺技が発動(ターン中最大3回)"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "3回",
+                        "reduce": "20%"
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030560,
@@ -13188,18 +15959,144 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人ゴッドSSベジータ(進化)",
         "yomi": "すーぱーさいやじんごっどすーぱーさいやじんべじーた(しんか)",
         "rarity": "UR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 58,
+        "type": "STR",
+        "class": "Super",
+        "release": "2025/01/29",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "宇宙サバイバル編",
+            "神次元",
+            "純粋サイヤ人",
+            "フルパワー",
+            "第7宇宙代表",
+            "ベジータの系譜",
+            "兄弟の絆",
+            "好敵手",
+            "師弟の絆",
+            "力戦奮闘",
+            "奇跡の覚醒",
+            "再起する力",
+            "天才戦士",
+            "超サイヤ人を超えた力",
+            "親子の絆",
+            "超HERO",
+            "大会出場者",
+            "継承する者"
+        ],
+        "leaderSkill": "「宇宙サバイバル編」カテゴリの\n気力+3、HPとATKとDEF190%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030550
+            },
+            {
+                "rank": "UR",
+                "id": 1030560,
+                "medals": [
+                    {
+                        "name": "超激戦/神をも凌ぐサイヤの境地/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030570,
+                "medals": [
+                    {
+                        "name": "超激戦/神をも凌ぐサイヤの境地/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/全身全霊全力解放！最強を目指す戦士/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/正義をすてた破壊の力/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "天才",
+                    "王の血筋",
+                    "神の次元",
+                    "臨戦態勢",
+                    "力の大会",
+                    "超激戦"
+                ],
+                "stats": {
+                    "hp": 9038,
+                    "atk": 9110,
+                    "def": 5406
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "格闘",
+                        "name": "戦闘民族の誇り",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "進化を重ねた姿",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF150%[img:up]",
+                                "ランダム気玉変化：力を除く属性気玉1種→虹"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK150%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃するたび",
+                            "effects": [
+                                "[img:infinity]気力+1",
+                                "[img:infinity]DEF30%[img:up](最大150%)",
+                                "そのターン中、ダメージ軽減率5%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得気玉2個につき",
+                            "effects": [
+                                "必ず1回追加攻撃し中確率で必殺技が発動(ターン中最大4回)"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "4回",
+                        "reduce": "25%"
+                    }
+                }
+            }
+        ]
     },
     {
         "id": 1030570,
@@ -13207,17 +16104,182 @@ const CHARACTER_DATA = [
         "name": "超サイヤ人ゴッドSSベジータ(進化)",
         "yomi": "すーぱーさいやじんごっどすーぱーさいやじんべじーた(しんか)",
         "rarity": "LR",
-        "cost": 0,
-        "type": "",
-        "class": "",
-        "source_type": "",
+        "cost": 77,
+        "type": "STR",
+        "class": "Super",
+        "release": "2025/01/29",
+        "source_type": "gasha",
         "drop_event": "",
-        "categories": [],
-        "leaderSkill": "",
+        "categories": [
+            "宇宙サバイバル編",
+            "神次元",
+            "純粋サイヤ人",
+            "フルパワー",
+            "第7宇宙代表",
+            "ベジータの系譜",
+            "兄弟の絆",
+            "好敵手",
+            "師弟の絆",
+            "力戦奮闘",
+            "奇跡の覚醒",
+            "再起する力",
+            "天才戦士",
+            "超サイヤ人を超えた力",
+            "親子の絆",
+            "超HERO",
+            "大会出場者",
+            "継承する者"
+        ],
+        "leaderSkill": "「宇宙サバイバル編」カテゴリの\n気力+4、HPとATKとDEF220%UP",
         "leaderSkill_eza": "",
         "leaderSkill_seza": "",
+        "awakening": [
+            {
+                "rank": "SSR",
+                "id": 1030550
+            },
+            {
+                "rank": "UR",
+                "id": 1030560,
+                "medals": [
+                    {
+                        "name": "超激戦/神をも凌ぐサイヤの境地/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    }
+                ]
+            },
+            {
+                "rank": "LR",
+                "id": 1030570,
+                "medals": [
+                    {
+                        "name": "超激戦/神をも凌ぐサイヤの境地/3",
+                        "bg": "超激戦/bg",
+                        "count": 35
+                    },
+                    {
+                        "name": "超激戦/全身全霊全力解放！最強を目指す戦士/1",
+                        "bg": "超激戦/bg",
+                        "count": 21
+                    },
+                    {
+                        "name": "超激戦/正義をすてた破壊の力/1",
+                        "bg": "超激戦/bg",
+                        "count": 14
+                    }
+                ]
+            }
+        ],
         "farmCards": [],
         "partners": [],
-        "forms": []
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "天才",
+                    "王の血筋",
+                    "神の次元",
+                    "臨戦態勢",
+                    "力の大会",
+                    "超激戦",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 17325,
+                    "atk": 15020,
+                    "def": 10188
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 20,
+                        "type": "格闘",
+                        "name": "戦闘民族の誇り",
+                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "その他",
+                        "name": "ファイナルフラッシュ",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超極大ダメージを与える",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "格闘",
+                        "name": "ライバル同士の共闘",
+                        "effect": "ATKが大幅上昇、1ターンDEFが大幅上昇し、相手に超極大ダメージを与える\n発動条件\n名称に「孫悟空」を含むキャラ(少年期、ギニュー、Jr.等を除く)が攻撃参加中の味方にいるとき、気力18以上で発動",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "オレのやり方で勝つ！！",
+                    "intro": {
+                        "condition": "自身の登場時、チームに自身の他に「宇宙サバイバル編」カテゴリの味方がいるとき登場時演出が発動",
+                        "effect": "[img:one_time]6ターンの間、ATK60%[img:up]、ダメージ軽減率30%[img:up]"
+                    },
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF200%[img:up]",
+                                "ランダム気玉変化：力を除く属性気玉1種→虹"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "ATK200%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃するたび",
+                            "effects": [
+                                "[img:infinity]気力+1",
+                                "[img:infinity]DEF40%[img:up](最大200%)",
+                                "そのターン中、ダメージ軽減率7%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得気玉2個につき",
+                            "effects": [
+                                "必ず1回追加攻撃し中確率で必殺技が発動(ターン中最大5回)"
+                            ]
+                        },
+                        {
+                            "title": "バトル中自身が6回以上必殺技を発動すると",
+                            "effects": [
+                                "[img:infinity]ダメージ軽減率30%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "バトル中自身が7回以上必殺技を発動すると",
+                            "effects": [
+                                "[img:infinity]必ず会心が発動"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "crit": "100%",
+                        "add": "5回",
+                        "reduce": "100%"
+                    }
+                }
+            }
+        ]
     }
 ];
