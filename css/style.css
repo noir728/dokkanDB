@@ -2818,8 +2818,8 @@ body {
 }
 
 .team-icon-mini {
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
     border-radius: 6px;
     overflow: visible;
     background-color: #2a2a2e;
@@ -3346,4 +3346,5 @@ body {
 
 .remove-slot-btn:active {
     background-color: rgba(255, 77, 77, 0.4);
+
 }
