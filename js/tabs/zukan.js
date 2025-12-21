@@ -2207,6 +2207,30 @@ function renderCharacterDetail(id) {
         });
     }
 
+    // ユニット必殺技の表示
+    if (currentData.unitSuperAttack) {
+        body.innerHTML += `<div class="section-title" style="color: #ff9500; border-left-color: #ff9500;">ユニット必殺技</div>`;
+        const usa = currentData.unitSuperAttack;
+        let typeIcon = `<span class="sa-type-badge">${usa.type}</span>`;
+        if (usa.type) typeIcon = `<div class="sa-type-badge"><img src="assets/sa_types/${usa.type}.png" class="sa-type-icon" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span>${usa.type}</span></div>`;
+
+        const specsHtml = getSpecsHtml(usa.specs);
+        const conditionHtml = usa.condition ? `<div class="usa-condition"><span style="font-weight:bold; color:#ffcc00;">[発動条件]</span> ${formatText(usa.condition)}</div>` : '';
+
+        body.innerHTML += `
+            <div class="unit-super-attack-card">
+                <div class="sa-header">
+                    <span class="usa-badge">UNIT</span>
+                    ${usa.maxLv ? `<span class="sa-lv-badge">Lv${usa.maxLv}</span>` : ''}
+                    <span class="sa-name">${usa.name}</span>
+                    ${typeIcon}
+                </div>
+                ${conditionHtml}
+                <div class="sa-effect">${formatText(usa.effect)}</div>
+                ${specsHtml}
+            </div>`;
+    }
+
     if (char.categories) {
         let catHtml = `<div class="section-title">カテゴリ</div><div style="display:flex; flex-wrap:wrap; gap:6px;">`;
         char.categories.forEach(cat => { catHtml += `<span class="clickable-tag" onclick="window.applyFilter('category', '${cat}')" style="background:#333; padding:6px 12px; border-radius:12px; font-size:12px; border:1px solid #555;">${cat}</span>`; });

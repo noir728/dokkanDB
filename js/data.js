@@ -143,7 +143,10 @@ const CHARACTER_DATA = [
                             "title": "無限上昇、一度のみ",
                             "effects": [
                                 "[img:infinity]",
-                                "[img:one_time]"
+                                "[img:one_time]",
+                                "[img:icon_stun]",
+                                "[img:icon_counter]",
+                                "[img:icon_atk_down]"
                             ]
                         },
                         {
@@ -181,6 +184,17 @@ const CHARACTER_DATA = [
                     "name": "アクティブ名",
                     "condition": "条件",
                     "effect": "効果"
+                },
+                "unitSuperAttack": {
+                    "name": "ユニット必殺サンプル",
+                    "maxLv": 20,
+                    "type": "気弾",
+                    "condition": "「力の大会」カテゴリの味方が2人以上いるとき",
+                    "effect": "相手に究極ダメージを与え、1ターンATKとDEFが大幅上昇",
+                    "specs": {
+                        "atk_up": "100%",
+                        "def_up": "50%"
+                    }
                 },
                 "standby": {
                     "name": "スタンバイ名",
