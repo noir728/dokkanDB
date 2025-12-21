@@ -308,6 +308,10 @@ function render() {
         // Defined in team.js
         if (typeof renderTeamLayout === 'function') renderTeamLayout();
         else contentDiv.innerHTML = '<div style="padding:20px; text-align:center;">Team Module Loading...</div>';
+    } else if (state.currentTab === 'box') {
+        // Defined in box.js
+        if (typeof renderBoxLayout === 'function') renderBoxLayout();
+        else contentDiv.innerHTML = '<div style="padding:20px; text-align:center;">Box Module Loading...</div>';
     } else {
         contentDiv.innerHTML = `<div style="padding:20px;text-align:center;color:#888;">${state.currentTab} (開発中)</div>`;
     }
