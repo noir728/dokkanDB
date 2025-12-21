@@ -1367,10 +1367,12 @@ function renderZukanList(targetGrid) {
         };
 
         const handleEnd = (e) => {
-            // e.preventDefault(); // 必要に応じて
-            if (timer) clearTimeout(timer);
-            if (!isLongPressed) {
-                onTap();
+            // If timer is null, it means it was cancelled (e.g., by movement), so ignore
+            if (timer) {
+                clearTimeout(timer);
+                if (!isLongPressed) {
+                    onTap();
+                }
             }
         };
 
@@ -1395,16 +1397,32 @@ function renderZukanList(targetGrid) {
         // ここではPCでもマウスダウン長押しに対応させる
         element.addEventListener('mousedown', (e) => {
             if (e.button !== 0) return; // 左クリックのみ
+            startX = e.clientX;
+            startY = e.clientY;
             isLongPressed = false;
             timer = setTimeout(() => {
                 isLongPressed = true;
                 onLongPress();
             }, longPressDuration);
         });
+
+        element.addEventListener('mousemove', (e) => {
+            if (timer) {
+                const diffX = Math.abs(e.clientX - startX);
+                const diffY = Math.abs(e.clientY - startY);
+                if (diffX > 10 || diffY > 10) {
+                    clearTimeout(timer);
+                    timer = null;
+                }
+            }
+        });
         element.addEventListener('mouseup', (e) => {
-            if (timer) clearTimeout(timer);
-            if (!isLongPressed && e.button === 0) {
-                onTap();
+            // Check if timer exists (was not cancelled by move)
+            if (timer) {
+                clearTimeout(timer);
+                if (!isLongPressed && e.button === 0) {
+                    onTap();
+                }
             }
         });
         element.addEventListener('mouseleave', () => {
