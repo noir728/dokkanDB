@@ -3429,3 +3429,95 @@ body {
 .slot-popover-btn.remove {
     color: var(--accent-str);
 }
+
+/* =========================================
+   PWA Install Banner
+   ========================================= */
+.pwa-banner {
+    position: fixed;
+    bottom: 70px;
+    /* Above tab bar */
+    left: 10px;
+    right: 10px;
+    background-color: #222;
+    border: 1px solid var(--highlight);
+    border-radius: 8px;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    animation: slideUp 0.3s ease-out;
+}
+
+.pwa-banner.hidden {
+    display: none;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.pwa-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.pwa-text {
+    flex: 1;
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.pwa-title {
+    display: block;
+    margin-bottom: 2px;
+}
+
+.pwa-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.pwa-btn-install {
+    background-color: var(--highlight);
+    color: black;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(255, 215, 0, 0.3);
+}
+
+.pwa-btn-install:active {
+    transform: scale(0.95);
+}
+
+.pwa-btn-close {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+}
+
+.pwa-btn-close:active {
+    color: #fff;
+}
