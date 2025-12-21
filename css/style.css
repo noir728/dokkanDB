@@ -26,19 +26,23 @@
     --nav-height: 60px;
 
     /* Standby Colors */
-    --standby-border: #00e5ff; /* Cyan */
+    --standby-border: #00e5ff;
+    /* Cyan */
     --standby-bg: rgba(0, 229, 255, 0.05);
 
     /* Field Colors */
-    --field-border: #ff00ff; /* Magenta */
+    --field-border: #ff00ff;
+    /* Magenta */
     --field-bg: #2d1f2d;
 }
 
 /* =========================================
    2. Base Styles & Resets
    ========================================= */
-html, body {
-    overscroll-behavior-y: auto; /* Allow vertical pull-to-refresh if needed */
+html,
+body {
+    overscroll-behavior-y: auto;
+    /* Allow vertical pull-to-refresh if needed */
 }
 
 body {
@@ -48,7 +52,8 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     -webkit-font-smoothing: antialiased;
-    overflow: hidden; /* App-like behavior */
+    overflow: hidden;
+    /* App-like behavior */
 }
 
 /* =========================================
@@ -267,6 +272,27 @@ body {
     height: 16px;
     fill: currentColor;
 }
+
+/* Max Awakening Toggle Button */
+.max-awakening-btn {
+    background-color: #2d2d30;
+    border: 1px solid #444;
+    color: #888;
+    border-radius: 6px;
+    padding: 0 10px;
+    height: 36px;
+    font-size: 11px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.max-awakening-btn.active {
+    background-color: rgba(255, 77, 77, 0.15);
+    border-color: var(--accent-str);
+    color: var(--accent-str);
+}
+
 
 .active-filter-badge {
     margin-top: 8px;
@@ -593,7 +619,8 @@ body {
     display: flex;
     align-items: center;
     flex: 1;
-    min-width: 0; /* Critical for text truncation in flex item */
+    min-width: 0;
+    /* Critical for text truncation in flex item */
     margin-right: 8px;
 }
 
@@ -617,7 +644,8 @@ body {
     min-width: 0;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis; /* Default state */
+    text-overflow: ellipsis;
+    /* Default state */
 }
 
 /* Animation Class */
@@ -627,11 +655,35 @@ body {
 }
 
 @keyframes scroll-fade-in {
-    0% { transform: translateX(0); opacity: 1; }
-    70% { transform: translateX(-150%); opacity: 1; } /* Scroll out */
-    70.1% { transform: translateX(0); opacity: 0; } /* Reset pos instantly hidden */
-    80% { transform: translateX(0); opacity: 1; } /* Fade in */
-    100% { transform: translateX(0); opacity: 1; } /* Wait */
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    70% {
+        transform: translateX(-150%);
+        opacity: 1;
+    }
+
+    /* Scroll out */
+    70.1% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+
+    /* Reset pos instantly hidden */
+    80% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    /* Fade in */
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    /* Wait */
 }
 
 .char-sub-header {
@@ -654,7 +706,8 @@ body {
     margin-top: 2px;
 }
 
-.date-row-primary, .date-row-secondary {
+.date-row-primary,
+.date-row-secondary {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
@@ -672,10 +725,15 @@ body {
 }
 
 .date-tag.eza {
-    background:#4a2c00; color:#ffa500; border-color:#804000;
+    background: #4a2c00;
+    color: #ffa500;
+    border-color: #804000;
 }
+
 .date-tag.seza {
-    background:#2a004a; color:#e080ff; border-color:#d300ff;
+    background: #2a004a;
+    color: #e080ff;
+    border-color: #d300ff;
 }
 
 .action-buttons {
@@ -733,9 +791,10 @@ body {
     width: 100%;
     padding: 20px 0;
     text-align: center;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.2);
     margin-top: 30px;
-    margin-bottom: 80px; /* Ensure space for bottom nav/FAB */
+    margin-bottom: 80px;
+    /* Ensure space for bottom nav/FAB */
     border-top: 1px solid var(--border-color);
 }
 
@@ -1022,6 +1081,11 @@ body {
     padding: 2px 6px;
     border-radius: 10px;
     font-weight: bold;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
 }
 
 .sa-lv-badge {
@@ -1287,7 +1351,8 @@ body {
 }
 
 .accordion-content.open {
-    max-height: 1000px; /* Arbitrary large value */
+    max-height: 1000px;
+    /* Arbitrary large value */
     opacity: 1;
     transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease-in-out;
     padding-top: 5px !important;
@@ -1791,7 +1856,8 @@ body {
     display: flex;
     background: #333;
     border-radius: 8px;
-    padding: 2px; /* Fixed typo: pading -> padding */
+    padding: 2px;
+    /* Fixed typo: pading -> padding */
 }
 
 .toggle-item {
@@ -1920,7 +1986,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     z-index: 950;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -2215,7 +2281,7 @@ body {
     z-index: 2000;
     display: flex;
     justify-content: center;
-    box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
     animation: slideUp 0.3s ease-out;
     padding-bottom: calc(env(safe-area-inset-bottom) + 15px);
 }
@@ -2294,13 +2360,25 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes scaleIn {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 @keyframes slideInRight {
@@ -2308,6 +2386,7 @@ body {
         opacity: 0;
         transform: translateX(20px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -2319,6 +2398,7 @@ body {
         opacity: 0;
         transform: translateX(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -2330,6 +2410,7 @@ body {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -2340,6 +2421,7 @@ body {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -2349,15 +2431,1001 @@ body {
     0% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.05);
     }
+
     100% {
         transform: scale(1);
     }
 }
 
 @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-200%); }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-200%);
+    }
+}
+
+/* =========================================
+   Team Builder Styles (追記分)
+   ========================================= */
+
+/* コンテナとヘッダー */
+.team-container {
+    padding: 15px;
+    padding-bottom: 80px;
+}
+
+.team-header-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+.team-meta-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.team-name-input {
+    flex: 2;
+    background: #333;
+    border: 1px solid #555;
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.team-label-select {
+    flex: 1;
+    background: #333;
+    border: 1px solid #555;
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.team-stats-summary {
+    display: flex;
+    justify-content: space-around;
+    background: #1a1a1c;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 11px;
+    color: #ccc;
+    border: 1px solid #333;
+}
+
+.team-stat-val {
+    color: #fff;
+    font-weight: bold;
+    margin-left: 4px;
+}
+
+/* チームスロットのグリッド */
+.team-grid-area {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.team-role-label {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 4px;
+    padding-left: 4px;
+    border-left: 2px solid var(--highlight);
+}
+
+.team-main-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.team-sub-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+}
+
+.team-slot {
+    aspect-ratio: 1;
+    background-color: #222;
+    border: 1px dashed #555;
+    border-radius: 6px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.team-slot:active {
+    background-color: #333;
+    border-color: #888;
+}
+
+.team-slot.filled {
+    border: 1px solid #444;
+    background: transparent;
+}
+
+.slot-placeholder {
+    font-size: 24px;
+    color: #555;
+    font-weight: bold;
+}
+
+.slot-remove-btn {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 18px;
+    height: 18px;
+    background: #ff4d4d;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* LS倍率バッジ */
+.ls-check-badge {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    white-space: nowrap;
+    border: 1px solid #555;
+    z-index: 5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.ls-ok {
+    background: #4cd964;
+    color: #000;
+    border-color: #fff;
+    font-weight: bold;
+}
+
+.ls-ng {
+    background: #ff4d4d;
+    border-color: #ffaaaa;
+}
+
+/* チームナビゲーション */
+.team-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    background: #222;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.team-nav-btn {
+    background: #333;
+    border: 1px solid #555;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.team-nav-indicator {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--highlight);
+}
+
+/* 図鑑：選択モード時のバナー */
+.select-mode-banner {
+    background-color: var(--entry-bg);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    border-bottom: 2px solid var(--entry-border);
+    position: sticky;
+    top: 57px;
+    /* ヘッダーの下 */
+    z-index: 45;
+}
+
+/* チーム編成：LS倍率セクションヘッダー */
+.ls-section-header {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #444;
+    border-top: 1px solid #444;
+    padding: 8px 0;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    background-color: rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   NEW TEAM UI STYLES
+   ========================================= */
+
+.team-container-new {
+    padding: 10px;
+    padding-bottom: 100px;
+}
+
+/* --- Label Filter Tabs --- */
+.team-label-tabs {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 10px 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    -webkit-overflow-scrolling: touch;
+}
+
+.team-label-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.team-label-tab {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-sub);
+    cursor: pointer;
+    border: 1px solid #444;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.team-label-tab.active {
+    background-color: var(--highlight);
+    color: #000;
+    font-weight: bold;
+    border-color: var(--highlight);
+}
+
+.team-label-tab:active {
+    transform: scale(0.95);
+}
+
+/* --- Team List --- */
+.team-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.team-empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+/* --- Team Card --- */
+.team-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.team-card.expanded {
+    border-color: var(--highlight);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.15);
+}
+
+.team-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.team-card-header:active {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.team-card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.team-card-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.team-card-label-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    background-color: #333;
+    border-radius: 10px;
+    color: #aaa;
+    border: 1px solid #555;
+}
+
+.team-card-arrow {
+    font-size: 12px;
+    color: #666;
+    transition: transform 0.3s ease;
+}
+
+.team-card.expanded .team-card-arrow {
+    color: var(--highlight);
+}
+
+/* --- Team Icons Row (Compact View) --- */
+.team-icons-row {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    padding: 8px 4px 12px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.team-icon-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.team-icon-slot:active .team-icon-mini {
+    transform: scale(0.95);
+}
+
+.slot-role-label {
+    font-size: 8px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.slot-role-label.leader {
+    color: #ffd700;
+    background-color: rgba(255, 215, 0, 0.15);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.slot-role-label.friend {
+    color: #00ccff;
+    background-color: rgba(0, 204, 255, 0.15);
+    border: 1px solid rgba(0, 204, 255, 0.3);
+}
+
+.slot-role-spacer {
+    height: 16px;
+}
+
+.team-icon-mini {
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    overflow: visible;
+    background-color: #2a2a2e;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.15s ease;
+}
+
+.team-icon-mini.filled {
+    border: none;
+}
+
+.team-icon-mini.empty {
+    color: #555;
+    font-size: 18px;
+    border: 2px dashed #444;
+}
+
+.team-icon-mini .dokkan-icon {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.team-icon-mini .slot-remove-btn {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 16px;
+    height: 16px;
+    background-color: var(--accent-str);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 10;
+    border: 2px solid var(--card-bg);
+}
+
+.slot-ls-badge-container {
+    min-height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slot-ls-badge-container .ls-check-badge {
+    position: static;
+    transform: none;
+    font-size: 8px;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+/* --- Expanded Content --- */
+.team-expanded-content {
+    padding: 15px;
+    border-top: 1px solid var(--border-color);
+    background-color: rgba(0, 0, 0, 0.15);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+/* --- Team Stats Row --- */
+.team-stats-row {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--card-bg);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.team-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.team-stat-label {
+    font-size: 10px;
+    color: #888;
+    letter-spacing: 1px;
+}
+
+.team-stat-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--highlight);
+}
+
+/* --- Team Memo Section --- */
+.team-memo-section {
+    margin-bottom: 15px;
+}
+
+.team-memo-label {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.team-memo-input {
+    width: 100%;
+    min-height: 80px;
+    background-color: #1a1a1c;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: #fff;
+    padding: 10px;
+    font-size: 13px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.team-memo-input:focus {
+    border-color: var(--highlight);
+    outline: none;
+}
+
+.team-memo-input::placeholder {
+    color: #555;
+}
+
+/* --- Team Slots Edit (Expanded) --- */
+.team-slots-edit {
+    margin-bottom: 15px;
+}
+
+.team-slots-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.team-slots-row.subs {
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.team-slot-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.team-role-label {
+    font-size: 9px;
+    padding: 2px 6px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.team-slot {
+    width: 55px;
+    height: 55px;
+    background-color: #2a2a2e;
+    border: 2px dashed #444;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.team-slot.filled {
+    border-style: solid;
+    border-color: #555;
+}
+
+.team-slot:active {
+    transform: scale(0.95);
+}
+
+.team-slot .dokkan-icon {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.slot-placeholder {
+    font-size: 24px;
+    color: #555;
+}
+
+.slot-remove-btn {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 18px;
+    height: 18px;
+    background-color: var(--accent-str);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+    border: 2px solid var(--card-bg);
+}
+
+.ls-check-badge {
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-weight: bold;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.ls-check-badge.ls-ok {
+    background-color: var(--accent-teq);
+    color: #000;
+}
+
+.ls-check-badge.ls-ng {
+    background-color: #555;
+    color: #aaa;
+}
+
+/* --- Team Actions Row --- */
+.team-actions-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.team-name-edit {
+    flex: 1;
+    background-color: #2a2a2e;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+.team-name-edit:focus {
+    border-color: var(--highlight);
+    outline: none;
+}
+
+.team-label-edit {
+    background-color: #2a2a2e;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+.team-btn-clear,
+.team-btn-delete {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.team-btn-clear {
+    background-color: #444;
+    color: #fff;
+}
+
+.team-btn-clear:active {
+    background-color: #555;
+}
+
+.team-btn-delete {
+    background-color: rgba(255, 77, 77, 0.2);
+    color: var(--accent-str);
+    border: 1px solid var(--accent-str);
+}
+
+.team-btn-delete:active {
+    background-color: rgba(255, 77, 77, 0.4);
+}
+
+/* --- Add Team FAB --- */
+.team-add-fab {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--highlight) 0%, #ff9500 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    z-index: 100;
+    transition: all 0.2s ease;
+}
+
+.team-add-fab:active {
+    transform: scale(0.9);
+}
+
+.team-add-fab svg {
+    stroke: #000;
+    stroke-width: 3;
+}
+
+/* --- Link Compatibility Section --- */
+.team-link-section {
+    margin-top: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.team-link-header {
+    padding: 12px 15px;
+    background-color: rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.team-link-header:active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.link-char-select-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 10px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-top: 1px solid var(--border-color);
+}
+
+.link-char-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.15s ease;
+}
+
+.link-char-item:active {
+    transform: scale(0.95);
+}
+
+.link-char-item.selected {
+    transform: scale(1.05);
+}
+
+.link-char-item.selected .link-char-icon {
+    box-shadow: 0 0 0 3px var(--highlight);
+    border-radius: 8px;
+}
+
+.link-char-item.empty {
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    border-radius: 6px;
+    border: 1px dashed #555;
+}
+
+.link-char-role {
+    font-size: 8px;
+    font-weight: bold;
+    color: var(--highlight);
+    margin-bottom: 2px;
+}
+
+.link-char-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.link-char-icon .dokkan-icon {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.link-no-selection {
+    padding: 20px;
+    text-align: center;
+    color: #666;
+    font-size: 13px;
+    border-top: 1px solid var(--border-color);
+}
+
+.link-match-results {
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.link-match-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border-left: 3px solid #666;
+}
+
+.link-match-row.excellent {
+    border-left-color: #4cd964;
+    background-color: rgba(76, 217, 100, 0.1);
+}
+
+.link-match-row.good {
+    border-left-color: #ffa500;
+    background-color: rgba(255, 165, 0, 0.1);
+}
+
+.link-match-row.low {
+    border-left-color: #888;
+}
+
+.link-match-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.link-match-icon .dokkan-icon {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.link-match-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 60px;
+}
+
+.link-match-role {
+    font-size: 10px;
+    color: #888;
+}
+
+.link-match-count {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.link-match-names {
+    flex: 1;
+    font-size: 11px;
+    color: #aaa;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.link-no-results {
+    padding: 15px;
+    text-align: center;
+    color: #666;
+    font-size: 13px;
+}
+
+/* --- Remove Slot Button in Team Select Mode --- */
+.remove-slot-btn {
+    background-color: rgba(255, 77, 77, 0.2);
+    color: var(--accent-str);
+    border: 1px solid var(--accent-str);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 8px;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
+}
+
+.remove-slot-btn:active {
+    background-color: rgba(255, 77, 77, 0.4);
+}
+
+/* --- Slot Popover --- */
+.slot-popover-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.slot-popover {
+    position: absolute;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    background-color: #2d2d30;
+    border: 1px solid #555;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    min-width: 100px;
+    animation: popoverFadeIn 0.15s ease;
+}
+
+@keyframes popoverFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.slot-popover-btn {
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.slot-popover-btn:active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.slot-popover-btn:not(:last-child) {
+    border-bottom: 1px solid #444;
+}
+
+.slot-popover-btn.remove {
+    color: var(--accent-str);
 }
