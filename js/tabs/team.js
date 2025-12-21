@@ -98,6 +98,7 @@ function renderTeamCard(team, teamIndex) {
                  onmouseup="handleSlotMouseUp(event, ${teamIndex}, ${i})"
                  onmouseleave="handleSlotMouseLeave(event)"
                  ontouchstart="handleSlotTouchStart(event, ${teamIndex}, ${i}, ${charId || 'null'})"
+                 ontouchmove="handleSlotTouchMove(event, ${teamIndex}, ${i})"
                  ontouchend="handleSlotTouchEnd(event, ${teamIndex}, ${i})"
                  ontouchcancel="handleSlotTouchEnd(event, ${teamIndex}, ${i})">
                 ${roleLabel ? `<div class="slot-role-label ${roleClass}">${roleLabel}</div>` : '<div class="slot-role-spacer"></div>'}
@@ -377,7 +378,11 @@ function openTeamSelect(slotIndex) {
 // --- Long-Press Handler ---
 let longPressTimer = null;
 let isLongPress = false;
+let touchStartX = 0;
+let touchStartY = 0;
+let hasTouchMoved = false;
 const LONG_PRESS_DURATION = 500; // ms
+const MOVE_THRESHOLD = 10; // px
 
 function handleSlotMouseDown(e, teamIndex, slotIndex, charId) {
     // Ignore if click originated from remove button
@@ -423,14 +428,39 @@ function handleSlotTouchStart(e, teamIndex, slotIndex, charId) {
     // Ignore if touch originated from remove button
     if (e.target.classList.contains('slot-remove-btn')) return;
 
-    e.preventDefault(); // Prevent scrolling during long press
+    // Track touch position for scroll detection
+    if (e.touches && e.touches[0]) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }
+    hasTouchMoved = false;
     isLongPress = false;
+
+    // Do NOT call e.preventDefault() - allow scrolling
+
     longPressTimer = setTimeout(() => {
-        isLongPress = true;
-        if (charId) {
-            openCharDetailFromTeam(charId);
+        if (!hasTouchMoved) {
+            isLongPress = true;
+            if (navigator.vibrate) navigator.vibrate(50);
+            if (charId) {
+                openCharDetailFromTeam(charId);
+            }
         }
     }, LONG_PRESS_DURATION);
+}
+
+function handleSlotTouchMove(e, teamIndex, slotIndex) {
+    if (e.touches && e.touches[0]) {
+        const diffX = Math.abs(e.touches[0].clientX - touchStartX);
+        const diffY = Math.abs(e.touches[0].clientY - touchStartY);
+        if (diffX > MOVE_THRESHOLD || diffY > MOVE_THRESHOLD) {
+            hasTouchMoved = true;
+            if (longPressTimer) {
+                clearTimeout(longPressTimer);
+                longPressTimer = null;
+            }
+        }
+    }
 }
 
 function handleSlotTouchEnd(e, teamIndex, slotIndex) {
@@ -438,7 +468,9 @@ function handleSlotTouchEnd(e, teamIndex, slotIndex) {
         clearTimeout(longPressTimer);
         longPressTimer = null;
     }
-    if (!isLongPress) {
+
+    // Only trigger tap if no movement and no long press
+    if (!isLongPress && !hasTouchMoved) {
         const team = state.teams[teamIndex];
         const charId = team.slots[slotIndex];
         if (charId) {
@@ -451,6 +483,7 @@ function handleSlotTouchEnd(e, teamIndex, slotIndex) {
         }
     }
     isLongPress = false;
+    hasTouchMoved = false;
 }
 
 function handleRemoveClick(e, teamIndex, slotIndex) {
@@ -648,6 +681,7 @@ window.handleSlotMouseDown = handleSlotMouseDown;
 window.handleSlotMouseUp = handleSlotMouseUp;
 window.handleSlotMouseLeave = handleSlotMouseLeave;
 window.handleSlotTouchStart = handleSlotTouchStart;
+window.handleSlotTouchMove = handleSlotTouchMove;
 window.handleSlotTouchEnd = handleSlotTouchEnd;
 window.handleRemoveClick = handleRemoveClick;
 window.openCharDetailFromTeam = openCharDetailFromTeam;

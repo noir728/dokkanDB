@@ -77,6 +77,9 @@ function init() {
         else scrollTopBtn.classList.remove('visible');
     });
 
+    // Pull-to-Refresh Setup
+    setupPullToRefresh();
+
     // Popstate Event (Handle browser back/forward navigation)
     window.addEventListener('popstate', (event) => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -112,9 +115,102 @@ function init() {
         }
     });
 
-    // PWA & Service Worker Logic (Simplified for brevity, keep your existing code)
+    // PWA & Service Worker Logic with Update Detection
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js').catch(console.error);
+        navigator.serviceWorker.register('service-worker.js')
+            .then((registration) => {
+                // Check for updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    if (newWorker) {
+                        showUpdateOverlay();
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'activated') {
+                                // New service worker activated - reload to get fresh content
+                                hideUpdateOverlay();
+                                window.location.reload();
+                            }
+                        });
+                    }
+                });
+            })
+            .catch(console.error);
+
+        // Detect controller change (SW update applied)
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            // Reload triggered by new SW
+        });
+    }
+}
+
+// --- Pull-to-Refresh ---
+function setupPullToRefresh() {
+    const indicator = document.getElementById('pull-refresh-indicator');
+    if (!indicator) return;
+
+    let touchStartY = 0;
+    let isPulling = false;
+    const PULL_THRESHOLD = 80; // px needed to trigger refresh
+
+    contentDiv.addEventListener('touchstart', (e) => {
+        // Only trigger if at top of scroll
+        if (contentDiv.scrollTop <= 0) {
+            touchStartY = e.touches[0].clientY;
+            isPulling = true;
+        }
+    }, { passive: true });
+
+    contentDiv.addEventListener('touchmove', (e) => {
+        if (!isPulling) return;
+
+        const touchY = e.touches[0].clientY;
+        const pullDistance = touchY - touchStartY;
+
+        // Only show indicator when pulling down at top
+        if (pullDistance > 0 && contentDiv.scrollTop <= 0) {
+            const progress = Math.min(pullDistance / PULL_THRESHOLD, 1);
+            indicator.style.opacity = progress;
+            indicator.style.transform = `translateY(${Math.min(pullDistance * 0.5, 50)}px)`;
+
+            if (progress >= 1) {
+                indicator.classList.add('visible');
+            }
+        }
+    }, { passive: true });
+
+    contentDiv.addEventListener('touchend', () => {
+        if (!isPulling) return;
+
+        const isTriggered = indicator.classList.contains('visible');
+
+        // Reset indicator
+        indicator.style.opacity = '0';
+        indicator.style.transform = 'translateY(-100%)';
+        indicator.classList.remove('visible');
+        isPulling = false;
+
+        if (isTriggered) {
+            // Show spinner and reload
+            showUpdateOverlay();
+            setTimeout(() => {
+                window.location.reload();
+            }, 300);
+        }
+    }, { passive: true });
+}
+
+// --- Update Overlay ---
+function showUpdateOverlay() {
+    const overlay = document.getElementById('update-overlay');
+    if (overlay) {
+        overlay.classList.remove('hidden');
+    }
+}
+
+function hideUpdateOverlay() {
+    const overlay = document.getElementById('update-overlay');
+    if (overlay) {
+        overlay.classList.add('hidden');
     }
 }
 
