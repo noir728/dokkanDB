@@ -143,10 +143,7 @@ const CHARACTER_DATA = [
                             "title": "無限上昇、一度のみ",
                             "effects": [
                                 "[img:infinity]",
-                                "[img:one_time]",
-                                "[img:icon_stun]",
-                                "[img:icon_counter]",
-                                "[img:icon_atk_down]"
+                                "[img:one_time]"
                             ]
                         },
                         {
@@ -184,17 +181,6 @@ const CHARACTER_DATA = [
                     "name": "アクティブ名",
                     "condition": "条件",
                     "effect": "効果"
-                },
-                "unitSuperAttack": {
-                    "name": "ユニット必殺サンプル",
-                    "maxLv": 20,
-                    "type": "気弾",
-                    "condition": "「力の大会」カテゴリの味方が2人以上いるとき",
-                    "effect": "相手に究極ダメージを与え、1ターンATKとDEFが大幅上昇",
-                    "specs": {
-                        "atk_up": "100%",
-                        "def_up": "50%"
-                    }
                 },
                 "standby": {
                     "name": "スタンバイ名",
@@ -17443,6 +17429,200 @@ const CHARACTER_DATA = [
                         "add": "1回",
                         "revival": true,
                         "reduce": "58%"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": 1016970,
+        "title": "晴れやかな闘い",
+        "name": "トランクス(青年期)",
+        "yomi": "晴れやかな闘い",
+        "rarity": "SSR",
+        "cost": 19,
+        "type": "INT",
+        "class": "Super",
+        "release": "2020/08/07",
+        "source_type": "gasha",
+        "drop_event": "",
+        "categories": [
+            "混血サイヤ人",
+            "未来編",
+            "時空を超えし者",
+            "ベジータの系譜",
+            "師弟の絆",
+            "劇場版HERO",
+            "頭脳戦",
+            "託された意志",
+            "親子の絆",
+            "地球育ちの戦士",
+            "大会出場者"
+        ],
+        "leaderSkill": "超知属性の気力+2、HPとATKとDEF70%UP",
+        "leaderSkill_eza": "",
+        "leaderSkill_seza": "",
+        "farmCards": [],
+        "partners": [],
+        "forms": [
+            {
+                "label": "通常",
+                "name": "トランクス(青年期)",
+                "links": [
+                    "未来からの使者",
+                    "サイヤ人の血",
+                    "冷静な判断",
+                    "王の血筋",
+                    "Z戦士",
+                    "絶望の未来"
+                ],
+                "stats": {
+                    "hp": 7217,
+                    "atk": 8530,
+                    "def": 4443
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "バーニングアタック",
+                        "effect": "相手に超特大ダメージを与え、中確率で気絶させる",
+                        "specs": {
+                            "stun": true
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "過去の世界での親孝行",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF70%[img:up]",
+                                "気玉変化：体→虹",
+                                "中確率で敵の攻撃を回避",
+                                "チームの「劇場版HERO」カテゴリの 味方全員の気力+2、ATK20%[img:up]、DEF10%[img:up]"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "dodge": "中確率"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": 1032450,
+        "title": "天下一大武道大会での交戦",
+        "name": "トランクス(青年期)",
+        "yomi": "天下一大武道大会での交戦",
+        "rarity": "UR",
+        "cost": 36,
+        "type": "INT",
+        "class": "Super",
+        "release": "2025/12/12",
+        "source_type": "gasha",
+        "drop_event": "",
+        "categories": [
+            "混血サイヤ人",
+            "未来編",
+            "時空を超えし者",
+            "ベジータの系譜",
+            "師弟の絆",
+            "劇場版HERO",
+            "頭脳戦",
+            "託された意志",
+            "親子の絆",
+            "地球育ちの戦士",
+            "大会出場者"
+        ],
+        "leaderSkill": "超知属性の気力+3、HPとATKとDEF90%UP",
+        "leaderSkill_eza": "",
+        "leaderSkill_seza": "",
+        "farmCards": [],
+        "partners": [],
+        "forms": [
+            {
+                "label": "通常",
+                "name": "トランクス(青年期)",
+                "links": [
+                    "未来からの使者",
+                    "サイヤ人の血",
+                    "冷静な判断",
+                    "王の血筋",
+                    "Z戦士",
+                    "絶望の未来",
+                    "限界突破"
+                ],
+                "stats": {
+                    "hp": 7475,
+                    "atk": 8730,
+                    "def": 4595
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "バーニングアタック",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与え、高確率で気絶させる",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%",
+                            "stun": true
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "銀河戦士との闘い",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF200%[img:up]",
+                                "気玉変化：体→虹",
+                                "高確率で敵の攻撃を回避",
+                                "「劇場版HERO」または 「混血サイヤ人」カテゴリの 味方全員の気力+2、ATK60%[img:up]、DEF40%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得虹気玉1個につき",
+                            "effects": [
+                                "ATK/DEF50%[img:up](最大150%)",
+                                "会心率10%[img:up](最大30%)",
+                                "回避率5%[img:up](最大15%)"
+                            ]
+                        },
+                        {
+                            "title": "自身の他に攻撃参加中の「劇場版HERO」または 「混血サイヤ人」カテゴリの味方がいるとき",
+                            "effects": [
+                                "必殺技が追加発動",
+                                "取得虹気玉1個につき ATK/DEF50%[img:up](最大150%)、 会心率10%[img:up](最大30%)、 回避率5%[img:up](最大15%)"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター12以上で攻撃時",
+                            "effects": [
+                                "ATK/DEF200%[img:up]",
+                                "取得虹気玉1個以上でDEF200%[img:up]",
+                                "取得虹気玉2個以上でATK200%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "極系の敵がいるとき",
+                            "effects": [
+                                "ランダム気玉変化：知と体を除く属性気玉1種→虹"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "dodge": "50%",
+                        "crit": "30%",
+                        "add": "1回"
                     }
                 }
             }

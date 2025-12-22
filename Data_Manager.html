@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,25 +9,48 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <!-- External Data Sources -->
     <script src="./js/categories.js"></script>
     <script src="./js/link_skills.js"></script>
 
     <style>
-        body { font-family: sans-serif; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .section-content { display: block; }
-        .section-content.hidden { display: none; }
-        .chevron-icon { transition: transform 0.2s; }
-        .section-header[aria-expanded="false"] .chevron-icon { transform: rotate(-90deg); }
-        
+        body {
+            font-family: sans-serif;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section-content {
+            display: block;
+        }
+
+        .section-content.hidden {
+            display: none;
+        }
+
+        .chevron-icon {
+            transition: transform 0.2s;
+        }
+
+        .section-header[aria-expanded="false"] .chevron-icon {
+            transform: rotate(-90deg);
+        }
+
         /* Suggestion List Styles */
-        .suggestions-wrapper { position: relative; }
+        .suggestions-wrapper {
+            position: relative;
+        }
+
         .suggestions-list {
             position: absolute;
-            bottom: 100%; 
+            bottom: 100%;
             left: 0;
             right: 0;
             background: white;
@@ -35,19 +59,29 @@
             max-height: 250px;
             overflow-y: auto;
             z-index: 50;
-            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1); 
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
             display: none;
             margin-bottom: 4px;
         }
-        .suggestions-list.show { display: block; }
+
+        .suggestions-list.show {
+            display: block;
+        }
+
         .suggestion-item {
             padding: 0.5rem 0.75rem;
             cursor: pointer;
             font-size: 0.875rem;
             border-bottom: 1px solid #f1f5f9;
         }
-        .suggestion-item:last-child { border-bottom: none; }
-        .suggestion-item:hover { background-color: #f1f5f9; }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f1f5f9;
+        }
 
         /* Small Action Buttons */
         .action-btn {
@@ -61,10 +95,26 @@
             cursor: pointer;
             transition: all 0.1s;
         }
-        .btn-reset { background-color: #e2e8f0; color: #475569; }
-        .btn-reset:hover { background-color: #cbd5e1; color: #1e293b; }
-        .btn-clear { background-color: #fee2e2; color: #ef4444; }
-        .btn-clear:hover { background-color: #fecaca; color: #b91c1c; }
+
+        .btn-reset {
+            background-color: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-reset:hover {
+            background-color: #cbd5e1;
+            color: #1e293b;
+        }
+
+        .btn-clear {
+            background-color: #fee2e2;
+            color: #ef4444;
+        }
+
+        .btn-clear:hover {
+            background-color: #fecaca;
+            color: #b91c1c;
+        }
 
         /* Tool Buttons */
         .tool-btn {
@@ -78,52 +128,67 @@
             white-space: nowrap;
             margin-bottom: 2px;
         }
+
         .tool-btn:hover {
             background-color: #e2e8f0;
             color: #1e293b;
             transform: translateY(-1px);
         }
-        .tool-btn:active { transform: translateY(0); }
+
+        .tool-btn:active {
+            transform: translateY(0);
+        }
 
         /* Loading Bar */
-        .progress-bar { transition: width 0.3s ease; }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
     </style>
 </head>
+
 <body class="bg-slate-50 text-slate-900 pb-20">
 
     <!-- Header -->
-    <header class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-10 flex flex-col md:flex-row justify-between items-center gap-4">
+    <header
+        class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-10 flex flex-col md:flex-row justify-between items-center gap-4">
         <div class="flex items-center gap-4 w-full md:w-auto justify-between">
             <div class="flex items-center gap-2">
                 <i data-lucide="database" class="w-6 h-6"></i>
                 <h1 class="text-xl font-bold tracking-tight">Dokkan Data Manager</h1>
             </div>
             <!-- Global Reset Button -->
-            <button onclick="resetAll()" class="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs font-bold transition-colors md:ml-4" title="全ての入力を初期状態に戻す">
+            <button onclick="resetAll()"
+                class="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs font-bold transition-colors md:ml-4"
+                title="全ての入力を初期状態に戻す">
                 <i data-lucide="rotate-ccw" class="w-3 h-3"></i> 全リセット
             </button>
         </div>
         <div class="flex bg-blue-700 rounded-lg p-1 w-full md:w-auto justify-center overflow-x-auto">
-            <button onclick="switchTab('import')" id="btn-import" class="flex-1 md:flex-none px-4 py-1.5 rounded-md text-sm font-medium transition-all text-blue-100 hover:bg-blue-600 flex items-center justify-center gap-1 whitespace-nowrap">
+            <button onclick="switchTab('import')" id="btn-import"
+                class="flex-1 md:flex-none px-4 py-1.5 rounded-md text-sm font-medium transition-all text-blue-100 hover:bg-blue-600 flex items-center justify-center gap-1 whitespace-nowrap">
                 <i data-lucide="sparkles" class="w-4 h-4"></i> 単体解析
             </button>
-            <button onclick="switchTab('bulk')" id="btn-bulk" class="flex-1 md:flex-none px-4 py-1.5 rounded-md text-sm font-medium transition-all text-blue-100 hover:bg-blue-600 flex items-center justify-center gap-1 whitespace-nowrap">
+            <button onclick="switchTab('bulk')" id="btn-bulk"
+                class="flex-1 md:flex-none px-4 py-1.5 rounded-md text-sm font-medium transition-all text-blue-100 hover:bg-blue-600 flex items-center justify-center gap-1 whitespace-nowrap">
                 <i data-lucide="layers" class="w-4 h-4"></i> 一括解析
             </button>
-            <button onclick="switchTab('input')" id="btn-input" class="flex-1 md:flex-none px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-white text-blue-700 shadow flex items-center justify-center gap-1 whitespace-nowrap">
+            <button onclick="switchTab('input')" id="btn-input"
+                class="flex-1 md:flex-none px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-white text-blue-700 shadow flex items-center justify-center gap-1 whitespace-nowrap">
                 <i data-lucide="edit" class="w-4 h-4"></i> 入力編集
             </button>
-            <button onclick="switchTab('preview')" id="btn-preview" class="flex-1 md:flex-none px-4 py-1.5 rounded-md text-sm font-medium transition-all text-blue-100 hover:bg-blue-600 flex items-center justify-center gap-1 whitespace-nowrap">
+            <button onclick="switchTab('preview')" id="btn-preview"
+                class="flex-1 md:flex-none px-4 py-1.5 rounded-md text-sm font-medium transition-all text-blue-100 hover:bg-blue-600 flex items-center justify-center gap-1 whitespace-nowrap">
                 <i data-lucide="file-text" class="w-4 h-4"></i> 出力
             </button>
         </div>
     </header>
 
     <main class="max-w-6xl mx-auto p-4 md:p-6">
-        
+
         <!-- API Settings (Common) -->
         <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-4 mb-6">
-            <div class="flex justify-between items-center cursor-pointer" onclick="document.getElementById('api-settings').classList.toggle('hidden')">
+            <div class="flex justify-between items-center cursor-pointer"
+                onclick="document.getElementById('api-settings').classList.toggle('hidden')">
                 <h2 class="font-bold text-slate-700 flex items-center gap-2">
                     <i data-lucide="settings" class="w-4 h-4 text-blue-500"></i> AI解析設定 (Gemini API)
                 </h2>
@@ -132,14 +197,26 @@
             <div id="api-settings" class="mt-4 hidden space-y-3 border-t pt-3">
                 <div class="flex flex-col gap-1">
                     <label class="text-xs font-bold text-slate-500">Gemini API Key</label>
-                    <div class="flex gap-2">
-                        <input type="password" id="gemini-key" class="border border-slate-300 rounded px-3 py-1.5 text-sm flex-1" placeholder="AIzaSy...">
-                        <button onclick="saveApiKey()" class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-bold">保存</button>
-                    </div>
+                    <input type="password" id="gemini-key"
+                        class="border border-slate-300 rounded px-3 py-1.5 text-sm w-full" placeholder="AIzaSy...">
                 </div>
                 <div class="flex flex-col gap-1">
                     <label class="text-xs font-bold text-slate-500">使用モデル</label>
-                    <input type="text" id="gemini-model" class="border border-slate-300 rounded px-3 py-1.5 text-sm" value="gemini-2.0-flash-exp" placeholder="例: gemini-1.5-flash, gemini-2.0-flash-exp">
+                    <input type="text" id="gemini-model"
+                        class="border border-slate-300 rounded px-3 py-1.5 text-sm w-full" value="gemini-2.0-flash-exp"
+                        placeholder="例: gemini-1.5-flash, gemini-2.0-flash-exp">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-bold text-slate-500">GAS Web App URL (Optional)</label>
+                    <input type="text" id="gas-url" class="border border-slate-300 rounded px-3 py-1.5 text-sm w-full"
+                        placeholder="https://script.google.com/macros/s/...">
+                    <p class="text-xs text-slate-400">スプレッドシート連携用 (Importシート)</p>
+                </div>
+                <div class="pt-2">
+                    <button onclick="saveApiKey()"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded text-sm shadow">
+                        設定を保存
+                    </button>
                 </div>
             </div>
         </div>
@@ -153,26 +230,33 @@
                     </h2>
                     <p class="text-xs text-slate-500 mt-1">DokkanInfoのURL（ID抽出用）と、Webページでコピーしたテキストを貼り付けてください。</p>
                 </div>
-                
+
                 <div class="mb-3">
                     <label class="text-xs font-bold text-slate-500 block mb-1">対象URL (ID自動抽出用)</label>
-                    <input type="text" id="import-url" class="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="例: https://jpnja.dokkaninfo.com/cards/1032111">
+                    <input type="text" id="import-url"
+                        class="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="例: https://jpnja.dokkaninfo.com/cards/1032111">
                 </div>
 
                 <div class="relative">
-                    <textarea id="import-text" rows="10" class="w-full border border-slate-300 rounded-lg p-4 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none bg-slate-50" placeholder="ここにテキストを貼り付け..."></textarea>
-                    
-                    <div id="ai-loading" class="hidden absolute inset-0 bg-white/80 flex flex-col items-center justify-center rounded-lg backdrop-blur-sm">
+                    <textarea id="import-text" rows="10"
+                        class="w-full border border-slate-300 rounded-lg p-4 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none bg-slate-50"
+                        placeholder="ここにテキストを貼り付け..."></textarea>
+
+                    <div id="ai-loading"
+                        class="hidden absolute inset-0 bg-white/80 flex flex-col items-center justify-center rounded-lg backdrop-blur-sm">
                         <i data-lucide="loader-2" class="w-8 h-8 text-blue-600 animate-spin mb-2"></i>
                         <span class="text-sm font-bold text-blue-600">AIが解析中...</span>
                     </div>
                 </div>
 
                 <div class="mt-4 flex justify-between items-center">
-                    <button onclick="clearImport()" class="text-xs text-slate-500 hover:text-red-500 flex items-center gap-1">
+                    <button onclick="clearImport()"
+                        class="text-xs text-slate-500 hover:text-red-500 flex items-center gap-1">
                         <i data-lucide="trash-2" class="w-3 h-3"></i> クリア
                     </button>
-                    <button onclick="analyzeText()" id="btn-analyze" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2.5 rounded-lg shadow transition flex items-center gap-2 disabled:opacity-50">
+                    <button onclick="analyzeText()" id="btn-analyze"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2.5 rounded-lg shadow transition flex items-center gap-2 disabled:opacity-50">
                         <i data-lucide="sparkles" class="w-4 h-4"></i> 解析して入力
                     </button>
                 </div>
@@ -194,14 +278,18 @@
                             </p>
                         </div>
                         <div class="bg-purple-50 p-2 rounded border border-purple-100 text-xs">
-                             <label class="font-bold text-purple-800 block mb-1">区切り文字</label>
-                             <input type="text" id="bulk-delimiter" class="border border-purple-300 rounded px-2 py-1 w-24 text-center font-mono" value="===">
+                            <label class="font-bold text-purple-800 block mb-1">区切り文字</label>
+                            <input type="text" id="bulk-delimiter"
+                                class="border border-purple-300 rounded px-2 py-1 w-24 text-center font-mono"
+                                value="===">
                         </div>
                     </div>
                 </div>
 
                 <div class="relative">
-                    <textarea id="bulk-text" rows="12" class="w-full border border-slate-300 rounded-lg p-4 text-xs font-mono focus:ring-2 focus:ring-purple-500 outline-none bg-slate-50" placeholder="キャラAの情報...&#10;===&#10;キャラBの情報...&#10;===&#10;キャラCの情報..."></textarea>
+                    <textarea id="bulk-text" rows="12"
+                        class="w-full border border-slate-300 rounded-lg p-4 text-xs font-mono focus:ring-2 focus:ring-purple-500 outline-none bg-slate-50"
+                        placeholder="キャラAの情報...&#10;===&#10;キャラBの情報...&#10;===&#10;キャラCの情報..."></textarea>
                 </div>
 
                 <div class="mt-4 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -210,7 +298,8 @@
                         <input type="number" id="bulk-delay" class="border rounded px-2 py-1 w-16" value="5" min="2">
                         <span class="text-slate-400">(API制限回避のため)</span>
                     </div>
-                    <button onclick="startBulkAnalysis()" id="btn-bulk-start" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2.5 rounded-lg shadow transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button onclick="startBulkAnalysis()" id="btn-bulk-start"
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2.5 rounded-lg shadow transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                         <i data-lucide="play" class="w-4 h-4"></i> 一括解析開始
                     </button>
                 </div>
@@ -222,16 +311,29 @@
                         <span id="bulk-count">0 / 0</span>
                     </div>
                     <div class="w-full bg-slate-200 rounded-full h-2.5 mb-4 overflow-hidden">
-                        <div id="bulk-bar" class="bg-purple-600 h-2.5 rounded-full progress-bar" style="width: 0%"></div>
+                        <div id="bulk-bar" class="bg-purple-600 h-2.5 rounded-full progress-bar" style="width: 0%">
+                        </div>
                     </div>
-                    
+
                     <!-- Results List -->
                     <div class="border border-slate-200 rounded-lg overflow-hidden">
-                        <div class="bg-slate-50 px-3 py-2 border-b border-slate-200 flex justify-between items-center">
+                        <div
+                            class="bg-slate-50 px-3 py-2 border-b border-slate-200 flex flex-col md:flex-row justify-between items-center gap-2">
                             <h3 class="text-xs font-bold text-slate-700">解析結果一覧</h3>
-                            <button onclick="copyBulkTSV()" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs font-bold flex items-center gap-1">
-                                <i data-lucide="copy" class="w-3 h-3"></i> 全結果をTSVコピー
-                            </button>
+                            <div class="flex gap-2 flex-wrap justify-end">
+                                <button onclick="copyBulkTSV()"
+                                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-xs font-bold flex items-center gap-1">
+                                    <i data-lucide="copy" class="w-3 h-3"></i> Forms TSV
+                                </button>
+                                <button onclick="copyBulkCharactersTSV()"
+                                    class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-bold flex items-center gap-1">
+                                    <i data-lucide="copy" class="w-3 h-3"></i> Chars TSV
+                                </button>
+                                <button onclick="sendBulkToSheet()" id="btn-gas-send"
+                                    class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs font-bold flex items-center gap-1">
+                                    <i data-lucide="send" class="w-3 h-3"></i> GAS送信
+                                </button>
+                            </div>
                         </div>
                         <div id="bulk-results-container" class="max-h-60 overflow-y-auto bg-white p-2 space-y-1">
                             <!-- Result Items -->
@@ -243,40 +345,51 @@
 
         <!-- INPUT TAB -->
         <div id="tab-input" class="tab-content active space-y-6">
-            
+
             <!-- Character Info Section -->
             <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
-                <div class="section-header flex items-center justify-between bg-slate-100 p-3 rounded-t cursor-pointer border-b border-slate-200 hover:bg-slate-200 transition-colors" onclick="toggleSection('basic-content', this)" aria-expanded="true">
+                <div class="section-header flex items-center justify-between bg-slate-100 p-3 rounded-t cursor-pointer border-b border-slate-200 hover:bg-slate-200 transition-colors"
+                    onclick="toggleSection('basic-content', this)" aria-expanded="true">
                     <div class="flex items-center gap-2 font-bold text-slate-700">
                         <i data-lucide="user" class="w-4 h-4"></i> 基本情報 (Characters.csv)
                     </div>
                     <i data-lucide="chevron-down" class="chevron-icon w-4 h-4"></i>
                 </div>
-                
+
                 <div id="basic-content" class="section-content p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
                     <!-- Basic Fields -->
                     <div class="flex flex-col gap-1 md:col-span-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">キャラID (必須)</label>
-                        <input type="text" id="char-id" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-yellow-50" placeholder="自動入力または手動">
+                        <input type="text" id="char-id"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-yellow-50"
+                            placeholder="自動入力または手動">
                     </div>
                     <div class="flex flex-col gap-1 md:col-span-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">二つ名</label>
-                        <input type="text" id="char-title" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="例: 究極の力">
+                        <input type="text" id="char-title"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            placeholder="例: 究極の力">
                     </div>
-                    
+
                     <div class="flex flex-col gap-1 md:col-span-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">キャラ名</label>
                         <div class="flex gap-2">
-                            <input type="text" id="char-name" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm flex-1" placeholder="例: 孫悟空">
-                            <button onclick="searchWeb()" class="bg-blue-100 text-blue-600 border border-blue-200 rounded px-2 hover:bg-blue-200 text-xs font-bold whitespace-nowrap flex items-center gap-1" title="二つ名とキャラ名でGoogle検索">
+                            <input type="text" id="char-name"
+                                class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm flex-1"
+                                placeholder="例: 孫悟空">
+                            <button onclick="searchWeb()"
+                                class="bg-blue-100 text-blue-600 border border-blue-200 rounded px-2 hover:bg-blue-200 text-xs font-bold whitespace-nowrap flex items-center gap-1"
+                                title="二つ名とキャラ名でGoogle検索">
                                 <i data-lucide="search" class="w-4 h-4"></i>
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="flex flex-col gap-1 md:col-span-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">読み仮名</label>
-                        <input type="text" id="char-yomi" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="例: そんごくう">
+                        <input type="text" id="char-yomi"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            placeholder="例: そんごくう">
                     </div>
 
                     <div class="flex flex-col gap-1 md:col-span-1">
@@ -289,7 +402,8 @@
                     </div>
                     <div class="flex flex-col gap-1 md:col-span-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">コスト</label>
-                        <input type="number" id="char-cost" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                        <input type="number" id="char-cost"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                     </div>
                     <div class="flex flex-col gap-1 md:col-span-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">属性</label>
@@ -311,17 +425,23 @@
 
                     <div class="flex flex-col gap-1 md:col-span-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">実装日</label>
-                        <input type="text" id="char-release" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="YYYY/MM/DD">
+                        <input type="text" id="char-release"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            placeholder="YYYY/MM/DD">
                     </div>
                     <div class="flex flex-col gap-1 md:col-span-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">極限日</label>
-                        <input type="text" id="char-eza" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="YYYY/MM/DD">
+                        <input type="text" id="char-eza"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            placeholder="YYYY/MM/DD">
                     </div>
                     <div class="flex flex-col gap-1 md:col-span-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">超極限日</label>
-                        <input type="text" id="char-seza" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="YYYY/MM/DD">
+                        <input type="text" id="char-seza"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            placeholder="YYYY/MM/DD">
                     </div>
-                     <div class="flex flex-col gap-1 md:col-span-1">
+                    <div class="flex flex-col gap-1 md:col-span-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">入手方法</label>
                         <select id="char-source" class="border border-slate-300 rounded px-2 py-1.5 text-sm bg-white">
                             <option value="gasha">ガチャ (gasha)</option>
@@ -334,19 +454,25 @@
                     <!-- Category Input -->
                     <div class="flex flex-col gap-1 md:col-span-4 suggestions-wrapper">
                         <div class="flex justify-between items-center mb-1">
-                             <label class="text-xs font-semibold text-slate-500 uppercase">カテゴリ (カンマ区切り)</label>
-                             <div class="flex gap-2">
+                            <label class="text-xs font-semibold text-slate-500 uppercase">カテゴリ (カンマ区切り)</label>
+                            <div class="flex gap-2">
                                 <div class="flex gap-1">
-                                    <button class="action-btn btn-reset" onclick="resetField('char-categories', 'categories')">初期値</button>
-                                    <button class="action-btn btn-clear" onclick="clearField('char-categories')">クリア</button>
+                                    <button class="action-btn btn-reset"
+                                        onclick="resetField('char-categories', 'categories')">初期値</button>
+                                    <button class="action-btn btn-clear"
+                                        onclick="clearField('char-categories')">クリア</button>
                                 </div>
-                             </div>
+                            </div>
                         </div>
                         <div class="flex gap-2 mb-1">
-                            <input type="text" id="cat-search" class="border border-blue-200 rounded px-2 py-1 text-sm flex-1" placeholder="カテゴリを検索して追加 (クリックで一覧表示)...">
+                            <input type="text" id="cat-search"
+                                class="border border-blue-200 rounded px-2 py-1 text-sm flex-1"
+                                placeholder="カテゴリを検索して追加 (クリックで一覧表示)...">
                         </div>
                         <div id="cat-suggestions" class="suggestions-list"></div>
-                        <textarea id="char-categories" rows="3" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono" placeholder="純粋サイヤ人, 孫悟空の系譜, ..."></textarea>
+                        <textarea id="char-categories" rows="3"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"
+                            placeholder="純粋サイヤ人, 孫悟空の系譜, ..."></textarea>
                     </div>
 
                     <!-- Awakening Input -->
@@ -354,40 +480,48 @@
                         <div class="flex justify-between items-center mb-1">
                             <label class="text-xs font-semibold text-slate-500 uppercase">覚醒ルート (JSON)</label>
                             <div class="flex gap-1">
-                                <button class="action-btn btn-reset" onclick="resetField('char-awakening', 'awakening')">初期値</button>
+                                <button class="action-btn btn-reset"
+                                    onclick="resetField('char-awakening', 'awakening')">初期値</button>
                                 <button class="action-btn btn-clear" onclick="clearField('char-awakening')">クリア</button>
                             </div>
                         </div>
-                        <textarea id="char-awakening" rows="12" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"></textarea>
+                        <textarea id="char-awakening" rows="12"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"></textarea>
                     </div>
-                    
-                     <div class="flex flex-col gap-1 md:col-span-4">
+
+                    <div class="flex flex-col gap-1 md:col-span-4">
                         <label class="text-xs font-semibold text-slate-500 uppercase">ドロップイベントID (任意)</label>
-                        <input type="text" id="char-dropevent" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="">
+                        <input type="text" id="char-dropevent"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            placeholder="">
                     </div>
                 </div>
             </div>
 
             <!-- Leader Skill Section -->
             <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
-                 <div class="section-header flex items-center justify-between bg-slate-100 p-3 rounded-t cursor-pointer border-b border-slate-200 hover:bg-slate-200 transition-colors" onclick="toggleSection('leader-content', this)" aria-expanded="true">
+                <div class="section-header flex items-center justify-between bg-slate-100 p-3 rounded-t cursor-pointer border-b border-slate-200 hover:bg-slate-200 transition-colors"
+                    onclick="toggleSection('leader-content', this)" aria-expanded="true">
                     <div class="flex items-center gap-2 font-bold text-slate-700">
                         <i data-lucide="settings" class="w-4 h-4"></i> リーダースキル
                     </div>
                     <i data-lucide="chevron-down" class="chevron-icon w-4 h-4"></i>
                 </div>
                 <div id="leader-content" class="section-content p-4 grid grid-cols-1 gap-4">
-                     <div class="flex flex-col gap-1">
+                    <div class="flex flex-col gap-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">通常</label>
-                        <textarea id="ls-normal" rows="2" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"></textarea>
+                        <textarea id="ls-normal" rows="2"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"></textarea>
                     </div>
-                     <div class="flex flex-col gap-1">
+                    <div class="flex flex-col gap-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">極限後</label>
-                        <textarea id="ls-eza" rows="2" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"></textarea>
+                        <textarea id="ls-eza" rows="2"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"></textarea>
                     </div>
-                     <div class="flex flex-col gap-1">
+                    <div class="flex flex-col gap-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">超極限後</label>
-                        <textarea id="ls-seza" rows="2" class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"></textarea>
+                        <textarea id="ls-seza" rows="2"
+                            class="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"></textarea>
                     </div>
                 </div>
             </div>
@@ -396,11 +530,12 @@
             <div class="space-y-4">
                 <div class="flex items-center justify-between">
                     <h2 class="text-lg font-bold text-slate-700">形態データ (Forms.csv)</h2>
-                    <button onclick="addForm()" class="flex items-center gap-1 bg-green-600 text-white px-3 py-1.5 rounded hover:bg-green-700 text-sm font-bold shadow-sm">
+                    <button onclick="addForm()"
+                        class="flex items-center gap-1 bg-green-600 text-white px-3 py-1.5 rounded hover:bg-green-700 text-sm font-bold shadow-sm">
                         <i data-lucide="plus" class="w-4 h-4"></i> 形態追加
                     </button>
                 </div>
-                
+
                 <div id="forms-container" class="space-y-4">
                     <!-- Form items will be added here via JS -->
                 </div>
@@ -411,14 +546,16 @@
         <!-- PREVIEW TAB -->
         <div id="tab-preview" class="tab-content space-y-6">
             <div class="bg-blue-50 p-4 rounded border border-blue-200 flex justify-between items-center">
-                 <div>
-                     <p class="font-bold text-blue-800 text-sm">出力形式を選択</p>
-                     <p class="text-xs text-blue-600">スプレッドシートへの貼り付け方で選んでください</p>
-                 </div>
-                 <div class="flex bg-white rounded border border-blue-200 p-1">
-                     <button onclick="setOutputMode('csv')" id="mode-csv" class="px-3 py-1 text-xs font-bold rounded bg-blue-100 text-blue-700">CSV (ファイル保存)</button>
-                     <button onclick="setOutputMode('tsv')" id="mode-tsv" class="px-3 py-1 text-xs font-bold rounded text-slate-500">TSV (スプシ直貼り)</button>
-                 </div>
+                <div>
+                    <p class="font-bold text-blue-800 text-sm">出力形式を選択</p>
+                    <p class="text-xs text-blue-600">スプレッドシートへの貼り付け方で選んでください</p>
+                </div>
+                <div class="flex bg-white rounded border border-blue-200 p-1">
+                    <button onclick="setOutputMode('csv')" id="mode-csv"
+                        class="px-3 py-1 text-xs font-bold rounded bg-blue-100 text-blue-700">CSV (ファイル保存)</button>
+                    <button onclick="setOutputMode('tsv')" id="mode-tsv"
+                        class="px-3 py-1 text-xs font-bold rounded text-slate-500">TSV (スプシ直貼り)</button>
+                </div>
             </div>
 
             <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
@@ -426,8 +563,10 @@
                     <i data-lucide="file-text" class="w-4 h-4"></i> Characters 出力
                 </h3>
                 <div class="relative">
-                    <pre id="output-char" class="bg-slate-800 text-slate-100 p-3 rounded text-xs overflow-x-auto whitespace-pre-wrap font-mono"></pre>
-                    <button onclick="copyToClipboard('output-char', this)" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white p-1.5 rounded flex items-center gap-1 text-xs">
+                    <pre id="output-char"
+                        class="bg-slate-800 text-slate-100 p-3 rounded text-xs overflow-x-auto whitespace-pre-wrap font-mono"></pre>
+                    <button onclick="copyToClipboard('output-char', this)"
+                        class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white p-1.5 rounded flex items-center gap-1 text-xs">
                         <i data-lucide="copy" class="w-3 h-3"></i> コピー
                     </button>
                 </div>
@@ -438,20 +577,22 @@
                     <i data-lucide="file-text" class="w-4 h-4"></i> Forms 出力
                 </h3>
                 <div class="relative">
-                    <pre id="output-forms" class="bg-slate-800 text-slate-100 p-3 rounded text-xs overflow-x-auto whitespace-pre-wrap font-mono"></pre>
-                    <button onclick="copyToClipboard('output-forms', this)" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white p-1.5 rounded flex items-center gap-1 text-xs">
-                         <i data-lucide="copy" class="w-3 h-3"></i> コピー
+                    <pre id="output-forms"
+                        class="bg-slate-800 text-slate-100 p-3 rounded text-xs overflow-x-auto whitespace-pre-wrap font-mono"></pre>
+                    <button onclick="copyToClipboard('output-forms', this)"
+                        class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white p-1.5 rounded flex items-center gap-1 text-xs">
+                        <i data-lucide="copy" class="w-3 h-3"></i> コピー
                     </button>
                 </div>
             </div>
-            
-             <div class="bg-yellow-50 p-4 rounded border border-yellow-200 text-sm text-yellow-800">
-              <p class="font-bold mb-1">TSVモード（スプシ直貼り）の使い方</p>
-              <ul class="list-disc pl-5 space-y-1 text-xs">
-                <li>上のボタンを「TSV」に切り替えてコピーします。</li>
-                <li>スプレッドシートの貼り付けたいセルを選択し、<b>Ctrl + V</b> で貼り付けます。</li>
-                <li>「ファイル > インポート」や「区切り位置指定」は不要で、自動的にセルに分割されます。</li>
-              </ul>
+
+            <div class="bg-yellow-50 p-4 rounded border border-yellow-200 text-sm text-yellow-800">
+                <p class="font-bold mb-1">TSVモード（スプシ直貼り）の使い方</p>
+                <ul class="list-disc pl-5 space-y-1 text-xs">
+                    <li>上のボタンを「TSV」に切り替えてコピーします。</li>
+                    <li>スプレッドシートの貼り付けたいセルを選択し、<b>Ctrl + V</b> で貼り付けます。</li>
+                    <li>「ファイル > インポート」や「区切り位置指定」は不要で、自動的にセルに分割されます。</li>
+                </ul>
             </div>
         </div>
 
@@ -461,19 +602,23 @@
     <template id="form-template">
         <div class="form-item bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden" data-id="">
             <div class="bg-slate-50 p-3 border-b border-slate-200 flex justify-between items-center">
-                 <div class="flex gap-2 items-center">
+                <div class="flex gap-2 items-center">
                     <span class="form-index bg-slate-200 text-slate-600 px-2 py-0.5 rounded text-xs font-bold">#1</span>
-                    <input type="text" class="form-label-input font-bold text-slate-700 bg-transparent border-b border-transparent focus:border-blue-500 focus:outline-none w-32" placeholder="タブ名" value="通常">
-                 </div>
-                 <div class="flex items-center gap-2">
-                    <button class="btn-duplicate text-blue-500 hover:text-blue-700 text-xs font-bold flex items-center gap-1 px-2 py-1 rounded hover:bg-blue-50" title="この形態をコピーして追加">
+                    <input type="text"
+                        class="form-label-input font-bold text-slate-700 bg-transparent border-b border-transparent focus:border-blue-500 focus:outline-none w-32"
+                        placeholder="タブ名" value="通常">
+                </div>
+                <div class="flex items-center gap-2">
+                    <button
+                        class="btn-duplicate text-blue-500 hover:text-blue-700 text-xs font-bold flex items-center gap-1 px-2 py-1 rounded hover:bg-blue-50"
+                        title="この形態をコピーして追加">
                         <i data-lucide="copy" class="w-3 h-3"></i> コピー
                     </button>
                     <div class="w-px h-4 bg-slate-300"></div>
                     <button class="btn-remove text-red-400 hover:text-red-600" title="削除">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </button>
-                 </div>
+                </div>
             </div>
 
             <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -488,157 +633,288 @@
                         </select>
                     </div>
                     <div class="flex flex-col gap-1">
-                         <label class="text-xs font-semibold text-slate-500 uppercase">形態名称 (変わる場合)</label>
-                         <input type="text" class="form-name border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                        <label class="text-xs font-semibold text-slate-500 uppercase">形態名称 (変わる場合)</label>
+                        <input type="text"
+                            class="form-name border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                     </div>
                     <div class="flex flex-col gap-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">画像ID (form_id)</label>
-                        <input type="text" class="form-id-val border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="空欄ならキャラID">
+                        <input type="text"
+                            class="form-id-val border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            placeholder="空欄ならキャラID">
                     </div>
-                    
+
                     <div class="flex flex-col gap-1 md:col-span-2 suggestions-wrapper">
                         <label class="text-xs font-semibold text-slate-500 uppercase">リンクスキル (カンマ区切り)</label>
                         <div class="flex gap-2 mb-1">
-                            <input type="text" class="link-search border border-blue-200 rounded px-2 py-1 text-sm flex-1" placeholder="リンクを検索して追加 (クリックで一覧表示)...">
+                            <input type="text"
+                                class="link-search border border-blue-200 rounded px-2 py-1 text-sm flex-1"
+                                placeholder="リンクを検索して追加 (クリックで一覧表示)...">
                         </div>
                         <div class="link-suggestions suggestions-list"></div>
-                        <input type="text" class="form-links border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                        <input type="text"
+                            class="form-links border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                     </div>
                 </div>
 
                 <!-- Form JSON Fields -->
                 <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                   <!-- Stats (Full Width) -->
-                   <div class="flex flex-col gap-1 md:col-span-2">
+                    <!-- Stats (Full Width) -->
+                    <div class="flex flex-col gap-1 md:col-span-2">
                         <div class="flex justify-between items-center mb-1">
                             <label class="text-xs font-semibold text-slate-500 uppercase">ステータス (Stats JSON)</label>
                             <div class="flex gap-1">
                                 <button class="action-btn btn-reset" onclick="resetFormItem(this, 'stats')">初期値</button>
-                                <button class="action-btn btn-clear" onclick="clearFormItem(this, '.form-stats')">クリア</button>
+                                <button class="action-btn btn-clear"
+                                    onclick="clearFormItem(this, '.form-stats')">クリア</button>
                             </div>
                         </div>
-                        <textarea class="form-stats border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono" rows="3"></textarea>
-                   </div>
+                        <textarea
+                            class="form-stats border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"
+                            rows="3"></textarea>
+                    </div>
 
-                   <!-- Attacks (Row 2 Col 1) -->
-                   <div class="flex flex-col gap-1">
+                    <!-- Attacks (左列) -->
+                    <div class="flex flex-col gap-3">
+                        <!-- 必殺技 -->
+                        <div class="flex flex-col gap-1">
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs font-semibold text-slate-500 uppercase">必殺技 (Attacks)</label>
+                                <div class="flex gap-1 items-center">
+                                    <button class="action-btn btn-reset"
+                                        onclick="resetFormItem(this, 'attacks')">初期値</button>
+                                    <button class="action-btn btn-clear"
+                                        onclick="clearFormItem(this, '.form-attacks')">クリア</button>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-1 justify-end items-center">
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'crit: &quot;%&quot;,')">会心</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'add: &quot;回&quot;,')">追撃</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'reduce: &quot;%&quot;,')">軽減</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'dodge: &quot;%&quot;,')">回避</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'guard: true,')">ガード</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'effective: true,')">抜群</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'action_break: true,')">弾き</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'revival: true,')">復活</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'stun: true,')">気絶</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'seal: true,')">封じ</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'counter: true,')">反撃</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'survive_ko: true,')">KO耐</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'target: true,')">タゲ集中</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'atk_up: &quot;%&quot;,')">ATK↑</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'def_up: &quot;%&quot;,')">DEF↑</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'atk_down: &quot;%&quot;,')">ATK↓</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-attacks', 'def_down: &quot;%&quot;,')">DEF↓</button>
+                            </div>
+                            <textarea class="form-attacks border border-slate-300 rounded px-2 py-1.5 text-sm font-mono"
+                                rows="6"></textarea>
+                        </div>
+
+                        <!-- ユニット必殺技 -->
+                        <div class="flex flex-col gap-1">
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs font-semibold text-orange-600 uppercase">ユニット必殺技</label>
+                                <div class="flex gap-1">
+                                    <button class="action-btn btn-reset"
+                                        onclick="resetFormItem(this, 'unitSuperAttack')">初期値</button>
+                                    <button class="action-btn btn-clear"
+                                        onclick="clearFormItem(this, '.form-unit-sa')">クリア</button>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-1 justify-end items-center">
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'crit: &quot;%&quot;,')">会心</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'add: &quot;回&quot;,')">追撃</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'reduce: &quot;%&quot;,')">軽減</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'dodge: &quot;%&quot;,')">回避</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'guard: true,')">ガード</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'effective: true,')">抜群</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'action_break: true,')">弾き</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'revival: true,')">復活</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'stun: true,')">気絶</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'seal: true,')">封じ</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'counter: true,')">反撃</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'survive_ko: true,')">KO耐</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'target: true,')">タゲ集中</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'atk_up: &quot;%&quot;,')">ATK↑</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'def_up: &quot;%&quot;,')">DEF↑</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'atk_down: &quot;%&quot;,')">ATK↓</button>
+                                <button class="tool-btn"
+                                    onclick="insertText(this, '.form-unit-sa', 'def_down: &quot;%&quot;,')">DEF↓</button>
+                            </div>
+                            <textarea
+                                class="form-unit-sa border border-orange-300 rounded px-2 py-1.5 text-sm font-mono bg-orange-50"
+                                rows="3" placeholder='{"name": "技名", "condition": "発動条件", "effect": "効果"}'></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Active (Row 2 Col 2) -->
+                    <div class="flex flex-col gap-1">
                         <div class="flex justify-between items-center mb-1">
-                            <label class="text-xs font-semibold text-slate-500 uppercase">必殺技 (Attacks JSON)</label>
-                            <div class="flex gap-1 items-center">
-                                <button class="action-btn btn-reset" onclick="resetFormItem(this, 'attacks')">初期値</button>
-                                <button class="action-btn btn-clear" onclick="clearFormItem(this, '.form-attacks')">クリア</button>
+                            <label class="text-xs font-semibold text-slate-500 uppercase">アクティブスキル (Active JSON)</label>
+                            <div class="flex gap-1">
+                                <button class="action-btn btn-reset"
+                                    onclick="resetFormItem(this, 'active')">初期値</button>
+                                <button class="action-btn btn-clear"
+                                    onclick="clearFormItem(this, '.form-active')">クリア</button>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-1 justify-end items-center mb-1">
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'crit: &quot;100%&quot;,')">会心</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'add: &quot;5回&quot;,')">追撃</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'reduce: &quot;90%&quot;,')">軽減</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'dodge: &quot;50%&quot;,')">回避</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'guard: true,')">ガード</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'effective: true,')">抜群</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'action_break: true,')">弾き</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'revival: true,')">復活</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'stun: true,')">気絶</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'seal: true,')">封じ</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'counter: true,')">反撃</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'survive_ko: true,')">KO耐</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'target: true,')">タゲ集中</button>
-                             
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'atk_up: &quot;%&quot;,')">ATKアップ</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'def_up: &quot;%&quot;,')">DEFアップ</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'atk_down: &quot;%&quot;,')">ATKダウン</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-attacks', 'def_down: &quot;%&quot;,')">DEFダウン</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'crit: &quot;100%&quot;,')">会心</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'add: &quot;5回&quot;,')">追撃</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'reduce: &quot;90%&quot;,')">軽減</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'dodge: &quot;50%&quot;,')">回避</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'guard: true,')">ガード</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'effective: true,')">抜群</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'action_break: true,')">弾き</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'revival: true,')">復活</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'stun: true,')">気絶</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'seal: true,')">封じ</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'counter: true,')">反撃</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'survive_ko: true,')">KO耐</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'target: true,')">タゲ集中</button>
+
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'atk_up: &quot;%&quot;,')">ATKアップ</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'def_up: &quot;%&quot;,')">DEFアップ</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'atk_down: &quot;%&quot;,')">ATKダウン</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-active', 'def_down: &quot;%&quot;,')">DEFダウン</button>
                         </div>
-                        <textarea class="form-attacks border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono" rows="7"></textarea>
-                   </div>
-                   
-                   <!-- Active (Row 2 Col 2) -->
-                   <div class="flex flex-col gap-1">
-                        <div class="flex justify-between items-center mb-1">
-                             <label class="text-xs font-semibold text-slate-500 uppercase">アクティブスキル (Active JSON)</label>
-                             <div class="flex gap-1">
-                                <button class="action-btn btn-reset" onclick="resetFormItem(this, 'active')">初期値</button>
-                                <button class="action-btn btn-clear" onclick="clearFormItem(this, '.form-active')">クリア</button>
-                             </div>
-                        </div>
-                        <div class="flex flex-wrap gap-1 justify-end items-center mb-1">
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'crit: &quot;100%&quot;,')">会心</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'add: &quot;5回&quot;,')">追撃</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'reduce: &quot;90%&quot;,')">軽減</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'dodge: &quot;50%&quot;,')">回避</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'guard: true,')">ガード</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'effective: true,')">抜群</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'action_break: true,')">弾き</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'revival: true,')">復活</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'stun: true,')">気絶</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'seal: true,')">封じ</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'counter: true,')">反撃</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'survive_ko: true,')">KO耐</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'target: true,')">タゲ集中</button>
-                             
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'atk_up: &quot;%&quot;,')">ATKアップ</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'def_up: &quot;%&quot;,')">DEFアップ</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'atk_down: &quot;%&quot;,')">ATKダウン</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-active', 'def_down: &quot;%&quot;,')">DEFダウン</button>
-                        </div>
-                        <textarea class="form-active border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono" rows="7"></textarea>
-                   </div>
-                   
-                   <!-- Passive (Row 3, Full Width) -->
-                   <div class="flex flex-col gap-1 md:col-span-2 passive-wrapper">
+                        <textarea
+                            class="form-active border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"
+                            rows="7"></textarea>
+                    </div>
+
+                    <!-- Passive (Row 3, Full Width) -->
+                    <div class="flex flex-col gap-1 md:col-span-2 passive-wrapper">
                         <div class="flex items-center justify-between mb-1">
-                             <label class="text-xs font-semibold text-slate-500 uppercase">パッシブスキル (Passive JSON)</label>
-                             <div class="flex gap-1">
-                                <button class="action-btn btn-reset" onclick="resetFormItem(this, 'passive')">初期値</button>
-                                <button class="action-btn btn-clear" onclick="clearFormItem(this, '.form-passive')">クリア</button>
-                             </div>
+                            <label class="text-xs font-semibold text-slate-500 uppercase">パッシブスキル (Passive JSON)</label>
+                            <div class="flex gap-1">
+                                <button class="action-btn btn-reset"
+                                    onclick="resetFormItem(this, 'passive')">初期値</button>
+                                <button class="action-btn btn-clear"
+                                    onclick="clearFormItem(this, '.form-passive')">クリア</button>
+                            </div>
                         </div>
                         <div class="flex flex-wrap gap-1 justify-end items-center mb-1">
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'crit: &quot;100%&quot;,')">会心</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'add: &quot;5回&quot;,')">追撃</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'reduce: &quot;90%&quot;,')">軽減</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'dodge: &quot;50%&quot;,')">回避</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'guard: true,')">ガード</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'effective: true,')">抜群</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'action_break: true,')">弾き</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'revival: true,')">復活</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'stun: true,')">気絶</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'seal: true,')">封じ</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'counter: true,')">反撃</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'survive_ko: true,')">KO耐</button>
-                             <button class="tool-btn" onclick="insertText(this, '.form-passive', 'target: true,')">タゲ集中</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'crit: &quot;100%&quot;,')">会心</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'add: &quot;5回&quot;,')">追撃</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'reduce: &quot;90%&quot;,')">軽減</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'dodge: &quot;50%&quot;,')">回避</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'guard: true,')">ガード</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'effective: true,')">抜群</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'action_break: true,')">弾き</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'revival: true,')">復活</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'stun: true,')">気絶</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'seal: true,')">封じ</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'counter: true,')">反撃</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'survive_ko: true,')">KO耐</button>
+                            <button class="tool-btn"
+                                onclick="insertText(this, '.form-passive', 'target: true,')">タゲ集中</button>
                         </div>
-                        <textarea class="form-passive border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono" rows="12"></textarea>
-                   </div>
+                        <textarea
+                            class="form-passive border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"
+                            rows="12"></textarea>
+                    </div>
 
-                   <!-- Standby -->
-                   <div class="flex flex-col gap-1">
+                    <!-- Standby -->
+                    <div class="flex flex-col gap-1">
                         <div class="flex justify-between items-center mb-1">
-                             <label class="text-xs font-semibold text-slate-500 uppercase">スタンバイスキル (Standby JSON)</label>
-                             <div class="flex gap-1">
-                                <button class="action-btn btn-reset" onclick="resetFormItem(this, 'standby')">初期値</button>
-                                <button class="action-btn btn-clear" onclick="clearFormItem(this, '.form-standby')">クリア</button>
-                             </div>
+                            <label class="text-xs font-semibold text-slate-500 uppercase">スタンバイスキル (Standby
+                                JSON)</label>
+                            <div class="flex gap-1">
+                                <button class="action-btn btn-reset"
+                                    onclick="resetFormItem(this, 'standby')">初期値</button>
+                                <button class="action-btn btn-clear"
+                                    onclick="clearFormItem(this, '.form-standby')">クリア</button>
+                            </div>
                         </div>
-                        <textarea class="form-standby border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono" rows="3"></textarea>
-                   </div>
+                        <textarea
+                            class="form-standby border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"
+                            rows="3"></textarea>
+                    </div>
 
-                   <!-- Field -->
-                   <div class="flex flex-col gap-1">
+                    <!-- Field -->
+                    <div class="flex flex-col gap-1">
                         <div class="flex justify-between items-center mb-1">
-                             <label class="text-xs font-semibold text-slate-500 uppercase">フィールド (Field JSON)</label>
-                             <div class="flex gap-1">
+                            <label class="text-xs font-semibold text-slate-500 uppercase">フィールド (Field JSON)</label>
+                            <div class="flex gap-1">
                                 <button class="action-btn btn-reset" onclick="resetFormItem(this, 'field')">初期値</button>
-                                <button class="action-btn btn-clear" onclick="clearFormItem(this, '.form-field')">クリア</button>
-                             </div>
+                                <button class="action-btn btn-clear"
+                                    onclick="clearFormItem(this, '.form-field')">クリア</button>
+                            </div>
                         </div>
-                        <textarea class="form-field border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono" rows="3"></textarea>
-                   </div>
-                   
-                   <div class="flex flex-col gap-1">
+                        <textarea
+                            class="form-field border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"
+                            rows="3"></textarea>
+                    </div>
+
+                    <div class="flex flex-col gap-1">
                         <label class="text-xs font-semibold text-slate-500 uppercase">リバーシブル (Reversible)</label>
-                        <input type="text" class="form-reversible border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="例: normal">
-                   </div>
+                        <input type="text"
+                            class="form-reversible border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            placeholder="例: normal">
+                    </div>
                 </div>
             </div>
         </div>
@@ -648,12 +924,14 @@
         // --- Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            
+
             // Check API Key
             const key = localStorage.getItem('gemini_api_key');
-            if(key) document.getElementById('gemini-key').value = key;
+            if (key) document.getElementById('gemini-key').value = key;
             const model = localStorage.getItem('gemini_model');
-            if(model) document.getElementById('gemini-model').value = model;
+            if (model) document.getElementById('gemini-model').value = model;
+            const gasUrl = localStorage.getItem('gas_app_url');
+            if (gasUrl) document.getElementById('gas-url').value = gasUrl;
 
             // Load resources
             if (typeof MASTER_CATEGORIES !== 'undefined') {
@@ -663,7 +941,7 @@
                 availableLinks = Object.keys(LINK_SKILLS);
             }
 
-            addForm(); 
+            addForm();
             document.getElementById('char-awakening').value = DEFAULTS.awakening;
             setupTagSearch('cat-search', 'cat-suggestions', 'char-categories', availableCategories);
         });
@@ -672,38 +950,43 @@
         function saveApiKey() {
             const key = document.getElementById('gemini-key').value.trim();
             const model = document.getElementById('gemini-model').value.trim();
-            if(!key) {
+            const gasUrl = document.getElementById('gas-url').value.trim();
+
+            if (!key) {
                 alert("APIキーを入力してください");
                 return;
             }
             localStorage.setItem('gemini_api_key', key);
             localStorage.setItem('gemini_model', model || 'gemini-2.0-flash-exp');
+            if (gasUrl) localStorage.setItem('gas_app_url', gasUrl);
+            else localStorage.removeItem('gas_app_url');
+
             alert("設定を保存しました");
             document.getElementById('api-settings').classList.add('hidden');
         }
 
         function clearImport() {
-            document.getElementById('import-text').value='';
-            document.getElementById('import-url').value='';
+            document.getElementById('import-text').value = '';
+            document.getElementById('import-url').value = '';
         }
 
         // --- BULK ANALYSIS LOGIC ---
         let bulkQueue = [];
         let bulkResults = [];
         let isBulkRunning = false;
-        
+
         async function startBulkAnalysis() {
             const text = document.getElementById('bulk-text').value.trim();
             const delimiter = document.getElementById('bulk-delimiter').value || '===';
             const delaySec = parseInt(document.getElementById('bulk-delay').value) || 5;
             const apiKey = localStorage.getItem('gemini_api_key');
-            
-            if(!text) { alert("一括解析用のテキストを入力してください"); return; }
-            if(!apiKey) { alert("APIキーを設定してください"); return; }
-            
+
+            if (!text) { alert("一括解析用のテキストを入力してください"); return; }
+            if (!apiKey) { alert("APIキーを設定してください"); return; }
+
             // Split and setup queue
             bulkQueue = text.split(new RegExp(`\\n?${delimiter}\\n?`)).map(t => t.trim()).filter(t => t);
-            if(bulkQueue.length === 0) { alert("区切り文字で正しく分割できませんでした"); return; }
+            if (bulkQueue.length === 0) { alert("区切り文字で正しく分割できませんでした"); return; }
 
             // UI Reset
             isBulkRunning = true;
@@ -711,21 +994,21 @@
             document.getElementById('bulk-results-container').innerHTML = '';
             document.getElementById('btn-bulk-start').disabled = true;
             document.getElementById('btn-bulk-start').innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> 解析中...`;
-            
+
             document.getElementById('bulk-progress-area').classList.remove('hidden');
             updateBulkProgress(0, bulkQueue.length);
 
             // Start Loop
             for (let i = 0; i < bulkQueue.length; i++) {
-                if(!isBulkRunning) break; // Emergency stop if needed
+                if (!isBulkRunning) break; // Emergency stop if needed
 
-                updateBulkStatus(`キャラ ${i+1}/${bulkQueue.length} を解析中...`);
-                
+                updateBulkStatus(`キャラ ${i + 1}/${bulkQueue.length} を解析中...`);
+
                 try {
                     const chunk = bulkQueue[i];
                     // Call API (using the same logic as single, but returning data)
                     const data = await fetchAiAnalysis(chunk, apiKey);
-                    
+
                     // Store Result
                     bulkResults.push({
                         status: 'success',
@@ -744,15 +1027,15 @@
                     addBulkResultItem(i, 'error', `エラー: ${e.message}`);
                 }
 
-                updateBulkProgress(i+1, bulkQueue.length);
+                updateBulkProgress(i + 1, bulkQueue.length);
 
                 // Wait for delay (skip on last item)
                 if (i < bulkQueue.length - 1) {
                     let wait = delaySec;
-                    while(wait > 0) {
-                         updateBulkStatus(`待機中... 残り${wait}秒`);
-                         await new Promise(r => setTimeout(r, 1000));
-                         wait--;
+                    while (wait > 0) {
+                        updateBulkStatus(`待機中... 残り${wait}秒`);
+                        await new Promise(r => setTimeout(r, 1000));
+                        wait--;
                     }
                 }
             }
@@ -762,13 +1045,13 @@
             updateBulkStatus("解析完了！");
             document.getElementById('btn-bulk-start').disabled = false;
             document.getElementById('btn-bulk-start').innerHTML = `<i data-lucide="play" class="w-4 h-4"></i> 一括解析開始`;
-            alert("一括解析が完了しました。\n「全結果をTSVコピー」で出力できます。");
+            alert("一括解析が完了しました。\n解析結果一覧上部のボタンから、TSVコピーまたはGAS送信を行ってください。");
         }
 
         async function fetchAiAnalysis(text, apiKey) {
-             const model = localStorage.getItem('gemini_model') || 'gemini-2.0-flash-exp';
-             // Shortened prompt for efficiency, same rules
-             const prompt = `
+            const model = localStorage.getItem('gemini_model') || 'gemini-2.0-flash-exp';
+            // Shortened prompt for efficiency, same rules
+            const prompt = `
 あなたはドッカンバトルのデータ抽出を行う専門AIです。
 以下のテキストはWebページからコピーされたキャラクター情報です。これを解析し、指定のJSON形式で出力してください。
 
@@ -795,6 +1078,15 @@
    - **maxLv**: レアリティから推測してください（UR=10, LR=20, 極限UR=15, 極限LR=25）。不明なら数値を入れず null にしてください。
    - **type**: 技の説明やアイコンの文脈から推測してください（"格闘"、"気弾"、"物理"、"その他"）。不明なら "気弾,格闘,物理" としてください。
    - **効果文**: 改行は "、" に置換して1行にまとめてください。
+
+5. **ユニット必殺技(Unit Super Attack)**:
+   - 「ユニット必殺技」「UNIT SUPER ATTACK」といった記載がある場合、\`unitSuperAttack\` オブジェクトに格納してください。
+   - **condition**: 発動条件（例：「○○カテゴリの味方が2人以上いるとき」）を抽出してください。
+   - **name**: 技名を抽出してください。
+   - **effect**: 効果文を抽出してください。
+   - **type**: 必殺技と同様に種類を推測してください。
+   - **specs**: 必殺技と同様にスペックを抽出してください。
+   - 存在しない場合は \`unitSuperAttack\` キー自体を省略してください。
 
 4. **スペック自動抽出 (specs / maxValues)**:
    - テキストを解析し、以下のキーワードが含まれる場合、フラグを立ててください。
@@ -872,6 +1164,14 @@
           "specs": {}
         }
       ],
+      "unitSuperAttack": {
+        "name": "ユニット必殺技名",
+        "maxLv": 20,
+        "type": "気弾/格闘/物理",
+        "condition": "発動条件",
+        "effect": "効果",
+        "specs": {}
+      },
       "links": ["リンク名1", "リンク名2"]
     }
   ]
@@ -880,7 +1180,7 @@
 対象テキスト:
 ${text.substring(0, 30000)}
 `;
-             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -907,15 +1207,15 @@ ${text.substring(0, 30000)}
             const container = document.getElementById('bulk-results-container');
             const div = document.createElement('div');
             div.className = "flex justify-between items-center text-xs p-2 border-b border-slate-100 last:border-0";
-            
-            const icon = status === 'success' 
+
+            const icon = status === 'success'
                 ? `<i data-lucide="check-circle-2" class="w-4 h-4 text-green-500"></i>`
                 : `<i data-lucide="alert-circle" class="w-4 h-4 text-red-500"></i>`;
-            
+
             div.innerHTML = `
                 <div class="flex items-center gap-2">
                     ${icon}
-                    <span class="font-mono text-slate-400">#${index+1}</span>
+                    <span class="font-mono text-slate-400">#${index + 1}</span>
                     <span class="font-bold text-slate-700 truncate w-64">${title}</span>
                 </div>
                 ${status === 'success' ? `<button onclick="loadBulkItem(${index})" class="text-blue-600 hover:underline">編集</button>` : ''}
@@ -927,60 +1227,144 @@ ${text.substring(0, 30000)}
 
         // Load a single bulk result into the editor
         function loadBulkItem(index) {
-            if(!bulkResults[index] || bulkResults[index].status !== 'success') return;
-            if(!confirm("現在の入力内容を破棄して、このデータを読み込みますか？")) return;
-            
+            if (!bulkResults[index] || bulkResults[index].status !== 'success') return;
+            if (!confirm("現在の入力内容を破棄して、このデータを読み込みますか？")) return;
+
             applyAiData(bulkResults[index].data);
             switchTab('input');
         }
 
-        // Generate TSV for ALL bulk results
+        // Generate TSV for ALL bulk results (Forms)
         function copyBulkTSV() {
-            if(bulkResults.length === 0) { alert("データがありません"); return; }
-            
+            if (bulkResults.length === 0) { alert("データがありません"); return; }
+
+            const { formRows } = generateBulkRows();
+            const finalText = formRows.join('\n');
+            navigator.clipboard.writeText(finalText).then(() => {
+                alert("全キャラの「Forms」データをTSV形式でクリップボードにコピーしました。\nスプレッドシートのFormsシート等に貼り付けてください。");
+            });
+        }
+
+        // Generate TSV for ALL bulk results (Characters)
+        function copyBulkCharactersTSV() {
+            if (bulkResults.length === 0) { alert("データがありません"); return; }
+
+            const { charRows } = generateBulkRows();
+            const finalText = charRows.join('\n');
+            navigator.clipboard.writeText(finalText).then(() => {
+                alert("全キャラの「Characters」データをTSV形式でクリップボードにコピーしました。\nスプレッドシートのCharactersシート等に貼り付けてください。");
+            });
+        }
+
+        // Send Bulk Data to GAS
+        async function sendBulkToSheet() {
+            if (bulkResults.length === 0) { alert("データがありません"); return; }
+            const gasUrl = localStorage.getItem('gas_app_url');
+            if (!gasUrl) { alert("API設定でGAS Web App URLを設定してください"); return; }
+
+            const btn = document.getElementById('btn-gas-send');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i data-lucide="loader-2" class="w-3 h-3 animate-spin"></i> 送信中...`;
+            btn.disabled = true;
+
+            try {
+                const { charRows, formRows } = generateBulkRows2D('raw');
+
+                const payload = {
+                    type: 'bulk',
+                    charRows: charRows,
+                    formRows: formRows
+                };
+
+                // Use no-cors mode, but we can't read response.
+                // Or try cors if GAS script implements ContentService correctly.
+                // Standard GAS Web App with ContentService.createTextOutput and setMimeType(JSON) usually supports CORS if "Anyone" access is set.
+                const response = await fetch(gasUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // text/plain avoids preflight
+                    body: JSON.stringify(payload)
+                });
+
+                const json = await response.json();
+                if (json.result === 'success') {
+                    alert("スプレッドシート(Import)への送信が完了しました！");
+                } else {
+                    alert("送信エラー: " + (json.error || "不明なエラー"));
+                }
+
+            } catch (e) {
+                console.error(e);
+                alert("送信に失敗しました。\nGAS URLやネットワーク設定を確認してください。\n" + e.message);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                lucide.createIcons();
+            }
+        }
+
+        // Helper to generate rows for both uses
+        function generateBulkRows() {
+            const { charRows, formRows } = generateBulkRows2D('tsv'); // Explicitly TSV
+            return {
+                charRows: charRows.map(r => r.join('\t')),
+                formRows: formRows.map(r => r.join('\t'))
+            };
+        }
+
+        function generateBulkRows2D(mode = 'tsv') {
             let charRows = [];
             let formRows = [];
-            
+
             bulkResults.forEach(res => {
-                if(res.status !== 'success') return;
+                if (res.status !== 'success') return;
                 const data = res.data;
                 const basics = data.basics || data;
                 const forms = data.forms || [data];
-                
-                // Char Row
                 const charId = basics.id || '';
+
+                // Char Row
                 charRows.push([
-                    charId, basics.title, basics.name, basics.title, // yomi placeholder?
+                    charId, basics.title, basics.name, basics.title, // yomi placeholder
                     basics.rarity, basics.cost, basics.type, basics.class,
                     basics.release_date, basics.eza_date, "", // seza
-                    // Leader skills (first form usually)
                     forms[0]?.leader_skill || "", "", "",
-                    formatField((basics.categories||[]).join(', '), 'tsv'),
-                    formatField(DEFAULTS.awakening, 'tsv'), // default awakening
+                    formatField((basics.categories || []).join(', '), mode),
+                    formatField("", mode), // Empty awakening
                     "", ""
-                ].join('\t'));
+                ]);
 
                 // Form Rows
                 forms.forEach(f => {
-                    // Logic to fix attacks data similar to applyAiData
                     let attacksJson = "";
-                    if(f.attacks) {
+                    if (f.attacks) {
                         const rarity = basics.rarity || 'UR';
                         const fixedAttacks = f.attacks.map((atk, i) => ({
-                            ki: atk.ki || (rarity==='LR' && i===1 ? "18~" : "12~"),
-                            maxLv: atk.maxLv || (rarity==='LR'?20:10),
+                            ki: atk.ki || (rarity === 'LR' && i === 1 ? "18~" : "12~"),
+                            maxLv: atk.maxLv || (rarity === 'LR' ? 20 : 10),
                             type: atk.type || "気弾,格闘,物理",
                             name: atk.name,
                             effect: atk.effect,
-                            specs: atk.specs||{}
+                            specs: atk.specs || {}
                         }));
                         attacksJson = JSON.stringify(fixedAttacks);
                     }
-                    
-                    // Logic for passive
+
+                    // Unit SA
+                    let unitSaJson = "";
+                    if (f.unitSuperAttack) {
+                        unitSaJson = JSON.stringify(f.unitSuperAttack);
+                        // Note: If we need to merge this into attacks or keep separate?
+                        // Current logic puts unit SA into its own field or appends?
+                        // The original generateCSV logic handles unit SA by... wait, verify generateCSV.
+                        // Actually, getSafeValue('char-dropevent') is the last char item.
+                        // Forms items: id, mode, label, name, image_id, links, stats, attacks, passive, active, standby, field, reversible, unit_sa
+                        // The original copyBulkTSV logic (lines 1314-1325) didn't include unitSuperAttack field logic!
+                        // We must add it.
+                    }
+
                     let passiveJson = "";
-                    if(f.passive) {
-                         const p = {
+                    if (f.passive) {
+                        const p = {
                             name: f.passive.name || "パッシブ",
                             intro: f.passive.intro || null,
                             details: f.passive.details || [],
@@ -989,28 +1373,28 @@ ${text.substring(0, 30000)}
                         passiveJson = JSON.stringify(p);
                     }
 
+                    // Check columns count in generateCSV to match.
+                    // generateCSV (Line 2008):
+                    // charId, mode, label, name, id_val, links, stats, attacks, passive, active, standby, field, reversible
+                    // *Unit SA was missing in generateCSV too?*
+                    // Let's check generateCSV implementation again.
+
                     formRows.push([
                         charId, "normal", "通常", f.name || "", "",
-                        formatField((f.links||[]).join(', '), 'tsv'),
-                        formatField(JSON.stringify(f.stats), 'tsv'),
-                        formatField(attacksJson, 'tsv'),
-                        formatField(passiveJson, 'tsv'),
-                        formatField(JSON.stringify(f.active||{}), 'tsv'),
-                        formatField(JSON.stringify(f.standby||{}), 'tsv'),
-                        formatField(JSON.stringify(f.field||{}), 'tsv'),
-                        "normal"
-                    ].join('\t'));
+                        formatField((f.links || []).join(', '), mode),
+                        formatField(JSON.stringify(f.stats), mode),
+                        formatField(attacksJson, mode),
+                        formatField(passiveJson, mode),
+                        formatField(JSON.stringify(f.active || {}), mode),
+                        formatField(JSON.stringify(f.standby || {}), mode),
+                        formatField(JSON.stringify(f.field || {}), mode),
+                        "normal",
+                        // Add Unit SA at the end if the sheet supports it.
+                        formatField(unitSaJson, mode)
+                    ]);
                 });
             });
-            
-            // For now, let's copy Forms data as it's most complex. 
-            // Or combine? Let's copy Forms data primarily as requested implies bulk entry.
-            // Actually, let's just copy Forms. User can loop for Chars if needed or we can append.
-            // Let's copy Forms data to clipboard.
-            const finalText = formRows.join('\n');
-            navigator.clipboard.writeText(finalText).then(() => {
-                alert("全キャラの「Forms」データをTSV形式でクリップボードにコピーしました。\nスプレッドシートに貼り付けてください。");
-            });
+            return { charRows, formRows };
         }
 
 
@@ -1019,16 +1403,16 @@ ${text.substring(0, 30000)}
             const text = document.getElementById('import-text').value.trim();
             const urlVal = document.getElementById('import-url').value.trim();
             const apiKey = localStorage.getItem('gemini_api_key');
-            
+
             // ... (Existing Single Logic) ...
             // Reusing fetchAiAnalysis for consistency
             if (!text) { alert("解析するテキストを入力してください"); return; }
             if (!apiKey) { alert("API設定からAPIキーを保存してください"); document.getElementById('api-settings').classList.remove('hidden'); return; }
 
             let extractedId = null;
-            if(urlVal) {
+            if (urlVal) {
                 const match = urlVal.match(/cards\/(\d+)/);
-                if(match) extractedId = match[1];
+                if (match) extractedId = match[1];
             }
 
             const btn = document.getElementById('btn-analyze');
@@ -1038,8 +1422,8 @@ ${text.substring(0, 30000)}
 
             try {
                 const result = await fetchAiAnalysis(text, apiKey);
-                if(extractedId) {
-                    if(result.basics) result.basics.id = extractedId;
+                if (extractedId) {
+                    if (result.basics) result.basics.id = extractedId;
                     else result.id = extractedId;
                 }
                 applyAiData(result);
@@ -1055,16 +1439,16 @@ ${text.substring(0, 30000)}
         }
 
         // ... (Existing applyAiData and other functions remain same, just ensure they are present) ...
-        
+
         function applyAiData(data) {
             // Support both flat structure (legacy prompt) and new nested structure
-            const basics = data.basics || data; 
-            const forms = data.forms || [data]; 
+            const basics = data.basics || data;
+            const forms = data.forms || [data];
 
             // Basic Info
             const setVal = (id, val) => {
                 const el = document.getElementById(id);
-                if(el && val) el.value = val;
+                if (el && val) el.value = val;
             };
 
             setVal('char-id', basics.id);
@@ -1075,7 +1459,7 @@ ${text.substring(0, 30000)}
             setVal('char-type', basics.type);
             setVal('char-class', basics.class);
             setVal('char-release', basics.release_date);
-            
+
             // EZA Date handling (Strict null check)
             if (basics.eza_date && basics.eza_date !== 'なし') {
                 setVal('char-eza', basics.eza_date);
@@ -1088,12 +1472,12 @@ ${text.substring(0, 30000)}
             // Forms Handling
             const formContainer = document.getElementById('forms-container');
             formContainer.innerHTML = '';
-            
+
             forms.forEach((formData, index) => {
                 addForm(); // Adds a new form item
                 const formItems = formContainer.querySelectorAll('.form-item');
                 const currentForm = formItems[formItems.length - 1];
-                
+
                 // Set Form Name
                 if (index > 0 && formData.name) {
                     currentForm.querySelector('.form-name').value = formData.name;
@@ -1154,7 +1538,7 @@ ${text.substring(0, 30000)}
                     const s = {
                         name: formData.standby.name || "スタンバイ",
                         condition: formData.standby.condition || "",
-                        effect: formData.standby.effect || "", 
+                        effect: formData.standby.effect || "",
                         finish: finishArray
                     };
                     currentForm.querySelector('.form-standby').value = JSON.stringify(s, null, 2);
@@ -1167,8 +1551,8 @@ ${text.substring(0, 30000)}
                 if (formData.field) {
                     currentForm.querySelector('.form-field').value = JSON.stringify(formData.field, null, 2);
                 } else {
-                     // Empty field if no Field (AI logic currently doesn't output field much, but safely clear it)
-                     currentForm.querySelector('.form-field').value = "";
+                    // Empty field if no Field (AI logic currently doesn't output field much, but safely clear it)
+                    currentForm.querySelector('.form-field').value = "";
                 }
 
                 // Attacks (New Logic)
@@ -1185,10 +1569,10 @@ ${text.substring(0, 30000)}
                         // Guess Ki if missing
                         let ki = atk.ki;
                         if (!ki) {
-                           if (rarity === 'LR' && i === 1) ki = "18~";
-                           else ki = "12~";
+                            if (rarity === 'LR' && i === 1) ki = "18~";
+                            else ki = "12~";
                         }
-                        
+
                         // Guess MaxLv if missing
                         let maxLv = atk.maxLv;
                         if (!maxLv) maxLv = guessMaxLv(rarity);
@@ -1220,7 +1604,7 @@ ${text.substring(0, 30000)}
             outputMode = mode;
             const btnCsv = document.getElementById('mode-csv');
             const btnTsv = document.getElementById('mode-tsv');
-            
+
             if (mode === 'csv') {
                 btnCsv.classList.add('bg-blue-100', 'text-blue-700');
                 btnCsv.classList.remove('text-slate-500');
@@ -1259,7 +1643,7 @@ ${text.substring(0, 30000)}
             categories: '',
             // Flat structure as requested
             stats: JSON.stringify({ "hp": 10000, "atk": 10000, "def": 10000 }, null, 2),
-            
+
             attacks: `[
     { 
         ki: "12~", maxLv: 20, type: "気弾,格闘,物理", 
@@ -1329,12 +1713,12 @@ ${text.substring(0, 30000)}
         function searchWeb() {
             const title = document.getElementById('char-title').value;
             const name = document.getElementById('char-name').value;
-            
+
             if (!name) {
                 alert("検索するにはキャラ名を入力してください");
                 return;
             }
-            
+
             const query = `ドッカンバトル ${title} ${name} ステータス`;
             const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
             window.open(url, '_blank');
@@ -1342,26 +1726,26 @@ ${text.substring(0, 30000)}
 
         // --- Global Reset ---
         function resetAll() {
-            if(!confirm("現在の入力内容をすべて破棄して、初期状態に戻しますか？")) return;
-            
+            if (!confirm("現在の入力内容をすべて破棄して、初期状態に戻しますか？")) return;
+
             const fields = [
-                'char-id', 'char-title', 'char-name', 'char-yomi', 
-                'char-cost', 'char-release', 'char-eza', 'char-seza', 
+                'char-id', 'char-title', 'char-name', 'char-yomi',
+                'char-cost', 'char-release', 'char-eza', 'char-seza',
                 'char-dropevent', 'ls-normal', 'ls-eza', 'ls-seza', 'char-categories'
             ];
             fields.forEach(id => {
                 const el = document.getElementById(id);
-                if(el) el.value = '';
+                if (el) el.value = '';
             });
-            
+
             document.getElementById('char-rarity').value = 'SSR';
             document.getElementById('char-type').value = 'AGL';
             document.getElementById('char-class').value = 'Super';
             document.getElementById('char-source').value = 'gasha';
-            
+
             document.getElementById('char-awakening').value = DEFAULTS.awakening;
             document.getElementById('import-text').value = '';
-            
+
             const formContainer = document.getElementById('forms-container');
             formContainer.innerHTML = '';
             addForm();
@@ -1370,18 +1754,18 @@ ${text.substring(0, 30000)}
         // --- Individual Field Controls ---
         function clearField(id) {
             const el = document.getElementById(id);
-            if(el) el.value = '';
+            if (el) el.value = '';
         }
         function resetField(id, defaultKey) {
             const el = document.getElementById(id);
-            if(el && DEFAULTS[defaultKey] !== undefined) {
+            if (el && DEFAULTS[defaultKey] !== undefined) {
                 el.value = DEFAULTS[defaultKey];
             }
         }
         function clearFormItem(btn, selector) {
             const wrapper = btn.closest('.md\\:col-span-2') || btn.closest('.flex-col');
             const el = wrapper.querySelector(selector);
-            if(el) el.value = '';
+            if (el) el.value = '';
         }
         function resetFormItem(btn, defaultKey) {
             const container = btn.closest('.md\\:col-span-2') || btn.closest('.flex-col');
@@ -1394,7 +1778,7 @@ ${text.substring(0, 30000)}
                 'field': '.form-field'
             };
             const el = container.querySelector(selectorMap[defaultKey]);
-            if(el && DEFAULTS[defaultKey] !== undefined) {
+            if (el && DEFAULTS[defaultKey] !== undefined) {
                 el.value = DEFAULTS[defaultKey];
             }
         }
@@ -1405,7 +1789,7 @@ ${text.substring(0, 30000)}
             // Find the container holding both the button toolbar and the textarea
             const container = btn.closest('.flex-col');
             const textarea = container.querySelector(selector);
-            
+
             if (!textarea) return;
 
             const start = textarea.selectionStart;
@@ -1413,7 +1797,7 @@ ${text.substring(0, 30000)}
             const text = textarea.value;
             const before = text.substring(0, start);
             const after = text.substring(end, text.length);
-            
+
             const insertion = textToInsert + '\n';
             textarea.value = before + insertion + after;
             textarea.selectionStart = textarea.selectionEnd = start + insertion.length;
@@ -1426,7 +1810,7 @@ ${text.substring(0, 30000)}
             const list = document.getElementById(listId);
             const target = document.getElementById(targetId);
 
-            if(!input) return;
+            if (!input) return;
 
             const showList = (filterText = '') => {
                 const val = filterText.toLowerCase();
@@ -1442,7 +1826,7 @@ ${text.substring(0, 30000)}
             input.addEventListener('input', (e) => showList(e.target.value));
             input.addEventListener('focus', () => showList(input.value));
             input.addEventListener('click', () => showList(input.value));
-            
+
             document.addEventListener('click', (e) => {
                 if (!e.target.closest('.suggestions-wrapper')) {
                     list.classList.remove('show');
@@ -1463,8 +1847,8 @@ ${text.substring(0, 30000)}
                 div.textContent = match;
                 div.onclick = () => {
                     addTagToTextarea(match, target);
-                    input.value = ''; 
-                    list.classList.remove('show'); 
+                    input.value = '';
+                    list.classList.remove('show');
                 };
                 list.appendChild(div);
             });
@@ -1488,7 +1872,7 @@ ${text.substring(0, 30000)}
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById(`tab-${tabName}`).classList.add('active');
-            
+
             // Buttons logic
             const btns = {
                 'import': document.getElementById('btn-import'),
@@ -1526,11 +1910,11 @@ ${text.substring(0, 30000)}
             const template = document.getElementById('form-template');
             const clone = template.content.cloneNode(true);
             const formContainer = document.getElementById('forms-container');
-            
+
             const uniqueId = Date.now();
             const formEl = clone.querySelector('.form-item');
             formEl.dataset.id = uniqueId;
-            
+
             // Elements
             const inputs = {
                 mode: formEl.querySelector('.form-mode'),
@@ -1632,7 +2016,7 @@ ${text.substring(0, 30000)}
             const el = document.getElementById(id);
             return el ? el.value : '';
         }
-        
+
         // Escape for CSV (Excel/Google Sheets style)
         function escapeCsv(str) {
             if (!str) return '';
@@ -1642,6 +2026,7 @@ ${text.substring(0, 30000)}
         // Escape for TSV (Remove newlines to keep it in one cell if needed, or wrap quotes)
         // Sheets paste works best with tab delimiters and quotes for multi-line
         function formatField(str, mode) {
+            if (mode === 'raw') return str; // Return raw string/value for GAS
             if (mode === 'csv') {
                 return escapeCsv(str);
             } else {
@@ -1679,7 +2064,7 @@ ${text.substring(0, 30000)}
                 getSafeValue('char-source'),
                 getSafeValue('char-dropevent')
             ].join(delimiter);
-            
+
             document.getElementById('output-char').textContent = charData;
 
             const formItems = document.querySelectorAll('.form-item');
@@ -1720,4 +2105,5 @@ ${text.substring(0, 30000)}
         }
     </script>
 </body>
+
 </html>
