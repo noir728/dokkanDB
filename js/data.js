@@ -16286,7 +16286,7 @@ const CHARACTER_DATA = [
         "id": 1032100,
         "title": "心火を燃やす戦士",
         "name": "超サイヤ人孫悟飯(未来)",
-        "yomi": "",
+        "yomi": "すーぱーさいやじんそんごはん(みらい)",
         "rarity": "SSR",
         "cost": 26,
         "type": "INT",
@@ -16419,7 +16419,7 @@ const CHARACTER_DATA = [
         "id": 1032110,
         "title": "悲劇に立ち向かう力",
         "name": "超サイヤ人孫悟飯(未来)",
-        "yomi": "",
+        "yomi": "すーぱーさいやじんそんごはん(みらい)",
         "rarity": "UR",
         "cost": 50,
         "type": "INT",
@@ -16553,7 +16553,7 @@ const CHARACTER_DATA = [
         "id": 1032120,
         "title": "未来へとつながる絆",
         "name": "超サイヤ人孫悟飯(未来) /超サイヤ人トランクス(少年期)(未来)",
-        "yomi": "",
+        "yomi": "すーぱーさいやじんそんごはん(みらい)/すーぱーさいやじんとらんくす(しょうねんき)(みらい)",
         "rarity": "LR",
         "cost": 77,
         "type": "INT",
@@ -16832,7 +16832,7 @@ const CHARACTER_DATA = [
         "id": 1023400,
         "title": "過酷な世界での闘い",
         "name": "超サイヤ人孫悟飯(未来)&トランクス(少年期)(未来)",
-        "yomi": "",
+        "yomi": "すーぱーさいやじんそんごはん(みらい)&すーぱーさいやじんとらんくす(しょうねんき)(みらい)",
         "rarity": "SSR",
         "cost": 26,
         "type": "AGL",
@@ -16921,7 +16921,7 @@ const CHARACTER_DATA = [
         "id": 1023410,
         "title": "反撃の道標",
         "name": "超サイヤ人孫悟飯(未来)&トランクス(少年期)(未来)",
-        "yomi": "",
+        "yomi": "すーぱーさいやじんそんごはん(みらい)&すーぱーさいやじんとらんくす(しょうねんき)(みらい)",
         "rarity": "UR",
         "cost": 50,
         "type": "AGL",
@@ -17011,7 +17011,7 @@ const CHARACTER_DATA = [
         "id": 1023420,
         "title": "残された希望",
         "name": "超サイヤ人孫悟飯(未来)&トランクス(少年期)(未来)",
-        "yomi": "",
+        "yomi": "すーぱーさいやじんそんごはん(みらい)&すーぱーさいやじんとらんくす(しょうねんき)(みらい)",
         "rarity": "LR",
         "cost": 77,
         "type": "AGL",
@@ -17438,7 +17438,7 @@ const CHARACTER_DATA = [
         "id": 1016970,
         "title": "晴れやかな闘い",
         "name": "トランクス(青年期)",
-        "yomi": "晴れやかな闘い",
+        "yomi": "とらんくす(せいねんき)",
         "rarity": "SSR",
         "cost": 19,
         "type": "INT",
@@ -17467,7 +17467,7 @@ const CHARACTER_DATA = [
         "forms": [
             {
                 "label": "通常",
-                "name": "トランクス(青年期)",
+                "name": "",
                 "links": [
                     "未来からの使者",
                     "サイヤ人の血",
@@ -17518,7 +17518,7 @@ const CHARACTER_DATA = [
         "id": 1032450,
         "title": "天下一大武道大会での交戦",
         "name": "トランクス(青年期)",
-        "yomi": "天下一大武道大会での交戦",
+        "yomi": "とらんくす(せいねんき)",
         "rarity": "UR",
         "cost": 36,
         "type": "INT",
@@ -17547,7 +17547,7 @@ const CHARACTER_DATA = [
         "forms": [
             {
                 "label": "通常",
-                "name": "トランクス(青年期)",
+                "name": "",
                 "links": [
                     "未来からの使者",
                     "サイヤ人の血",
@@ -17623,6 +17623,1294 @@ const CHARACTER_DATA = [
                         "dodge": "50%",
                         "crit": "30%",
                         "add": "1回"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": 1008450,
+        "title": "魔族再興の叫び",
+        "name": "マジュニア",
+        "yomi": "",
+        "rarity": "SSR",
+        "cost": 19,
+        "type": "AGL",
+        "class": "Extreme",
+        "release": "2021/12/17",
+        "source_type": "gasha",
+        "drop_event": "",
+        "categories": [
+            "天下一武道会",
+            "ナメック星人",
+            "恐怖の征服",
+            "ターゲット孫悟空",
+            "リベンジ",
+            "天才戦士",
+            "託された意志",
+            "世界の混乱",
+            "命運をかけた闘い",
+            "地球育chの戦士",
+            "大会出場者",
+            "魔の力",
+            "継承する者"
+        ],
+        "leaderSkill": "速属性の気力+3、HPとATKとDEF50%UP",
+        "leaderSkill_eza": "",
+        "leaderSkill_seza": "",
+        "farmCards": [],
+        "partners": [],
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "BOSSキャラ",
+                    "タフネス戦士",
+                    "魔の流儀",
+                    "一心同体",
+                    "不思議な大冒険",
+                    "ドラゴンボールの導き"
+                ],
+                "stats": {
+                    "hp": 6930,
+                    "atk": 7146,
+                    "def": 4565
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "超爆裂魔波",
+                        "effect": "1ターンDEFが上昇し、相手に超特大ダメージを与え、高確率で気絶させる",
+                        "specs": {
+                            "def_up": "30%",
+                            "stun": true
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "魔族の報復",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "「亀仙流」カテゴリの敵がいるとき",
+                            "effects": [
+                                "ATK/DEF100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "登場から3ターン目以降、気力メーター12以上で攻撃時",
+                            "effects": [
+                                "[img:one_time]ATK200%[img:up]",
+                                "[img:one_time]敵を2ターン気絶させる"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "stun": true
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": 1027190,
+        "title": "平和を憎む一閃",
+        "name": "マジュニア",
+        "yomi": "",
+        "rarity": "UR",
+        "cost": 36,
+        "type": "AGL",
+        "class": "Extreme",
+        "release": "2023/08/11",
+        "eza": "2025/12/12",
+        "source_type": "gasha",
+        "drop_event": "",
+        "categories": [
+            "天下一武道会",
+            "ナメック星人",
+            "恐怖の征服",
+            "ターゲット孫悟空",
+            "リベンジ",
+            "天才戦士",
+            "託された意志",
+            "世界の混乱",
+            "命運をかけた闘い",
+            "地球育ちの戦士",
+            "大会出場者",
+            "魔の力",
+            "継承する者"
+        ],
+        "leaderSkill": "速属性の気力+3、HPとATKとDEF70%UP",
+        "leaderSkill_eza": "速属性の気力+3、HPとATKとDEF70%UP",
+        "leaderSkill_seza": "",
+        "farmCards": [],
+        "partners": [],
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "BOSSキャラ",
+                    "タフネス戦士",
+                    "魔の流儀",
+                    "一心同体",
+                    "不思議な大冒険",
+                    "ドラゴンボールの導き",
+                    "限界突破"
+                ],
+                "stats": {
+                    "hp": 7550,
+                    "atk": 7512,
+                    "def": 4960
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "超爆裂魔波",
+                        "effect": "1ターンDEFが大幅上昇し、相手に超特大ダメージを与え、高確率で気絶させる",
+                        "specs": {
+                            "def_up": "50%",
+                            "stun": true
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "魔族の呪縛",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+2、ATK/DEF150%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "「亀仙流」カテゴリの敵がいるとき",
+                            "effects": [
+                                "気力+2、ATK/DEF150%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時",
+                            "effects": [
+                                "必ず追加攻撃し高確率で必殺技が発動"
+                            ]
+                        },
+                        {
+                            "title": "登場から3ターン目以降、気力メーター12以上で攻撃時",
+                            "effects": [
+                                "[img:one_time]ATK200%[img:up]",
+                                "[img:one_time]攻撃した敵を2ターン気絶させる"
+                            ]
+                        },
+                        {
+                            "title": "登場から6ターン目以降、気力メーター12以上で攻撃時",
+                            "effects": [
+                                "[img:one_time]ATK150%[img:up]",
+                                "[img:one_time]攻撃した敵の必殺技を2ターン封じる"
+                            ]
+                        },
+                        {
+                            "title": "登場から9ターン目以降、気力メーター12以上で攻撃時",
+                            "effects": [
+                                "ATK100%[img:up]"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "stun": true,
+                        "seal": true,
+                        "add": "1",
+                        "target": true
+                    }
+                }
+            }
+        ],
+        "forms_eza": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "BOSSキャラ",
+                    "タフネス戦士",
+                    "魔の流儀",
+                    "一心同体",
+                    "不思議な大冒険",
+                    "ドラゴンボールの導き",
+                    "限界突破"
+                ],
+                "stats": {
+                    "hp": 10097,
+                    "atk": 10046,
+                    "def": 6633
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 15,
+                        "type": "気弾",
+                        "name": "超爆裂魔波(極限)",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超特大ダメージを与え、高確率で気絶させる",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%",
+                            "stun": true
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "魔族の呪縛",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+2、ATK/DEF200%[img:up]",
+                                "必ず追加攻撃し高確率で必殺技が発動",
+                                "高確率で会心が発動"
+                            ]
+                        },
+                        {
+                            "title": "「大会出場者」または「亀仙流」カテゴリの敵がいるとき",
+                            "effects": [
+                                "気力+2、ATK/DEF150%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "敵が1体のとき",
+                            "effects": [
+                                "必殺技が追加発動",
+                                "全ての攻撃をガード"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター12以上で攻撃するまで",
+                            "effects": [
+                                "そのターン中、超高確率で敵の攻撃を回避"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター12以上で攻撃時",
+                            "effects": [
+                                "ATK/DEF200%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "登場から3ターン目以降、気力メーター12以上で攻撃時",
+                            "effects": [
+                                "[img:one_time]ATK250%[img:up]、DEF150%[img:up]",
+                                "[img:one_time]必ず会心が発動",
+                                "[img:one_time]攻撃した敵を2ターン気絶させる"
+                            ]
+                        },
+                        {
+                            "title": "登場から6ターン目以降、気力メーター12以上で攻撃時",
+                            "effects": [
+                                "[img:one_time]ATK200%[img:up]、DEF100%[img:up]",
+                                "[img:one_time]必ず会心が発動",
+                                "[img:one_time]攻撃した敵の必殺技を2ターン封じる"
+                            ]
+                        },
+                        {
+                            "title": "登場から9ターン目以降、気力メーター12以上で攻撃時",
+                            "effects": [
+                                "ATK150%[img:up]、DEF50%[img:up]",
+                                "攻撃した敵の必殺技を封じる"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "crit": "100%",
+                        "add": "2",
+                        "guard": true,
+                        "dodge": "70%",
+                        "stun": true,
+                        "seal": true
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": 1025610,
+        "title": "無名の武道家",
+        "name": "ジャッキー・チュン",
+        "yomi": "",
+        "rarity": "SSR",
+        "cost": 18,
+        "type": "INT",
+        "class": "Super",
+        "release": "2022/11/25",
+        "source_type": "event",
+        "drop_event": "",
+        "categories": [
+            "天下一武道会",
+            "少年編",
+            "地球人",
+            "頭脳戦",
+            "惑星破壊",
+            "高速戦闘",
+            "地球育ちの戦士",
+            "大会出場者"
+        ],
+        "leaderSkill": "「天下一武道会」カテゴリの\n気力+2、HPとATKとDEF80%UP",
+        "leaderSkill_eza": "",
+        "leaderSkill_seza": "",
+        "farmCards": [],
+        "partners": [],
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "頭脳派",
+                    "天下一武道会優勝者",
+                    "不思議な大冒険",
+                    "ドラゴンボールの導き"
+                ],
+                "stats": {
+                    "hp": 6469,
+                    "atk": 7313,
+                    "def": 3998
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "萬國驚天掌",
+                        "effect": "1ターンDEFが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "def_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "ひさしぶりのマジ",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+2",
+                                "ATK/DEF80%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "必殺技を発動するたび",
+                            "effects": [
+                                "[img:infinity]ATK10%[img:up](最大30%)"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるたび",
+                            "effects": [
+                                "[img:infinity]DEF10%[img:up](最大30%)"
+                            ]
+                        }
+                    ],
+                    "maxValues": {}
+                }
+            }
+        ]
+    },
+    {
+        "id": 1025620,
+        "title": "大決勝戦の始まり",
+        "name": "ジャッキー・チュン",
+        "yomi": "",
+        "rarity": "UR",
+        "cost": 38,
+        "type": "INT",
+        "class": "Super",
+        "release": "2022/11/25",
+        "source_type": "event",
+        "drop_event": "",
+        "categories": [
+            "天下一武道会",
+            "少年編",
+            "地球人",
+            "頭脳戦",
+            "惑星破壊",
+            "高速戦闘",
+            "地球育ちの戦士",
+            "大会出場者"
+        ],
+        "leaderSkill": "「天下一武道会」カテゴリの\n気力+3、HPとATKとDEF100%UP",
+        "leaderSkill_eza": "",
+        "leaderSkill_seza": "",
+        "farmCards": [],
+        "partners": [],
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "頭脳派",
+                    "天下一武道会優勝者",
+                    "不思議な大冒険",
+                    "ドラゴンボールの導き",
+                    "限界突破"
+                ],
+                "stats": {
+                    "hp": 8100,
+                    "atk": 8400,
+                    "def": 4959
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "萬國驚天掌",
+                        "effect": "1ターンDEFが上昇し、相手に超特大ダメージを与える",
+                        "specs": {
+                            "def_up": "30%",
+                            "stun": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "頭にきての大反撃",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+3",
+                                "ATK/DEF100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "必殺技を発動するたび",
+                            "effects": [
+                                "[img:infinity]ATK15%[img:up](最大45%)"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるたび",
+                            "effects": [
+                                "[img:infinity]DEF15%[img:up](最大45%)"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "atk": "45%",
+                        "def": "45%"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": 1025630,
+        "title": "天下一武道会のクライマックス",
+        "name": "ジャッキー・チュン",
+        "yomi": "",
+        "rarity": "LR",
+        "cost": 99,
+        "type": "INT",
+        "class": "Super",
+        "release": "2022/11/25",
+        "eza": "2025/12/12",
+        "source_type": "event",
+        "drop_event": "",
+        "categories": [
+            "天下一武道会",
+            "少年編",
+            "地球人",
+            "頭脳戦",
+            "惑星破壊",
+            "高速戦闘",
+            "フルパワー",
+            "かめはめ波",
+            "地球育ちの戦士",
+            "大会出場者"
+        ],
+        "leaderSkill": "「天下一武道会」カテゴリの\n気力+4、HPとATKとDEF130%UP",
+        "leaderSkill_eza": "",
+        "leaderSkill_seza": "",
+        "farmCards": [],
+        "partners": [],
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "頭脳派",
+                    "天下一武道会優勝者",
+                    "かめはめ波",
+                    "不思議な大冒険",
+                    "ドラゴンボールの導き",
+                    "限界突破",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 15083,
+                    "atk": 13355,
+                    "def": 9078
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 20,
+                        "type": "気弾,格闘,物理",
+                        "name": "萬國驚天掌",
+                        "effect": "1ターンDEFが上昇し、相手に極大ダメージを与え、高確率で気絶させる",
+                        "specs": {
+                            "def_up": "30%",
+                            "stun": true
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 20,
+                        "type": "気弾,格闘,物理",
+                        "name": "優勝キック",
+                        "effect": "1ターンATKが上昇し、相手に超極大ダメージを与え、高確率で気絶させる",
+                        "specs": {
+                            "atk_up": "30%",
+                            "stun": true
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "決勝戦にふさわしい闘い",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+4",
+                                "ATK/DEF120%[img:up]",
+                                "「天下一武道会」カテゴリの自身を除く味方全員の気力+3、ATK/DEF50%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "必殺技を発動するたび",
+                            "effects": [
+                                "[img:infinity]ATK20%[img:up](最大60%)"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるたび",
+                            "effects": [
+                                "[img:infinity]DEF20%[img:up](最大60%)"
+                            ]
+                        },
+                        {
+                            "title": "超必殺技が命中した敵から攻撃を受けるとき",
+                            "effects": [
+                                "ダメージ軽減率50%[img:up]"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "reduce": "50%"
+                    }
+                },
+                "active": {
+                    "name": "最大出力かめはめ波",
+                    "condition": "バトル中自身が6回以上攻撃を受けると 発動可能、またはバトル中必殺技の発動が4回以上で 発動可能(1回のみ)",
+                    "description": "一時的にATK610%UPしたダメージを与え、発動したターン中64%の確率で会心が発動",
+                    "specs": {
+                        "crit": "64%"
+                    }
+                }
+            }
+        ],
+        "forms_eza": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "頭脳派",
+                    "天下一武道会優勝者",
+                    "かめはめ波",
+                    "不思議な大冒険",
+                    "ドラゴンボールの導き",
+                    "限界突破",
+                    "伝説の力"
+                ],
+                "stats": {
+                    "hp": 15083,
+                    "atk": 13355,
+                    "def": 9078
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 25,
+                        "type": "気弾,格闘,物理",
+                        "name": "萬國驚天掌(極限)",
+                        "effect": "1ターンATKとDEFが上昇し、相手に極大ダメージを与え、超高確率で気絶させる",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%",
+                            "stun": true
+                        }
+                    },
+                    {
+                        "ki": "18~",
+                        "maxLv": 25,
+                        "type": "気弾,格闘,物理",
+                        "name": "優勝キック(極限)",
+                        "effect": "4ターンATKとDEFが上昇し、相手に超極大ダメージを与え、高確率で気絶させる",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%",
+                            "stun": true
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "決勝戦にふさわしい闘い",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "気力+4、ATK/DEF180%[img:up]",
+                                "「天下一武道会」または「頭脳戦」カテゴリの味方全員の気力+3、ATK/DEF50%[img:up]",
+                                "全属性に効果抜群で攻撃"
+                            ]
+                        },
+                        {
+                            "title": "自身の他に攻撃参加中の「天下一武道会」または「頭脳戦」カテゴリの味方がいるとき",
+                            "effects": [
+                                "必ず追加攻撃し超高確率で必殺技が発動"
+                            ]
+                        },
+                        {
+                            "title": "必殺技を発動するたび",
+                            "effects": [
+                                "[img:infinity]気力+1(最大+4)",
+                                "[img:infinity]ATK/DEF50%[img:up](最大150%)"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるか回避するたび",
+                            "effects": [
+                                "[img:infinity]気力+1(最大+4)",
+                                "[img:infinity]ATK/DEF50%[img:up](最大150%)"
+                            ]
+                        },
+                        {
+                            "title": "アクティブスキル発動時または気力メーター24で攻撃時",
+                            "effects": [
+                                "ATK/DEF100%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "超必殺技が命中した敵から攻撃を受けるとき",
+                            "effects": [
+                                "DEF100%[img:up]",
+                                "ダメージ軽減率50%[img:up]"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "effective": true,
+                        "add": "1回",
+                        "reduce": "50%"
+                    }
+                },
+                "active": {
+                    "name": "最大出力かめはめ波",
+                    "condition": "バトル中自身が6回以上攻撃を受けると 発動可能、またはバトル中必殺技の発動が4回以上で 発動可能(1回のみ)",
+                    "description": "一時的にATK610%UPしたダメージを与え、発動したターン中64%の確率で会心が発動",
+                    "specs": {
+                        "crit": "64%"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": 1023370,
+        "title": "気配を持たぬ殺人鬼",
+        "name": "ドクター・ゲロ&人造人間19号",
+        "yomi": "",
+        "rarity": "SSR",
+        "cost": 21,
+        "type": "INT",
+        "class": "Extreme",
+        "release": "2021/11/30",
+        "source_type": "gasha",
+        "drop_event": "",
+        "categories": [
+            "人造人間",
+            "人造人間/セル編",
+            "ターゲット孫悟空",
+            "力の吸収",
+            "コンビネーション"
+        ],
+        "leaderSkill": "「人造人間」カテゴリの\n気力+2、HPとATKとDEF100%UP",
+        "leaderSkill_eza": "",
+        "leaderSkill_seza": "",
+        "farmCards": [],
+        "partners": [],
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "人造人間",
+                    "エネルギー吸収式",
+                    "RR軍",
+                    "悪夢",
+                    "残虐",
+                    "恐怖と絶望"
+                ],
+                "stats": {
+                    "hp": 5039,
+                    "atk": 7571,
+                    "def": 4296
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾,格闘,物理",
+                        "name": "バイオニックパニッシャー",
+                        "effect": "相手に超特大ダメージを与え、HPを10%回復",
+                        "specs": {}
+                    }
+                ],
+                "passive": {
+                    "name": "データの照合",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK140%[img:up]",
+                                "DEF130%[img:up]",
+                                "「人造人間」カテゴリの味方全員の気力+2、ATK/DEF20%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター12以上で攻撃時",
+                            "effects": [
+                                "ATK/DEF39%[img:up]",
+                                "敵のガードを無効化"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "guard": true
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": 1023380,
+        "title": "蓄積された殺意",
+        "name": "ドクター・ゲロ&人造人間19号",
+        "yomi": "",
+        "rarity": "UR",
+        "cost": 40,
+        "type": "INT",
+        "class": "Extreme",
+        "release": "2021/11/30",
+        "eza": "2025/12/02",
+        "source_type": "gasha",
+        "drop_event": "",
+        "categories": [
+            "人造人間",
+            "人造人間/セル編",
+            "ターゲット孫悟空",
+            "力の吸収",
+            "コンビネーション"
+        ],
+        "leaderSkill": "「人造人間」カテゴリの\n気力+3、HPとATKとDEF120%UP",
+        "leaderSkill_eza": "「人造人間」カテゴリの\n気力+3、HPとATKとDEF130%UP",
+        "leaderSkill_seza": "",
+        "farmCards": [],
+        "partners": [],
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "人造人間",
+                    "エネルギー吸収式",
+                    "RR軍",
+                    "悪夢",
+                    "残虐",
+                    "恐怖と絶望",
+                    "超激戦"
+                ],
+                "stats": {
+                    "hp": 6809,
+                    "atk": 9251,
+                    "def": 5811
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾",
+                        "name": "バイオニックパニッシャー",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超特大ダメージを与え、HPを10%回復",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "エネルギーの掌握",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK200%[img:up]",
+                                "DEF190%[img:up]",
+                                "「人造人間」カテゴリの味方全員の気力+3、ATK/DEF40%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター12以上で攻撃時",
+                            "effects": [
+                                "ATK/DEF39%[img:up]",
+                                "敵のガードを無効化"
+                            ]
+                        },
+                        {
+                            "title": "HP39%以下",
+                            "effects": [
+                                "敵の必殺技を見極める"
+                            ]
+                        },
+                        {
+                            "title": "敵の気弾系必殺技を受けるとき",
+                            "effects": [
+                                "吸収し、吸収したダメージの39%回復する"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "guard": true,
+                        "scouter": true
+                    }
+                }
+            }
+        ],
+        "forms_eza": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "人造人間",
+                    "エネルギー吸収式",
+                    "RR軍",
+                    "悪夢",
+                    "残虐",
+                    "恐怖と絶望",
+                    "超激戦"
+                ],
+                "stats": {
+                    "hp": 9106,
+                    "atk": 12371,
+                    "def": 7771
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 15,
+                        "type": "気弾",
+                        "name": "バイオニックパニッシャー(極限)",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超特大ダメージを与え、HPを15%回復",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "エネルギーの掌握",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF250%[img:up]",
+                                "「人造人間」カテゴリの味方全員の気力+3、ATK/DEF60%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター12以上で攻撃時",
+                            "effects": [
+                                "ATK190%[img:up]",
+                                "敵のガードを無効化"
+                            ]
+                        },
+                        {
+                            "title": "攻撃を受けるとき",
+                            "effects": [
+                                "DEF190%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "チームの「人造人間」カテゴリの味方1体につき",
+                            "effects": [
+                                "ATK/DEF100%[img:up](最大390%)",
+                                "会心率/ダメージ軽減率10%[img:up](最大39%)"
+                            ]
+                        },
+                        {
+                            "title": "HP39%以下のときまたはHP69%以下で自身の他に攻撃参加中の「人造人間」カテゴリの味方がいるとき",
+                            "effects": [
+                                "敵の必殺技を見極める"
+                            ]
+                        },
+                        {
+                            "title": "敵の気弾系必殺技を受けるとき",
+                            "effects": [
+                                "吸収し、吸収したダメージの39%回復する"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "guard": true,
+                        "crit": "39%",
+                        "reduce": "39%",
+                        "scouter": true
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": 1023350,
+        "title": "荒廃した未来",
+        "name": "人造人間17号(未来)&18号(未来)",
+        "yomi": "",
+        "rarity": "SSR",
+        "cost": 30,
+        "type": "TEQ",
+        "class": "Extreme",
+        "release": "2021/11/30",
+        "source_type": "gasha",
+        "drop_event": "",
+        "categories": [
+            "世界の混乱",
+            "人造人間",
+            "未来編",
+            "兄弟の絆",
+            "人造人間/セル編",
+            "コンビネーション",
+            "制御不能の力"
+        ],
+        "leaderSkill": "「世界の混乱」または「未来編」カテゴリの\n気力+2、HPとATKとDEF140%UP",
+        "leaderSkill_eza": "",
+        "leaderSkill_seza": "",
+        "farmCards": [],
+        "partners": [],
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "人造人間",
+                    "有機質改造",
+                    "双子",
+                    "悪夢",
+                    "残虐",
+                    "絶望の未来"
+                ],
+                "stats": {
+                    "hp": 8288,
+                    "atk": 10430,
+                    "def": 5069
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾,格闘,物理",
+                        "name": "ノンストップバイオレンス",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超絶特大ダメージを与える",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%"
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "退屈しのぎ",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK120%[img:up]",
+                                "DEF130%[img:up]",
+                                "ランダム気玉変化：技を除く属性気玉1種→技"
+                            ]
+                        },
+                        {
+                            "title": "取得技気玉1個につき",
+                            "effects": [
+                                "ATK/DEF20%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得気玉7個以上",
+                            "effects": [
+                                "ATK40%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得気玉8個以上",
+                            "effects": [
+                                "DEF50%[img:up]"
+                            ]
+                        }
+                    ],
+                    "maxValues": {}
+                }
+            }
+        ]
+    },
+    {
+        "id": 1023360,
+        "title": "命を奪うゲーム",
+        "name": "人造人間17号(未来)&18号(未来)",
+        "yomi": "",
+        "rarity": "UR",
+        "cost": 58,
+        "type": "TEQ",
+        "class": "Extreme",
+        "release": "2021/11/30",
+        "eza": "2025/12/02",
+        "source_type": "gasha",
+        "drop_event": "",
+        "categories": [
+            "世界の混乱",
+            "人造人間",
+            "未来編",
+            "兄弟の絆",
+            "人造人間/セル編",
+            "コンビネーション",
+            "制御不能の力"
+        ],
+        "leaderSkill": "「世界の混乱」または「未来編」カテゴリの\n気力+3、HPとATKとDEF170%UP",
+        "leaderSkill_eza": "「世界の混乱」または「未来編」カテゴリの\n気力+3、HPとATKとDEF180%UP",
+        "leaderSkill_seza": "",
+        "farmCards": [],
+        "partners": [],
+        "forms": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "人造人間",
+                    "有機質改造",
+                    "双子",
+                    "悪夢",
+                    "残虐",
+                    "絶望の未来",
+                    "超激戦"
+                ],
+                "stats": {
+                    "hp": 10465,
+                    "atk": 12432,
+                    "def": 6353
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 10,
+                        "type": "気弾,格闘,物理",
+                        "name": "ノンストップバイオレンス",
+                        "effect": "1ターンATKとDEFが上昇し、相手に超絶特大ダメージを与え、必殺技を封じる",
+                        "specs": {
+                            "atk_up": "30%",
+                            "def_up": "30%",
+                            "seal": true
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "年月をかけた楽しみ",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK170%[img:up]",
+                                "DEF180%[img:up]",
+                                "ランダム気玉変化：技を除く属性気玉1種→技",
+                                "虹気玉取得時の気力上昇量+1"
+                            ]
+                        },
+                        {
+                            "title": "取得技気玉1個につき",
+                            "effects": [
+                                "ATK/DEF35%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "技気玉以外の取得気玉1個につき",
+                            "effects": [
+                                "ATK18%[img:up]",
+                                "DEF17%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得気玉7個以上",
+                            "effects": [
+                                "ATK70%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得気玉8個以上",
+                            "effects": [
+                                "DEF80%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "攻撃時にHP35%以下",
+                            "effects": [
+                                "必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "敵の気弾系必殺技を受けるときHP35%以上",
+                            "effects": [
+                                "無効化する"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "1回"
+                    }
+                },
+                "active": {
+                    "name": "地獄のゲーム",
+                    "condition": "敵が1体で敵のHP35%以上のとき発動可能、または敵が3体以上のとき発動可能(1回のみ)",
+                    "description": "ターゲットした敵1体の攻撃ターンを1のばす",
+                    "specs": {
+                        "action_break": true
+                    }
+                }
+            }
+        ],
+        "forms_eza": [
+            {
+                "label": "通常",
+                "name": "",
+                "links": [
+                    "人造人間",
+                    "有機質改造",
+                    "双子",
+                    "悪夢",
+                    "残虐",
+                    "絶望の未来",
+                    "超激戦"
+                ],
+                "stats": {
+                    "hp": 13995,
+                    "atk": 16625,
+                    "def": 8496
+                },
+                "superAttacks": [
+                    {
+                        "ki": "12~",
+                        "maxLv": 15,
+                        "type": "気弾,格闘,物理",
+                        "name": "ノンストップバイオレンス(極限)",
+                        "effect": "1ターンATKとDEFが大幅上昇し、相手に超絶特大ダメージを与え、必殺技を封じる",
+                        "specs": {
+                            "atk_up": "50%",
+                            "def_up": "50%",
+                            "seal": true
+                        }
+                    }
+                ],
+                "passive": {
+                    "name": "年月をかけた楽しみ",
+                    "intro": null,
+                    "details": [
+                        {
+                            "title": "基本効果",
+                            "effects": [
+                                "ATK/DEF200%[img:up]",
+                                "ダメージ軽減率17%[img:up]",
+                                "回避率18%[img:up]",
+                                "ランダム気玉変化：技を除く属性気玉1種→技",
+                                "技気玉か虹気玉取得時の気力上昇量+1",
+                                "必殺技が追加発動"
+                            ]
+                        },
+                        {
+                            "title": "取得気玉1個につき",
+                            "effects": [
+                                "ATK/DEF35%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得技気玉1個につき",
+                            "effects": [
+                                "ATK18%[img:up]",
+                                "DEF17%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "取得技気玉2個以上または取得虹気玉1個以上",
+                            "effects": [
+                                "会心率/ダメージ軽減率/回避率35%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "気力メーター12以上で攻撃時",
+                            "effects": [
+                                "ATK/DEF150%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "HP35%以下",
+                            "effects": [
+                                "ダメージ軽減率17%[img:up]",
+                                "回避率18%[img:up]"
+                            ]
+                        },
+                        {
+                            "title": "敵の気弾系必殺技を受けるとき",
+                            "effects": [
+                                "HP35%以上、または取得気玉7個以上で無効化する",
+                                "取得気玉8個以上で2ターンの間、「人造人間」カテゴリの味方全員のATK/DEF15%[img:up]"
+                            ]
+                        }
+                    ],
+                    "maxValues": {
+                        "add": "1回",
+                        "reduce": "17%",
+                        "dodge": "18%",
+                        "crit": "35%"
+                    }
+                },
+                "active": {
+                    "name": "地獄のゲーム",
+                    "condition": "敵が1体で敵のHP35%以上のとき発動可能、または敵が3体以上のとき発動可能(1回のみ)",
+                    "description": "ターゲットした敵1体の攻撃ターンを1のばす",
+                    "specs": {
+                        "action_break": true
                     }
                 }
             }
