@@ -71,10 +71,13 @@ function init() {
         render();
     }
 
-    // Scroll Event
+    // Scroll Event - キャラ詳細画面のみでトップボタンを表示
     contentDiv.addEventListener('scroll', () => {
-        if (contentDiv.scrollTop > 300) scrollTopBtn.classList.add('visible');
-        else scrollTopBtn.classList.remove('visible');
+        if (state.detailCharId && contentDiv.scrollTop > 300) {
+            scrollTopBtn.classList.add('visible');
+        } else {
+            scrollTopBtn.classList.remove('visible');
+        }
     });
 
     // Pull-to-Refresh Setup
