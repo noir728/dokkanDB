@@ -269,7 +269,6 @@ function renderBoxGridBatch() {
                  data-char-id="${char.id}"
                  onclick="toggleBoxOwned(${char.id}, this)">
                 ${iconHtml}
-                ${isOwned ? '<div class="owned-check">✓</div>' : ''}
             </div>
         `;
     }
@@ -316,14 +315,10 @@ function toggleBoxOwned(id, element) {
         state.owned = state.owned.filter(oid => oid !== id);
         element.classList.remove('owned');
         element.classList.add('unowned');
-        element.querySelector('.owned-check')?.remove();
     } else {
         state.owned.push(id);
         element.classList.remove('unowned');
         element.classList.add('owned');
-        if (!element.querySelector('.owned-check')) {
-            element.innerHTML += '<div class="owned-check">✓</div>';
-        }
     }
     saveState();
     updateBoxStats();
