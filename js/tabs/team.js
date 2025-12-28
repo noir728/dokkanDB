@@ -143,7 +143,7 @@ function renderTeamCard(team, teamIndex) {
                         </div>
                     </div>
                     <div class="team-qr-section">
-                        <canvas id="qr-canvas-${teamIndex}" class="team-qr-canvas" width="80" height="80"></canvas>
+                        <div id="qr-container-${teamIndex}" class="team-qr-container"></div>
                         <div class="team-qr-btns">
                             <button class="qr-btn qr-btn-save" onclick="saveTeamQR(${teamIndex})" title="QR保存">💾</button>
                             <button class="qr-btn qr-btn-load" onclick="openQRLoadModal(${teamIndex})" title="QR読込">📷</button>
@@ -662,6 +662,10 @@ function renderLinkCompatibilitySection(team, teamIndex) {
                     const matchClass = r.match.count >= 5 ? 'excellent' : (r.match.count >= 3 ? 'good' : 'low');
                     // リンク先キャラのアイコン（形態変化時はその形態のアイコン）
                     const charIconHtml = getLinkCharIconHtml(r.char, r.formIndex);
+
+                    // リンク効果を合計
+                    const totalEffects = aggregateLinkEffects(r.match.links);
+
                     html += `
                         <div class="link-match-row ${matchClass}">
                             <div class="link-match-icon">${charIconHtml}</div>
@@ -669,7 +673,7 @@ function renderLinkCompatibilitySection(team, teamIndex) {
                                 <div class="link-match-role">${r.roleLabel}</div>
                                 <div class="link-match-count">${r.match.count}リンク</div>
                             </div>
-                            <div class="link-match-names">${r.match.links.slice(0, 3).join(', ')}${r.match.links.length > 3 ? '...' : ''}</div>
+                            <div class="link-match-names">${totalEffects}</div>
                         </div>
                     `;
                 });
@@ -687,6 +691,47 @@ function renderLinkCompatibilitySection(team, teamIndex) {
 
     html += '</div>';
     return html;
+}
+
+// リンク効果を合計する関数
+function aggregateLinkEffects(linkNames) {
+    let ki = 0;
+    let atk = 0;
+    let def = 0;
+    let atkDef = 0; // ATK,DEF同時上昇
+
+    linkNames.forEach(linkName => {
+        const skill = LINK_SKILLS[linkName];
+        if (!skill) return;
+
+        const effect = skill.lv10;
+
+        // 気力パース
+        const kiMatch = effect.match(/気力\+(\d+)/);
+        if (kiMatch) ki += parseInt(kiMatch[1]);
+
+        // ATK,DEF同時上昇パース
+        const atkDefMatch = effect.match(/ATK,DEF(\d+)%UP/);
+        if (atkDefMatch) {
+            atkDef += parseInt(atkDefMatch[1]);
+        } else {
+            // ATK単独パース
+            const atkMatch = effect.match(/ATK(\d+)%UP/);
+            if (atkMatch) atk += parseInt(atkMatch[1]);
+
+            // DEF単独パース
+            const defMatch = effect.match(/DEF(\d+)%UP/);
+            if (defMatch) def += parseInt(defMatch[1]);
+        }
+    });
+
+    // 結果を組み立て
+    const parts = [];
+    if (ki > 0) parts.push(`気力+${ki}`);
+    if (atk > 0 || atkDef > 0) parts.push(`ATK${atk + atkDef}%`);
+    if (def > 0 || atkDef > 0) parts.push(`DEF${def + atkDef}%`);
+
+    return parts.length > 0 ? parts.join(' ') : '-';
 }
 
 // 形態変化キャラ用のリンク計算
@@ -732,23 +777,19 @@ function calculateLinkMatchesWithFormIndex(char1, formIndex1, char2, formIndex2)
 function getLinkCharIconHtml(char, formIndex = 0) {
     if (!char) return '';
 
+    // デバッグログ
+    console.log('getLinkCharIconHtml:', char.name, 'formIndex:', formIndex);
+
     // 形態データを取得
     const form = (char.forms && char.forms[formIndex]) ? char.forms[formIndex] : null;
 
-    // 形態指定時の処理
+    console.log('  form:', form ? `label=${form.label}, id=${form.id}` : 'null');
+
+    // 形態指定時の処理（formIndex > 0 = 通常形態以外）
     if (form && formIndex > 0) {
-        // reversible_iconがある場合はそのIDを使用
-        if (form.reversible_icon) {
-            const formData = {
-                id: form.reversible_icon,
-                type: form.type || char.type,
-                rarity: form.rarity || char.rarity,
-                class: form.class || char.class
-            };
-            return getCharIconHtml(char, formData, { hideStatus: true });
-        }
-        // 形態にIDがある場合はそのIDを使用
+        // 形態にIDがある場合はそのIDを使用（変身先など）
         if (form.id) {
+            console.log('  Using form.id:', form.id);
             const formData = {
                 id: form.id,
                 type: form.type || char.type,
@@ -757,10 +798,11 @@ function getLinkCharIconHtml(char, formIndex = 0) {
             };
             return getCharIconHtml(char, formData, { hideStatus: true });
         }
+        console.log('  No form.id, falling back to char.id');
     }
 
     // デフォルトは通常のアイコン（ステータス非表示）
-    // char.idを直接使用
+    console.log('  Using default char.id:', char.id);
     return getCharIconHtml(char, null, { hideStatus: true });
 }
 
@@ -1102,18 +1144,27 @@ function decodeTeamData(encoded) {
 // QRコード生成
 function generateTeamQR(teamIndex) {
     const team = state.teams[teamIndex];
-    if (!team) return;
+    if (!team) {
+        console.log('QR: team not found for index', teamIndex);
+        return;
+    }
 
-    // タイミング問題を解決するため、少し遅延してからcanvas取得
+    // タイミング問題を解決するため、遅延を増加
     setTimeout(() => {
-        const canvas = document.getElementById(`qr-canvas-${teamIndex}`);
-        if (!canvas) {
-            console.log('QR canvas not found:', `qr-canvas-${teamIndex}`);
+        const containerId = `qr-container-${teamIndex}`;
+        const container = document.getElementById(containerId);
+
+        if (!container) {
+            console.log('QR: container not found:', containerId);
             return;
         }
 
+        // 既存のQRコードをクリア
+        container.innerHTML = '';
+
         if (typeof QRCode === 'undefined') {
-            console.log('QRCode library not loaded');
+            console.log('QR: QRCode library not loaded');
+            container.innerHTML = '<span style="color:#888;font-size:10px;">No Lib</span>';
             return;
         }
 
@@ -1121,36 +1172,27 @@ function generateTeamQR(teamIndex) {
 
         // データが大きすぎる場合の対応
         if (encoded.length > 2000) {
-            console.log('QR data too large:', encoded.length);
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#2d2d30';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#ff6666';
-            ctx.font = '10px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('データ大', canvas.width / 2, canvas.height / 2);
+            console.log('QR: data too large');
+            container.innerHTML = '<span style="color:#ff6666;font-size:10px;">Too Big</span>';
             return;
         }
 
-        // QRコード生成
-        QRCode.toCanvas(canvas, encoded, {
-            width: 80,
-            margin: 1,
-            color: { dark: '#ffffff', light: '#2d2d30' }
-        }, (error) => {
-            if (error) {
-                console.error('QR生成エラー:', error);
-                // エラー時はフォールバック表示
-                const ctx = canvas.getContext('2d');
-                ctx.fillStyle = '#2d2d30';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#888';
-                ctx.font = '10px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('QR Error', canvas.width / 2, canvas.height / 2);
-            }
-        });
-    }, 100);
+        try {
+            // 新しいAPIでQRコード生成
+            new QRCode(container, {
+                text: encoded,
+                width: 80,
+                height: 80,
+                colorDark: '#ffffff',
+                colorLight: '#2d2d30',
+                correctLevel: QRCode.CorrectLevel.L
+            });
+            console.log('QR: generated successfully');
+        } catch (e) {
+            console.error('QR生成例外:', e);
+            container.innerHTML = '<span style="color:#888;font-size:10px;">Error</span>';
+        }
+    }, 200);
 }
 
 // QRコード保存
@@ -1160,23 +1202,40 @@ function saveTeamQR(teamIndex) {
 
     const encoded = encodeTeamData(team);
 
-    // 大きめのQRコードを生成してダウンロード
-    const tempCanvas = document.createElement('canvas');
-    QRCode.toCanvas(tempCanvas, encoded, {
-        width: 300,
-        margin: 2,
-        color: { dark: '#000000', light: '#ffffff' }
-    }, (error) => {
-        if (error) {
-            alert('QR生成エラー');
-            return;
-        }
+    // 一時的なdiv要素を作成してQRコード生成
+    const tempDiv = document.createElement('div');
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.left = '-9999px';
+    document.body.appendChild(tempDiv);
 
-        const link = document.createElement('a');
-        link.download = `team_${team.name.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
-        link.href = tempCanvas.toDataURL('image/png');
-        link.click();
-    });
+    try {
+        new QRCode(tempDiv, {
+            text: encoded,
+            width: 300,
+            height: 300,
+            colorDark: '#000000',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.L
+        });
+
+        // 少し待ってからcanvasを取得
+        setTimeout(() => {
+            const canvas = tempDiv.querySelector('canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.download = `team_${team.name.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } else {
+                alert('QR生成エラー');
+            }
+            document.body.removeChild(tempDiv);
+        }, 100);
+    } catch (e) {
+        console.error('QR保存エラー:', e);
+        alert('QR生成エラー');
+        document.body.removeChild(tempDiv);
+    }
 }
 
 // QR読込モーダルを開く

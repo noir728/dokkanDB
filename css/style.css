@@ -4146,10 +4146,21 @@ body {
     gap: 8px;
 }
 
-.team-qr-canvas {
+.team-qr-container {
+    width: 80px;
+    height: 80px;
     background: #2d2d30;
     border-radius: 6px;
     border: 1px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.team-qr-container img,
+.team-qr-container canvas {
+    display: block;
 }
 
 .team-qr-btns {
