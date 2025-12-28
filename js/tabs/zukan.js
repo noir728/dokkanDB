@@ -1245,8 +1245,8 @@ function renderZukanList(targetGrid) {
                 const item = document.createElement('div');
                 item.className = 'char-item-icon';
                 item.style.position = 'relative';
-                // アイコン生成
-                const iconHtml = (typeof getCharIconHtml === 'function') ? getCharIconHtml(char) : 'IMG';
+                // アイコン生成（図鑑タブではステータスアイコン非表示）
+                const iconHtml = (typeof getCharIconHtml === 'function') ? getCharIconHtml(char, null, { hideStatus: true }) : 'IMG';
                 item.innerHTML = iconHtml;
 
                 // 長押し・タップ判定ロジック
@@ -1277,7 +1277,8 @@ function renderZukanList(targetGrid) {
 
         displayDB.forEach(char => {
             const item = document.createElement('div');
-            const iconHtml = (typeof getCharIconHtml === 'function') ? getCharIconHtml(char) : 'IMG';
+            // 図鑑タブではステータスアイコン非表示
+            const iconHtml = (typeof getCharIconHtml === 'function') ? getCharIconHtml(char, null, { hideStatus: true }) : 'IMG';
 
             const defaultClick = () => {
                 if (state.listMode === 'teamSelect') {
@@ -1538,6 +1539,23 @@ function openDetail(id) {
 
 function closeDetail() {
     const url = new URL(window.location);
+
+    // returnTabがセットされている場合（編成タブから開いた場合など）
+    if (state.returnTab) {
+        const targetTab = state.returnTab;
+        state.returnTab = null;
+        state.detailCharId = null;
+        state.animDirection = 'left';
+
+        // URLからidパラメータを削除
+        url.searchParams.delete('id');
+        window.history.replaceState({}, '', url);
+
+        // 該当タブに切り替え
+        switchTab(targetTab);
+        return;
+    }
+
     if (url.searchParams.has('id')) {
         window.history.back();
         return;

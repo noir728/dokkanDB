@@ -8,6 +8,7 @@ let expandedTeamId = null;
 let currentLabelFilter = '全て';
 let linkSectionExpanded = false;
 let selectedLinkCharIndex = null;
+let linkCharFormIndices = {}; // リンク相性セクションで選択中の形態インデックス
 
 function renderTeamLayout() {
     const contentDiv = document.getElementById('main-content');
@@ -130,14 +131,23 @@ function renderTeamCard(team, teamIndex) {
 
         cardHtml += `
             <div class="team-expanded-content">
-                <div class="team-stats-row">
-                    <div class="team-stat-item">
-                        <span class="team-stat-label">TOTAL HP</span>
-                        <span class="team-stat-value">${stats.hp.toLocaleString()}</span>
+                <div class="team-stats-qr-row">
+                    <div class="team-stats-section">
+                        <div class="team-stat-item">
+                            <span class="team-stat-label">TOTAL HP</span>
+                            <span class="team-stat-value">${stats.hp.toLocaleString()}</span>
+                        </div>
+                        <div class="team-stat-item">
+                            <span class="team-stat-label">COST</span>
+                            <span class="team-stat-value">${stats.cost}</span>
+                        </div>
                     </div>
-                    <div class="team-stat-item">
-                        <span class="team-stat-label">COST</span>
-                        <span class="team-stat-value">${stats.cost}</span>
+                    <div class="team-qr-section">
+                        <canvas id="qr-canvas-${teamIndex}" class="team-qr-canvas" width="80" height="80"></canvas>
+                        <div class="team-qr-btns">
+                            <button class="qr-btn qr-btn-save" onclick="saveTeamQR(${teamIndex})" title="QR保存">💾</button>
+                            <button class="qr-btn qr-btn-load" onclick="openQRLoadModal(${teamIndex})" title="QR読込">📷</button>
+                        </div>
                     </div>
                 </div>
 
@@ -161,6 +171,9 @@ function renderTeamCard(team, teamIndex) {
                 </div>
             </div>
         `;
+
+        // QRコード生成はレンダリング後に実行
+        requestAnimationFrame(() => generateTeamQR(teamIndex));
     }
 
     cardHtml += '</div>';
@@ -493,17 +506,10 @@ function handleRemoveClick(e, teamIndex, slotIndex) {
 }
 
 function openCharDetailFromTeam(charId) {
-    // Clear search and filter state to prevent restoration on back
-    state.searchQuery = '';
-    state.filter = {
-        type: [], class: [], rarity: [], categories: [], links: [],
-        owned: false, favorite: false, ezaOnly: false,
-        saTypeLogic: 'AND', categoryLogic: 'AND', linkLogic: 'AND',
-        sort: 'releaseDesc', saTypes: []
-    };
+    // 戻り先を編成タブに設定
+    state.returnTab = 'party';
 
-    // Switch to Zukan tab and open detail
-    state.currentTab = 'zukan';
+    // キャラ詳細を開く（タブは切り替えない）
     state.detailCharId = charId;
     state.detailFormIndex = 0;
     state.detailEzaMode = 'normal';
@@ -512,9 +518,8 @@ function openCharDetailFromTeam(charId) {
     // Update URL
     const url = new URL(window.location);
     url.searchParams.set('id', charId);
-    window.history.pushState({ charId: charId }, '', url);
+    window.history.pushState({ charId: charId, returnTab: 'party' }, '', url);
 
-    updateTabUI();
     render();
 }
 
@@ -539,6 +544,7 @@ function renderLinkCompatibilitySection(team, teamIndex) {
         <div id="link-section-${teamIndex}" class="team-link-section">
             <div class="team-link-header" onclick="toggleLinkSection(${team.id}, ${teamIndex})">
                 <span>${sectionExpanded ? '▲' : '▼'} リンク相性</span>
+                ${sectionExpanded ? '<span class="link-hint">長押しで形態変化</span>' : ''}
             </div>
     `;
 
@@ -548,13 +554,29 @@ function renderLinkCompatibilitySection(team, teamIndex) {
         for (let i = 0; i < 7; i++) {
             const charId = team.slots[i];
             const isSelected = selectedLinkCharIndex === i;
+            const selectedFormIndex = linkCharFormIndices[i] || 0;
 
             if (charId) {
                 const char = DB.find(c => c.id === charId);
                 if (char) {
+                    // 形態変化があるかチェック
+                    const hasForms = char.forms && char.forms.length > 1;
+
+                    // 選択中の形態のアイコンを取得
+                    const iconHtml = getLinkCharIconHtml(char, selectedFormIndex);
+
                     html += `
-                        <div class="link-char-item ${isSelected ? 'selected' : ''}" onclick="selectLinkChar(${team.id}, ${teamIndex}, ${i})">
-                            <div class="link-char-icon">${getCharIconHtml(char)}</div>
+                        <div class="link-char-item ${isSelected ? 'selected' : ''}" 
+                             onclick="selectLinkChar(${team.id}, ${teamIndex}, ${i})"
+                             oncontextmenu="event.preventDefault(); showLinkFormPopover(event, ${char.id}, ${teamIndex}, ${i});"
+                             ontouchstart="handleLinkCharTouchStart(event, ${char.id}, ${teamIndex}, ${i})"
+                             ontouchend="handleLinkCharTouchEnd(event, ${team.id}, ${teamIndex}, ${i})"
+                             ontouchmove="handleLinkCharTouchMove(event)"
+                             data-char-id="${char.id}"
+                             data-team-index="${teamIndex}"
+                             data-slot-index="${i}">
+                            <div class="link-char-icon">${iconHtml}</div>
+                            ${hasForms ? '<div class="form-indicator">◎</div>' : ''}
                         </div>
                     `;
                 } else {
@@ -569,10 +591,13 @@ function renderLinkCompatibilitySection(team, teamIndex) {
         // Match results
         if (selectedLinkCharIndex !== null && team.slots[selectedLinkCharIndex]) {
             const selectedChar = DB.find(c => c.id === team.slots[selectedLinkCharIndex]);
+            const selectedFormIndex = linkCharFormIndices[selectedLinkCharIndex] || 0;
             if (selectedChar) {
                 html += '<div class="link-match-results">';
 
                 const results = [];
+
+                // 全スロットのキャラとその形態変化キャラを対象に
                 for (let i = 0; i < 7; i++) {
                     if (i === selectedLinkCharIndex) continue;
                     const otherCharId = team.slots[i];
@@ -584,19 +609,62 @@ function renderLinkCompatibilitySection(team, teamIndex) {
                     // Exclude same-name characters
                     if (selectedChar.name === otherChar.name) continue;
 
-                    const match = calculateLinkMatches(selectedChar, otherChar);
                     const roleLabel = i === 0 ? 'リーダー' : (i === 6 ? 'フレンド' : `SUB${i}`);
-                    results.push({ char: otherChar, roleLabel, match, slotIndex: i });
+
+                    // 選択中の形態でリンク計算
+                    const match = calculateLinkMatchesWithFormIndex(selectedChar, selectedFormIndex, otherChar, 0);
+                    results.push({
+                        char: otherChar,
+                        roleLabel,
+                        match,
+                        slotIndex: i,
+                        formIndex: 0
+                    });
+
+                    // 形態変化キャラのリンクも追加
+                    if (otherChar.forms && otherChar.forms.length > 1) {
+                        otherChar.forms.forEach((form, formIdx) => {
+                            if (formIdx === 0) return; // 最初の形態はすでに追加済み
+                            if (!form.links) return;
+                            if (form.label === 'ビジュアルチェンジ' || form.name === 'ビジュアルチェンジ') return;
+
+                            // 形態変化キャラ名が同じ場合はスキップ
+                            const formName = form.name || otherChar.name;
+                            if (selectedChar.name === formName) return;
+
+                            const formMatch = calculateLinkMatchesWithFormIndex(selectedChar, selectedFormIndex, otherChar, formIdx);
+                            if (formMatch.count > 0) {
+                                results.push({
+                                    char: otherChar,
+                                    roleLabel,
+                                    match: formMatch,
+                                    slotIndex: i,
+                                    formIndex: formIdx
+                                });
+                            }
+                        });
+                    }
                 }
 
                 // Sort by match count descending
                 results.sort((a, b) => b.match.count - a.match.count);
 
-                results.forEach(r => {
+                // 重複除去（同じスロット+形態で最高のマッチのみ表示）
+                const seen = new Set();
+                const uniqueResults = results.filter(r => {
+                    const key = `${r.slotIndex}-${r.formIndex}`;
+                    if (seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
+                });
+
+                uniqueResults.forEach(r => {
                     const matchClass = r.match.count >= 5 ? 'excellent' : (r.match.count >= 3 ? 'good' : 'low');
+                    // リンク先キャラのアイコン（形態変化時はその形態のアイコン）
+                    const charIconHtml = getLinkCharIconHtml(r.char, r.formIndex);
                     html += `
                         <div class="link-match-row ${matchClass}">
-                            <div class="link-match-icon">${getCharIconHtml(r.char)}</div>
+                            <div class="link-match-icon">${charIconHtml}</div>
                             <div class="link-match-info">
                                 <div class="link-match-role">${r.roleLabel}</div>
                                 <div class="link-match-count">${r.match.count}リンク</div>
@@ -606,7 +674,7 @@ function renderLinkCompatibilitySection(team, teamIndex) {
                     `;
                 });
 
-                if (results.length === 0) {
+                if (uniqueResults.length === 0) {
                     html += '<div class="link-no-results">比較対象がありません</div>';
                 }
 
@@ -619,6 +687,245 @@ function renderLinkCompatibilitySection(team, teamIndex) {
 
     html += '</div>';
     return html;
+}
+
+// 形態変化キャラ用のリンク計算
+function calculateLinkMatchesWithForm(char1, form) {
+    if (!char1 || !form || !form.links) return { count: 0, links: [] };
+
+    const links1 = (char1.forms && char1.forms[0] && char1.forms[0].links) ? char1.forms[0].links : (char1.links || []);
+    const links2 = form.links;
+
+    const set1 = new Set(links1);
+    const matchingLinks = links2.filter(link => set1.has(link));
+
+    return { count: matchingLinks.length, links: matchingLinks };
+}
+
+// 形態インデックス指定でリンク計算
+function calculateLinkMatchesWithFormIndex(char1, formIndex1, char2, formIndex2) {
+    if (!char1 || !char2) return { count: 0, links: [] };
+
+    // char1の指定形態のリンクを取得
+    let links1 = [];
+    if (char1.forms && char1.forms[formIndex1] && char1.forms[formIndex1].links) {
+        links1 = char1.forms[formIndex1].links;
+    } else if (char1.links) {
+        links1 = char1.links;
+    }
+
+    // char2の指定形態のリンクを取得
+    let links2 = [];
+    if (char2.forms && char2.forms[formIndex2] && char2.forms[formIndex2].links) {
+        links2 = char2.forms[formIndex2].links;
+    } else if (char2.links) {
+        links2 = char2.links;
+    }
+
+    const set1 = new Set(links1);
+    const matchingLinks = links2.filter(link => set1.has(link));
+
+    return { count: matchingLinks.length, links: matchingLinks };
+}
+
+// リンク相性セクション用のキャラアイコン取得（形態指定対応）
+function getLinkCharIconHtml(char, formIndex = 0) {
+    if (!char) return '';
+
+    // 形態データを取得
+    const form = (char.forms && char.forms[formIndex]) ? char.forms[formIndex] : null;
+
+    // 形態指定時の処理
+    if (form && formIndex > 0) {
+        // reversible_iconがある場合はそのIDを使用
+        if (form.reversible_icon) {
+            const formData = {
+                id: form.reversible_icon,
+                type: form.type || char.type,
+                rarity: form.rarity || char.rarity,
+                class: form.class || char.class
+            };
+            return getCharIconHtml(char, formData, { hideStatus: true });
+        }
+        // 形態にIDがある場合はそのIDを使用
+        if (form.id) {
+            const formData = {
+                id: form.id,
+                type: form.type || char.type,
+                rarity: form.rarity || char.rarity,
+                class: form.class || char.class
+            };
+            return getCharIconHtml(char, formData, { hideStatus: true });
+        }
+    }
+
+    // デフォルトは通常のアイコン（ステータス非表示）
+    // char.idを直接使用
+    return getCharIconHtml(char, null, { hideStatus: true });
+}
+
+// リンク相性キャラの長押しハンドラ
+let linkCharLongPressTimer = null;
+let linkCharIsLongPress = false;
+const LINK_CHAR_LONG_PRESS_DURATION = 500;
+
+function handleLinkCharTouchStart(event, charId, teamIndex, slotIndex) {
+    linkCharIsLongPress = false;
+    linkCharLongPressTimer = setTimeout(() => {
+        linkCharIsLongPress = true;
+        if (navigator.vibrate) navigator.vibrate(50);
+        showLinkFormPopover(event, charId, teamIndex, slotIndex);
+    }, LINK_CHAR_LONG_PRESS_DURATION);
+}
+
+function handleLinkCharTouchMove(event) {
+    if (linkCharLongPressTimer) {
+        clearTimeout(linkCharLongPressTimer);
+        linkCharLongPressTimer = null;
+    }
+}
+
+function handleLinkCharTouchEnd(event, teamId, teamIndex, slotIndex) {
+    if (linkCharLongPressTimer) {
+        clearTimeout(linkCharLongPressTimer);
+        linkCharLongPressTimer = null;
+    }
+    // 長押しでなければ通常のタップ（キャラ選択）
+    if (!linkCharIsLongPress) {
+        selectLinkChar(teamId, teamIndex, slotIndex);
+    }
+    linkCharIsLongPress = false;
+}
+
+// リンク相性用形態選択ポップオーバー
+function showLinkFormPopover(event, charId, teamIndex, slotIndex) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    closeFormPopover();
+
+    const char = DB.find(c => c.id === charId);
+    if (!char || !char.forms || char.forms.length <= 1) return;
+
+    // 形態一覧を作成
+    let formsHtml = '<div class="form-popover-list">';
+    char.forms.forEach((form, idx) => {
+        if (form.label === 'ビジュアルチェンジ' || form.name === 'ビジュアルチェンジ') return;
+
+        // 形態ラベルを決定（個別ラベル優先）
+        let label = '通常';
+        if (idx === 0) {
+            label = '通常';
+        } else if (form.label) {
+            label = form.label;
+        } else if (form.name) {
+            label = form.name;
+        } else {
+            label = '変身';
+        }
+
+        const formName = form.name || char.name;
+        const isSelected = (linkCharFormIndices[slotIndex] || 0) === idx;
+        formsHtml += `<div class="form-popover-item ${isSelected ? 'selected' : ''}" onclick="selectLinkCharForm(${teamIndex}, ${slotIndex}, ${idx})"><span class="form-popover-label">${label}</span><span class="form-popover-name">${formName}</span></div>`;
+    });
+    formsHtml += '</div>';
+
+    // ポップオーバー作成
+    const overlay = document.createElement('div');
+    overlay.className = 'form-popover-overlay';
+    overlay.onclick = closeFormPopover;
+
+    const popover = document.createElement('div');
+    popover.className = 'form-popover';
+    popover.innerHTML = `<div class="form-popover-title">形態選択</div>${formsHtml}`;
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(popover);
+
+    // 位置調整
+    const target = event.target.closest('.link-char-item');
+    if (target) {
+        const rect = target.getBoundingClientRect();
+        popover.style.left = `${Math.max(10, rect.left - 50)}px`;
+        popover.style.top = `${rect.bottom + 8}px`;
+
+        // 画面外に出ないよう調整
+        const popRect = popover.getBoundingClientRect();
+        if (popRect.right > window.innerWidth - 10) {
+            popover.style.left = `${window.innerWidth - popRect.width - 10}px`;
+        }
+    }
+
+    activeFormPopover = { overlay, popover };
+}
+
+// 形態選択
+function selectLinkCharForm(teamIndex, slotIndex, formIndex) {
+    linkCharFormIndices[slotIndex] = formIndex;
+    closeFormPopover();
+    updateLinkSectionUI(teamIndex);
+}
+
+
+
+// 形態変化吹き出し表示
+function showFormPopover(event, charId, teamIndex) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    closeFormPopover();
+
+    const char = DB.find(c => c.id === charId);
+    if (!char || !char.forms || char.forms.length <= 1) return;
+
+    // 形態一覧を作成
+    let formsHtml = '<div class="form-popover-list">';
+    char.forms.forEach((form, idx) => {
+        if (form.label === 'ビジュアルチェンジ' || form.name === 'ビジュアルチェンジ') return;
+
+        let label = form.label || '通常';
+        if (form.reversible_icon) {
+            label = 'リバチェン';
+        }
+        const formName = form.name || char.name;
+        formsHtml += `<div class="form-popover-item"><span class="form-popover-label">${label}</span><span class="form-popover-name">${formName}</span></div>`;
+    });
+    formsHtml += '</div>';
+
+    // ポップオーバー作成
+    const overlay = document.createElement('div');
+    overlay.className = 'form-popover-overlay';
+    overlay.onclick = closeFormPopover;
+
+    const popover = document.createElement('div');
+    popover.className = 'form-popover';
+    popover.innerHTML = `<div class="form-popover-title">形態変化</div>${formsHtml}`;
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(popover);
+
+    // 位置調整
+    const rect = event.target.closest('.link-char-item').getBoundingClientRect();
+    popover.style.left = `${Math.max(10, rect.left - 50)}px`;
+    popover.style.top = `${rect.bottom + 8}px`;
+
+    // 画面外に出ないよう調整
+    const popRect = popover.getBoundingClientRect();
+    if (popRect.right > window.innerWidth - 10) {
+        popover.style.left = `${window.innerWidth - popRect.width - 10}px`;
+    }
+
+    activeFormPopover = { overlay, popover };
+}
+
+let activeFormPopover = null;
+
+function closeFormPopover() {
+    if (activeFormPopover) {
+        activeFormPopover.overlay.remove();
+        activeFormPopover.popover.remove();
+        activeFormPopover = null;
+    }
 }
 
 function toggleLinkSection(teamId, teamIndex) {
@@ -687,6 +994,14 @@ window.handleRemoveClick = handleRemoveClick;
 window.openCharDetailFromTeam = openCharDetailFromTeam;
 window.toggleLinkSection = toggleLinkSection;
 window.selectLinkChar = selectLinkChar;
+window.showFormPopover = showFormPopover;
+window.closeFormPopover = closeFormPopover;
+window.showLinkFormPopover = showLinkFormPopover;
+window.selectLinkCharForm = selectLinkCharForm;
+window.handleLinkCharTouchStart = handleLinkCharTouchStart;
+window.handleLinkCharTouchMove = handleLinkCharTouchMove;
+window.handleLinkCharTouchEnd = handleLinkCharTouchEnd;
+
 
 // --- Slot Popover Logic ---
 let activePopover = null;
@@ -751,3 +1066,292 @@ window.showSlotPopover = showSlotPopover;
 window.closeSlotPopover = closeSlotPopover;
 window.popoverSwap = popoverSwap;
 window.popoverRemove = popoverRemove;
+
+// ========================================
+// QRコード共有機能
+// ========================================
+
+// チームデータをエンコード
+function encodeTeamData(team) {
+    const data = {
+        n: team.name,
+        l: team.label,
+        s: team.slots,
+        m: team.memo || ''
+    };
+    return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+}
+
+// チームデータをデコード
+function decodeTeamData(encoded) {
+    try {
+        const json = decodeURIComponent(escape(atob(encoded)));
+        const data = JSON.parse(json);
+        return {
+            name: data.n || 'インポートチーム',
+            label: data.l || '汎用',
+            slots: data.s || [null, null, null, null, null, null, null],
+            memo: data.m || ''
+        };
+    } catch (e) {
+        console.error('QRデコードエラー:', e);
+        return null;
+    }
+}
+
+// QRコード生成
+function generateTeamQR(teamIndex) {
+    const team = state.teams[teamIndex];
+    if (!team) return;
+
+    // タイミング問題を解決するため、少し遅延してからcanvas取得
+    setTimeout(() => {
+        const canvas = document.getElementById(`qr-canvas-${teamIndex}`);
+        if (!canvas) {
+            console.log('QR canvas not found:', `qr-canvas-${teamIndex}`);
+            return;
+        }
+
+        if (typeof QRCode === 'undefined') {
+            console.log('QRCode library not loaded');
+            return;
+        }
+
+        const encoded = encodeTeamData(team);
+
+        // データが大きすぎる場合の対応
+        if (encoded.length > 2000) {
+            console.log('QR data too large:', encoded.length);
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#2d2d30';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#ff6666';
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('データ大', canvas.width / 2, canvas.height / 2);
+            return;
+        }
+
+        // QRコード生成
+        QRCode.toCanvas(canvas, encoded, {
+            width: 80,
+            margin: 1,
+            color: { dark: '#ffffff', light: '#2d2d30' }
+        }, (error) => {
+            if (error) {
+                console.error('QR生成エラー:', error);
+                // エラー時はフォールバック表示
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#2d2d30';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#888';
+                ctx.font = '10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('QR Error', canvas.width / 2, canvas.height / 2);
+            }
+        });
+    }, 100);
+}
+
+// QRコード保存
+function saveTeamQR(teamIndex) {
+    const team = state.teams[teamIndex];
+    if (!team) return;
+
+    const encoded = encodeTeamData(team);
+
+    // 大きめのQRコードを生成してダウンロード
+    const tempCanvas = document.createElement('canvas');
+    QRCode.toCanvas(tempCanvas, encoded, {
+        width: 300,
+        margin: 2,
+        color: { dark: '#000000', light: '#ffffff' }
+    }, (error) => {
+        if (error) {
+            alert('QR生成エラー');
+            return;
+        }
+
+        const link = document.createElement('a');
+        link.download = `team_${team.name.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+        link.href = tempCanvas.toDataURL('image/png');
+        link.click();
+    });
+}
+
+// QR読込モーダルを開く
+let qrLoadTargetIndex = null;
+
+function openQRLoadModal(teamIndex) {
+    qrLoadTargetIndex = teamIndex;
+
+    const overlay = document.createElement('div');
+    overlay.id = 'qr-load-overlay';
+    overlay.className = 'qr-load-overlay';
+    overlay.onclick = (e) => { if (e.target === overlay) closeQRLoadModal(); };
+
+    overlay.innerHTML = `
+        <div class="qr-load-modal">
+            <div class="qr-load-header">
+                <span>QRコード読込</span>
+                <button onclick="closeQRLoadModal()">×</button>
+            </div>
+            <div class="qr-load-options">
+                <button class="qr-load-option" onclick="startCameraQR()">
+                    <span class="qr-load-icon">📷</span>
+                    <span>カメラで読取</span>
+                </button>
+                <button class="qr-load-option" onclick="selectImageQR()">
+                    <span class="qr-load-icon">🖼️</span>
+                    <span>画像から読取</span>
+                </button>
+            </div>
+            <div id="qr-camera-container" class="qr-camera-container" style="display:none;">
+                <video id="qr-video" autoplay playsinline></video>
+                <canvas id="qr-scan-canvas" style="display:none;"></canvas>
+                <div class="qr-scan-overlay"></div>
+            </div>
+            <input type="file" id="qr-file-input" accept="image/*" style="display:none;" onchange="handleQRFile(event)">
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+}
+
+function closeQRLoadModal() {
+    stopCameraQR();
+    const overlay = document.getElementById('qr-load-overlay');
+    if (overlay) overlay.remove();
+    qrLoadTargetIndex = null;
+}
+
+let qrVideoStream = null;
+let qrScanInterval = null;
+
+function startCameraQR() {
+    const container = document.getElementById('qr-camera-container');
+    const video = document.getElementById('qr-video');
+    if (!container || !video) return;
+
+    container.style.display = 'block';
+
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(stream => {
+            qrVideoStream = stream;
+            video.srcObject = stream;
+            video.play();
+
+            // 定期スキャン開始
+            qrScanInterval = setInterval(() => scanQRFromVideo(video), 200);
+        })
+        .catch(err => {
+            alert('カメラにアクセスできません: ' + err.message);
+            container.style.display = 'none';
+        });
+}
+
+function stopCameraQR() {
+    if (qrScanInterval) {
+        clearInterval(qrScanInterval);
+        qrScanInterval = null;
+    }
+    if (qrVideoStream) {
+        qrVideoStream.getTracks().forEach(track => track.stop());
+        qrVideoStream = null;
+    }
+}
+
+function scanQRFromVideo(video) {
+    if (!video.videoWidth || typeof jsQR === 'undefined') return;
+
+    const canvas = document.getElementById('qr-scan-canvas');
+    if (!canvas) return;
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0);
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+    if (code) {
+        applyQRData(code.data);
+    }
+}
+
+function selectImageQR() {
+    document.getElementById('qr-file-input')?.click();
+}
+
+function handleQRFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+            if (code) {
+                applyQRData(code.data);
+            } else {
+                alert('QRコードが見つかりませんでした');
+            }
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function applyQRData(data) {
+    const teamData = decodeTeamData(data);
+    if (!teamData) {
+        alert('無効なQRコードです');
+        return;
+    }
+
+    if (qrLoadTargetIndex !== null) {
+        // 既存チームに適用
+        const team = state.teams[qrLoadTargetIndex];
+        if (team) {
+            team.slots = teamData.slots;
+            team.memo = teamData.memo;
+            saveTeamState();
+            closeQRLoadModal();
+            renderTeamLayout();
+            return;
+        }
+    }
+
+    // 新規チームとして追加
+    const newTeam = {
+        id: Date.now(),
+        name: teamData.name,
+        label: teamData.label,
+        slots: teamData.slots,
+        memo: teamData.memo
+    };
+    state.teams.push(newTeam);
+    expandedTeamId = newTeam.id;
+    saveTeamState();
+    closeQRLoadModal();
+    renderTeamLayout();
+}
+
+// グローバル公開
+window.generateTeamQR = generateTeamQR;
+window.saveTeamQR = saveTeamQR;
+window.openQRLoadModal = openQRLoadModal;
+window.closeQRLoadModal = closeQRLoadModal;
+window.startCameraQR = startCameraQR;
+window.selectImageQR = selectImageQR;
+window.handleQRFile = handleQRFile;

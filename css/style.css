@@ -4023,3 +4023,400 @@ body {
 [data-theme="light"] .toast {
     background: #1d1d1f;
 }
+
+/* ========================================
+   形態変化ポップオーバー・バッジ
+======================================== */
+
+.link-hint {
+    font-size: 10px;
+    color: #888;
+    margin-left: auto;
+}
+
+.form-indicator {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 8px;
+    color: #ffd700;
+    z-index: 5;
+}
+
+.form-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+.form-popover-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+}
+
+.form-popover {
+    position: fixed;
+    background: #2d2d30;
+    border: 1px solid #555;
+    border-radius: 12px;
+    padding: 12px;
+    z-index: 1001;
+    min-width: 180px;
+    max-width: 280px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.form-popover-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #444;
+}
+
+.form-popover-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-popover-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    background: #3a3a3d;
+    border-radius: 6px;
+}
+
+.form-popover-label {
+    font-size: 10px;
+    color: #8b5cf6;
+    background: rgba(139, 92, 246, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.form-popover-name {
+    font-size: 11px;
+    color: #ddd;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ========================================
+   QRコード共有機能
+======================================== */
+
+.team-stats-qr-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 10px;
+    background: #2a2a2d;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.team-stats-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.team-qr-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.team-qr-canvas {
+    background: #2d2d30;
+    border-radius: 6px;
+    border: 1px solid #444;
+}
+
+.team-qr-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.qr-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    background: #3a3a3d;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.qr-btn:hover {
+    background: #4a4a4d;
+}
+
+.qr-btn:active {
+    transform: scale(0.95);
+}
+
+/* QR読込モーダル */
+.qr-load-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-load-modal {
+    background: #2d2d30;
+    border-radius: 16px;
+    padding: 20px;
+    width: 90%;
+    max-width: 320px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.qr-load-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.qr-load-header button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #444;
+    color: white;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.qr-load-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.qr-load-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #3a3a3d;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.qr-load-option:hover {
+    background: #4a4a4d;
+}
+
+.qr-load-icon {
+    font-size: 24px;
+}
+
+/* カメラプレビュー */
+.qr-camera-container {
+    margin-top: 15px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.qr-camera-container video {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    display: block;
+}
+
+.qr-scan-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border: 2px solid #4cd964;
+    border-radius: 12px;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+}
+
+/* =========================================
+   39. Form Popover (形態選択ポップオーバー)
+   ========================================= */
+.form-popover-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+}
+
+.form-popover {
+    position: fixed;
+    z-index: 2001;
+    background: #2d2d30;
+    border: 1px solid #555;
+    border-radius: 12px;
+    padding: 12px;
+    min-width: 200px;
+    max-width: 280px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.form-popover-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #444;
+}
+
+.form-popover-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-popover-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #3a3a3d;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.form-popover-item:hover,
+.form-popover-item:active {
+    background: #4a4a4d;
+}
+
+.form-popover-item.selected {
+    background: rgba(76, 217, 100, 0.2);
+    border: 1px solid #4cd964;
+}
+
+.form-popover-label {
+    font-size: 11px;
+    color: #4cd964;
+    background: rgba(76, 217, 100, 0.15);
+    padding: 2px 6px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.form-popover-name {
+    font-size: 13px;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* =========================================
+   40. Slot Popover (スロット操作ポップオーバー)
+   ========================================= */
+.slot-popover-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2000;
+}
+
+.slot-popover {
+    position: fixed;
+    z-index: 2001;
+    background: #2d2d30;
+    border: 1px solid #555;
+    border-radius: 10px;
+    padding: 8px;
+    display: flex;
+    gap: 6px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.slot-popover-btn {
+    padding: 10px 16px;
+    background: #3a3a3d;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.slot-popover-btn:hover,
+.slot-popover-btn:active {
+    background: #4a4a4d;
+}
+
+.slot-popover-btn.remove {
+    color: #ff4d4d;
+}
+
+/* Form Indicator on Link Char */
+.link-char-item {
+    position: relative;
+}
+
+.link-char-item .form-indicator {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    font-size: 10px;
+    color: #4cd964;
+    background: rgba(0, 0, 0, 0.7);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

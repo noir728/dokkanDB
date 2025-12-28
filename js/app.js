@@ -31,7 +31,8 @@ const state = {
         categories: [], categoryLogic: 'AND',
         links: [], linkLogic: 'AND'
     },
-    scrollPositions: { zukan: 0, detail: 0, party: 0 }
+    scrollPositions: { zukan: 0, detail: 0, party: 0 },
+    returnTab: null // 詳細画面からの戻り先タブ（編成タブから開いた場合は'party'）
 };
 
 const contentDiv = document.getElementById('main-content');
