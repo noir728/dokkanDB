@@ -4,6 +4,9 @@
 let boxFilter = 'all'; // 'all', 'owned', 'unowned'
 let boxSort = 'releaseDesc';
 let statsCarouselIndex = 0;
+let boxChars = []; // Filtered and sorted characters for rendering
+let boxRenderedCount = 0; // Number of items currently rendered
+const BOX_BATCH_SIZE = 50; // Number of items to render per batch
 
 // i18n Labels (basic support)
 const i18n = {
@@ -209,11 +212,39 @@ function renderBoxGrid() {
         return getDate(b).localeCompare(getDate(a));
     });
 
+    // Store chars for virtual scroll
+    boxChars = chars;
+
+    // Reset rendered count and clear grid
+    boxRenderedCount = 0;
+    grid.innerHTML = '';
+
+    // Render initial batch
+    renderBoxGridBatch();
+
+    // Setup scroll listener for lazy loading
+    setupBoxScrollListener();
+}
+
+// Render a batch of box items for lazy loading
+function renderBoxGridBatch() {
+    const grid = document.getElementById('box-grid');
+    if (!grid) return;
+
+    const startIndex = boxRenderedCount;
+    const endIndex = Math.min(startIndex + BOX_BATCH_SIZE, boxChars.length);
+
+    if (startIndex >= endIndex) return;
+
     let html = '';
-    chars.forEach(char => {
+    for (let i = startIndex; i < endIndex; i++) {
+        const char = boxChars[i];
         const isOwned = state.owned.includes(char.id);
         const ownedClass = isOwned ? 'owned' : 'unowned';
-        const iconHtml = typeof getCharIconHtml === 'function' ? getCharIconHtml(char) : `<div class="icon-fallback">${char.name[0]}</div>`;
+        // hideStatus: true to remove yellow badges
+        const iconHtml = typeof getCharIconHtml === 'function'
+            ? getCharIconHtml(char, null, { hideStatus: true })
+            : `<div class="icon-fallback">${char.name[0]}</div>`;
 
         html += `
             <div class="box-char-icon ${ownedClass}" 
@@ -223,9 +254,43 @@ function renderBoxGrid() {
                 ${isOwned ? '<div class="owned-check">✓</div>' : ''}
             </div>
         `;
-    });
+    }
 
-    grid.innerHTML = html;
+    grid.insertAdjacentHTML('beforeend', html);
+    boxRenderedCount = endIndex;
+}
+
+// Scroll handler for lazy loading
+let boxScrollListenerAdded = false;
+function setupBoxScrollListener() {
+    if (boxScrollListenerAdded) return;
+
+    const mainContent = document.getElementById('main-content');
+    if (!mainContent) return;
+
+    mainContent.addEventListener('scroll', handleBoxScroll, { passive: true });
+    boxScrollListenerAdded = true;
+}
+
+let boxScrollDebounce = null;
+function handleBoxScroll() {
+    if (boxScrollDebounce) return;
+    if (boxRenderedCount >= boxChars.length) return;
+
+    boxScrollDebounce = setTimeout(() => {
+        boxScrollDebounce = null;
+
+        const mainContent = document.getElementById('main-content');
+        if (!mainContent) return;
+
+        const scrollTop = mainContent.scrollTop;
+        const scrollHeight = mainContent.scrollHeight;
+        const clientHeight = mainContent.clientHeight;
+
+        if (scrollTop + clientHeight >= scrollHeight - 400) {
+            renderBoxGridBatch();
+        }
+    }, 50);
 }
 
 function toggleBoxOwned(id, element) {
@@ -243,13 +308,14 @@ function toggleBoxOwned(id, element) {
         }
     }
     saveState();
-    updateOwnershipBar();
+    updateBoxStats();
 }
 
-function updateOwnershipBar() {
+function updateBoxStats() {
     const stats = calculateBoxStats();
     const ownershipPercent = DB.length > 0 ? Math.round((stats.total / DB.length) * 100) : 0;
 
+    // Update ownership bar
     const label = document.querySelector('.ownership-label span:first-child');
     const percent = document.querySelector('.ownership-percent');
     const fill = document.querySelector('.ownership-fill');
@@ -257,6 +323,14 @@ function updateOwnershipBar() {
     if (label) label.textContent = `${t('owned')}: ${stats.total} / ${DB.length}`;
     if (percent) percent.textContent = `${ownershipPercent}%`;
     if (fill) fill.style.width = `${ownershipPercent}%`;
+
+    // Update carousel stats
+    const statCards = document.querySelectorAll('.stat-card .stat-value');
+    if (statCards.length >= 3) {
+        statCards[0].textContent = stats.lr;
+        statCards[1].textContent = stats.ur;
+        statCards[2].textContent = stats.total;
+    }
 }
 
 // Long press for detail view
