@@ -42,20 +42,30 @@ function getCharIconHtml(char, formData, options = {}) {
 
     const typeHtml = `<div class="layer-type"><img src="${typeSrc}" class="type-img" onerror="this.parentElement.style.background='${typeColor}'; this.parentElement.innerHTML='${getShortType(displayType)}';"></div>`;
 
-    // ステータスアイコン（所持・お気に入り）- hideStatusオプションで非表示可能
+    // ステータスアイコン（所持・お気に入り）
+    // options.hideStatus: 全て非表示
+    // options.hideOwned: 所持のみ非表示
     let statusHtml = '';
-    if (!options.hideStatus && (isOwned || isFav)) {
-        statusHtml = '<div class="layer-status">';
-        if (isFav) statusHtml += '<div class="status-icon status-fav">★</div>';
-        if (isOwned) statusHtml += '<div class="status-icon status-owned">✔</div>';
-        statusHtml += '</div>';
+    if (!options.hideStatus) {
+        const showFav = isFav;
+        const showOwned = isOwned && !options.hideOwned;
+
+        if (showFav || showOwned) {
+            statusHtml = '<div class="layer-status">';
+            if (showFav) statusHtml += '<div class="status-icon status-fav">★</div>';
+            if (showOwned) statusHtml += '<div class="status-icon status-owned">✔</div>';
+            statusHtml += '</div>';
+        }
     }
 
+    // EZAバッジ - options.hideEzaで非表示
     let ezaHtml = '';
-    if (char.seza) {
-        ezaHtml = `<div class="layer-eza-status"><img src="assets/status/seza.png" class="eza-icon-img"></div>`;
-    } else if (char.eza) {
-        ezaHtml = `<div class="layer-eza-status"><img src="assets/status/eza.png" class="eza-icon-img"></div>`;
+    if (!options.hideEza) {
+        if (char.seza) {
+            ezaHtml = `<div class="layer-eza-status"><img src="assets/status/seza.png" class="eza-icon-img"></div>`;
+        } else if (char.eza) {
+            ezaHtml = `<div class="layer-eza-status"><img src="assets/status/eza.png" class="eza-icon-img"></div>`;
+        }
     }
 
     return `<div class="dokkan-icon">${frameHtml}${imgHtml}${rarityHtml}${typeHtml}${statusHtml}${ezaHtml}</div>`;

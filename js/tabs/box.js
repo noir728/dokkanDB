@@ -7,6 +7,7 @@ let statsCarouselIndex = 0;
 let boxChars = []; // Filtered and sorted characters for rendering
 let boxRenderedCount = 0; // Number of items currently rendered
 const BOX_BATCH_SIZE = 50; // Number of items to render per batch
+let boxScrollPosition = 0; // Save scroll position when leaving
 
 // i18n Labels (basic support)
 const i18n = {
@@ -168,6 +169,23 @@ function renderBoxLayout() {
 
     renderBoxGrid();
     setupBoxTouchHandlers();
+
+    // Restore scroll position if returning from detail view
+    if (boxScrollPosition > 0) {
+        // Render enough items to cover the scroll position
+        // Estimate: each row is about 80px, grid is about 5 items per row
+        const estimatedItemsNeeded = Math.ceil((boxScrollPosition / 80) * 5) + BOX_BATCH_SIZE;
+        while (boxRenderedCount < Math.min(estimatedItemsNeeded, boxChars.length)) {
+            renderBoxGridBatch();
+        }
+
+        requestAnimationFrame(() => {
+            const mainContent = document.getElementById('main-content');
+            if (mainContent) {
+                mainContent.scrollTop = boxScrollPosition;
+            }
+        });
+    }
 }
 
 function calculateBoxStats() {
@@ -241,9 +259,9 @@ function renderBoxGridBatch() {
         const char = boxChars[i];
         const isOwned = state.owned.includes(char.id);
         const ownedClass = isOwned ? 'owned' : 'unowned';
-        // hideStatus: true to remove yellow badges
+        // hideOwned: 所持バッジ非表示、hideEza: EZAバッジ非表示
         const iconHtml = typeof getCharIconHtml === 'function'
-            ? getCharIconHtml(char, null, { hideStatus: true })
+            ? getCharIconHtml(char, null, { hideOwned: true, hideEza: true })
             : `<div class="icon-fallback">${char.name[0]}</div>`;
 
         html += `
@@ -351,6 +369,11 @@ function setupBoxTouchHandlers() {
             if (navigator.vibrate) navigator.vibrate(50);
             const charId = parseInt(icon.dataset.charId);
             if (charId && typeof openDetail === 'function') {
+                // Save scroll position before opening detail
+                const mainContent = document.getElementById('main-content');
+                if (mainContent) {
+                    boxScrollPosition = mainContent.scrollTop;
+                }
                 openDetail(charId);
             }
         }, 500);
