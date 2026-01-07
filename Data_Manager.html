@@ -1292,7 +1292,7 @@
                     <label class="text-xs font-semibold text-slate-500 uppercase">リバーシブル (Reversible)</label>
                     <input type="text"
                         class="form-reversible border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                        placeholder="例: normal">
+                        placeholder="例: 0">
                 </div>
             </div>
         </div>
@@ -1438,6 +1438,9 @@
 1. **JSONのみを出力**: Markdown記法(\`\`\`json)は不要です。純粋なJSON文字列のみを返してください。
 2. **NULLの扱い**: データが存在しない場合、"なし"という文字列ではなく、必ず JSONの \`null\` または空文字 \`""\` を使用してください。
    - 例: EZA日が不明なら "eza_date": null
+3. **複数IDの扱い**: テキスト内に複数の「ID: ...」や「NAME: ...」セクションが含まれる場合があります（変身先やEZAデータなど）。
+   - **必ずテキストの冒頭にある最初のIDと名前**を「basics」の情報として使用してください。
+   - 後続のID情報は、変身形態(forms)の一部として解析するか、無視してください。
 
 【詳細抽出ルール】
 1. **ステータス**: "最大", "解放", "100%", "虹" などの数値ではなく、**「0%」「解放なし」「Lv最大時（潜在解放なし）」のステータス**を優先してください。
@@ -1452,13 +1455,27 @@
      - "down" → "[img:down]"
    - **登場時演出(intro)**: "登場時"という文言を含む効果は、\`intro\` オブジェクトに分離してください。
 
-3. **必殺技(Attacks)**:
+3. **モード(mode)**:
+   - 通常形態: "normal"
+   - EZA覚醒後: "eza" (ID等の文脈から判断)
+
+4. **必殺技(Attacks)**:
    - **ki**: テキストから推測してください。通常は "12~"、超必殺技は "18~" です。
    - **maxLv**: レアリティから推測してください（UR=10, LR=20, 極限UR=15, 極限LR=25）。不明なら数値を入れず null にしてください。
    - **type**: 技の説明やアイコンの文脈から推測してください（"格闘"、"気弾"、"物理"、"その他"）。不明なら "気弾,格闘,物理" としてください。
    - **効果文**: 改行は "、" に置換して1行にまとめてください。
 
-5. **ユニット必殺技(Unit Super Attack)**:
+5. **覚醒情報(Awakening)**:
+   - "Card Awakenings", "Z-Awakenings", "Dokkan Awaken" 周辺の情報を解析してください。
+   - "× 7" や "× 77" などの数値がメダル必要数です。
+   - 段階(step)ごとにメダルの枚数リストを作成してください。
+   - ランクは SSR -> UR -> LR -> EZA -> SEZA の順序で推測してください。
+
+6. **空データの扱い**:
+   - 中身がない場合は \`{}\` ではなく \`null\` を出力してください。
+   - リーダースキルはEZA後も必ず出力してください（変化がない場合も同じ内容を出力）。
+
+6. **ユニット必殺技(Unit Super Attack)**:
    - 「ユニット必殺技」「UNIT SUPER ATTACK」といった記載がある場合、\`unitSuperAttack\` オブジェクトに格納してください。
    - **condition**: 発動条件（例：「○○カテゴリの味方が2人以上いるとき」）を抽出してください。
    - **name**: 技名を抽出してください。
@@ -1504,10 +1521,21 @@
     "cost": 数値,
     "release_date": "YYYY/MM/DD",
     "eza_date": "YYYY/MM/DD (なければnull)",
-    "categories": ["カテゴリ名1", "カテゴリ名2"]
+    "cost": 数値,
+    "release_date": "YYYY/MM/DD",
+    "eza_date": "YYYY/MM/DD (なければnull)",
+    "categories": ["カテゴリ名1", "カテゴリ名2"],
+    "awakening": [
+      {
+        "rank": "SSR/UR/LR/EZA",
+        "id": "ID(わかれば)",
+        "medals": [ { "count": 77 } ]
+      }
+    ]
   },
   "forms": [
     {
+      "mode": "normal, eza, transform",
       "name": "形態名 (基本形態/変身後名)",
       "stats": { "hp": 数値, "atk": 数値, "def": 数値 }, 
       "leader_skill": "リーダースキル全文",
@@ -1758,16 +1786,22 @@ ${text.substring(0, 30000)}
                 // *Unit SA was missing in generateCSV too?*
                 // Let's check generateCSV implementation again.
 
+                // Helper to safely stringify or return empty
+                const safeJson = (obj) => {
+                    if (!obj || (typeof obj === 'object' && Object.keys(obj).length === 0)) return "";
+                    return JSON.stringify(obj);
+                };
+
                 formRows.push([
-                    charId, "normal", "通常", f.name || "", "",
+                    charId, f.mode || "normal", "通常", f.name || "", "",
                     formatField((f.links || []).join(', '), mode),
-                    formatField(JSON.stringify(f.stats), mode),
+                    formatField(safeJson(f.stats), mode),
                     formatField(attacksJson, mode),
                     formatField(passiveJson, mode),
-                    formatField(JSON.stringify(f.active || {}), mode),
-                    formatField(JSON.stringify(f.standby || {}), mode),
-                    formatField(JSON.stringify(f.field || {}), mode),
-                    "normal",
+                    formatField(safeJson(f.active), mode),
+                    formatField(safeJson(f.standby), mode),
+                    formatField(safeJson(f.field), mode),
+                    "", // Reversible is always empty per user request
                     // Add Unit SA at the end if the sheet supports it.
                     formatField(unitSaJson, mode)
                 ]);
@@ -1846,6 +1880,19 @@ ${text.substring(0, 30000)}
 
         if (basics.categories && Array.isArray(basics.categories)) {
             setVal('char-categories', basics.categories.join(', '));
+        }
+
+        // Awakening Handling
+        if (basics.awakening && Array.isArray(basics.awakening)) {
+            const lines = basics.awakening.map(step => {
+                const medals = step.medals ? step.medals.map(m => `{name:"(記入)", bg: "超激戦/bg", count:${m.count}}`).join(', ') : "";
+                return `    { rank: "${step.rank}", id: ${step.id || ""}, medals: [${medals}] }`;
+            });
+            const formatted = `[\n${lines.join(',\n')}\n]`;
+            setVal('char-awakening', formatted);
+        } else {
+            // Default if no awakening found
+            setVal('char-awakening', DEFAULTS.awakening);
         }
 
         // Forms Handling
