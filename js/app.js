@@ -1,5 +1,9 @@
 // Ensure DB and other constants are available
-const DB = (typeof CHARACTER_DATA !== 'undefined') ? CHARACTER_DATA : [];
+// Google Apps Script Web App URL
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz3D9-U19Ae1BkQS1qCvLD7Wn6llfLblYOC52tSXakBj0a_cJ7WBfUL5sWuWj78teE/exec";
+
+// Ensure DB and other constants are available
+let DB = (typeof CHARACTER_DATA !== 'undefined') ? CHARACTER_DATA : [];
 const LINKS = (typeof LINK_SKILLS !== 'undefined') ? LINK_SKILLS : {};
 const CATEGORY_LIST = (typeof MASTER_CATEGORIES !== 'undefined') ? MASTER_CATEGORIES : [];
 
@@ -39,7 +43,15 @@ const contentDiv = document.getElementById('main-content');
 const tabs = document.querySelectorAll('.tab-btn');
 const scrollTopBtn = document.getElementById('scroll-top-btn');
 
-function init() {
+async function init() {
+    // Show Loading
+    showUpdateOverlay("データ読み込み中...");
+
+    // Load Data from GAS
+    await loadData();
+
+    hideUpdateOverlay();
+
     // Load Owned/Fav
     const savedOwned = localStorage.getItem('dokkan_owned');
     if (savedOwned) state.owned = JSON.parse(savedOwned);
@@ -147,6 +159,32 @@ function init() {
     }
 }
 
+
+async function loadData() {
+    try {
+        // Fallback to local data if fetch fails or takes too long
+        const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 10000));
+
+        const fetchPromise = fetch(GAS_API_URL);
+        const response = await Promise.race([fetchPromise, timeout]);
+
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        const data = await response.json();
+
+        if (Array.isArray(data) && data.length > 0) {
+            DB = data;
+            window.DB = DB; // Update global reference
+            console.log("Data loaded from GAS:", DB.length, "records");
+        } else {
+            console.warn("GAS returned empty or invalid data");
+        }
+    } catch (error) {
+        console.warn("GAS Fetch failed, using local data fallback.", error);
+        // DB is already initialized with CHARACTER_DATA if available
+    }
+}
+
 // --- Pull-to-Refresh ---
 function setupPullToRefresh() {
     const indicator = document.getElementById('pull-refresh-indicator');
@@ -204,9 +242,13 @@ function setupPullToRefresh() {
 }
 
 // --- Update Overlay ---
-function showUpdateOverlay() {
+function showUpdateOverlay(message) {
     const overlay = document.getElementById('update-overlay');
     if (overlay) {
+        if (message) {
+            const textEl = overlay.querySelector('.loading-text');
+            if (textEl) textEl.textContent = message;
+        }
         overlay.classList.remove('hidden');
     }
 }
