@@ -140,15 +140,15 @@ function renderBoxLayout() {
                 <div class="stats-carousel" id="stats-carousel">
                     <div class="stats-track">
                         <div class="stat-card">
-                            <div class="stat-value">${stats.lr}</div>
+                            <div class="stat-value">${stats.lr}<span class="stat-denominator">/${stats.totalLR}</span></div>
                             <div class="stat-label">${t('lrOwned')}</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value">${stats.ur}</div>
+                            <div class="stat-value">${stats.ur}<span class="stat-denominator">/${stats.totalUR}</span></div>
                             <div class="stat-label">${t('urOwned')}</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value">${stats.total}</div>
+                            <div class="stat-value">${stats.total}<span class="stat-denominator">/${DB.length}</span></div>
                             <div class="stat-label">${t('totalOwned')}</div>
                         </div>
                     </div>
@@ -200,7 +200,14 @@ function calculateBoxStats() {
         }
     });
 
-    return { lr, ur, total };
+    // 分母用: DB内の各レアリティの総数
+    let totalLR = 0, totalUR = 0;
+    DB.forEach(c => {
+        if (c.rarity === 'LR') totalLR++;
+        else if (c.rarity === 'UR') totalUR++;
+    });
+
+    return { lr, ur, total, totalLR, totalUR };
 }
 
 function setBoxFilter(filter) {
@@ -337,12 +344,12 @@ function updateBoxStats() {
     if (percent) percent.textContent = `${ownershipPercent}%`;
     if (fill) fill.style.width = `${ownershipPercent}%`;
 
-    // Update carousel stats
+    // Update carousel stats (分母付き)
     const statCards = document.querySelectorAll('.stat-card .stat-value');
     if (statCards.length >= 3) {
-        statCards[0].textContent = stats.lr;
-        statCards[1].textContent = stats.ur;
-        statCards[2].textContent = stats.total;
+        statCards[0].innerHTML = `${stats.lr}<span class="stat-denominator">/${stats.totalLR}</span>`;
+        statCards[1].innerHTML = `${stats.ur}<span class="stat-denominator">/${stats.totalUR}</span>`;
+        statCards[2].innerHTML = `${stats.total}<span class="stat-denominator">/${DB.length}</span>`;
     }
 }
 

@@ -334,7 +334,12 @@ function switchTab(tabName) {
 
 function updateTabUI() {
     tabs.forEach(t => t.classList.remove('active'));
-    const activeBtn = document.querySelector(`button[onclick="switchTab('${state.currentTab}')"]`);
+    // teamSelectモード中は見た目上「編成」タブをアクティブにする
+    let displayTab = state.currentTab;
+    if (state.listMode === 'teamSelect' && state.currentTab === 'zukan') {
+        displayTab = 'party';
+    }
+    const activeBtn = document.querySelector(`button[onclick="switchTab('${displayTab}')"]`);
     if (activeBtn) activeBtn.classList.add('active');
 }
 
