@@ -453,7 +453,7 @@ function calcFarmCards(targetChar) {
     matches.forEach(c => {
         let isEvent = false;
         if (c.source_type) {
-            isEvent = (c.source_type === 'event');
+            isEvent = ['event', 'mission', 'trade', 'exchange'].includes(c.source_type);
         } else {
             isEvent = (c.cost <= 20);
         }
@@ -527,6 +527,8 @@ function renderFilterModal() {
                     <div class="filter-chip" onclick="toggleFilter('rarity', 'UR')">UR</div>
                     <div class="filter-chip" onclick="toggleFilter('rarity', 'SSR')">SSR</div>
                     <div class="filter-chip" onclick="toggleFilter('rarity', 'SR')">SR</div>
+                    <div class="filter-chip" onclick="toggleFilter('rarity', 'R')">R</div>
+                    <div class="filter-chip" onclick="toggleFilter('rarity', 'N')">N</div>
                 </div>
             </div>
 
@@ -1083,6 +1085,21 @@ function renderZukanList(targetGrid) {
                 if (validSteps.length > 0) {
                     const lastStepId = validSteps[validSteps.length - 1].id;
                     if (char.id !== lastStepId) return false;
+                }
+            } else {
+                // awakening情報がない場合のフォールバックロジック
+                if (char.rarity === 'LR') {
+                    return true; // LRは常に表示
+                } else if (char.rarity === 'UR') {
+                    // 次の進化先(ID+10)が存在し、かつそれがLRであれば「進化前」とみなして非表示
+                    const nextId = char.id + 10;
+                    const nextChar = DB.find(c => c.id === nextId);
+                    if (nextChar && nextChar.rarity === 'LR') {
+                        return false; // UR->LRへの進化前なので非表示
+                    }
+                    return true; // それ以外は最大覚醒URとみなす
+                } else {
+                    return false; // SSR, SR, R, N は非表示
                 }
             }
         }

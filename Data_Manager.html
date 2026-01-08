@@ -786,6 +786,9 @@
                         <option value="SSR">SSR</option>
                         <option value="UR">UR</option>
                         <option value="LR">LR</option>
+                        <option value="SR">SR</option>
+                        <option value="R">R</option>
+                        <option value="N">N</option>
                     </select>
                 </div>
                 <div class="flex flex-col gap-1 md:col-span-1">
@@ -835,7 +838,7 @@
                         <option value="gasha">ガチャ (gasha)</option>
                         <option value="event">イベント (event)</option>
                         <option value="mission">ミッション (mission)</option>
-                        <option value="exchange">交換所 (exchange)</option>
+                        <option value="trade">交換 (trade)</option>
                     </select>
                 </div>
 
@@ -1444,7 +1447,19 @@
 
 【詳細抽出ルール】
 1. **ステータス**: "最大", "解放", "100%", "虹" などの数値ではなく、**「0%」「解放なし」「Lv最大時（潜在解放なし）」のステータス**を優先してください。
-2. **パッシブスキル構造**:
+   - **レアリティ**: テキストに明記がない場合、最大Lvやコストから推測してください (Lv150/Cost77or99 -> LR, Lv120/Cost58or48 -> UR, Cost99 -> LR)。
+   - **属性**: "AGL", "TEQ" や "速", "技" などの表記を探してください。見つからない場合は、パッシブ名や文脈から推測するか、"" (デフォルト) としてください。
+   - **クラス**: "Super", "Extreme", "超", "極" から判断してください。
+
+2. **読み仮名(yomi)**:
+   - **キャラ名(name)のみ**をひらがなに変換してください（二つ名は含めない）。
+   - **ドッカンバトルの慣例**に従ってください:
+     - "超" → "すーぱー" (例: 超サイヤ人 -> すーぱーさいやじん)
+     - "GT" → "じーてぃー"
+     - "界王拳" → "かいおうけん"
+     - カタカナ名はそのままひらがなにしてください。
+
+3. **パッシブスキル構造**:
    - **分割**: パッシブスキルは複数の効果ブロックに分かれていることが多いです。空白行や短い見出し行を目印に分割してください。
    - **見出し(title)**: ブロックの最初の行が見出しである場合が多いです（例：「基本効果」「〇〇カテゴリがある時」など）。
    - **効果(effects)**: 効果文は改行ごとに配列に分割してください。
@@ -1514,6 +1529,7 @@
   "basics": {
     "id": "キャラID(数値)",
     "name": "キャラ名",
+    "yomi": "よみがな(超→すーぱー)",
     "title": "二つ名",
     "rarity": "レアリティ(SSR, UR, LR)",
     "type": "属性(AGL, TEQ, INT, STR, PHY)",
@@ -1549,8 +1565,9 @@
       },
       "active": {
         "name": "アクティブ名",
+        "name": "アクティブ名",
         "condition": "条件",
-        "description": "効果",
+        "effect": "効果",
         "specs": {}
       },
       "standby": {
@@ -1866,6 +1883,7 @@ ${text.substring(0, 30000)}
 
         setVal('char-id', basics.id);
         setVal('char-name', basics.name);
+        setVal('char-yomi', basics.yomi);
         setVal('char-title', basics.title);
         setVal('char-cost', basics.cost);
         setVal('char-rarity', basics.rarity);
@@ -1946,7 +1964,7 @@ ${text.substring(0, 30000)}
                 const a = {
                     name: formData.active.name,
                     condition: formData.active.condition || "",
-                    effect: formData.active.description || "",
+                    effect: formData.active.effect || formData.active.description || "",
                     specs: formData.active.specs || {}
                 };
                 currentForm.querySelector('.form-active').value = JSON.stringify(a, null, 2);
