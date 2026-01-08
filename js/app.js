@@ -71,6 +71,10 @@ async function init() {
     // Load Teams
     initTeams();
 
+    // Initialize Settings (i18n etc.)
+    if (typeof initSettings === 'function') initSettings();
+    updateTabLabels();
+
     if (typeof populateFilterOptions === 'function') populateFilterOptions();
 
     // URL Check
@@ -332,6 +336,24 @@ function switchTab(tabName) {
     }
 }
 
+// Update tab bar labels based on current language
+function updateTabLabels() {
+    if (typeof t !== 'function') return;
+    const tabLabels = {
+        'zukan': 'tabZukan',
+        'events': 'tabEvents',
+        'party': 'tabParty',
+        'box': 'tabBox'
+    };
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        const match = btn.getAttribute('onclick')?.match(/switchTab\('(\w+)'\)/);
+        if (match && tabLabels[match[1]]) {
+            const span = btn.querySelector('span');
+            if (span) span.textContent = t(tabLabels[match[1]]);
+        }
+    });
+}
+
 function updateTabUI() {
     tabs.forEach(t => t.classList.remove('active'));
     // teamSelectモード中は見た目上「編成」タブをアクティブにする
@@ -404,3 +426,4 @@ window.LINKS = LINKS;
 window.CATEGORY_LIST = CATEGORY_LIST;
 window.saveTeamState = saveTeamState;
 window.saveFilterState = saveFilterState;
+window.updateTabLabels = updateTabLabels;

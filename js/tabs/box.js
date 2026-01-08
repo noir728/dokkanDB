@@ -36,7 +36,17 @@ const i18n = {
         cacheCleared: 'キャッシュをクリアしました',
         lrOwned: 'LR所持',
         urOwned: 'UR所持',
-        totalOwned: '総所持'
+        totalOwned: '総所持',
+        // タブ名・図鑑・編成
+        tabZukan: '図鑑', tabEvents: 'イベント', tabParty: '編成', tabBox: 'BOX',
+        search: '検索', maxAwakening: '覚醒最大', filterTitle: '絞り込み', apply: '適用', reset: 'リセット', displaying: '体 表示中',
+        sortReleaseDesc: '実装日: 新しい順', sortReleaseAsc: '実装日: 古い順', sortRarityDesc: 'レアリティ: 高い順', sortRarityAsc: 'レアリティ: 低い順',
+        sortCostDesc: 'コスト: 高い順', sortCostAsc: 'コスト: 低い順', sortHpDesc: 'HP: 高い順', sortAtkDesc: 'ATK: 高い順', sortDefDesc: 'DEF: 高い順',
+        leaderSkill: 'リーダースキル', passiveSkill: 'パッシブスキル', superAttack: '必殺技', activeSkill: 'アクティブスキル',
+        links: 'リンクスキル', categories: 'カテゴリ', saFodder: '技上げ素材', leaderCandidates: 'リーダー候補', partners: '相性の良いキャラ',
+        memo: 'メモ', clearSlots: 'スロットクリア', deleteTeam: 'チーム削除', linkCompatibility: 'リンク相性',
+        totalHp: 'TOTAL HP', cost: 'COST', leader: 'リーダー', friend: 'フレンド', replace: '入れ替え', remove: '解除',
+        addToHome: 'ホーム画面に追加', add: '追加'
     },
     en: {
         boxTitle: 'BOX',
@@ -63,7 +73,17 @@ const i18n = {
         cacheCleared: 'Cache cleared',
         lrOwned: 'LR Owned',
         urOwned: 'UR Owned',
-        totalOwned: 'Total Owned'
+        totalOwned: 'Total Owned',
+        // Tab names, Zukan, Team
+        tabZukan: 'Zukan', tabEvents: 'Events', tabParty: 'Team', tabBox: 'BOX',
+        search: 'Search', maxAwakening: 'Max Awakening', filterTitle: 'Filters', apply: 'Apply', reset: 'Reset', displaying: ' displayed',
+        sortReleaseDesc: 'Release: Newest', sortReleaseAsc: 'Release: Oldest', sortRarityDesc: 'Rarity: Highest', sortRarityAsc: 'Rarity: Lowest',
+        sortCostDesc: 'Cost: Highest', sortCostAsc: 'Cost: Lowest', sortHpDesc: 'HP: Highest', sortAtkDesc: 'ATK: Highest', sortDefDesc: 'DEF: Highest',
+        leaderSkill: 'Leader Skill', passiveSkill: 'Passive Skill', superAttack: 'Super Attack', activeSkill: 'Active Skill',
+        links: 'Link Skills', categories: 'Categories', saFodder: 'SA Fodder', leaderCandidates: 'Leader Candidates', partners: 'Partner Characters',
+        memo: 'Memo', clearSlots: 'Clear Slots', deleteTeam: 'Delete Team', linkCompatibility: 'Link Compatibility',
+        totalHp: 'TOTAL HP', cost: 'COST', leader: 'Leader', friend: 'Friend', replace: 'Replace', remove: 'Remove',
+        addToHome: 'Add to Home Screen', add: 'Add'
     }
 };
 
@@ -476,6 +496,8 @@ function setLanguage(lang) {
     state.settings.language = lang;
     saveSettings();
     closeSettingsModal();
+    // Update tab bar labels with new language
+    if (typeof updateTabLabels === 'function') updateTabLabels();
     renderBoxLayout(); // Re-render with new language
 }
 
@@ -595,3 +617,10 @@ window.showImportDialog = showImportDialog;
 window.importUserData = importUserData;
 window.clearAppCache = clearAppCache;
 window.factoryReset = factoryReset;
+
+// i18n exports for other tabs
+window.i18n = i18n;
+window.t = t;
+window.getLang = getLang;
+window.initSettings = initSettings;
+
