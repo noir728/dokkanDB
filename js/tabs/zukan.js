@@ -2022,13 +2022,30 @@ function renderCharacterDetail(id) {
                 sRainbow = { hp: '---', atk: '---', def: '---' }; sFifty = sRainbow; sBase = sRainbow;
             }
         }
+
+        // レアリティ別最大レベル設定
         let maxLv = 100;
         if (char.rarity === 'LR') maxLv = 150;
         else if (char.rarity === 'UR') {
             if (state.detailEzaMode === 'eza' || state.detailEzaMode === 'seza') maxLv = 140; else maxLv = 120;
         } else if (char.rarity === 'SSR') maxLv = 80;
+        else if (char.rarity === 'SR') maxLv = 60;
+        else if (char.rarity === 'R') maxLv = 40;
+        else if (char.rarity === 'N') maxLv = 20;
 
-        body.innerHTML += `<div id="char-swipe-area" style="touch-action: pan-y;"><div class="section-title">ステータス</div><div style="display:flex; gap:10px;"><div style="display:flex; flex-direction:column; align-items:center;"><div class="detail-icon-large">${getCharIconHtml(char, currentData)}</div><div class="text-xs text-gray-300 mt-1">最大Lv.${maxLv}</div>${char.cost ? `<div class="char-cost">コスト: ${char.cost}</div>` : ''}</div><table style="width:100%; font-size:11px; text-align:center; border-collapse:collapse; border:1px solid #444; border-radius:4px; overflow:hidden;"><tr style="background:#333; color:#aaa;"><th></th><th>HP</th><th>ATK</th><th>DEF</th></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">LvMax</td><td>${sBase.hp}</td><td>${sBase.atk}</td><td>${sBase.def}</td></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">55%</td><td>${sFifty.hp}</td><td>${sFifty.atk}</td><td>${sFifty.def}</td></tr><tr style="background:#222;"><td style="background:#2a2a2e;font-weight:bold;">100%</td><td>${sRainbow.hp}</td><td>${sRainbow.atk}</td><td>${sRainbow.def}</td></tr></table></div></div>`;
+        // SR/R/N は潜在能力が適用されないので、最大レベルのみ表示
+        const isLowRarity = ['SR', 'R', 'N'].includes(char.rarity);
+
+        let statsTableHtml = '';
+        if (isLowRarity) {
+            // SR/R/N: 最大レベルのみ表示
+            statsTableHtml = `<table style="width:100%; font-size:11px; text-align:center; border-collapse:collapse; border:1px solid #444; border-radius:4px; overflow:hidden;"><tr style="background:#333; color:#aaa;"><th></th><th>HP</th><th>ATK</th><th>DEF</th></tr><tr style="background:#222;"><td style="background:#2a2a2e;font-weight:bold;">LvMax</td><td>${sBase.hp}</td><td>${sBase.atk}</td><td>${sBase.def}</td></tr></table>`;
+        } else {
+            // LR/UR/SSR: 従来通り3行表示
+            statsTableHtml = `<table style="width:100%; font-size:11px; text-align:center; border-collapse:collapse; border:1px solid #444; border-radius:4px; overflow:hidden;"><tr style="background:#333; color:#aaa;"><th></th><th>HP</th><th>ATK</th><th>DEF</th></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">LvMax</td><td>${sBase.hp}</td><td>${sBase.atk}</td><td>${sBase.def}</td></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">55%</td><td>${sFifty.hp}</td><td>${sFifty.atk}</td><td>${sFifty.def}</td></tr><tr style="background:#222;"><td style="background:#2a2a2e;font-weight:bold;">100%</td><td>${sRainbow.hp}</td><td>${sRainbow.atk}</td><td>${sRainbow.def}</td></tr></table>`;
+        }
+
+        body.innerHTML += `<div id="char-swipe-area" style="touch-action: pan-y;"><div class="section-title">ステータス</div><div style="display:flex; gap:10px;"><div style="display:flex; flex-direction:column; align-items:center;"><div class="detail-icon-large">${getCharIconHtml(char, currentData)}</div><div class="text-xs text-gray-300 mt-1">最大Lv.${maxLv}</div>${char.cost ? `<div class="char-cost">コスト: ${char.cost}</div>` : ''}</div>${statsTableHtml}</div></div>`;
     }
 
     let displayLeaderSkill = char.leaderSkill;

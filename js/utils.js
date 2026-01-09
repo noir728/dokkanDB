@@ -6,9 +6,12 @@ function getCharIconHtml(char, formData, options = {}) {
     const displayRarity = (formData && formData.rarity) ? formData.rarity : char.rarity;
     let displayClass = (formData && formData.class) ? formData.class : char.class;
 
-    // Task 3: If character starts as SSR (no SR/R/N in awakening), use generic type icon ONLY for SSR form
+    // SR, R, N は常に汎用属性アイコンを使用
+    // SSR は「Native SSR」（SR/R/Nからの覚醒でない）の場合のみ汎用アイコンを使用
     let useGenericIcon = false;
-    if (displayRarity === 'SSR') {
+    if (['SR', 'R', 'N'].includes(displayRarity)) {
+        useGenericIcon = true;
+    } else if (displayRarity === 'SSR') {
         // Check if it's a "Native SSR" (No 'SR', 'R', or 'N' in awakening steps)
         const hasLowerForms = char.awakening && char.awakening.some(step => ['SR', 'R', 'N'].includes(step.rank));
         if (!hasLowerForms) {
