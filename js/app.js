@@ -165,10 +165,28 @@ async function init() {
 
 
 async function loadData() {
-    try {
-        // Fallback to local data if fetch fails or takes too long
-        const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 10000));
+    const CACHE_KEY = 'dokkan_db_cache';
+    const CACHE_TIMESTAMP_KEY = 'dokkan_db_cache_timestamp';
 
+    // 1. まずキャッシュを読み込んで即座に表示
+    try {
+        const cachedData = localStorage.getItem(CACHE_KEY);
+        if (cachedData) {
+            const parsed = JSON.parse(cachedData);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                DB = parsed;
+                window.DB = DB;
+                const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+                console.log("Data loaded from cache:", DB.length, "records", timestamp ? `(cached: ${timestamp})` : '');
+            }
+        }
+    } catch (cacheError) {
+        console.warn("Cache read failed:", cacheError);
+    }
+
+    // 2. バックグラウンドでGASから最新データを取得
+    try {
+        const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 15000));
         const fetchPromise = fetch(GAS_API_URL);
         const response = await Promise.race([fetchPromise, timeout]);
 
@@ -177,15 +195,31 @@ async function loadData() {
         const data = await response.json();
 
         if (Array.isArray(data) && data.length > 0) {
+            const oldCount = DB.length;
             DB = data;
-            window.DB = DB; // Update global reference
+            window.DB = DB;
+
+            // キャッシュを更新
+            try {
+                localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+                localStorage.setItem(CACHE_TIMESTAMP_KEY, new Date().toLocaleString('ja-JP'));
+            } catch (saveError) {
+                console.warn("Cache save failed (storage full?):", saveError);
+            }
+
             console.log("Data loaded from GAS:", DB.length, "records");
+
+            // データに変更があった場合、UIを再描画
+            if (oldCount > 0 && oldCount !== DB.length) {
+                console.log(`Data updated: ${oldCount} -> ${DB.length} records`);
+                if (typeof render === 'function') render();
+            }
         } else {
             console.warn("GAS returned empty or invalid data");
         }
     } catch (error) {
-        console.warn("GAS Fetch failed, using local data fallback.", error);
-        // DB is already initialized with CHARACTER_DATA if available
+        console.warn("GAS Fetch failed, using cached/local data.", error);
+        // キャッシュまたはCHARACTER_DATAを使用（既に読み込み済み）
     }
 }
 
@@ -196,7 +230,7 @@ function setupPullToRefresh() {
 
     let touchStartY = 0;
     let isPulling = false;
-    const PULL_THRESHOLD = 80; // px needed to trigger refresh
+    const PULL_THRESHOLD = 150; // px needed to trigger refresh（80→150に拡大）
 
     contentDiv.addEventListener('touchstart', (e) => {
         // Only trigger if at top of scroll
@@ -216,10 +250,12 @@ function setupPullToRefresh() {
         if (pullDistance > 0 && contentDiv.scrollTop <= 0) {
             const progress = Math.min(pullDistance / PULL_THRESHOLD, 1);
             indicator.style.opacity = progress;
-            indicator.style.transform = `translateY(${Math.min(pullDistance * 0.5, 50)}px)`;
+            indicator.style.transform = `translateY(${Math.min(pullDistance * 0.5, 75)}px)`;
 
             if (progress >= 1) {
                 indicator.classList.add('visible');
+            } else {
+                indicator.classList.remove('visible');
             }
         }
     }, { passive: true });
@@ -236,13 +272,47 @@ function setupPullToRefresh() {
         isPulling = false;
 
         if (isTriggered) {
-            // Show spinner and reload
-            showUpdateOverlay();
-            setTimeout(() => {
-                window.location.reload();
-            }, 300);
+            // 確認ポップアップを表示
+            showRefreshConfirmModal();
         }
     }, { passive: true });
+}
+
+// --- Refresh Confirm Modal ---
+function showRefreshConfirmModal() {
+    // 既存のモーダルがあれば削除
+    const existing = document.getElementById('refresh-confirm-modal');
+    if (existing) existing.remove();
+
+    const modalHtml = `
+        <div id="refresh-confirm-modal" class="modal-overlay open" style="z-index: 2000;">
+            <div class="filter-modal scale-in" style="height: auto; max-width: 300px; padding: 20px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 10px;">🔄</div>
+                    <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 15px;">データを更新しますか？</h3>
+                    <p style="font-size: 12px; color: #aaa; margin-bottom: 20px;">最新のキャラクターデータをサーバーから取得します。</p>
+                    <div style="display: flex; gap: 10px; justify-content: center;">
+                        <button onclick="closeRefreshModal()" style="flex: 1; padding: 10px; background: #333; color: #fff; border: none; border-radius: 6px; font-size: 14px;">キャンセル</button>
+                        <button onclick="confirmRefresh()" style="flex: 1; padding: 10px; background: #4cd964; color: #fff; border: none; border-radius: 6px; font-size: 14px; font-weight: bold;">更新する</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function closeRefreshModal() {
+    const modal = document.getElementById('refresh-confirm-modal');
+    if (modal) modal.remove();
+}
+
+function confirmRefresh() {
+    closeRefreshModal();
+    showUpdateOverlay('データ更新中...');
+    setTimeout(() => {
+        window.location.reload();
+    }, 300);
 }
 
 // --- Update Overlay ---
