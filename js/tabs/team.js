@@ -10,6 +10,9 @@ let linkSectionExpanded = false;
 let selectedLinkCharIndex = null;
 let linkCharFormIndices = {}; // リンク相性セクションで選択中の形態インデックス
 
+// 解放率モーダル状態
+let potentialModalState = null; // { teamId, slotIndex, potentials: [bool, bool, bool, bool] }
+
 function renderTeamLayout() {
     const contentDiv = document.getElementById('main-content');
     if (!contentDiv) return;
@@ -90,6 +93,9 @@ function renderTeamCard(team, teamIndex) {
             iconContent = '<div class="slot-placeholder">+</div>';
         }
 
+        // 解放率表示
+        const potentialHtml = hasChar ? renderPotentialIcons(team.id, i) : '';
+
         iconsHtml += `
             <div class="team-icon-slot ${roleClass}" 
                  data-team-index="${teamIndex}" 
@@ -107,6 +113,7 @@ function renderTeamCard(team, teamIndex) {
                     ${iconContent}
                 </div>
                 <div class="slot-ls-badge-container">${lsBadge}</div>
+                ${potentialHtml}
             </div>
         `;
     }
@@ -339,6 +346,7 @@ function openTeamSelectNew(teamIndex, slotIndex) {
     state.currentTeamIndex = teamIndex;
     state.selectingSlot = slotIndex;
     state.listMode = 'teamSelect';
+    state.scrollPositions['zukan'] = 0; // スクロール位置をトップにリセット
 
     state.currentTab = 'zukan';
     updateTabUI();
@@ -398,8 +406,9 @@ const LONG_PRESS_DURATION = 500; // ms
 const MOVE_THRESHOLD = 10; // px
 
 function handleSlotMouseDown(e, teamIndex, slotIndex, charId) {
-    // Ignore if click originated from remove button
+    // Ignore if click originated from remove button or potential container
     if (e.target.classList.contains('slot-remove-btn')) return;
+    if (e.target.closest('.slot-potential-container')) return;
 
     isLongPress = false;
     longPressTimer = setTimeout(() => {
@@ -411,6 +420,9 @@ function handleSlotMouseDown(e, teamIndex, slotIndex, charId) {
 }
 
 function handleSlotMouseUp(e, teamIndex, slotIndex) {
+    // Ignore if click originated from potential container
+    if (e.target.closest('.slot-potential-container')) return;
+
     if (longPressTimer) {
         clearTimeout(longPressTimer);
         longPressTimer = null;
@@ -438,8 +450,9 @@ function handleSlotMouseLeave(e) {
 }
 
 function handleSlotTouchStart(e, teamIndex, slotIndex, charId) {
-    // Ignore if touch originated from remove button
+    // Ignore if touch originated from remove button or potential container
     if (e.target.classList.contains('slot-remove-btn')) return;
+    if (e.target.closest('.slot-potential-container')) return;
 
     // Track touch position for scroll detection
     if (e.touches && e.touches[0]) {
@@ -477,6 +490,9 @@ function handleSlotTouchMove(e, teamIndex, slotIndex) {
 }
 
 function handleSlotTouchEnd(e, teamIndex, slotIndex) {
+    // Ignore if touch originated from potential container
+    if (e.target.closest('.slot-potential-container')) return;
+
     if (longPressTimer) {
         clearTimeout(longPressTimer);
         longPressTimer = null;
@@ -1413,4 +1429,128 @@ window.openQRLoadModal = openQRLoadModal;
 window.closeQRLoadModal = closeQRLoadModal;
 window.startCameraQR = startCameraQR;
 window.selectImageQR = selectImageQR;
+
+// ========================================
+// 解放率（ポテンシャル）表示機能
+// ========================================
+
+// 解放率アイコンをレンダリング
+function renderPotentialIcons(teamId, slotIndex) {
+    const key = `${teamId}-${slotIndex}`;
+    const potentials = state.slotPotentials?.[key] || [false, false, false, false];
+
+    let iconsHtml = '';
+    for (let i = 0; i < 4; i++) {
+        const iconPath = potentials[i]
+            ? 'assets/icons/Potential_released.png'
+            : 'assets/icons/Potential_closed.png';
+        iconsHtml += `<img src="${iconPath}" alt="潜在${i + 1}">`;
+    }
+
+    return `
+        <div class="slot-potential-container" onclick="event.stopPropagation(); openPotentialModal(${teamId}, ${slotIndex})">
+            <div class="slot-potential-label">解放率</div>
+            <div class="slot-potential-icons">${iconsHtml}</div>
+        </div>
+    `;
+}
+
+// 解放率モーダルを開く
+function openPotentialModal(teamId, slotIndex) {
+    const key = `${teamId}-${slotIndex}`;
+    const currentPotentials = state.slotPotentials?.[key] || [false, false, false, false];
+
+    potentialModalState = {
+        teamId,
+        slotIndex,
+        potentials: [...currentPotentials]
+    };
+
+    renderPotentialModal();
+}
+
+// モーダルをレンダリング
+function renderPotentialModal() {
+    if (!potentialModalState) return;
+
+    // 既存モーダルを削除
+    const existing = document.getElementById('potential-modal-overlay');
+    if (existing) existing.remove();
+
+    const { potentials } = potentialModalState;
+
+    let iconsHtml = '';
+    for (let i = 0; i < 4; i++) {
+        const iconPath = potentials[i]
+            ? 'assets/icons/Potential_released.png'
+            : 'assets/icons/Potential_closed.png';
+        iconsHtml += `<img src="${iconPath}" alt="潜在${i + 1}" onclick="togglePotentialIcon(${i})">`;
+    }
+
+    const modalHtml = `
+        <div id="potential-modal-overlay" class="potential-modal-overlay" onclick="closePotentialModal()">
+            <div class="potential-modal" onclick="event.stopPropagation()">
+                <div class="potential-modal-title">解放率を設定</div>
+                <div class="potential-modal-icons" id="potential-modal-icons">
+                    ${iconsHtml}
+                </div>
+                <div class="potential-modal-buttons">
+                    <button class="potential-modal-btn cancel" onclick="closePotentialModal()">キャンセル</button>
+                    <button class="potential-modal-btn confirm" onclick="confirmPotentialModal()">完了</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+// アイコンをトグル
+function togglePotentialIcon(index) {
+    if (!potentialModalState) return;
+
+    potentialModalState.potentials[index] = !potentialModalState.potentials[index];
+
+    // モーダル内のアイコンを更新
+    const container = document.getElementById('potential-modal-icons');
+    if (container) {
+        const imgs = container.querySelectorAll('img');
+        if (imgs[index]) {
+            imgs[index].src = potentialModalState.potentials[index]
+                ? 'assets/icons/Potential_released.png'
+                : 'assets/icons/Potential_closed.png';
+        }
+    }
+}
+
+// モーダルを閉じる（キャンセル）
+function closePotentialModal() {
+    potentialModalState = null;
+    const overlay = document.getElementById('potential-modal-overlay');
+    if (overlay) overlay.remove();
+}
+
+// 完了（保存）
+function confirmPotentialModal() {
+    if (!potentialModalState) return;
+
+    const { teamId, slotIndex, potentials } = potentialModalState;
+    const key = `${teamId}-${slotIndex}`;
+
+    // stateに保存
+    if (!state.slotPotentials) state.slotPotentials = {};
+    state.slotPotentials[key] = potentials;
+
+    // 永続化
+    saveTeamState();
+
+    closePotentialModal();
+    renderTeamLayout();
+}
+
+// グローバル公開（解放率関連）
+window.openPotentialModal = openPotentialModal;
+window.closePotentialModal = closePotentialModal;
+window.togglePotentialIcon = togglePotentialIcon;
+window.confirmPotentialModal = confirmPotentialModal;
 window.handleQRFile = handleQRFile;

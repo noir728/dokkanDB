@@ -4447,3 +4447,115 @@ body {
     font-weight: normal;
     margin-left: 2px;
 }
+
+/* =========================================
+   42. Team Tab - Potential Release Display
+   ========================================= */
+.slot-potential-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    margin-top: 2px;
+    padding: 2px 3px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #444;
+    border-radius: 4px;
+}
+
+.slot-potential-label {
+    font-size: 7px;
+    color: #888;
+}
+
+.slot-potential-icons {
+    display: flex;
+    gap: 1px;
+    cursor: pointer;
+}
+
+.slot-potential-icons img {
+    width: 12px;
+    height: 12px;
+}
+
+/* Potential Modal Overlay */
+.potential-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.potential-modal {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    min-width: 280px;
+    border: 1px solid var(--border-color);
+}
+
+.potential-modal-title {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.potential-modal-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.potential-modal-icons img {
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.potential-modal-icons img:active {
+    transform: scale(0.9);
+}
+
+.potential-modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.potential-modal-btn {
+    padding: 10px 24px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.potential-modal-btn.cancel {
+    background: #444;
+    color: #fff;
+}
+
+.potential-modal-btn.cancel:active {
+    background: #555;
+}
+
+.potential-modal-btn.confirm {
+    background: var(--accent-teq);
+    color: #fff;
+}
+
+.potential-modal-btn.confirm:active {
+    background: #3cb055;
+}

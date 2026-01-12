@@ -357,6 +357,14 @@ function initTeams() {
     const savedIdx = localStorage.getItem('dokkan_current_team_idx');
     if (savedIdx !== null) state.currentTeamIndex = parseInt(savedIdx, 10);
     if (state.currentTeamIndex >= state.teams.length) state.currentTeamIndex = 0;
+
+    // Load slot potentials
+    const savedPotentials = localStorage.getItem('dokkan_slot_potentials');
+    if (savedPotentials) {
+        state.slotPotentials = JSON.parse(savedPotentials);
+    } else {
+        state.slotPotentials = {};
+    }
 }
 
 function saveState() {
@@ -367,6 +375,9 @@ function saveState() {
 function saveTeamState() {
     localStorage.setItem('dokkan_teams', JSON.stringify(state.teams));
     localStorage.setItem('dokkan_current_team_idx', state.currentTeamIndex);
+    if (state.slotPotentials) {
+        localStorage.setItem('dokkan_slot_potentials', JSON.stringify(state.slotPotentials));
+    }
 }
 
 function saveFilterState() {
@@ -392,8 +403,8 @@ function switchTab(tabName) {
         window.history.pushState({ filter: state.filter }, '', url);
     }
 
-    // Reset Selection Mode if leaving zukan without selecting
-    if (tabName !== 'zukan' && state.listMode === 'teamSelect') {
+    // Reset Selection Mode when switching tabs (including when switching to zukan)
+    if (state.listMode === 'teamSelect') {
         state.listMode = 'icon';
         state.selectingSlot = null;
     }
