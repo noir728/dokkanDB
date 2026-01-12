@@ -69,12 +69,11 @@ function renderTeamLayout() {
 function renderTeamCard(team, teamIndex) {
     const isExpanded = expandedTeamId === team.id;
 
-    // --- Icon Row with Labels and LS Badges ---
-    let iconsHtml = '<div class="team-icons-row">';
-    for (let i = 0; i < 7; i++) {
-        const charId = team.slots[i];
-        const roleLabel = i === 0 ? 'リーダー' : (i === 6 ? 'フレンド' : '');
-        const roleClass = i === 0 ? 'leader' : (i === 6 ? 'friend' : 'sub');
+    // --- Helper function to generate slot HTML ---
+    const generateSlotHtml = (slotIndex) => {
+        const charId = team.slots[slotIndex];
+        const roleLabel = slotIndex === 0 ? 'リーダー' : (slotIndex === 6 ? 'フレンド' : '');
+        const roleClass = slotIndex === 0 ? 'leader' : (slotIndex === 6 ? 'friend' : 'sub');
 
         let iconContent = '';
         let lsBadge = '';
@@ -85,7 +84,7 @@ function renderTeamCard(team, teamIndex) {
             if (char) {
                 hasChar = true;
                 iconContent = getCharIconHtml(char);
-                lsBadge = calculateLsBadgeForSlot(char, teamIndex, i);
+                lsBadge = calculateLsBadgeForSlot(char, teamIndex, slotIndex);
             } else {
                 iconContent = '<div class="slot-placeholder">?</div>';
             }
@@ -93,21 +92,20 @@ function renderTeamCard(team, teamIndex) {
             iconContent = '<div class="slot-placeholder">+</div>';
         }
 
-        // 解放率表示
-        const potentialHtml = hasChar ? renderPotentialIcons(team.id, i) : '';
+        const potentialHtml = hasChar ? renderPotentialIcons(team.id, slotIndex) : '';
 
-        iconsHtml += `
+        return `
             <div class="team-icon-slot ${roleClass}" 
                  data-team-index="${teamIndex}" 
-                 data-slot-index="${i}"
+                 data-slot-index="${slotIndex}"
                  data-char-id="${charId || ''}"
-                 onmousedown="handleSlotMouseDown(event, ${teamIndex}, ${i}, ${charId || 'null'})"
-                 onmouseup="handleSlotMouseUp(event, ${teamIndex}, ${i})"
+                 onmousedown="handleSlotMouseDown(event, ${teamIndex}, ${slotIndex}, ${charId || 'null'})"
+                 onmouseup="handleSlotMouseUp(event, ${teamIndex}, ${slotIndex})"
                  onmouseleave="handleSlotMouseLeave(event)"
-                 ontouchstart="handleSlotTouchStart(event, ${teamIndex}, ${i}, ${charId || 'null'})"
-                 ontouchmove="handleSlotTouchMove(event, ${teamIndex}, ${i})"
-                 ontouchend="handleSlotTouchEnd(event, ${teamIndex}, ${i})"
-                 ontouchcancel="handleSlotTouchEnd(event, ${teamIndex}, ${i})">
+                 ontouchstart="handleSlotTouchStart(event, ${teamIndex}, ${slotIndex}, ${charId || 'null'})"
+                 ontouchmove="handleSlotTouchMove(event, ${teamIndex}, ${slotIndex})"
+                 ontouchend="handleSlotTouchEnd(event, ${teamIndex}, ${slotIndex})"
+                 ontouchcancel="handleSlotTouchEnd(event, ${teamIndex}, ${slotIndex})">
                 ${roleLabel ? `<div class="slot-role-label ${roleClass}">${roleLabel}</div>` : '<div class="slot-role-spacer"></div>'}
                 <div class="team-icon-mini ${hasChar ? 'filled' : 'empty'}">
                     ${iconContent}
@@ -116,8 +114,22 @@ function renderTeamCard(team, teamIndex) {
                 ${potentialHtml}
             </div>
         `;
+    };
+
+    // --- 上段: リーダー(0) + フレンド(6) ---
+    let topRowHtml = '<div class="team-icons-row team-icons-top">';
+    topRowHtml += generateSlotHtml(0);
+    topRowHtml += generateSlotHtml(6);
+    topRowHtml += '</div>';
+
+    // --- 下段: サブ(1-5) ---
+    let bottomRowHtml = '<div class="team-icons-row team-icons-bottom">';
+    for (let i = 1; i <= 5; i++) {
+        bottomRowHtml += generateSlotHtml(i);
     }
-    iconsHtml += '</div>';
+    bottomRowHtml += '</div>';
+
+    const iconsHtml = topRowHtml + bottomRowHtml;
 
     // --- Compact Card ---
     let cardHtml = `
@@ -126,13 +138,14 @@ function renderTeamCard(team, teamIndex) {
                 <div class="team-card-title">
                     <span class="team-card-name">${team.name || 'チーム'}</span>
                     <span class="team-card-label-badge">${team.label || '汎用'}</span>
+                    <span class="team-card-edit-btn" onclick="event.stopPropagation(); openTeamEditModal(${teamIndex})">✏️</span>
                 </div>
                 <span class="team-card-arrow">${isExpanded ? '▲' : '▼'}</span>
             </div>
             ${iconsHtml}
     `;
 
-    // --- Expanded Details (no editable slots, just stats/memo/actions) ---
+    // --- Expanded Details ---
     if (isExpanded) {
         const stats = calculateTeamStats(team);
 
@@ -163,13 +176,6 @@ function renderTeamCard(team, teamIndex) {
                 <div class="team-memo-section">
                     <label class="team-memo-label">メモ</label>
                     <textarea class="team-memo-input" placeholder="メモを入力..." onchange="updateTeamMemo(${teamIndex}, this.value)">${team.memo || ''}</textarea>
-                </div>
-
-                <div class="team-actions-row">
-                    <input type="text" class="team-name-edit" value="${team.name}" onchange="updateTeamName(${teamIndex}, this.value)" placeholder="チーム名">
-                    <select class="team-label-edit" onchange="updateTeamLabel(${teamIndex}, this.value)">
-                        ${TEAM_LABELS.filter(l => l !== '全て').map(l => `<option value="${l}" ${team.label === l ? 'selected' : ''}>${l}</option>`).join('')}
-                    </select>
                 </div>
 
                 <div class="team-actions-row">
@@ -1554,3 +1560,90 @@ window.closePotentialModal = closePotentialModal;
 window.togglePotentialIcon = togglePotentialIcon;
 window.confirmPotentialModal = confirmPotentialModal;
 window.handleQRFile = handleQRFile;
+
+// ========================================
+// チーム編集モーダル（チーム名・ラベル編集）
+// ========================================
+
+let teamEditModalState = null;
+
+function openTeamEditModal(teamIndex) {
+    const team = state.teams[teamIndex];
+    if (!team) return;
+
+    teamEditModalState = {
+        teamIndex,
+        name: team.name,
+        label: team.label
+    };
+
+    renderTeamEditModal();
+}
+
+function renderTeamEditModal() {
+    if (!teamEditModalState) return;
+
+    // 既存モーダルを削除
+    const existing = document.getElementById('team-edit-modal-overlay');
+    if (existing) existing.remove();
+
+    const { name, label } = teamEditModalState;
+
+    const labelOptions = TEAM_LABELS.filter(l => l !== '全て').map(l =>
+        `<option value="${l}" ${label === l ? 'selected' : ''}>${l}</option>`
+    ).join('');
+
+    const modalHtml = `
+        <div id="team-edit-modal-overlay" class="team-edit-modal-overlay" onclick="closeTeamEditModal()">
+            <div class="team-edit-modal" onclick="event.stopPropagation()">
+                <div class="team-edit-modal-title">チーム編集</div>
+                <div class="team-edit-modal-field">
+                    <label>チーム名</label>
+                    <input type="text" id="team-edit-name-input" value="${name || ''}" placeholder="チーム名">
+                </div>
+                <div class="team-edit-modal-field">
+                    <label>ラベル</label>
+                    <select id="team-edit-label-select">
+                        ${labelOptions}
+                    </select>
+                </div>
+                <div class="team-edit-modal-buttons">
+                    <button class="team-edit-modal-btn cancel" onclick="closeTeamEditModal()">キャンセル</button>
+                    <button class="team-edit-modal-btn confirm" onclick="confirmTeamEditModal()">完了</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function closeTeamEditModal() {
+    teamEditModalState = null;
+    const overlay = document.getElementById('team-edit-modal-overlay');
+    if (overlay) overlay.remove();
+}
+
+function confirmTeamEditModal() {
+    if (!teamEditModalState) return;
+
+    const nameInput = document.getElementById('team-edit-name-input');
+    const labelSelect = document.getElementById('team-edit-label-select');
+
+    const { teamIndex } = teamEditModalState;
+    const team = state.teams[teamIndex];
+
+    if (team) {
+        if (nameInput) team.name = nameInput.value;
+        if (labelSelect) team.label = labelSelect.value;
+        saveTeamState();
+    }
+
+    closeTeamEditModal();
+    renderTeamLayout();
+}
+
+// グローバル公開（チーム編集モーダル関連）
+window.openTeamEditModal = openTeamEditModal;
+window.closeTeamEditModal = closeTeamEditModal;
+window.confirmTeamEditModal = confirmTeamEditModal;

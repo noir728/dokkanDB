@@ -2831,13 +2831,21 @@ body {
 .team-card-title {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .team-card-name {
     font-size: 14px;
     font-weight: bold;
     color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .team-card-label-badge {
@@ -2847,25 +2855,48 @@ body {
     border-radius: 10px;
     color: #aaa;
     border: 1px solid #555;
+    flex-shrink: 0;
+}
+
+.team-card-edit-btn {
+    font-size: 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 2px 4px;
+}
+
+.team-card-edit-btn:active {
+    opacity: 0.6;
 }
 
 .team-card-arrow {
     font-size: 12px;
     color: #666;
     transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 8px;
 }
 
 .team-card.expanded .team-card-arrow {
     color: var(--highlight);
 }
 
-/* --- Team Icons Row (Compact View) --- */
+/* --- Team Icons Row (2-Row Layout) --- */
 .team-icons-row {
     display: flex;
     justify-content: center;
-    gap: 2px;
-    padding: 8px 4px 12px;
+    gap: 4px;
+    padding: 6px 4px;
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+.team-icons-top {
+    padding-bottom: 2px;
+    gap: 20px;
+}
+
+.team-icons-bottom {
+    padding-top: 2px;
 }
 
 .team-icon-slot {
@@ -4557,5 +4588,101 @@ body {
 }
 
 .potential-modal-btn.confirm:active {
+    background: #3cb055;
+}
+
+/* =========================================
+   43. Team Edit Modal
+   ========================================= */
+.team-edit-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.team-edit-modal {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 300px;
+    max-width: 90%;
+    border: 1px solid var(--border-color);
+}
+
+.team-edit-modal-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.team-edit-modal-field {
+    margin-bottom: 16px;
+}
+
+.team-edit-modal-field label {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+.team-edit-modal-field input,
+.team-edit-modal-field select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: #1a1a1d;
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.team-edit-modal-field input:focus,
+.team-edit-modal-field select:focus {
+    outline: none;
+    border-color: var(--highlight);
+}
+
+.team-edit-modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.team-edit-modal-btn {
+    padding: 10px 24px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.team-edit-modal-btn.cancel {
+    background: #444;
+    color: #fff;
+}
+
+.team-edit-modal-btn.cancel:active {
+    background: #555;
+}
+
+.team-edit-modal-btn.confirm {
+    background: var(--accent-teq);
+    color: #fff;
+}
+
+.team-edit-modal-btn.confirm:active {
     background: #3cb055;
 }
