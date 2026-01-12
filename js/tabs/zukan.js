@@ -259,6 +259,80 @@ function calcLeaderCandidates(subChar) {
     return candidates.slice(0, 30);
 }
 
+// リーダースキルから対象カテゴリを抽出（「カテゴリの」より前のみ）
+function extractLeaderCategories(lsText) {
+    if (!lsText) return [];
+
+    // 「カテゴリの」で分割し、前半のみを対象にする
+    const parts = lsText.split('カテゴリの');
+    const targetText = parts[0] || '';
+
+    // 「」で囲まれたカテゴリ名をマッチ
+    const catMatches = targetText.match(/「([^」]+)」/g);
+    if (!catMatches) return [];
+
+    return catMatches.map(s => s.replace(/[「」]/g, ''));
+}
+
+// カテゴリ向けリーダー候補を検索
+function calcLeaderCandidatesForCategories(targetCategories) {
+    if (!targetCategories || targetCategories.length === 0) return [];
+
+    const candidates = [];
+    const targetCatsSet = new Set(targetCategories);
+
+    DB.forEach(char => {
+        // 最終覚醒形態のみを対象
+        if (char.awakening && char.awakening.length > 0) {
+            const stepsWithId = char.awakening.filter(step => step.id !== undefined && step.id !== null);
+            if (stepsWithId.length > 0) {
+                const lastStepId = stepsWithId[stepsWithId.length - 1].id;
+                if (char.id !== lastStepId) return;
+            }
+        }
+
+        // 極限後データを優先使用
+        let lsText = "";
+        let mode = "normal";
+        if (char.leader_skill_seza) { lsText = char.leader_skill_seza; mode = "seza"; }
+        else if (char.leader_skill_eza || char.leaderSkill_eza) { lsText = (char.leader_skill_eza || char.leaderSkill_eza); mode = "eza"; }
+        else lsText = char.leaderSkill;
+
+        if (!lsText) return;
+
+        // リーダースキルからカテゴリを抽出
+        const leaderCats = extractLeaderCategories(lsText);
+        if (leaderCats.length === 0) return;
+
+        // 選択カテゴリすべてにこのリーダーが補正を持つか確認（AND条件）
+        const hasAllCats = targetCategories.every(tc => leaderCats.includes(tc));
+        if (!hasAllCats) return;
+
+        // 補正値を計算（仮のサブキャラとして選択カテゴリを持つキャラを作成）
+        const fakeSubChar = { categories: targetCategories, type: '', class: '' };
+        const tempLeader = { ...char, leaderSkill: lsText };
+        const stats = calcDetailedLeaderStats(tempLeader, fakeSubChar);
+
+        if (stats.atk > 0 || stats.hp > 0 || stats.def > 0) {
+            candidates.push({
+                char: char,
+                stats: stats,
+                mode: mode,
+                totalBoost: stats.hp + stats.atk + stats.def
+            });
+        }
+    });
+
+    // HP+ATK+DEF合算でソート（同値は実装日降順）
+    candidates.sort((a, b) => {
+        if (b.totalBoost !== a.totalBoost) return b.totalBoost - a.totalBoost;
+        const getDate = (c) => [c.release, c.eza, c.seza].filter(d => d).sort().pop() || "";
+        return getDate(b.char).localeCompare(getDate(a.char));
+    });
+
+    return candidates;
+}
+
 function calcLeaderBoost(leaderChar, subChar) {
     let lsText = "";
     if (leaderChar.leaderSkill) lsText = leaderChar.leaderSkill;
@@ -569,6 +643,7 @@ function renderFilterModal() {
             <div class="filter-section">
                 <div class="filter-header">
                     <span class="filter-label">カテゴリ</span>
+                    <button id="leader-search-btn" class="leader-search-btn" onclick="toggleLeaderSearch()">リーダー検索</button>
                     <div class="toggle-mini" onclick="toggleMiniLogic('category')" id="logic-btn-category">
                         <span class="toggle-mini-opt active">AND</span>
                         <span class="toggle-mini-opt">OR</span>
@@ -781,6 +856,14 @@ function toggleFilter(key, value) {
     updateFilterUI();
 }
 
+function toggleLeaderSearch() {
+    state.filter.leaderSearch = !state.filter.leaderSearch;
+    const btn = document.getElementById('leader-search-btn');
+    if (btn) {
+        btn.classList.toggle('active', state.filter.leaderSearch);
+    }
+}
+
 function addFilterFromInput(type, input) {
     const val = input.value;
     if (!val) return;
@@ -806,8 +889,13 @@ function resetFilters() {
         sort: 'releaseDesc',
         rarities: [], rarityLogic: 'OR', types: [], typeLogic: 'OR', classes: [], classLogic: 'OR',
         status: [], eza: [], ezaLogic: 'OR', saTypes: [], saTypeLogic: 'OR',
-        categories: [], categoryLogic: 'AND', links: [], linkLogic: 'AND'
+        categories: [], categoryLogic: 'AND', links: [], linkLogic: 'AND',
+        leaderSearch: false
     };
+
+    // Reset Leader Search Button
+    const leaderBtn = document.getElementById('leader-search-btn');
+    if (leaderBtn) leaderBtn.classList.remove('active');
 
     const sortSelect = document.getElementById('sort-select');
     if (sortSelect) sortSelect.value = 'releaseDesc';
@@ -903,6 +991,12 @@ function updateFilterUI() {
     };
     updateAllItemChips('all-cats-container', state.filter.categories);
     updateAllItemChips('all-links-container', state.filter.links);
+
+    // Leader Search Button State
+    const leaderBtn = document.getElementById('leader-search-btn');
+    if (leaderBtn) {
+        leaderBtn.classList.toggle('active', state.filter.leaderSearch);
+    }
 }
 
 // --- 3. Navigation & Rendering ---
@@ -1217,6 +1311,152 @@ function renderZukanList(targetGrid) {
 
     grid.className = `char-grid ${state.listMode === 'detail' ? 'mode-detail' : ''}`;
     grid.innerHTML = '';
+
+    // --- 【分岐】リーダー検索モード ---
+    const isLeaderSearchMode = f.leaderSearch && f.categories.length > 0 && state.listMode !== 'teamSelect';
+
+    if (isLeaderSearchMode) {
+        grid.className = 'char-grid-sections';
+        grid.style.display = 'block';
+
+        // リーダー候補を取得
+        const leaderCandidates = calcLeaderCandidatesForCategories(f.categories);
+        const leaderCharIds = new Set(leaderCandidates.map(lc => lc.char.id));
+
+        // リーダー候補セクション
+        if (leaderCandidates.length > 0) {
+            const leaderHeader = document.createElement('div');
+            leaderHeader.className = 'ls-section-header leader-section';
+            leaderHeader.style.borderColor = '#ffd700';
+            leaderHeader.style.color = '#ffd700';
+            leaderHeader.innerHTML = `<span style="font-weight:bold; font-size:14px;">リーダー (${leaderCandidates.length})</span>`;
+            grid.appendChild(leaderHeader);
+
+            const leaderGrid = document.createElement('div');
+            leaderGrid.className = state.listMode === 'detail' ? 'char-grid mode-detail' : 'char-grid';
+            leaderGrid.style.padding = '5px 0 20px 0';
+            if (state.listMode === 'detail') leaderGrid.style.display = 'flex';
+
+            leaderCandidates.forEach(lc => {
+                const char = lc.char;
+                const stats = lc.stats;
+                const item = document.createElement('div');
+                const iconHtml = (typeof getCharIconHtml === 'function') ? getCharIconHtml(char, null, { hideStatus: true }) : 'IMG';
+
+                if (state.listMode === 'icon') {
+                    item.className = 'char-item-icon leader-candidate';
+                    item.style.position = 'relative';
+
+                    // 補正値テーブルHTML
+                    const statsTableHtml = `
+                        <div class="leader-stats-table">
+                            <div class="stats-row stats-header">
+                                <span>気力</span><span>HP</span><span>ATK</span><span>DEF</span>
+                            </div>
+                            <div class="stats-row stats-values">
+                                <span>+${stats.ki}</span><span>${stats.hp}%</span><span>${stats.atk}%</span><span>${stats.def}%</span>
+                            </div>
+                        </div>`;
+
+                    item.innerHTML = iconHtml + statsTableHtml;
+                    item.onclick = () => openDetail(char.id);
+                } else {
+                    // リストモード
+                    item.className = 'char-item-row leader-candidate';
+                    let badgeHtml = '';
+                    if (char.seza) badgeHtml = `<span class="seza-badge-mini">超極限</span>`;
+                    else if (char.eza) badgeHtml = `<span class="eza-badge-mini">極限</span>`;
+
+                    item.innerHTML = `
+                        <div class="list-icon-wrapper">${iconHtml}</div>
+                        <div class="char-row-info">
+                            <div class="char-row-header"><div class="char-row-title">${char.title || ''}</div><div class="char-row-date">${char.release || ''}</div></div>
+                            <div class="char-name-badge-flex" style="display:flex; align-items:center; width:100%;">
+                                <div class="char-row-name" style="flex:1; display:block; padding-right:4px;">
+                                    <span class="char-name-text">${char.name.replace(/\n/g, ' ')}</span>
+                                </div>
+                                ${badgeHtml}
+                            </div>
+                            <div class="char-row-leader-stats">
+                                <span class="stat-cell"><span class="stat-label">気力</span><span class="stat-value">+${stats.ki}</span></span>
+                                <span class="stat-cell"><span class="stat-label">HP</span><span class="stat-value">${stats.hp}%</span></span>
+                                <span class="stat-cell"><span class="stat-label">ATK</span><span class="stat-value">${stats.atk}%</span></span>
+                                <span class="stat-cell"><span class="stat-label">DEF</span><span class="stat-value">${stats.def}%</span></span>
+                            </div>
+                        </div>`;
+                    item.onclick = () => openDetail(char.id);
+                }
+                leaderGrid.appendChild(item);
+            });
+            grid.appendChild(leaderGrid);
+        }
+
+        // 通常キャラセクション（リーダー候補以外のカテゴリ所属キャラ）
+        const normalChars = displayDB.filter(c => !leaderCharIds.has(c.id));
+        if (normalChars.length > 0) {
+            const normalHeader = document.createElement('div');
+            normalHeader.className = 'ls-section-header normal-section';
+            normalHeader.style.borderColor = '#666';
+            normalHeader.style.color = '#888';
+            normalHeader.innerHTML = `<span style="font-size:12px;">カテゴリ所属キャラ (${normalChars.length})</span>`;
+            grid.appendChild(normalHeader);
+
+            const normalGrid = document.createElement('div');
+            normalGrid.className = state.listMode === 'detail' ? 'char-grid mode-detail' : 'char-grid';
+            normalGrid.style.padding = '5px 0 20px 0';
+            if (state.listMode === 'detail') normalGrid.style.display = 'flex';
+
+            normalChars.forEach(char => {
+                const item = document.createElement('div');
+                const iconHtml = (typeof getCharIconHtml === 'function') ? getCharIconHtml(char, null, { hideStatus: true }) : 'IMG';
+
+                if (state.listMode === 'icon') {
+                    item.className = 'char-item-icon';
+                    item.style.position = 'relative';
+                    item.innerHTML = iconHtml;
+                    item.onclick = () => openDetail(char.id);
+                } else {
+                    item.className = 'char-item-row';
+                    const rawStats = (char.forms && char.forms[0]) ? char.forms[0].stats : char.stats;
+                    let displayStats = { hp: '---', atk: '---', def: '---' };
+                    if (rawStats) {
+                        if (rawStats.rainbow) displayStats = rawStats.rainbow;
+                        else if (rawStats.hp) displayStats = rawStats;
+                    }
+                    let badgeHtml = '';
+                    if (char.seza) badgeHtml = `<span class="seza-badge-mini">超極限</span>`;
+                    else if (char.eza) badgeHtml = `<span class="eza-badge-mini">極限</span>`;
+
+                    item.innerHTML = `
+                        <div class="list-icon-wrapper">${iconHtml}</div>
+                        <div class="char-row-info">
+                            <div class="char-row-header"><div class="char-row-title">${char.title || ''}</div><div class="char-row-date">${char.release || ''}</div></div>
+                            <div class="char-name-badge-flex" style="display:flex; align-items:center; width:100%;">
+                                <div class="char-row-name" style="flex:1; display:block; padding-right:4px;">
+                                    <span class="char-name-text">${char.name.replace(/\n/g, ' ')}</span>
+                                </div>
+                                ${badgeHtml}
+                            </div>
+                            <div class="char-row-details">
+                                <div class="list-cost">コスト ${char.cost || '-'}</div>
+                                <div class="char-row-stats"><span>HP ${displayStats.hp}</span><span>ATK ${displayStats.atk}</span><span>DEF ${displayStats.def}</span></div>
+                            </div>
+                        </div>`;
+                    item.onclick = () => openDetail(char.id);
+                }
+                normalGrid.appendChild(item);
+            });
+            grid.appendChild(normalGrid);
+        }
+
+        // カウント更新
+        if (countEl) {
+            const totalLeaders = leaderCandidates.length;
+            const totalNormal = displayDB.filter(c => !leaderCharIds.has(c.id)).length;
+            countEl.innerText = `リーダー候補 ${totalLeaders}体 / カテゴリ所属 ${totalNormal}体`;
+        }
+        return;
+    }
 
     // --- 【分岐】サブキャラ選択モード (セクション分け表示) ---
     if (isSubSelectMode) {

@@ -1137,11 +1137,21 @@ window.popoverRemove = popoverRemove;
 
 // チームデータをエンコード
 function encodeTeamData(team) {
+    // 解放率データを収集
+    const potentials = {};
+    for (let i = 0; i < 7; i++) {
+        const key = `${team.id}-${i}`;
+        if (state.slotPotentials && state.slotPotentials[key]) {
+            potentials[i] = state.slotPotentials[key];
+        }
+    }
+
     const data = {
         n: team.name,
         l: team.label,
         s: team.slots,
-        m: team.memo || ''
+        m: team.memo || '',
+        p: potentials  // 解放率データ追加
     };
     return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
 }
@@ -1155,7 +1165,8 @@ function decodeTeamData(encoded) {
             name: data.n || 'インポートチーム',
             label: data.l || '汎用',
             slots: data.s || [null, null, null, null, null, null, null],
-            memo: data.m || ''
+            memo: data.m || '',
+            potentials: data.p || {}  // 解放率データ追加
         };
     } catch (e) {
         console.error('QRデコードエラー:', e);
@@ -1406,6 +1417,16 @@ function applyQRData(data) {
         if (team) {
             team.slots = teamData.slots;
             team.memo = teamData.memo;
+
+            // 解放率データを適用
+            if (teamData.potentials && Object.keys(teamData.potentials).length > 0) {
+                if (!state.slotPotentials) state.slotPotentials = {};
+                for (const slotIndex in teamData.potentials) {
+                    const key = `${team.id}-${slotIndex}`;
+                    state.slotPotentials[key] = teamData.potentials[slotIndex];
+                }
+            }
+
             saveTeamState();
             closeQRLoadModal();
             renderTeamLayout();
@@ -1422,6 +1443,16 @@ function applyQRData(data) {
         memo: teamData.memo
     };
     state.teams.push(newTeam);
+
+    // 解放率データを新チームIDで適用
+    if (teamData.potentials && Object.keys(teamData.potentials).length > 0) {
+        if (!state.slotPotentials) state.slotPotentials = {};
+        for (const slotIndex in teamData.potentials) {
+            const key = `${newTeam.id}-${slotIndex}`;
+            state.slotPotentials[key] = teamData.potentials[slotIndex];
+        }
+    }
+
     expandedTeamId = newTeam.id;
     saveTeamState();
     closeQRLoadModal();

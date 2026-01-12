@@ -33,7 +33,8 @@ const state = {
         eza: [], ezaLogic: 'OR',
         saTypes: [], saTypeLogic: 'OR',
         categories: [], categoryLogic: 'AND',
-        links: [], linkLogic: 'AND'
+        links: [], linkLogic: 'AND',
+        leaderSearch: false
     },
     scrollPositions: { zukan: 0, detail: 0, party: 0 },
     returnTab: null // 詳細画面からの戻り先タブ（編成タブから開いた場合は'party'）
