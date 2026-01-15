@@ -186,3 +186,199 @@ function scrollToTop() {
     const c = document.getElementById('main-content');
     if (c) c.scrollTo({ top: 0, behavior: 'auto' });
 }
+
+// --- DOM操作ヘルパー ---
+
+/**
+ * getElementById のショートカット
+ * @param {string} id - 要素のID
+ * @returns {HTMLElement|null}
+ */
+function $(id) {
+    return document.getElementById(id);
+}
+
+/**
+ * 要素を作成するヘルパー
+ * @param {string} tag - タグ名
+ * @param {string} className - クラス名
+ * @param {string} innerHTML - 内部HTML
+ * @returns {HTMLElement}
+ */
+function createElement(tag, className = '', innerHTML = '') {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    if (innerHTML) el.innerHTML = innerHTML;
+    return el;
+}
+
+// --- タップ・長押しハンドラ ---
+
+/**
+ * 長押し・タップ判定ヘルパー
+ * タップでonTap、長押し（500ms）でonLongPressを呼び出す
+ * @param {HTMLElement} element - 対象要素
+ * @param {Function} onTap - タップ時のコールバック
+ * @param {Function} onLongPress - 長押し時のコールバック
+ * @param {Object} options - オプション
+ * @param {number} options.longPressDuration - 長押し判定時間（ms）デフォルト500
+ * @param {number} options.moveThreshold - 移動閾値（px）デフォルト10
+ */
+function addPressHandlers(element, onTap, onLongPress, options = {}) {
+    const longPressDuration = options.longPressDuration || 500;
+    const moveThreshold = options.moveThreshold || 10;
+
+    let timer;
+    let isLongPressed = false;
+    let startX, startY;
+
+    const handleStart = (e) => {
+        isLongPressed = false;
+        if (e.touches) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }
+        timer = setTimeout(() => {
+            isLongPressed = true;
+            if (navigator.vibrate) navigator.vibrate(50);
+            onLongPress();
+        }, longPressDuration);
+    };
+
+    const handleEnd = (e) => {
+        if (timer) {
+            clearTimeout(timer);
+            if (!isLongPressed) {
+                onTap();
+            }
+        }
+    };
+
+    const handleMove = (e) => {
+        if (!timer) return;
+        if (e.touches) {
+            const diffX = Math.abs(e.touches[0].clientX - startX);
+            const diffY = Math.abs(e.touches[0].clientY - startY);
+            if (diffX > moveThreshold || diffY > moveThreshold) {
+                clearTimeout(timer);
+                timer = null;
+            }
+        }
+    };
+
+    // タッチイベント
+    element.addEventListener('touchstart', handleStart, { passive: true });
+    element.addEventListener('touchmove', handleMove, { passive: true });
+    element.addEventListener('touchend', handleEnd);
+
+    // マウスイベント（PC用）
+    element.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return;
+        startX = e.clientX;
+        startY = e.clientY;
+        isLongPressed = false;
+        timer = setTimeout(() => {
+            isLongPressed = true;
+            onLongPress();
+        }, longPressDuration);
+    });
+
+    element.addEventListener('mousemove', (e) => {
+        if (timer) {
+            const diffX = Math.abs(e.clientX - startX);
+            const diffY = Math.abs(e.clientY - startY);
+            if (diffX > moveThreshold || diffY > moveThreshold) {
+                clearTimeout(timer);
+                timer = null;
+            }
+        }
+    });
+
+    element.addEventListener('mouseup', (e) => {
+        if (timer) {
+            clearTimeout(timer);
+            if (!isLongPressed && e.button === 0) {
+                onTap();
+            }
+        }
+    });
+
+    element.addEventListener('mouseleave', () => {
+        if (timer) clearTimeout(timer);
+    });
+
+    element.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+    });
+}
+
+/**
+ * スクロール対応タップ判定ヘルパー
+ * スクロール時は選択しないようにする
+ * @param {HTMLElement} element - 対象要素
+ * @param {Function} onTap - タップ時のコールバック
+ * @param {Object} options - オプション
+ * @param {number} options.moveThreshold - 移動閾値（px）デフォルト10
+ */
+function addScrollAwareHandler(element, onTap, options = {}) {
+    const moveThreshold = options.moveThreshold || 10;
+    let startX, startY;
+    let hasMoved = false;
+
+    const handleTouchStart = (e) => {
+        hasMoved = false;
+        if (e.touches && e.touches[0]) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }
+    };
+
+    const handleTouchMove = (e) => {
+        if (e.touches && e.touches[0]) {
+            const diffX = Math.abs(e.touches[0].clientX - startX);
+            const diffY = Math.abs(e.touches[0].clientY - startY);
+            if (diffX > moveThreshold || diffY > moveThreshold) {
+                hasMoved = true;
+            }
+        }
+    };
+
+    const handleTouchEnd = (e) => {
+        if (!hasMoved) {
+            onTap();
+        }
+        hasMoved = false;
+    };
+
+    element.addEventListener('touchstart', handleTouchStart, { passive: true });
+    element.addEventListener('touchmove', handleTouchMove, { passive: true });
+    element.addEventListener('touchend', handleTouchEnd);
+
+    // マウスイベント（PC用）
+    let mouseHasMoved = false;
+    element.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return;
+        mouseHasMoved = false;
+        startX = e.clientX;
+        startY = e.clientY;
+    });
+
+    element.addEventListener('mousemove', (e) => {
+        if (startX !== undefined) {
+            const diffX = Math.abs(e.clientX - startX);
+            const diffY = Math.abs(e.clientY - startY);
+            if (diffX > moveThreshold || diffY > moveThreshold) {
+                mouseHasMoved = true;
+            }
+        }
+    });
+
+    element.addEventListener('mouseup', (e) => {
+        if (e.button === 0 && !mouseHasMoved) {
+            onTap();
+        }
+        mouseHasMoved = false;
+        startX = undefined;
+        startY = undefined;
+    });
+}

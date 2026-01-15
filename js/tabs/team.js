@@ -402,38 +402,40 @@ function openTeamSelect(slotIndex) {
     openTeamSelectNew(state.currentTeamIndex, slotIndex);
 }
 
-// --- Long-Press Handler ---
-let longPressTimer = null;
-let isLongPress = false;
-let touchStartX = 0;
-let touchStartY = 0;
-let hasTouchMoved = false;
-const LONG_PRESS_DURATION = 500; // ms
-const MOVE_THRESHOLD = 10; // px
+// --- Long-Press Handler State ---
+const pressState = {
+    timer: null,
+    isLongPress: false,
+    startX: 0,
+    startY: 0,
+    hasMoved: false,
+    DURATION: 500,    // ms
+    THRESHOLD: 10     // px
+};
 
 function handleSlotMouseDown(e, teamIndex, slotIndex, charId) {
     // Ignore if click originated from remove button or potential container
     if (e.target.classList.contains('slot-remove-btn')) return;
     if (e.target.closest('.slot-potential-container')) return;
 
-    isLongPress = false;
-    longPressTimer = setTimeout(() => {
-        isLongPress = true;
+    pressState.isLongPress = false;
+    pressState.timer = setTimeout(() => {
+        pressState.isLongPress = true;
         if (charId) {
             openCharDetailFromTeam(charId);
         }
-    }, LONG_PRESS_DURATION);
+    }, pressState.DURATION);
 }
 
 function handleSlotMouseUp(e, teamIndex, slotIndex) {
     // Ignore if click originated from potential container
     if (e.target.closest('.slot-potential-container')) return;
 
-    if (longPressTimer) {
-        clearTimeout(longPressTimer);
-        longPressTimer = null;
+    if (pressState.timer) {
+        clearTimeout(pressState.timer);
+        pressState.timer = null;
     }
-    if (!isLongPress) {
+    if (!pressState.isLongPress) {
         const team = state.teams[teamIndex];
         const charId = team.slots[slotIndex];
         if (charId) {
@@ -444,15 +446,15 @@ function handleSlotMouseUp(e, teamIndex, slotIndex) {
             openTeamSelectNew(teamIndex, slotIndex);
         }
     }
-    isLongPress = false;
+    pressState.isLongPress = false;
 }
 
 function handleSlotMouseLeave(e) {
-    if (longPressTimer) {
-        clearTimeout(longPressTimer);
-        longPressTimer = null;
+    if (pressState.timer) {
+        clearTimeout(pressState.timer);
+        pressState.timer = null;
     }
-    isLongPress = false;
+    pressState.isLongPress = false;
 }
 
 function handleSlotTouchStart(e, teamIndex, slotIndex, charId) {
@@ -462,34 +464,34 @@ function handleSlotTouchStart(e, teamIndex, slotIndex, charId) {
 
     // Track touch position for scroll detection
     if (e.touches && e.touches[0]) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
+        pressState.startX = e.touches[0].clientX;
+        pressState.startY = e.touches[0].clientY;
     }
-    hasTouchMoved = false;
-    isLongPress = false;
+    pressState.hasMoved = false;
+    pressState.isLongPress = false;
 
     // Do NOT call e.preventDefault() - allow scrolling
 
-    longPressTimer = setTimeout(() => {
-        if (!hasTouchMoved) {
-            isLongPress = true;
+    pressState.timer = setTimeout(() => {
+        if (!pressState.hasMoved) {
+            pressState.isLongPress = true;
             if (navigator.vibrate) navigator.vibrate(50);
             if (charId) {
                 openCharDetailFromTeam(charId);
             }
         }
-    }, LONG_PRESS_DURATION);
+    }, pressState.DURATION);
 }
 
 function handleSlotTouchMove(e, teamIndex, slotIndex) {
     if (e.touches && e.touches[0]) {
-        const diffX = Math.abs(e.touches[0].clientX - touchStartX);
-        const diffY = Math.abs(e.touches[0].clientY - touchStartY);
-        if (diffX > MOVE_THRESHOLD || diffY > MOVE_THRESHOLD) {
-            hasTouchMoved = true;
-            if (longPressTimer) {
-                clearTimeout(longPressTimer);
-                longPressTimer = null;
+        const diffX = Math.abs(e.touches[0].clientX - pressState.startX);
+        const diffY = Math.abs(e.touches[0].clientY - pressState.startY);
+        if (diffX > pressState.THRESHOLD || diffY > pressState.THRESHOLD) {
+            pressState.hasMoved = true;
+            if (pressState.timer) {
+                clearTimeout(pressState.timer);
+                pressState.timer = null;
             }
         }
     }
@@ -499,13 +501,13 @@ function handleSlotTouchEnd(e, teamIndex, slotIndex) {
     // Ignore if touch originated from potential container
     if (e.target.closest('.slot-potential-container')) return;
 
-    if (longPressTimer) {
-        clearTimeout(longPressTimer);
-        longPressTimer = null;
+    if (pressState.timer) {
+        clearTimeout(pressState.timer);
+        pressState.timer = null;
     }
 
     // Only trigger tap if no movement and no long press
-    if (!isLongPress && !hasTouchMoved) {
+    if (!pressState.isLongPress && !pressState.hasMoved) {
         const team = state.teams[teamIndex];
         const charId = team.slots[slotIndex];
         if (charId) {
@@ -517,8 +519,8 @@ function handleSlotTouchEnd(e, teamIndex, slotIndex) {
             openTeamSelectNew(teamIndex, slotIndex);
         }
     }
-    isLongPress = false;
-    hasTouchMoved = false;
+    pressState.isLongPress = false;
+    pressState.hasMoved = false;
 }
 
 function handleRemoveClick(e, teamIndex, slotIndex) {

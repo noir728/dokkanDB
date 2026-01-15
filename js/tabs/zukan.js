@@ -5,6 +5,50 @@
 // レアリティを数値にマッピングするための定数 (ソート用)
 const RARITY_RANK = { 'N': 0, 'R': 1, 'SR': 2, 'SSR': 3, 'UR': 4, 'LR': 5 };
 
+/**
+ * フィルター条件チェック（AND/OR対応）
+ * @param {Array} arr - 選択中のフィルター値
+ * @param {string} logic - 'AND' または 'OR'
+ * @param {Function} checkFn - チェック関数
+ * @returns {boolean}
+ */
+function checkFilterCondition(arr, logic, checkFn) {
+    if (arr.length === 0) return true;
+    if (logic === 'AND') return arr.every(checkFn);
+    return arr.some(checkFn);
+}
+
+/**
+ * キャラクターのステータス値を取得
+ * @param {Object} char - キャラクター
+ * @param {string} key - ステータスキー (hp, atk, def)
+ * @returns {number}
+ */
+function getCharStat(char, key) {
+    if (char.forms && char.forms[0] && char.forms[0].stats && char.forms[0].stats[key]) {
+        return char.forms[0].stats[key];
+    }
+    return char.stats ? (char.stats[key] || 0) : 0;
+}
+
+/**
+ * キャラクターの最新実装日を取得
+ * @param {Object} char - キャラクター
+ * @returns {string}
+ */
+function getLatestDate(char) {
+    return [char.release, char.eza, char.seza].filter(d => d).sort().pop() || "";
+}
+
+/**
+ * レアリティをソート用数値に変換
+ * @param {string} rarity - レアリティ文字列
+ * @returns {number}
+ */
+function getRarityRank(rarity) {
+    return RARITY_RANK[rarity] !== undefined ? RARITY_RANK[rarity] : -1;
+}
+
 function getSpecsHtml(specs) {
     if (!specs) return "";
 
@@ -1126,12 +1170,6 @@ function renderZukanList(targetGrid) {
         else clrBtn.classList.remove('visible');
     }
 
-    const check = (arr, logic, checkFn) => {
-        if (arr.length === 0) return true;
-        if (logic === 'AND') return arr.every(checkFn);
-        return arr.some(checkFn);
-    };
-
     let displayDB = DB.filter(char => {
         if (query) {
             const n = char.name.toLowerCase();
@@ -1140,9 +1178,9 @@ function renderZukanList(targetGrid) {
             if (!n.includes(query) && !t.includes(query) && !y.includes(query)) return false;
         }
 
-        if (!check(f.rarities, f.rarityLogic, r => char.rarity === r)) return false;
-        if (!check(f.types, f.typeLogic, t => char.type === t)) return false;
-        if (!check(f.classes, f.classLogic, c => char.class === c)) return false;
+        if (!checkFilterCondition(f.rarities, f.rarityLogic, r => char.rarity === r)) return false;
+        if (!checkFilterCondition(f.types, f.typeLogic, t => char.type === t)) return false;
+        if (!checkFilterCondition(f.classes, f.classLogic, c => char.class === c)) return false;
 
         if (f.status.includes('owned') && !state.owned.includes(char.id)) return false;
         if (f.status.includes('favorite') && !state.favorites.includes(char.id)) return false;
@@ -1159,8 +1197,8 @@ function renderZukanList(targetGrid) {
             if (!match) return false;
         }
 
-        if (!check(f.categories, f.categoryLogic, c => char.categories?.includes(c))) return false;
-        if (!check(f.links, f.linkLogic, l => {
+        if (!checkFilterCondition(f.categories, f.categoryLogic, c => char.categories?.includes(c))) return false;
+        if (!checkFilterCondition(f.links, f.linkLogic, l => {
             if (char.links?.includes(l)) return true;
             if (char.forms?.some(frm => frm.links?.includes(l))) return true;
             return false;
@@ -1172,7 +1210,7 @@ function renderZukanList(targetGrid) {
             scanSA(char.superAttacks);
             char.forms?.forEach(f => scanSA(f.superAttacks));
             char.forms_eza?.forEach(f => scanSA(f.superAttacks));
-            if (!check(f.saTypes, f.saTypeLogic, t => allSaTypes.has(t))) return false;
+            if (!checkFilterCondition(f.saTypes, f.saTypeLogic, t => allSaTypes.has(t))) return false;
         }
 
         // Max Awakening Filter: Only show final awakening form
@@ -1251,8 +1289,7 @@ function renderZukanList(targetGrid) {
                 // 倍率降順 -> 実装日新しい順
                 displayDB.sort((a, b) => {
                     if (b.tempLsBoost !== a.tempLsBoost) return b.tempLsBoost - a.tempLsBoost;
-                    const getDate = (c) => [c.release, c.eza, c.seza].filter(d => d).sort().pop() || "";
-                    return getDate(b).localeCompare(getDate(a));
+                    return getLatestDate(b).localeCompare(getLatestDate(a));
                 });
             }
         } else {
@@ -1261,25 +1298,21 @@ function renderZukanList(targetGrid) {
         }
     } else if (f.sort) {
         displayDB.sort((a, b) => {
-            const getStat = (c, k) => (c.forms && c.forms[0] && c.forms[0].stats && c.forms[0].stats[k]) ? c.forms[0].stats[k] : (c.stats ? c.stats[k] : 0);
-            const getRank = (r) => RARITY_RANK[r] !== undefined ? RARITY_RANK[r] : -1;
-            const getDate = (c) => [c.release, c.eza, c.seza].filter(d => d).sort().pop() || "";
-
-            const dateA = getDate(a);
-            const dateB = getDate(b);
+            const dateA = getLatestDate(a);
+            const dateB = getLatestDate(b);
             const dateDiff = dateB.localeCompare(dateA);
 
             if (f.sort === 'releaseDesc') return dateDiff;
             if (f.sort === 'releaseAsc') return dateA.localeCompare(dateB);
 
             let diff = 0;
-            if (f.sort === 'rarityDesc') diff = getRank(b.rarity) - getRank(a.rarity);
-            if (f.sort === 'rarityAsc') diff = getRank(a.rarity) - getRank(b.rarity);
+            if (f.sort === 'rarityDesc') diff = getRarityRank(b.rarity) - getRarityRank(a.rarity);
+            if (f.sort === 'rarityAsc') diff = getRarityRank(a.rarity) - getRarityRank(b.rarity);
             if (f.sort === 'costDesc') diff = (b.cost || 0) - (a.cost || 0);
             if (f.sort === 'costAsc') diff = (a.cost || 0) - (b.cost || 0);
-            if (f.sort === 'hpDesc') diff = getStat(b, 'hp') - getStat(a, 'hp');
-            if (f.sort === 'atkDesc') diff = getStat(b, 'atk') - getStat(a, 'atk');
-            if (f.sort === 'defDesc') diff = getStat(b, 'def') - getStat(a, 'def');
+            if (f.sort === 'hpDesc') diff = getCharStat(b, 'hp') - getCharStat(a, 'hp');
+            if (f.sort === 'atkDesc') diff = getCharStat(b, 'atk') - getCharStat(a, 'atk');
+            if (f.sort === 'defDesc') diff = getCharStat(b, 'def') - getCharStat(a, 'def');
 
             if (diff !== 0) return diff;
             return dateDiff;
