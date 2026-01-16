@@ -1380,16 +1380,12 @@ function renderZukanList(targetGrid) {
                     item.className = 'char-item-icon leader-candidate';
                     item.style.position = 'relative';
 
-                    // 補正値テーブルHTML
+                    // 補正値テーブルHTML（実際のtable要素）
                     const statsTableHtml = `
-                        <div class="leader-stats-table">
-                            <div class="stats-row stats-header">
-                                <span>気力</span><span>HP</span><span>ATK</span><span>DEF</span>
-                            </div>
-                            <div class="stats-row stats-values">
-                                <span>+${stats.ki}</span><span>${stats.hp}%</span><span>${stats.atk}%</span><span>${stats.def}%</span>
-                            </div>
-                        </div>`;
+                        <table class="leader-stats-table">
+                            <tr><th>気力</th><th>HP</th><th>ATK</th><th>DEF</th></tr>
+                            <tr><td>+${stats.ki}</td><td>${stats.hp}%</td><td>${stats.atk}%</td><td>${stats.def}%</td></tr>
+                        </table>`;
 
                     item.innerHTML = iconHtml + statsTableHtml;
                     item.onclick = () => openDetail(char.id);

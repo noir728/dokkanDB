@@ -4842,3 +4842,54 @@ body {
 .ls-section-header.leader-section {
     background: rgba(255, 215, 0, 0.08);
 }
+
+/* アイコンモード: リーダー候補アイテム */
+.char-item-icon.leader-candidate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* アイコンモード: リーダー候補アイコンサイズ（デフォルトと同じ） */
+.char-item-icon.leader-candidate .dokkan-icon {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    margin-top: 0;
+}
+
+/* アイコンモード: リーダー候補補正値テーブル */
+.leader-stats-table {
+    width: 100%;
+    min-width: 80px;
+    border-collapse: collapse;
+    font-size: 8px;
+    text-align: center;
+    margin-top: 2px;
+    table-layout: auto;
+}
+
+.leader-stats-table th,
+.leader-stats-table td {
+    border: 1px solid #555;
+    padding: 1px 2px;
+    white-space: nowrap;
+    overflow: visible;
+}
+
+.leader-stats-table th {
+    background: #333;
+    color: #aaa;
+    font-weight: bold;
+    font-size: 7px;
+}
+
+.leader-stats-table td {
+    background: #222;
+    color: #fff;
+    font-weight: bold;
+    font-size: 8px;
+}
