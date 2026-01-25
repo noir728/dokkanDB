@@ -1171,6 +1171,9 @@ function renderZukanList(targetGrid) {
     }
 
     let displayDB = DB.filter(char => {
+        // source_type が "?" のキャラは非表示
+        if (char.source_type === '?') return false;
+
         if (query) {
             const n = char.name.toLowerCase();
             const t = char.title ? char.title.toLowerCase() : '';
