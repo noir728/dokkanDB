@@ -594,135 +594,137 @@ function renderFilterModal() {
     const html = `
     <div id="filter-modal" class="modal-overlay">
         <div class="filter-modal scale-in">
-            <h2 style="font-size:16px; font-weight:bold; margin-bottom:20px; text-align:center;">絞り込み条件</h2>
+            <div class="filter-modal-body">
+                <h2 style="font-size:16px; font-weight:bold; margin-bottom:20px; text-align:center;">絞り込み条件</h2>
 
-            <!-- Removed Global Logic Toggle -->
+                <!-- Removed Global Logic Toggle -->
 
-            <!-- 属性 (Type) -->
-            <div class="filter-section">
-                <div class="filter-header">
-                    <span class="filter-label">属性 (Type)</span>
-                    <div class="toggle-mini" onclick="toggleMiniLogic('type')" id="logic-btn-type">
-                        <span class="toggle-mini-opt">AND</span>
-                        <span class="toggle-mini-opt active">OR</span>
-                        <div class="toggle-mini-slider" style="transform:translateX(33px); background-color: var(--accent-str);"></div>
+                <!-- 属性 (Type) -->
+                <div class="filter-section">
+                    <div class="filter-header">
+                        <span class="filter-label">属性</span>
+                        <div class="toggle-mini" onclick="toggleMiniLogic('type')" id="logic-btn-type">
+                            <span class="toggle-mini-opt">AND</span>
+                            <span class="toggle-mini-opt active">OR</span>
+                            <div class="toggle-mini-slider" style="transform:translateX(33px); background-color: var(--accent-str);"></div>
+                        </div>
+                    </div>
+                    <div class="filter-chips" id="filter-types">
+                        <div class="filter-chip" onclick="toggleFilter('type', 'AGL')">速</div>
+                        <div class="filter-chip" onclick="toggleFilter('type', 'TEQ')">技</div>
+                        <div class="filter-chip" onclick="toggleFilter('type', 'INT')">知</div>
+                        <div class="filter-chip" onclick="toggleFilter('type', 'STR')">力</div>
+                        <div class="filter-chip" onclick="toggleFilter('type', 'PHY')">体</div>
                     </div>
                 </div>
-                <div class="filter-chips" id="filter-types">
-                    <div class="filter-chip" onclick="toggleFilter('type', 'AGL')">速属性</div>
-                    <div class="filter-chip" onclick="toggleFilter('type', 'TEQ')">技属性</div>
-                    <div class="filter-chip" onclick="toggleFilter('type', 'INT')">知属性</div>
-                    <div class="filter-chip" onclick="toggleFilter('type', 'STR')">力属性</div>
-                    <div class="filter-chip" onclick="toggleFilter('type', 'PHY')">体属性</div>
-                </div>
-            </div>
 
-            <!-- 属性区分 (Class) -->
-            <div class="filter-section">
-                <div class="filter-header">
-                    <span class="filter-label">属性区分 (Class)</span>
-                    <div class="toggle-mini" onclick="toggleMiniLogic('class')" id="logic-btn-class">
-                        <span class="toggle-mini-opt">AND</span>
-                        <span class="toggle-mini-opt active">OR</span>
-                        <div class="toggle-mini-slider" style="transform:translateX(33px); background-color: var(--accent-str);"></div>
+                <!-- 属性区分 (Class) -->
+                <div class="filter-section">
+                    <div class="filter-header">
+                        <span class="filter-label">属性区分</span>
+                        <div class="toggle-mini" onclick="toggleMiniLogic('class')" id="logic-btn-class">
+                            <span class="toggle-mini-opt">AND</span>
+                            <span class="toggle-mini-opt active">OR</span>
+                            <div class="toggle-mini-slider" style="transform:translateX(33px); background-color: var(--accent-str);"></div>
+                        </div>
+                    </div>
+                    <div class="filter-chips" id="filter-classes">
+                        <div class="filter-chip" onclick="toggleFilter('class', 'Super')">超系</div>
+                        <div class="filter-chip" onclick="toggleFilter('class', 'Extreme')">極系</div>
                     </div>
                 </div>
-                <div class="filter-chips" id="filter-classes">
-                    <div class="filter-chip" onclick="toggleFilter('class', 'Super')">超系</div>
-                    <div class="filter-chip" onclick="toggleFilter('class', 'Extreme')">極系</div>
-                </div>
-            </div>
 
-            <!-- レアリティ -->
-            <div class="filter-section">
-                <div class="filter-header">
-                    <span class="filter-label">レアリティ</span>
-                    <div class="toggle-mini" onclick="toggleMiniLogic('rarity')" id="logic-btn-rarity">
-                        <span class="toggle-mini-opt">AND</span>
-                        <span class="toggle-mini-opt active">OR</span>
-                        <div class="toggle-mini-slider" style="transform:translateX(33px); background-color: var(--accent-str);"></div>
+                <!-- レアリティ -->
+                <div class="filter-section">
+                    <div class="filter-header">
+                        <span class="filter-label">レアリティ</span>
+                        <div class="toggle-mini" onclick="toggleMiniLogic('rarity')" id="logic-btn-rarity">
+                            <span class="toggle-mini-opt">AND</span>
+                            <span class="toggle-mini-opt active">OR</span>
+                            <div class="toggle-mini-slider" style="transform:translateX(33px); background-color: var(--accent-str);"></div>
+                        </div>
+                    </div>
+                    <div class="filter-chips" id="filter-rarities">
+                        <div class="filter-chip" onclick="toggleFilter('rarity', 'LR')">LR</div>
+                        <div class="filter-chip" onclick="toggleFilter('rarity', 'UR')">UR</div>
+                        <div class="filter-chip" onclick="toggleFilter('rarity', 'SSR')">SSR</div>
+                        <div class="filter-chip" onclick="toggleFilter('rarity', 'SR')">SR</div>
+                        <div class="filter-chip" onclick="toggleFilter('rarity', 'R')">R</div>
+                        <div class="filter-chip" onclick="toggleFilter('rarity', 'N')">N</div>
                     </div>
                 </div>
-                <div class="filter-chips" id="filter-rarities">
-                    <div class="filter-chip" onclick="toggleFilter('rarity', 'LR')">LR</div>
-                    <div class="filter-chip" onclick="toggleFilter('rarity', 'UR')">UR</div>
-                    <div class="filter-chip" onclick="toggleFilter('rarity', 'SSR')">SSR</div>
-                    <div class="filter-chip" onclick="toggleFilter('rarity', 'SR')">SR</div>
-                    <div class="filter-chip" onclick="toggleFilter('rarity', 'R')">R</div>
-                    <div class="filter-chip" onclick="toggleFilter('rarity', 'N')">N</div>
+
+                <!-- カテゴリ検索 -->
+                <div class="filter-section">
+                    <div class="filter-header">
+                        <span class="filter-label">カテゴリ</span>
+                        <button id="leader-search-btn" class="leader-search-btn" onclick="toggleLeaderSearch()">リーダー検索</button>
+                        <div class="toggle-mini" onclick="toggleMiniLogic('category')" id="logic-btn-category">
+                            <span class="toggle-mini-opt active">AND</span>
+                            <span class="toggle-mini-opt">OR</span>
+                            <div class="toggle-mini-slider"></div>
+                        </div>
+                    </div>
+                    <div class="filter-input-row">
+                        <input list="category-list" id="cat-input" class="filter-select-input" placeholder="カテゴリを検索..." onchange="addFilterFromInput('category', this)" style="flex:1;">
+                        <button class="btn-sm" onclick="toggleAllItems('category')">一覧</button>
+                    </div>
+                    <datalist id="category-list"></datalist>
+                    <div class="filter-chips" id="selected-cats" style="margin-top:10px;"></div>
+                    <div id="all-cats-container" class="all-items-container" style="display:none;"></div>
                 </div>
-            </div>
+
+                <!-- リンクスキル検索 -->
+                <div class="filter-section">
+                    <div class="filter-header">
+                        <span class="filter-label">リンクスキル</span>
+                        <div class="toggle-mini" onclick="toggleMiniLogic('link')" id="logic-btn-link">
+                            <span class="toggle-mini-opt active">AND</span>
+                            <span class="toggle-mini-opt">OR</span>
+                            <div class="toggle-mini-slider"></div>
+                        </div>
+                    </div>
+                    <div class="filter-input-row">
+                        <input list="link-list" id="link-input" class="filter-select-input" placeholder="リンクスキルを検索..." onchange="addFilterFromInput('link', this)" style="flex:1;">
+                        <button class="btn-sm" onclick="toggleAllItems('link')">一覧</button>
+                    </div>
+                    <datalist id="link-list"></datalist>
+                    <div class="filter-chips" id="selected-links" style="margin-top:10px;"></div>
+                    <div id="all-links-container" class="all-items-container" style="display:none;"></div>
+                </div>
+
+                <!-- 極限覚醒状態 -->
+                <div class="filter-section">
+                    <span class="filter-label">極限状態</span>
+                    <div class="filter-chips" id="filter-eza">
+                        <div class="filter-chip" onclick="toggleFilter('eza', 'none')">通常</div>
+                        <div class="filter-chip" onclick="toggleFilter('eza', 'eza')">極限Z覚醒</div>
+                        <div class="filter-chip" onclick="toggleFilter('eza', 'seza')">超極限</div>
+                    </div>
+                </div>
+
+                <!-- 必殺技区分 -->
+                <div class="filter-section">
+                    <span class="filter-label">必殺技の種類</span>
+                    <div class="filter-chips" id="filter-sa-type">
+                        <div class="filter-chip" onclick="toggleFilter('saType', '気弾')">気弾</div>
+                        <div class="filter-chip" onclick="toggleFilter('saType', '格闘')">格闘</div>
+                        <div class="filter-chip" onclick="toggleFilter('saType', '物理')">物理</div>
+                        <div class="filter-chip" onclick="toggleFilter('saType', 'その他')">その他</div>
+                    </div>
+                </div>
 
             <!-- 所持・お気に入り状態 -->
-            <div class="filter-section">
-                <span class="filter-label">状態 (Status)</span>
-                <div class="filter-chips" id="filter-status">
-                    <div class="filter-chip" onclick="toggleFilter('status', 'owned')">所持済み</div>
-                    <div class="filter-chip" onclick="toggleFilter('status', 'favorite')">お気に入り</div>
-                </div>
-            </div>
-
-            <!-- 極限覚醒状態 -->
-            <div class="filter-section">
-                <span class="filter-label">極限状態</span>
-                <div class="filter-chips" id="filter-eza">
-                    <div class="filter-chip" onclick="toggleFilter('eza', 'none')">通常</div>
-                    <div class="filter-chip" onclick="toggleFilter('eza', 'eza')">極限Z覚醒</div>
-                    <div class="filter-chip" onclick="toggleFilter('eza', 'seza')">超極限</div>
-                </div>
-            </div>
-
-            <!-- 必殺技区分 -->
-            <div class="filter-section">
-                <span class="filter-label">必殺技の種類</span>
-                <div class="filter-chips" id="filter-sa-type">
-                    <div class="filter-chip" onclick="toggleFilter('saType', '気弾')">気弾</div>
-                    <div class="filter-chip" onclick="toggleFilter('saType', '格闘')">格闘</div>
-                    <div class="filter-chip" onclick="toggleFilter('saType', '物理')">物理</div>
-                    <div class="filter-chip" onclick="toggleFilter('saType', 'その他')">その他</div>
-                </div>
-            </div>
-
-            <!-- カテゴリ検索 -->
-            <div class="filter-section">
-                <div class="filter-header">
-                    <span class="filter-label">カテゴリ</span>
-                    <button id="leader-search-btn" class="leader-search-btn" onclick="toggleLeaderSearch()">リーダー検索</button>
-                    <div class="toggle-mini" onclick="toggleMiniLogic('category')" id="logic-btn-category">
-                        <span class="toggle-mini-opt active">AND</span>
-                        <span class="toggle-mini-opt">OR</span>
-                        <div class="toggle-mini-slider"></div>
+                <div class="filter-section">
+                    <span class="filter-label">状態</span>
+                    <div class="filter-chips" id="filter-status">
+                        <div class="filter-chip" onclick="toggleFilter('status', 'owned')">所持済み</div>
+                        <div class="filter-chip" onclick="toggleFilter('status', 'favorite')">お気に入り</div>
                     </div>
                 </div>
-                <div class="filter-input-row">
-                    <input list="category-list" id="cat-input" class="filter-select-input" placeholder="カテゴリを検索..." onchange="addFilterFromInput('category', this)" style="flex:1;">
-                    <button class="btn-sm" onclick="toggleAllItems('category')">一覧</button>
-                </div>
-                <datalist id="category-list"></datalist>
-                <div class="filter-chips" id="selected-cats" style="margin-top:10px;"></div>
-                <div id="all-cats-container" class="all-items-container" style="display:none;"></div>
             </div>
 
-            <!-- リンクスキル検索 -->
-            <div class="filter-section">
-                <div class="filter-header">
-                    <span class="filter-label">リンクスキル</span>
-                    <div class="toggle-mini" onclick="toggleMiniLogic('link')" id="logic-btn-link">
-                        <span class="toggle-mini-opt active">AND</span>
-                        <span class="toggle-mini-opt">OR</span>
-                        <div class="toggle-mini-slider"></div>
-                    </div>
-                </div>
-                <div class="filter-input-row">
-                    <input list="link-list" id="link-input" class="filter-select-input" placeholder="リンクスキルを検索..." onchange="addFilterFromInput('link', this)" style="flex:1;">
-                    <button class="btn-sm" onclick="toggleAllItems('link')">一覧</button>
-                </div>
-                <datalist id="link-list"></datalist>
-                <div class="filter-chips" id="selected-links" style="margin-top:10px;"></div>
-                <div id="all-links-container" class="all-items-container" style="display:none;"></div>
-            </div>
-
-            <!-- アクションボタン -->
+            <!-- アクションボタン (固定表示) -->
             <div class="filter-actions">
                 <button class="btn-reset" onclick="resetFilters()">リセット</button>
                 <button class="btn-apply" onclick="closeFilterModal()">完了</button>
@@ -2221,7 +2223,7 @@ function renderCharacterDetail(id) {
     body.className = 'detail-container';
 
     if (char.awakening) {
-        let awkHtml = `<div class="section-title" style="margin-top:10px;">覚醒ルート</div><div class="scroll-container-x">`;
+        let awkContent = `<div class="scroll-container-x">`;
         char.awakening.forEach((step, idx) => {
             const iconHtml = getStepIconHtml(step, char);
             let clickAction = "";
@@ -2230,11 +2232,11 @@ function renderCharacterDetail(id) {
                 clickAction = `onclick="openDetail(${step.id})"`;
                 cursorStyle = `cursor: pointer;`;
             }
-            awkHtml += `<div class="medal-step" ${clickAction} style="${cursorStyle}">${iconHtml}</div>`;
+            awkContent += `<div class="medal-step" ${clickAction} style="${cursorStyle}">${iconHtml}</div>`;
             if (idx < char.awakening.length - 1) {
                 const nextStep = char.awakening[idx + 1];
                 if (nextStep.medals) {
-                    awkHtml += `<div class="transition-area"><div class="medals-req">`;
+                    awkContent += `<div class="transition-area"><div class="medals-req">`;
                     nextStep.medals.forEach(medal => {
                         let bgHtml = '';
                         if (medal.bg) {
@@ -2244,14 +2246,22 @@ function renderCharacterDetail(id) {
                         let medalImg = `<img src="assets/medals/${medal.name}.png" class="medal-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`;
                         let medalFallback = `<div class="req-icon-fallback" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#fff;font-size:8px;">M</div>`;
 
-                        awkHtml += `<div class="req-item"><div class="req-icon" title="${medal.name}">${bgHtml}${medalImg}${medalFallback}</div><div class="req-count">x${medal.count}</div></div>`;
+                        awkContent += `<div class="req-item"><div class="req-icon" title="${medal.name}">${bgHtml}${medalImg}${medalFallback}</div><div class="req-count">x${medal.count}</div></div>`;
                     });
-                    awkHtml += `</div><div class="arrow-long">→</div></div>`;
-                } else { awkHtml += `<div class="transition-area"><div class="arrow-long">→</div></div>`; }
+                    awkContent += `</div><div class="arrow-long">→</div></div>`;
+                } else { awkContent += `<div class="transition-area"><div class="arrow-long">→</div></div>`; }
             }
         });
-        awkHtml += `</div>`;
-        body.innerHTML += awkHtml;
+        awkContent += `</div>`;
+
+        const awkToggleId = `awakening-toggle-${id}`;
+        body.innerHTML += `
+            <div class="section-title" onclick="togglePartnerSection('${awkToggleId}', this)" style="cursor:pointer; display:flex; align-items:center; justify-content:space-between; margin-top:10px;">
+                <span>覚醒ルート (タップで開く)</span>
+                <span class="toggle-arrow" style="font-size:12px; color:#888;">▼</span>
+            </div>
+            <div id="${awkToggleId}" class="accordion-content">${awkContent}</div>
+        `;
     }
 
     if (currentData.stats) {
@@ -2577,7 +2587,8 @@ function renderCharacterDetail(id) {
             leaderCandidates.forEach(l => {
                 const iconHtml = getCharIconHtml(l.char, null, { hideStatus: true });
                 let badgeClass = "link-match-badge";
-                if (l.stats.atk >= 200) badgeClass += " full-link";
+                if (l.stats.atk >= 220) badgeClass += " boost-220";
+                else if (l.stats.atk >= 200) badgeClass += " boost-200";
 
                 leaderHtml += `
                     <div class="leader-candidate-item" onclick="openLeaderDetailModal(${l.char.id})">
