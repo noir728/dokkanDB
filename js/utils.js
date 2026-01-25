@@ -72,11 +72,14 @@ function getCharIconHtml(char, formData, options = {}) {
     }
 
     // Source Type バッジ (fes/matsuri) - 左上に表示
+    // options.hideSourceType: 非表示
     let sourceTypeBadgeHtml = '';
-    if (char.source_type === 'fes') {
-        sourceTypeBadgeHtml = `<div class="layer-source-type"><img src="assets/status/fes.png" class="source-type-icon-img"></div>`;
-    } else if (char.source_type === 'matsuri') {
-        sourceTypeBadgeHtml = `<div class="layer-source-type"><img src="assets/status/matsuri.png" class="source-type-icon-img"></div>`;
+    if (!options.hideSourceType) {
+        if (char.source_type === 'fes') {
+            sourceTypeBadgeHtml = `<div class="layer-source-type"><img src="assets/status/fes.png" class="source-type-icon-img"></div>`;
+        } else if (char.source_type === 'matsuri') {
+            sourceTypeBadgeHtml = `<div class="layer-source-type"><img src="assets/status/matsuri.png" class="source-type-icon-img"></div>`;
+        }
     }
 
     return `<div class="dokkan-icon">${frameHtml}${imgHtml}${rarityHtml}${typeHtml}${statusHtml}${ezaHtml}${sourceTypeBadgeHtml}</div>`;

@@ -1938,7 +1938,7 @@ function openLeaderDetailModal(leaderId) {
 
     const stats = calcDetailedLeaderStats(tempLeader, targetForCalc);
 
-    const leaderIconHtml = getCharIconHtml(leaderChar);
+    const leaderIconHtml = getCharIconHtml(leaderChar, null, { hideStatus: true });
 
     const modalHtml = `
         <div id="leader-detail-modal" class="modal-overlay open" style="z-index: 1200;">
@@ -2049,8 +2049,8 @@ function openLinkPartnerModal(partnerId, formType, formIndex) {
         lsBadgeHtml = `<div style="margin-top:4px; font-size:10px; color:#666; background:#222; padding:1px 6px; border-radius:4px; border:1px solid #444;">LS 対象外</div>`;
     }
 
-    const mainIconHtml = getCharIconHtml(mainChar, mainForm);
-    const partnerIconHtml = getCharIconHtml(partnerChar, partnerForm);
+    const mainIconHtml = getCharIconHtml(mainChar, mainForm, { hideStatus: true });
+    const partnerIconHtml = getCharIconHtml(partnerChar, partnerForm, { hideStatus: true });
 
     const modalHtml = `
         <div id="link-partner-modal" class="modal-overlay open" style="z-index: 1100;">
@@ -2317,7 +2317,7 @@ function renderCharacterDetail(id) {
             statsTableHtml = `<table style="width:100%; font-size:11px; text-align:center; border-collapse:collapse; border:1px solid #444; border-radius:4px; overflow:hidden;"><tr style="background:#333; color:#aaa;"><th></th><th>HP</th><th>ATK</th><th>DEF</th></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">LvMax</td><td>${sBase.hp}</td><td>${sBase.atk}</td><td>${sBase.def}</td></tr><tr style="background:#222; border-bottom:1px solid #333;"><td style="background:#2a2a2e;font-weight:bold;">55%</td><td>${sFifty.hp}</td><td>${sFifty.atk}</td><td>${sFifty.def}</td></tr><tr style="background:#222;"><td style="background:#2a2a2e;font-weight:bold;">100%</td><td>${sRainbow.hp}</td><td>${sRainbow.atk}</td><td>${sRainbow.def}</td></tr></table>`;
         }
 
-        body.innerHTML += `<div id="char-swipe-area" style="touch-action: pan-y;"><div class="section-title">ステータス</div><div style="display:flex; gap:10px;"><div style="display:flex; flex-direction:column; align-items:center;"><div class="detail-icon-large">${getCharIconHtml(char, currentData)}</div><div class="text-xs text-gray-300 mt-1">最大Lv.${maxLv}</div>${char.cost ? `<div class="char-cost">コスト: ${char.cost}</div>` : ''}</div>${statsTableHtml}</div></div>`;
+        body.innerHTML += `<div id="char-swipe-area" style="touch-action: pan-y;"><div class="section-title">ステータス</div><div style="display:flex; gap:10px;"><div style="display:flex; flex-direction:column; align-items:center;"><div class="detail-icon-large">${getCharIconHtml(char, currentData, { hideStatus: true })}</div><div class="text-xs text-gray-300 mt-1">最大Lv.${maxLv}</div>${char.cost ? `<div class="char-cost">コスト: ${char.cost}</div>` : ''}</div>${statsTableHtml}</div></div>`;
     }
 
     let displayLeaderSkill = char.leaderSkill;
@@ -2332,7 +2332,7 @@ function renderCharacterDetail(id) {
     if (partners.length > 0) {
         let partnersHtml = '';
         partners.forEach(p => {
-            const iconHtml = getCharIconHtml(p.char, p.targetForm);
+            const iconHtml = getCharIconHtml(p.char, p.targetForm, { hideStatus: true });
             let labelHtml = `リンク: ${p.match}`;
             let badgeClass = "link-match-badge";
             if (p.isFull) { labelHtml = "フルリンク"; badgeClass += " full-link"; }
@@ -2575,7 +2575,7 @@ function renderCharacterDetail(id) {
         if (leaderCandidates.length > 0) {
             let leaderHtml = '';
             leaderCandidates.forEach(l => {
-                const iconHtml = getCharIconHtml(l.char);
+                const iconHtml = getCharIconHtml(l.char, null, { hideStatus: true });
                 let badgeClass = "link-match-badge";
                 if (l.stats.atk >= 200) badgeClass += " full-link";
 
@@ -2615,7 +2615,7 @@ function renderCharacterDetail(id) {
         let farmHtml = `<div class="section-title">技上げ素材</div>`;
 
         const createFarmItem = (card, labelText, isGasha = false) => {
-            const iconHtml = getCharIconHtml(card);
+            const iconHtml = getCharIconHtml(card, null, { hideStatus: true });
             const displayLabel = isGasha ? "" : labelText;
 
             return `

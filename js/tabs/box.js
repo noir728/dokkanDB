@@ -288,7 +288,7 @@ function renderBoxGridBatch() {
         const ownedClass = isOwned ? 'owned' : 'unowned';
         // hideOwned: 所持バッジ非表示、hideEza: EZAバッジ非表示
         const iconHtml = typeof getCharIconHtml === 'function'
-            ? getCharIconHtml(char, null, { hideOwned: true, hideEza: true })
+            ? getCharIconHtml(char, null, { hideOwned: true, hideEza: true, hideSourceType: true })
             : `<div class="icon-fallback">${char.name[0]}</div>`;
 
         html += `

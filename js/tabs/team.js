@@ -83,7 +83,7 @@ function renderTeamCard(team, teamIndex) {
             const char = DB.find(c => c.id === charId);
             if (char) {
                 hasChar = true;
-                iconContent = getCharIconHtml(char);
+                iconContent = getCharIconHtml(char, null, { hideSourceType: true });
                 lsBadge = calculateLsBadgeForSlot(char, teamIndex, slotIndex);
             } else {
                 iconContent = '<div class="slot-placeholder">?</div>';
@@ -202,7 +202,7 @@ function renderEditableSlot(charId, teamIndex, slotIndex, label) {
         if (char) {
             lsBadge = calculateLsBadgeForSlot(char, teamIndex, slotIndex);
             content = `
-                ${getCharIconHtml(char)}
+                ${getCharIconHtml(char, null, { hideSourceType: true })}
                 <div class="slot-remove-btn" onclick="removeSlotChar(event, ${teamIndex}, ${slotIndex})">×</div>
                 ${lsBadge}
             `;
@@ -820,14 +820,14 @@ function getLinkCharIconHtml(char, formIndex = 0) {
                 rarity: form.rarity || char.rarity,
                 class: form.class || char.class
             };
-            return getCharIconHtml(char, formData, { hideStatus: true });
+            return getCharIconHtml(char, formData, { hideStatus: true, hideSourceType: true });
         }
         console.log('  No form.id, falling back to char.id');
     }
 
     // デフォルトは通常のアイコン（ステータス非表示）
     console.log('  Using default char.id:', char.id);
-    return getCharIconHtml(char, null, { hideStatus: true });
+    return getCharIconHtml(char, null, { hideStatus: true, hideSourceType: true });
 }
 
 // リンク相性キャラの長押しハンドラ
