@@ -116,7 +116,8 @@ function getCharacterData() {
         passive: parseJsObject(f.passive_json),
         active: parseJsObject(f.active_json),
         standby: parseJsObject(f.standby_json),
-        field: parseJsObject(f.field_json)
+        field: parseJsObject(f.field_json),
+        unitSuperAttack: parseJsObject(f.unitSuperAttack_json)
       };
 
       if (f.reversible !== undefined && f.reversible !== "") {
