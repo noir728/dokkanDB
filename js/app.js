@@ -1,6 +1,6 @@
 // Ensure DB and other constants are available
 // Google Apps Script Web App URL
-const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz3D9-U19Ae1BkQS1qCvLD7Wn6llfLblYOC52tSXakBj0a_cJ7WBfUL5sWuWj78teE/exec";
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycby_qQCqh8sLYmIFyPEUWGLHByYOLewqa8CAweFN7xRGmYkZUNKOwGVQ2BTlKMiUzNksRA/exec";
 
 // Ensure DB and other constants are available
 let DB = (typeof CHARACTER_DATA !== 'undefined') ? CHARACTER_DATA : [];

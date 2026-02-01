@@ -2557,7 +2557,7 @@ function renderCharacterDetail(id) {
         body.innerHTML += `
             <div class="unit-super-attack-card">
                 <div class="sa-header">
-                    <span class="usa-badge">UNIT</span>
+                    <span class="sa-ki-badge" style="background:#ff9500;">気力 ${usa.ki}</span>
                     ${usa.maxLv ? `<span class="sa-lv-badge">Lv${usa.maxLv}</span>` : ''}
                     <span class="sa-name">${usa.name}</span>
                     ${typeIcon}
