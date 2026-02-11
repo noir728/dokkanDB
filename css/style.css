@@ -1100,6 +1100,15 @@ body {
     border-radius: 4px;
 }
 
+/* Sub-header within attack section */
+.sa-sub-header {
+    font-size: 11px;
+    font-weight: bold;
+    padding-left: 8px;
+    margin: 10px 0 6px 0;
+    border-left: 2px solid currentColor;
+}
+
 /* Super Attack Card */
 .super-attack-card {
     background-color: var(--card-bg);
@@ -1217,7 +1226,19 @@ body {
 .unit-super-attack-card {
     background-color: var(--card-bg);
     border-top: 3px solid;
-    border-image: linear-gradient(90deg, #1900ff, #ff9500, #ffcc00, #ff9500, #ff6b00) 1;
+    border-image: linear-gradient(90deg, #1900ff) 1;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* EX Super Attack Card (EX必殺技) */
+.ex-super-attack-card {
+    background-color: var(--card-bg);
+    border-top: 3px solid;
+    border-image: linear-gradient(90deg, #00cc00) 1;
     border-radius: 6px;
     padding: 10px;
     margin-bottom: 8px;
@@ -1248,13 +1269,21 @@ body {
 }
 
 .usa-condition {
-    background: linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 149, 0, 0.1));
-    border-left: 2px solid #ff9500;
+    border: 1px solid #6c80ac;
     padding: 6px 10px;
     margin-bottom: 8px;
-    border-radius: 0 4px 4px 0;
+    border-radius: 4px;
     font-size: 11px;
-    color: #ffcc99;
+    color: #ffffff;
+}
+
+.ex-condition {
+    border: 1px solid #7bc47b;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #ffffff;
 }
 
 /* Standby Card */
@@ -1535,6 +1564,7 @@ body {
     object-fit: cover;
     position: relative;
     z-index: 2;
+    transform: scale(0.7);
 }
 
 .rank-badge {
@@ -1614,6 +1644,7 @@ body {
     justify-content: center;
     overflow: visible;
     position: relative;
+
 }
 
 .medal-bg {

@@ -195,7 +195,7 @@ async function loadData() {
 
         const data = await response.json();
 
-        if (Array.isArray(data) && data.length > 0) {
+        if (Array.isArray(data)) {
             const oldCount = DB.length;
             DB = data;
             window.DB = DB;

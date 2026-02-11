@@ -112,12 +112,35 @@ function getCharacterData() {
         id: f.form_id ? Number(f.form_id) : undefined,
         links: f.links ? String(f.links).split(',').map(s => s.trim()) : [],
         stats: parseJsObject(f.stats_json),
-        superAttacks: parseJsObject(f.attacks_json),
+        superAttacks: (() => {
+          let attacks = parseJsObject(f.attacks_json) || [];
+          // 既存データの後方互換: styleが未設定のattacksにstyleを自動付与
+          attacks = attacks.map(atk => {
+            if (!atk.style) {
+              atk.style = (atk.ki && atk.ki.includes("18")) ? "Hyper" : "Normal";
+            }
+            return atk;
+          });
+          // unitSuperAttack_json が存在し、attacks内にConditionがなければ統合
+          const unitSa = parseJsObject(f.unitSuperAttack_json);
+          if (unitSa && !attacks.some(a => a.style === 'Condition')) {
+            attacks.push({
+              ki: unitSa.ki || "18~",
+              maxLv: unitSa.maxLv || 20,
+              type: unitSa.type || "気弾,格闘,物理",
+              name: unitSa.name,
+              effect: unitSa.effect,
+              style: "Condition",
+              condition: unitSa.condition || "",
+              specs: unitSa.specs || {}
+            });
+          }
+          return attacks.length > 0 ? attacks : undefined;
+        })(),
         passive: parseJsObject(f.passive_json),
         active: parseJsObject(f.active_json),
         standby: parseJsObject(f.standby_json),
-        field: parseJsObject(f.field_json),
-        unitSuperAttack: parseJsObject(f.unitSuperAttack_json)
+        field: parseJsObject(f.field_json)
       };
 
       if (f.reversible !== undefined && f.reversible !== "") {

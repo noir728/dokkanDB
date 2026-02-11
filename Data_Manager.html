@@ -1479,6 +1479,10 @@
    - **maxLv**: レアリティから推測してください（UR=10, LR=20, 極限UR=15, 極限LR=25）。不明なら数値を入れず null にしてください。
    - **type**: 技の説明やアイコンの文脈から推測してください（"格闘"、"気弾"、"物理"、"その他"）。不明なら "気弾,格闘,物理" としてください。
    - **効果文**: 改行は "、" に置換して1行にまとめてください。
+   - **style**: 通常必殺技は "Normal"、超必殺技は "Hyper" としてください。
+   - **ユニット必殺技**: 「ユニット必殺技」「UNIT SUPER ATTACK」の記載がある場合、同じattacks配列内に style: "Condition" として追加してください。
+     - **condition**: 発動条件（例：「○○カテゴリの味方が2人以上いるとき」）を追加してください。
+   - ユニット必殺技が存在しない場合は style: "Condition" のエントリを追加しないでください。
 
 5. **覚醒情報(Awakening)**:
    - "Card Awakenings", "Z-Awakenings", "Dokkan Awaken" 周辺の情報を解析してください。
@@ -1489,15 +1493,6 @@
 6. **空データの扱い**:
    - 中身がない場合は \`{}\` ではなく \`null\` を出力してください。
    - リーダースキルはEZA後も必ず出力してください（変化がない場合も同じ内容を出力）。
-
-6. **ユニット必殺技(Unit Super Attack)**:
-   - 「ユニット必殺技」「UNIT SUPER ATTACK」といった記載がある場合、\`unitSuperAttack\` オブジェクトに格納してください。
-   - **condition**: 発動条件（例：「○○カテゴリの味方が2人以上いるとき」）を抽出してください。
-   - **name**: 技名を抽出してください。
-   - **effect**: 効果文を抽出してください。
-   - **type**: 必殺技と同様に種類を推測してください。
-   - **specs**: 必殺技と同様にスペックを抽出してください。
-   - 存在しない場合は \`unitSuperAttack\` キー自体を省略してください。
 
 4. **スペック自動抽出 (specs / maxValues)**:
    - テキストを解析し、以下のキーワードが含まれる場合、フラグを立ててください。
@@ -1585,17 +1580,29 @@
           "type": "気弾/格闘/物理", 
           "name": "技名", 
           "effect": "効果",
+          "style": "Normal",
+          "specs": {}
+        },
+        { 
+          "ki": "18~", 
+          "maxLv": 20, 
+          "type": "気弾/格闘/物理", 
+          "name": "超必殺技名(LRの場合)", 
+          "effect": "効果",
+          "style": "Hyper",
+          "specs": {}
+        },
+        { 
+          "ki": "18~", 
+          "maxLv": 20, 
+          "type": "気弾/格闘/物理", 
+          "name": "ユニット必殺技名(あれば)", 
+          "effect": "効果",
+          "style": "Condition",
+          "condition": "発動条件",
           "specs": {}
         }
       ],
-      "unitSuperAttack": {
-        "name": "ユニット必殺技名",
-        "maxLv": 20,
-        "type": "気弾/格闘/物理",
-        "condition": "発動条件",
-        "effect": "効果",
-        "specs": {}
-      },
       "links": ["リンク名1", "リンク名2"]
     }
   ]
@@ -1762,29 +1769,43 @@ ${text.substring(0, 30000)}
                 let attacksJson = "";
                 if (f.attacks) {
                     const rarity = basics.rarity || 'UR';
-                    const fixedAttacks = f.attacks.map((atk, i) => ({
-                        ki: atk.ki || (rarity === 'LR' && i === 1 ? "18~" : "12~"),
-                        maxLv: atk.maxLv || (rarity === 'LR' ? 20 : 10),
-                        type: atk.type || "気弾,格闘,物理",
-                        name: atk.name,
-                        effect: atk.effect,
-                        specs: atk.specs || {}
-                    }));
+                    const fixedAttacks = f.attacks.map((atk, i) => {
+                        const style = atk.style || ((atk.ki && atk.ki.includes("18")) ? "Hyper" : "Normal");
+                        const entry = {
+                            ki: atk.ki || (rarity === 'LR' && i === 1 ? "18~" : "12~"),
+                            maxLv: atk.maxLv || (rarity === 'LR' ? 20 : 10),
+                            type: atk.type || "気弾,格闘,物理",
+                            name: atk.name,
+                            effect: atk.effect,
+                            style: style,
+                            specs: atk.specs || {}
+                        };
+                        if (style === 'Condition' && atk.condition) {
+                            entry.condition = atk.condition;
+                        }
+                        return entry;
+                    });
+
+                    // unitSuperAttack を attacks配列に統合
+                    if (f.unitSuperAttack && !f.attacks.some(a => a.style === 'Condition')) {
+                        const usa = f.unitSuperAttack;
+                        fixedAttacks.push({
+                            ki: usa.ki || "18~",
+                            maxLv: usa.maxLv || (rarity === 'LR' ? 20 : 10),
+                            type: usa.type || "気弾,格闘,物理",
+                            name: usa.name,
+                            effect: usa.effect,
+                            style: "Condition",
+                            condition: usa.condition || "",
+                            specs: usa.specs || {}
+                        });
+                    }
+
                     attacksJson = JSON.stringify(fixedAttacks);
                 }
 
-                // Unit SA
+                // Unit SA (統合済みのため個別出力は不要)
                 let unitSaJson = "";
-                if (f.unitSuperAttack) {
-                    unitSaJson = JSON.stringify(f.unitSuperAttack);
-                    // Note: If we need to merge this into attacks or keep separate?
-                    // Current logic puts unit SA into its own field or appends?
-                    // The original generateCSV logic handles unit SA by... wait, verify generateCSV.
-                    // Actually, getSafeValue('char-dropevent') is the last char item.
-                    // Forms items: id, mode, label, name, image_id, links, stats, attacks, passive, active, standby, field, reversible, unit_sa
-                    // The original copyBulkTSV logic (lines 1314-1325) didn't include unitSuperAttack field logic!
-                    // We must add it.
-                }
 
                 let passiveJson = "";
                 if (f.passive) {
@@ -1999,7 +2020,7 @@ ${text.substring(0, 30000)}
                 currentForm.querySelector('.form-field').value = "";
             }
 
-            // Attacks (New Logic)
+            // Attacks (New Logic with style support)
             if (formData.attacks && Array.isArray(formData.attacks)) {
                 // Logic to guess maxLv if AI failed
                 const guessMaxLv = (rarity, type) => {
@@ -2023,17 +2044,45 @@ ${text.substring(0, 30000)}
 
                     // Guess Type if missing
                     let type = atk.type;
-                    if (!type || type === "気弾,格闘,物理") type = "気弾,格闘,物理"; // Keep default if generic
+                    if (!type || type === "気弾,格闘,物理") type = "気弾,格闘,物理";
 
-                    return {
+                    // Guess Style if missing
+                    let style = atk.style;
+                    if (!style) {
+                        style = (ki && ki.includes("18")) ? "Hyper" : "Normal";
+                    }
+
+                    const entry = {
                         ki: ki,
                         maxLv: maxLv,
                         type: type,
                         name: atk.name,
                         effect: atk.effect,
+                        style: style,
                         specs: atk.specs || {}
                     };
+                    // Condition style には condition フィールドを追加
+                    if (style === 'Condition' && atk.condition) {
+                        entry.condition = atk.condition;
+                    }
+                    return entry;
                 });
+
+                // unitSuperAttack が別オブジェクトとして存在する場合、attacks配列に統合
+                if (formData.unitSuperAttack && !formData.attacks.some(a => a.style === 'Condition')) {
+                    const usa = formData.unitSuperAttack;
+                    attacksData.push({
+                        ki: usa.ki || "18~",
+                        maxLv: usa.maxLv || guessMaxLv(rarity),
+                        type: usa.type || "気弾,格闘,物理",
+                        name: usa.name,
+                        effect: usa.effect,
+                        style: "Condition",
+                        condition: usa.condition || "",
+                        specs: usa.specs || {}
+                    });
+                }
+
                 currentForm.querySelector('.form-attacks').value = JSON.stringify(attacksData, null, 2);
             }
         });
@@ -2093,6 +2142,7 @@ ${text.substring(0, 30000)}
         ki: "12~", maxLv: 20, type: "気弾,格闘,物理", 
         name: "", 
         effect: "",
+        style: "Normal",
         "specs": {
         
         }
@@ -2101,6 +2151,7 @@ ${text.substring(0, 30000)}
         ki: "18~", maxLv: 20, type: "気弾,格闘,物理", 
         name: "", 
         effect: "",
+        style: "Hyper",
         "specs": {
         
         }

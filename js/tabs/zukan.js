@@ -274,14 +274,22 @@ function calcLeaderCandidates(subChar) {
             const stepsWithId = char.awakening.filter(step => step.id !== undefined && step.id !== null);
             if (stepsWithId.length > 0) {
                 const lastStepId = stepsWithId[stepsWithId.length - 1].id;
-                if (char.id !== lastStepId) return;
+                // Use != instead of !== to handle string vs number comparison
+                if (char.id != lastStepId) return;
             }
         }
 
         let lsText = "";
         let mode = "normal";
-        if (char.leader_skill_seza) { lsText = char.leader_skill_seza; mode = "seza"; }
-        else if (char.leader_skill_eza || char.leaderSkill_eza) { lsText = (char.leader_skill_eza || char.leaderSkill_eza); mode = "eza"; }
+        // Support both leader_skill_seza and leaderSkill_seza
+        if (char.leaderSkill_seza || char.leader_skill_seza) {
+            lsText = (char.leaderSkill_seza || char.leader_skill_seza);
+            mode = "seza";
+        }
+        else if (char.leaderSkill_eza || char.leader_skill_eza) {
+            lsText = (char.leaderSkill_eza || char.leader_skill_eza);
+            mode = "eza";
+        }
         else lsText = char.leaderSkill;
 
         if (!lsText) return;
@@ -379,7 +387,14 @@ function calcLeaderCandidatesForCategories(targetCategories) {
 
 function calcLeaderBoost(leaderChar, subChar) {
     let lsText = "";
-    if (leaderChar.leaderSkill) lsText = leaderChar.leaderSkill;
+    // Check all possible leader skill keys including EZA/SEZA
+    if (leaderChar.leaderSkill_seza || leaderChar.leader_skill_seza) {
+        lsText = leaderChar.leaderSkill_seza || leaderChar.leader_skill_seza;
+    } else if (leaderChar.leaderSkill_eza || leaderChar.leader_skill_eza) {
+        lsText = leaderChar.leaderSkill_eza || leaderChar.leader_skill_eza;
+    } else if (leaderChar.leaderSkill) {
+        lsText = leaderChar.leaderSkill;
+    }
 
     if (state.detailEzaMode === 'eza' || state.detailEzaMode === 'seza') {
         if (leaderChar.leader_skill_eza) lsText = leaderChar.leader_skill_eza;
@@ -2243,7 +2258,7 @@ function renderCharacterDetail(id) {
                             bgHtml = `<img src="assets/medals/${medal.bg}.png" class="medal-bg" onerror="this.style.display='none'">`;
                         }
 
-                        let medalImg = `<img src="assets/medals/${medal.name}.png" class="medal-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`;
+                        let medalImg = `<img src="assets/medals/${medal.name}.png" class="medal-img" onload="if(this.naturalWidth >= 300) this.style.transform='scale(1.0)';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`;
                         let medalFallback = `<div class="req-icon-fallback" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#fff;font-size:8px;">M</div>`;
 
                         awkContent += `<div class="req-item"><div class="req-icon" title="${medal.name}">${bgHtml}${medalImg}${medalFallback}</div><div class="req-count">x${medal.count}</div></div>`;
@@ -2522,31 +2537,68 @@ function renderCharacterDetail(id) {
     }
 
     if (currentData.superAttacks) {
-        body.innerHTML += `<div class="section-title">必殺技</div>`;
+        let lastStyle = null;
+        let sectionStarted = false;
+
         currentData.superAttacks.forEach(sa => {
-            let color = (sa.ki && sa.ki.includes("18")) ? "#ff4d4d" : "#ffd700";
+            // styleの判定: 明示的なstyleがなければki値から推測
+            let saStyle = sa.style;
+            if (!saStyle) {
+                saStyle = (sa.ki && sa.ki.includes("18")) ? "Hyper" : "Normal";
+            }
+
+            // 最初の必殺技でセクションヘッダーを出力
+            if (!sectionStarted) {
+                body.innerHTML += `<div class="section-title">必殺技</div>`;
+                sectionStarted = true;
+            }
+
+            // カラー設定
+            let color;
+            if (saStyle === 'Normal') {
+                color = '#ffd700';
+            } else if (saStyle === 'Hyper') {
+                color = '#ff4d4d';
+            } else {
+                // Conditionなどの場合は気力で判定
+                color = (sa.ki && String(sa.ki).includes("18")) ? '#ff4d4d' : '#ffd700';
+            }
+
             let typeIcon = `<span class="sa-type-badge">${sa.type}</span>`;
             if (sa.type) typeIcon = `<div class="sa-type-badge"><img src="assets/sa_types/${sa.type}.png" class="sa-type-icon" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span>${sa.type}</span></div>`;
 
             const specsHtml = getSpecsHtml(sa.specs);
+            let conditionHtml = '';
+            let cardClass = 'super-attack-card';
+            if (saStyle === 'Condition' && sa.condition) {
+                conditionHtml = `<div class="usa-condition"><span style="font-weight:bold; color:#ffcc00;">[発動条件]</span> ${formatText(sa.condition)}</div>`;
+                cardClass = 'unit-super-attack-card';
+            } else if (saStyle === 'Extra' && sa.condition) {
+                conditionHtml = `<div class="ex-condition"><span style="font-weight:bold; color:#ffcc00;">[発動条件]</span> ${formatText(sa.condition)}</div>`;
+                cardClass = 'ex-super-attack-card';
+            }
 
             body.innerHTML += `
-                <div class="super-attack-card" style="border-top-color: ${color};">
+                <div class="${cardClass}" style="border-top-color: ${color};">
                     <div class="sa-header">
                         <span class="sa-ki-badge" style="background:${color};">気力 ${sa.ki || '12'}</span>
                         ${sa.maxLv ? `<span class="sa-lv-badge">Lv${sa.maxLv}</span>` : ''}
                         <span class="sa-name">${sa.name}</span>
                         ${typeIcon}
                     </div>
+                    ${conditionHtml}
                     <div class="sa-effect">${formatText(sa.effect)}</div>
                     ${specsHtml}
                 </div>`;
         });
     }
 
-    // ユニット必殺技の表示
-    if (currentData.unitSuperAttack) {
-        body.innerHTML += `<div class="section-title" style="color: #ff9500; border-left-color: #ff9500;">ユニット必殺技</div>`;
+    // ユニット必殺技の表示 (後方互換: superAttacks内にConditionがない場合のみ)
+    if (currentData.unitSuperAttack && !(currentData.superAttacks && currentData.superAttacks.some(sa => sa.style === 'Condition'))) {
+        if (!currentData.superAttacks || currentData.superAttacks.length === 0) {
+            body.innerHTML += `<div class="section-title">必殺技</div>`;
+        }
+        body.innerHTML += `<div class="sa-sub-header" style="color: #ff9500;">ユニット必殺技</div>`;
         const usa = currentData.unitSuperAttack;
         let typeIcon = `<span class="sa-type-badge">${usa.type}</span>`;
         if (usa.type) typeIcon = `<div class="sa-type-badge"><img src="assets/sa_types/${usa.type}.png" class="sa-type-icon" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span>${usa.type}</span></div>`;

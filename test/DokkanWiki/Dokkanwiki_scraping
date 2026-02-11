@@ -1,0 +1,214 @@
+# ==========================================
+# Dokkan Wiki - Complete Form Scraper (Range)
+# ==========================================
+import json
+import pandas as pd
+import time
+import re
+import os
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from google.colab import files
+
+# ▼▼▼ 設定エリア ▼▼▼
+START_ID = 1023400  # 開始ID
+END_ID   = 1023420  # 終了ID（テスト用に狭くしています。必要に応じて広げてください）
+OUTPUT_CSV = "dokkan_all_forms_data.csv"
+OUTPUT_JSON = "dokkan_all_forms_data.json"
+# ▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+def setup_driver():
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+    chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+    driver = webdriver.Chrome(options=chrome_options)
+    return driver
+
+def clean_text(text):
+    """テキストのクリーニング（改行保持、余計な空白除去）"""
+    if not text:
+        return text
+    return str(text).strip()
+
+
+def fetch_and_parse_card(driver, card_id):
+    url = f"https://jpn.dokkan.wiki/api/cards/{card_id}"
+    print(f"[{card_id}] 取得中... ", end="")
+    
+    try:
+        driver.get(url)
+        # JSONがそのまま表示されるか、preタグ内にあるか
+        try:
+            json_text = driver.find_element(By.TAG_NAME, "pre").text
+        except:
+            json_text = driver.find_element(By.TAG_NAME, "body").text
+            
+        if not json_text or "status" in json_text and "no_bid" in json_text:
+            print("❌ データなし (404 or Empty)")
+            return [], []
+
+        data = json.loads(json_text)
+        
+        # IDが存在しない場合のエラーハンドリング
+        if "card" not in data or not data["card"]:
+            print("❌ 無効なカードデータ")
+            return [], []
+
+        card = data["card"]
+        
+        # --- 基本情報 (card) ---
+        row = {
+            "id": card.get("id"),
+            "title": card.get("title"),
+            "name": card.get("name"),
+            "cost": card.get("cost"),
+            "rarity": card.get("rarity"),
+            "element": card.get("element"),
+            "hp_max": card.get("hp_max"),
+            "atk_max": card.get("atk_max"),
+            "def_max": card.get("def_max"),
+            "open_at": card.get("open_at"),
+            "leader_skill": card.get("leader_skill"),
+            "passive_skill_name": card.get("passive_skill_name"),
+            "passive_skill_itemized_desc": clean_text(card.get("passive_skill_itemized_desc")),
+            "active_skill_name": card.get("active_skill_name"),
+            "active_skill_condition": clean_text(card.get("active_skill_condition")),
+            "active_skill_effect": clean_text(card.get("active_skill_effect")),
+            "skill_level_max": card.get("skill_level_max"),
+            "is_dokkan_fes": card.get("is_dokkan_fes"),
+            "is_carnival_only": card.get("is_carnival_only"),
+            "is_f2p": card.get("is_f2p")
+        }
+
+        # --- Categories ---
+        categories = data.get("categories", [])
+        row["categories"] = json.dumps([c.get("name") for c in categories], ensure_ascii=False)
+
+        # --- Specials ---
+        specials = data.get("specials", [])
+        specials_data = []
+        for s in specials:
+            specials_data.append({
+                "name": s.get("name"),
+                "description": clean_text(s.get("description")),
+                "eball_num_start": s.get("eball_num_start"),
+                "special_category_name": s.get("special_category_name"),
+                "style": s.get("style"),
+                "causality_description": clean_text(s.get("causality_description"))
+            })
+        row["specials"] = json.dumps(specials_data, ensure_ascii=False)
+
+        # --- Awakening Routes ---
+        awakening_routes = data.get("awakening_routes", [])
+        row["awakening_routes"] = json.dumps(awakening_routes, ensure_ascii=False)
+
+        # --- Transformations ---
+        transformations = data.get("transformations", [])
+        transformations_data = []
+        extra_ids = []  # next_card_idが4で始まるIDを収集
+        for t in transformations:
+            next_card_id = t.get("next_card_id")
+            if "start_card_id" in t:
+                next_c = t.get("next_card", {})
+                transformations_data.append({
+                    "id": next_c.get("id"),
+                    "name": next_c.get("name"),
+                    "element": next_c.get("element"),
+                    "description": next_c.get("description") # 注意: exampleにはないフィールドだが要求通り取得
+                })
+            # next_card_idが4で始まるIDを追加取得対象に
+            if next_card_id and str(next_card_id).startswith("4"):
+                extra_ids.append(next_card_id)
+        row["transformations"] = json.dumps(transformations_data, ensure_ascii=False)
+
+        # --- Optimal Awakening Growths ---
+        growths = data.get("optimal_awakening_growths", [])
+        row["optimal_awakening_growths"] = json.dumps(growths, ensure_ascii=False)
+
+        # --- Card Links ---
+        card_links = data.get("card_links", [])
+        card_links_data = []
+        for l in card_links:
+            card_links_data.append({
+                "idx": l.get("idx"),
+                "name": l.get("name")
+            })
+        row["card_links"] = json.dumps(card_links_data, ensure_ascii=False)
+
+        print("✅ 成功")
+        return [row], extra_ids
+
+    except Exception as e:
+        print(f"⚠️ エラー: {e}")
+        return [], []
+
+# --- メイン処理 ---
+def main():
+    driver = setup_driver()
+    all_data = []
+    
+    print(f"処理開始: ID {START_ID} ～ {END_ID}")
+    print("-" * 40)
+
+    fetched_ids = set()  # 重複取得を防ぐためのセット
+
+    for current_id in range(START_ID, END_ID + 1):
+        # IDの末尾が1以外はスキップ
+        last_digit = current_id % 10
+        if last_digit != 1:
+            continue
+
+        if current_id in fetched_ids:
+            continue
+        fetched_ids.add(current_id)
+
+        card_rows, extra_ids = fetch_and_parse_card(driver, current_id)
+        all_data.extend(card_rows)
+        time.sleep(1) # API負荷軽減のための待機
+
+        # transformations内のnext_card_idが4で始まるIDを追加取得
+        for extra_id in extra_ids:
+            if extra_id not in fetched_ids:
+                fetched_ids.add(extra_id)
+                print(f"  → 変身先ID {extra_id} を追加取得")
+                extra_rows, nested_extra_ids = fetch_and_parse_card(driver, extra_id)
+                all_data.extend(extra_rows)
+                time.sleep(1)
+                # ネストされた変身先も再帰的に追加取得
+                for nested_id in nested_extra_ids:
+                    if nested_id not in fetched_ids:
+                        fetched_ids.add(nested_id)
+                        print(f"  → → 変身先ID {nested_id} を追加取得")
+                        nested_rows, _ = fetch_and_parse_card(driver, nested_id)
+                        all_data.extend(nested_rows)
+                        time.sleep(1)
+
+    driver.quit()
+
+    # CSV保存
+    if all_data:
+        df = pd.DataFrame(all_data)
+        
+        df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
+        print("-" * 40)
+        print(f"CSV保存完了: {OUTPUT_CSV} ({len(all_data)}行)")
+        
+        # JSON保存
+        with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
+            json.dump(all_data, f, ensure_ascii=False, indent=2)
+        print(f"JSON保存完了: {OUTPUT_JSON}")
+        
+        files.download(OUTPUT_CSV)
+        files.download(OUTPUT_JSON)
+        
+        print("\n=== データプレビュー ===")
+        print(df.head(10))
+    else:
+        print("データが1件も取得できませんでした。ID範囲を確認してください。")
+
+if __name__ == "__main__":
+    main()
