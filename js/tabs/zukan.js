@@ -926,8 +926,42 @@ function toggleLeaderSearch() {
 }
 
 function addFilterFromInput(type, input) {
-    const val = input.value;
+    const val = input.value.trim();
     if (!val) return;
+
+    // バリデーション: 実在するカテゴリ/リンクかチェック
+    let isValid = false;
+    if (type === 'category') {
+        const catsSource = (typeof CATEGORY_LIST !== 'undefined' && CATEGORY_LIST.length > 0) ? CATEGORY_LIST : null;
+        if (catsSource) {
+            isValid = catsSource.includes(val);
+        } else {
+            // DBから抽出したリストでチェック
+            const allCats = new Set();
+            DB.forEach(c => { if (c.categories) c.categories.forEach(cat => allCats.add(cat)); });
+            isValid = allCats.has(val);
+        }
+    } else {
+        const linksSource = (typeof LINKS !== 'undefined' && Object.keys(LINKS).length > 0) ? Object.keys(LINKS) : null;
+        if (linksSource) {
+            isValid = linksSource.includes(val);
+        } else {
+            const allLinks = new Set();
+            DB.forEach(c => {
+                if (c.links) c.links.forEach(l => allLinks.add(l));
+                if (c.forms) c.forms.forEach(f => {
+                    if (f.links) f.links.forEach(l => allLinks.add(l));
+                });
+            });
+            isValid = allLinks.has(val);
+        }
+    }
+
+    if (!isValid) {
+        input.value = "";
+        return;
+    }
+
     const arr = type === 'category' ? state.filter.categories : state.filter.links;
     if (!arr.includes(val)) arr.push(val);
     input.value = "";

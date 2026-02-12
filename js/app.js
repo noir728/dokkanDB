@@ -120,6 +120,7 @@ async function init() {
             if (event.state && event.state.searchQuery !== undefined) {
                 state.searchQuery = event.state.searchQuery;
             }
+            if (typeof updateFilterUI === 'function') updateFilterUI();
             render();
         } else {
             // Navigate back to list view
@@ -146,6 +147,8 @@ async function init() {
                     state.filter.maxAwakening = parsed.maxAwakening;
                 }
             }
+
+            if (typeof updateFilterUI === 'function') updateFilterUI();
             render();
         }
     });

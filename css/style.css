@@ -4985,8 +4985,9 @@ body {
 }
 
 .char-item-icon-leader .dokkan-icon {
-    width: 70px; /* Normal grid min-width approximation */
-    height: 70px;
+    width: 80px;
+    /* Increased from 70px */
+    height: 80px;
 }
 
 .leader-stats-container {
@@ -4994,20 +4995,23 @@ body {
     overflow: hidden;
     background: rgba(0, 0, 0, 0.4);
     border-radius: 4px;
-    padding: 4px 2px;
+    padding: 6px 2px;
+    /* Increased padding */
     border: 1px solid #444;
 }
 
 .leader-stats-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 11px; /* Slightly larger */
+    font-size: 13px;
+    /* Increased from 11px */
     color: #eee;
     table-layout: fixed;
 }
 
 .leader-stats-table th {
-    font-size: 9px;
+    font-size: 10px;
+    /* Slightly larger */
     color: #888;
     padding-bottom: 2px;
     font-weight: normal;
@@ -5015,7 +5019,8 @@ body {
 
 .leader-stats-table td {
     text-align: center;
-    font-weight: bold;
+    font-weight: normal;
+    /* Changed from bold */
     color: var(--highlight);
     white-space: nowrap;
 }
