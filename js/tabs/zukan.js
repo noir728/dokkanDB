@@ -760,7 +760,7 @@ function populateFilterOptions() {
 
     // Task 3: Use source files for order
     const catsSource = (typeof CATEGORY_LIST !== 'undefined' && CATEGORY_LIST.length > 0) ? CATEGORY_LIST : null;
-    const linksSource = (typeof LINKS !== 'undefined' && Object.keys(LINKS).length > 0) ? Object.keys(LINKS) : null;
+    const linksSource = (typeof LINKS !== 'undefined' && LINKS.length > 0) ? LINKS.map(l => l.name) : null;
 
     let catsToRender = [];
     if (catsSource) {
@@ -776,7 +776,7 @@ function populateFilterOptions() {
         catList.innerHTML = '';
         catsToRender.forEach(cat => {
             const op = document.createElement('option');
-            op.value = cat;
+            op.value = (typeof cat === 'object') ? cat.name : cat;
             catList.appendChild(op);
         });
 
@@ -784,12 +784,13 @@ function populateFilterOptions() {
         if (allCatsContainer) {
             allCatsContainer.innerHTML = '';
             catsToRender.forEach(cat => {
+                const name = (typeof cat === 'object') ? cat.name : cat;
                 const item = document.createElement('div');
                 item.className = 'all-item-chip';
-                item.innerText = cat;
+                item.innerText = name;
                 item.onclick = () => {
-                    if (!state.filter.categories.includes(cat)) {
-                        state.filter.categories.push(cat);
+                    if (!state.filter.categories.includes(name)) {
+                        state.filter.categories.push(name);
                         updateFilterUI();
                     }
                 };
@@ -961,12 +962,12 @@ function addFilterFromInput(type, input) {
 function getFilterSource(type) {
     if (type === 'category') {
         const catsSource = (typeof CATEGORY_LIST !== 'undefined' && CATEGORY_LIST.length > 0) ? CATEGORY_LIST : null;
-        if (catsSource) return catsSource;
+        if (catsSource) return (typeof catsSource[0] === 'object') ? catsSource.map(c => c.name) : catsSource;
         const allCats = new Set();
         DB.forEach(c => { if (c.categories) c.categories.forEach(cat => allCats.add(cat)); });
         return Array.from(allCats).sort();
     } else {
-        const linksSource = (typeof LINKS !== 'undefined' && Object.keys(LINKS).length > 0) ? Object.keys(LINKS) : null;
+        const linksSource = (typeof LINKS !== 'undefined' && LINKS.length > 0) ? LINKS.map(l => l.name) : null;
         if (linksSource) return linksSource;
         const allLinks = new Set();
         DB.forEach(c => {
@@ -2130,7 +2131,8 @@ function openLinkPartnerModal(partnerId, formType, formIndex) {
     let linksHtml = "";
 
     sharedLinks.forEach(linkName => {
-        const linkData = LINKS[linkName] || { lv1: "---", lv10: "---" };
+        const linkObj = Array.isArray(LINKS) ? LINKS.find(l => l.name === linkName) : LINKS[linkName];
+        const linkData = linkObj ? { lv1: linkObj.level1_description || linkObj.lv1, lv10: linkObj.level10_description || linkObj.lv10 } : { lv1: "---", lv10: "---" };
         parseLinkStats(linkData.lv10, totalStats);
 
         linksHtml += `
@@ -2756,7 +2758,8 @@ function renderCharacterDetail(id) {
     if (currentData.links) {
         let linkHtml = `<div class="section-title">リンクスキル</div><div class="w-full mt-2 border-t border-[#3a3a3e]"><table class="link-table">`;
         currentData.links.forEach(linkName => {
-            const effectData = LINKS[linkName] || { lv1: "---", lv10: "---" };
+            const linkObj = Array.isArray(LINKS) ? LINKS.find(l => l.name === linkName) : LINKS[linkName];
+            const effectData = linkObj ? { lv1: linkObj.level1_description || linkObj.lv1, lv10: linkObj.level10_description || linkObj.lv10 } : { lv1: "---", lv10: "---" };
             linkHtml += `<tr onclick="applyFilter('link', '${linkName}')" style="cursor:pointer;"><td style="border-bottom:1px solid #333; padding:8px 4px;"><div class="link-name">${linkName}</div><div class="link-effect-row"><span class="link-lv-tag">Lv1</span><span>${formatText(effectData.lv1)}</span></div><div class="link-effect-row"><span class="link-lv-tag">Lv10</span><span>${formatText(effectData.lv10)}</span></div></td></tr>`;
         });
         linkHtml += `</table></div>`;

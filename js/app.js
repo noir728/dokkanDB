@@ -4,7 +4,7 @@ const GAS_API_URL = "https://script.google.com/macros/s/AKfycby_qQCqh8sLYmIFyPEU
 
 // Ensure DB and other constants are available
 let DB = (typeof CHARACTER_DATA !== 'undefined') ? CHARACTER_DATA : [];
-const LINKS = (typeof LINK_SKILLS !== 'undefined') ? LINK_SKILLS : {};
+const LINKS = (typeof LINK_SKILLS !== 'undefined') ? LINK_SKILLS : [];
 const CATEGORY_LIST = (typeof MASTER_CATEGORIES !== 'undefined') ? MASTER_CATEGORIES : [];
 
 const state = {
