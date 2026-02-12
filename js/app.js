@@ -112,18 +112,32 @@ async function init() {
             state.detailFormIndex = 0;
             state.detailEzaMode = 'normal';
             state.animDirection = 'left'; // Coming from history, animate left
-            render();
-        } else {
-            // Navigate back to list view
-            state.detailCharId = null;
-            state.animDirection = 'left';
-            // Restore filter state from history if available
+
+            // 履歴にフィルタ情報があれば復元
             if (event.state && event.state.filter) {
                 state.filter = event.state.filter;
             }
             if (event.state && event.state.searchQuery !== undefined) {
                 state.searchQuery = event.state.searchQuery;
             }
+            render();
+        } else {
+            // Navigate back to list view
+            state.detailCharId = null;
+            state.animDirection = 'left';
+
+            // 履歴からフィルタ状態を復元
+            if (event.state && event.state.filter) {
+                state.filter = event.state.filter;
+            } else {
+                // 履歴にない場合はデフォルト（リセット）
+                if (typeof resetFilters === 'function') resetFilters();
+            }
+
+            if (event.state && event.state.searchQuery !== undefined) {
+                state.searchQuery = event.state.searchQuery;
+            }
+
             // Re-apply persistent maxAwakening setting from localStorage
             const savedFilter = localStorage.getItem('dokkan_filter');
             if (savedFilter) {

@@ -1397,15 +1397,17 @@ function renderZukanList(targetGrid) {
                 const iconHtml = (typeof getCharIconHtml === 'function') ? getCharIconHtml(char, null, { hideStatus: true }) : 'IMG';
 
                 if (state.listMode === 'icon') {
-                    item.className = 'char-item-icon leader-candidate';
+                    item.className = 'char-item-icon-leader leader-candidate';
                     item.style.position = 'relative';
 
-                    // 補正値テーブルHTML（実際のtable要素）
+                    // 補正値テーブルHTML
                     const statsTableHtml = `
-                        <table class="leader-stats-table">
-                            <tr><th>気力</th><th>HP</th><th>ATK</th><th>DEF</th></tr>
-                            <tr><td>+${stats.ki}</td><td>${stats.hp}%</td><td>${stats.atk}%</td><td>${stats.def}%</td></tr>
-                        </table>`;
+                        <div class="leader-stats-container">
+                            <table class="leader-stats-table">
+                                <tr><th>気</th><th>HP</th><th>ATK</th><th>DEF</th></tr>
+                                <tr><td>+${stats.ki}</td><td>${stats.hp}%</td><td>${stats.atk}%</td><td>${stats.def}%</td></tr>
+                            </table>
+                        </div>`;
 
                     item.innerHTML = iconHtml + statsTableHtml;
                     item.onclick = () => openDetail(char.id);
@@ -1831,7 +1833,13 @@ function openDetail(id) {
 
     const url = new URL(window.location);
     url.searchParams.set('id', id);
-    window.history.pushState({ id: id }, '', url);
+
+    // 現在のフィルタ状態とクエリも保存する
+    window.history.pushState({
+        id: id,
+        filter: JSON.parse(JSON.stringify(state.filter)),
+        searchQuery: state.searchQuery
+    }, '', url);
 
     if (content) {
         content.scrollTop = 0;

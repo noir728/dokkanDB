@@ -4971,3 +4971,92 @@ body {
     font-weight: bold;
     font-size: 8px;
 }
+
+/* --- Leader Search Sections --- */
+.char-grid-sections {
+    padding: 10px;
+}
+
+.char-item-icon-leader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.char-item-icon-leader .dokkan-icon {
+    width: 70px; /* Normal grid min-width approximation */
+    height: 70px;
+}
+
+.leader-stats-container {
+    width: 100%;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    padding: 4px 2px;
+    border: 1px solid #444;
+}
+
+.leader-stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px; /* Slightly larger */
+    color: #eee;
+    table-layout: fixed;
+}
+
+.leader-stats-table th {
+    font-size: 9px;
+    color: #888;
+    padding-bottom: 2px;
+    font-weight: normal;
+}
+
+.leader-stats-table td {
+    text-align: center;
+    font-weight: bold;
+    color: var(--highlight);
+    white-space: nowrap;
+}
+
+.ls-section-header {
+    border-left: 4px solid;
+    padding: 6px 12px;
+    margin: 20px 0 10px 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), transparent);
+    border-radius: 4px;
+}
+
+.leader-candidate {
+    transition: transform 0.2s;
+}
+
+.leader-candidate:active {
+    transform: scale(0.95);
+}
+
+.char-row-leader-stats {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+    padding: 4px 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.char-row-leader-stats .stat-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.char-row-leader-stats .stat-label {
+    font-size: 9px;
+    color: #888;
+}
+
+.char-row-leader-stats .stat-value {
+    font-weight: bold;
+    color: var(--highlight);
+}
