@@ -212,6 +212,35 @@ body {
     display: flex;
 }
 
+/* --- Filter Suggestions --- */
+.filter-suggestions {
+    position: absolute;
+    background-color: #2d2d30;
+    border: 1px solid #444;
+    border-radius: 8px;
+    z-index: 100;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    margin-top: 4px;
+}
+
+.suggestion-item {
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:active {
+    background-color: #444;
+}
+
 /* --- Action Row (Sort/Mode) --- */
 .action-row {
     display: flex;
@@ -4992,6 +5021,7 @@ body {
 
 .leader-stats-container {
     width: 100%;
+    box-sizing: border-box;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.4);
     border-radius: 4px;
@@ -5027,10 +5057,13 @@ body {
 
 .ls-section-header {
     border-left: 4px solid;
+    border-right: 4px solid;
     padding: 6px 12px;
     margin: 20px 0 10px 0;
     background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), transparent);
     border-radius: 4px;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 .leader-candidate {

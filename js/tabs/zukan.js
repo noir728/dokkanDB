@@ -737,6 +737,9 @@ function renderFilterModal() {
                         <div class="filter-chip" onclick="toggleFilter('status', 'favorite')">お気に入り</div>
                     </div>
                 </div>
+
+                <datalist id="category-list"></datalist>
+                <datalist id="link-list"></datalist>
             </div>
 
             <!-- アクションボタン (固定表示) -->
@@ -846,6 +849,15 @@ function openFilterModal() {
 function closeFilterModal() {
     const modal = document.getElementById('filter-modal');
     if (modal) modal.classList.remove('open');
+
+    // 完了時に履歴に刻む（戻った際の復元用）
+    const url = new URL(window.location);
+    url.searchParams.delete('id'); // リスト画面への遷移として扱う
+    window.history.replaceState({
+        filter: JSON.parse(JSON.stringify(state.filter)),
+        searchQuery: state.searchQuery
+    }, '', url);
+
     renderZukanList();
 }
 
@@ -853,7 +865,7 @@ function toggleAllItems(type) {
     const id = type === 'category' ? 'all-cats-container' : 'all-links-container';
     const container = document.getElementById(id);
     if (container) {
-        const isHidden = container.style.display === 'none';
+        const isHidden = (container.style.display === 'none' || container.style.display === '');
         container.style.display = isHidden ? 'grid' : 'none';
     }
 }
@@ -1450,6 +1462,8 @@ function renderZukanList(targetGrid) {
             leaderHeader.className = 'ls-section-header leader-section';
             leaderHeader.style.borderColor = '#ffd700';
             leaderHeader.style.color = '#ffd700';
+            leaderHeader.style.maxWidth = '100%';
+            leaderHeader.style.boxSizing = 'border-box';
             leaderHeader.innerHTML = `<span style="font-weight:bold; font-size:14px;">リーダー (${leaderCandidates.length})</span>`;
             grid.appendChild(leaderHeader);
 
