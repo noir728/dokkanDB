@@ -89,6 +89,12 @@ async function init() {
         render();
     }
 
+    // 初回ロード時の状態を履歴に刻む（戻った際のevent.state null対策）
+    window.history.replaceState({
+        filter: JSON.parse(JSON.stringify(state.filter)),
+        searchQuery: state.searchQuery
+    }, '', window.location.href);
+
     // Scroll Event - キャラ詳細画面のみでトップボタンを表示
     contentDiv.addEventListener('scroll', () => {
         if (state.detailCharId && contentDiv.scrollTop > 300) {
@@ -130,8 +136,8 @@ async function init() {
             // 履歴からフィルタ状態を復元
             if (event.state && event.state.filter) {
                 state.filter = event.state.filter;
-            } else {
-                // 履歴にない場合はデフォルト（リセット）
+            } else if (!event.state) {
+                // 初回ステートがない場合はデフォルト（initで刻んだはずだが念のため）
                 if (typeof resetFilters === 'function') resetFilters();
             }
 

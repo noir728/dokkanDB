@@ -681,10 +681,10 @@ function renderFilterModal() {
                         </div>
                     </div>
                     <div class="filter-input-row">
-                        <input list="category-list" id="cat-input" class="filter-select-input" placeholder="カテゴリを検索..." onchange="addFilterFromInput('category', this)" style="flex:1;">
+                        <input id="cat-input" class="filter-select-input" placeholder="カテゴリを検索..." oninput="handleFilterKeywordInput('category', this)" onkeydown="if(event.key==='Enter') addFilterFromInput('category', this)" style="flex:1;" autocomplete="off">
                         <button class="btn-sm" onclick="toggleAllItems('category')">一覧</button>
                     </div>
-                    <datalist id="category-list"></datalist>
+                    <div id="cat-suggestions" class="filter-suggestions" style="display:none;"></div>
                     <div class="filter-chips" id="selected-cats" style="margin-top:10px;"></div>
                     <div id="all-cats-container" class="all-items-container" style="display:none;"></div>
                 </div>
@@ -700,10 +700,10 @@ function renderFilterModal() {
                         </div>
                     </div>
                     <div class="filter-input-row">
-                        <input list="link-list" id="link-input" class="filter-select-input" placeholder="リンクスキルを検索..." onchange="addFilterFromInput('link', this)" style="flex:1;">
+                        <input id="link-input" class="filter-select-input" placeholder="リンクスキルを検索..." oninput="handleFilterKeywordInput('link', this)" onkeydown="if(event.key==='Enter') addFilterFromInput('link', this)" style="flex:1;" autocomplete="off">
                         <button class="btn-sm" onclick="toggleAllItems('link')">一覧</button>
                     </div>
-                    <datalist id="link-list"></datalist>
+                    <div id="link-suggestions" class="filter-suggestions" style="display:none;"></div>
                     <div class="filter-chips" id="selected-links" style="margin-top:10px;"></div>
                     <div id="all-links-container" class="all-items-container" style="display:none;"></div>
                 </div>
@@ -930,42 +930,76 @@ function addFilterFromInput(type, input) {
     if (!val) return;
 
     // バリデーション: 実在するカテゴリ/リンクかチェック
-    let isValid = false;
-    if (type === 'category') {
-        const catsSource = (typeof CATEGORY_LIST !== 'undefined' && CATEGORY_LIST.length > 0) ? CATEGORY_LIST : null;
-        if (catsSource) {
-            isValid = catsSource.includes(val);
-        } else {
-            // DBから抽出したリストでチェック
-            const allCats = new Set();
-            DB.forEach(c => { if (c.categories) c.categories.forEach(cat => allCats.add(cat)); });
-            isValid = allCats.has(val);
-        }
-    } else {
-        const linksSource = (typeof LINKS !== 'undefined' && Object.keys(LINKS).length > 0) ? Object.keys(LINKS) : null;
-        if (linksSource) {
-            isValid = linksSource.includes(val);
-        } else {
-            const allLinks = new Set();
-            DB.forEach(c => {
-                if (c.links) c.links.forEach(l => allLinks.add(l));
-                if (c.forms) c.forms.forEach(f => {
-                    if (f.links) f.links.forEach(l => allLinks.add(l));
-                });
-            });
-            isValid = allLinks.has(val);
-        }
-    }
+    const source = getFilterSource(type);
+    const isValid = source.includes(val);
 
     if (!isValid) {
         input.value = "";
+        hideSuggestions(type);
         return;
     }
 
     const arr = type === 'category' ? state.filter.categories : state.filter.links;
     if (!arr.includes(val)) arr.push(val);
     input.value = "";
+    hideSuggestions(type);
     updateFilterUI();
+}
+
+function getFilterSource(type) {
+    if (type === 'category') {
+        const catsSource = (typeof CATEGORY_LIST !== 'undefined' && CATEGORY_LIST.length > 0) ? CATEGORY_LIST : null;
+        if (catsSource) return catsSource;
+        const allCats = new Set();
+        DB.forEach(c => { if (c.categories) c.categories.forEach(cat => allCats.add(cat)); });
+        return Array.from(allCats).sort();
+    } else {
+        const linksSource = (typeof LINKS !== 'undefined' && Object.keys(LINKS).length > 0) ? Object.keys(LINKS) : null;
+        if (linksSource) return linksSource;
+        const allLinks = new Set();
+        DB.forEach(c => {
+            if (c.links) c.links.forEach(l => allLinks.add(l));
+            if (c.forms) c.forms.forEach(f => {
+                if (f.links) f.links.forEach(l => allLinks.add(l));
+            });
+        });
+        return Array.from(allLinks).sort();
+    }
+}
+
+function handleFilterKeywordInput(type, input) {
+    const val = input.value.trim();
+    const suggestionsDiv = document.getElementById(type === 'category' ? 'cat-suggestions' : 'link-suggestions');
+    if (!suggestionsDiv) return;
+
+    if (!val) {
+        suggestionsDiv.style.display = 'none';
+        return;
+    }
+
+    const source = getFilterSource(type);
+    const matches = source.filter(item => item.toLowerCase().includes(val.toLowerCase())).slice(0, 10);
+
+    if (matches.length > 0) {
+        suggestionsDiv.innerHTML = matches.map(m => `<div class="suggestion-item" onclick="selectSuggestion('${type}', '${m.replace(/'/g, "\\'")}')">${m}</div>`).join('');
+        suggestionsDiv.style.display = 'block';
+    } else {
+        suggestionsDiv.style.display = 'none';
+    }
+}
+
+function selectSuggestion(type, val) {
+    const inputId = type === 'category' ? 'cat-input' : 'link-input';
+    const input = document.getElementById(inputId);
+    if (input) {
+        input.value = val;
+        addFilterFromInput(type, input);
+    }
+}
+
+function hideSuggestions(type) {
+    const suggestionsDiv = document.getElementById(type === 'category' ? 'cat-suggestions' : 'link-suggestions');
+    if (suggestionsDiv) suggestionsDiv.style.display = 'none';
 }
 
 function removeArrayFilter(type, value) {
