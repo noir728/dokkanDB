@@ -215,12 +215,13 @@ body {
 /* --- Filter Suggestions --- */
 .filter-suggestions {
     position: absolute;
+    border-left: 4px solid;
+    border-right: 4px solid;
     background-color: #2d2d30;
     border: 1px solid #444;
     border-radius: 8px;
     z-index: 100;
-    width: 100%;
-    max-height: 200px;
+    box-sizing: border-box;
     overflow-y: auto;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     margin-top: 4px;
