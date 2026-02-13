@@ -1239,6 +1239,27 @@ function renderZukanLayout() {
         fab.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg><span id="fab-badge" class="fab-badge" style="display:none;">0</span>`;
         contentDiv.appendChild(fab);
 
+        // TOPへボタンの追加
+        const topBtn = document.createElement('div');
+        topBtn.id = 'zukan-top-btn';
+        topBtn.className = 'scroll-top-fab';
+        topBtn.innerHTML = '<div class="scroll-top-text">TOPへ</div>';
+        topBtn.onclick = () => {
+            contentDiv.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        contentDiv.appendChild(topBtn);
+
+        // スクロールイベントの登録（TOPボタンの表示制御）
+        contentDiv.addEventListener('scroll', () => {
+            if (state.currentTab === 'zukan' && !state.detailCharId) {
+                if (contentDiv.scrollTop > 500) {
+                    topBtn.classList.add('visible');
+                } else {
+                    topBtn.classList.remove('visible');
+                }
+            }
+        });
+
         // Call renderZukanList after FAB is in DOM so badge updates correctly
         renderZukanList(grid);
 

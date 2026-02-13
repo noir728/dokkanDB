@@ -1917,14 +1917,20 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 2000;
-    display: none;
-    align-items: flex-end;
+    background: rgba(0, 0, 0, 0.85);
+    /* ちょっと濃く */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
 .modal-overlay.open {
-    display: flex;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .filter-modal {
@@ -1936,6 +1942,11 @@ body {
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+}
+
+#refresh-confirm-modal .filter-modal {
+    margin: auto;
+    /* 万が一のため */
 }
 
 .filter-modal-body {
@@ -2174,8 +2185,46 @@ body {
 }
 
 .filter-fab.active {
-    background-color: var(--accent-teq);
-    animation: pulse 2s infinite;
+    background: var(--accent-str);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* TOPへボタン */
+.scroll-top-fab {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    /* FABと反対側 */
+    width: 50px;
+    height: 50px;
+    background: #444;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.scroll-top-fab.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-top-fab:active {
+    transform: scale(0.9);
+}
+
+.scroll-top-text {
+    font-size: 10px;
+    font-weight: bold;
 }
 
 .fab-badge {

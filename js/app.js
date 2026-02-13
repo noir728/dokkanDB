@@ -312,7 +312,9 @@ function showRefreshConfirmModal() {
         <div id="refresh-confirm-modal" class="modal-overlay open" style="z-index: 2000;">
             <div class="filter-modal scale-in" style="height: auto; max-width: 300px; padding: 20px;">
                 <div style="text-align: center;">
-                    <div style="font-size: 24px; margin-bottom: 10px;">🔄</div>
+                    <div style="font-size: 24px; margin-bottom: 15px; color: #4cd964;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block; margin: 0 auto;"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
+                    </div>
                     <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 15px;">データを更新しますか？</h3>
                     <p style="font-size: 12px; color: #aaa; margin-bottom: 20px;">最新のキャラクターデータをサーバーから取得します。</p>
                     <div style="display: flex; gap: 10px; justify-content: center;">
