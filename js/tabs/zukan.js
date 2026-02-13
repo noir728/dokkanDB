@@ -1227,32 +1227,23 @@ function renderZukanLayout() {
         header.querySelector('input').addEventListener('input', (e) => { state.searchQuery = e.target.value; renderZukanList(); });
         contentDiv.appendChild(header);
 
-        const grid = document.createElement('div');
-        grid.id = 'zukan-grid';
-        contentDiv.appendChild(grid);
-
-        // Add FAB (must be added before renderZukanList so badge can be updated)
-        const fab = document.createElement('div');
-        fab.id = 'filter-fab';
-        fab.className = 'filter-fab';
-        fab.onclick = openFilterModal;
-        fab.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg><span id="fab-badge" class="fab-badge" style="display:none;">0</span>`;
-        contentDiv.appendChild(fab);
-
-        // TOPへボタンの追加
+        // TOPへボタンの追加（ヘッダーの直後に配置）
+        const topContainer = document.createElement('div');
+        topContainer.className = 'scroll-top-container';
         const topBtn = document.createElement('div');
         topBtn.id = 'zukan-top-btn';
         topBtn.className = 'scroll-top-fab';
-        topBtn.innerHTML = '<div class="scroll-top-text">TOPへ</div>';
+        topBtn.innerHTML = '<div class="scroll-top-text">▲ TOPへ</div>';
         topBtn.onclick = () => {
             contentDiv.scrollTo({ top: 0, behavior: 'smooth' });
         };
-        contentDiv.appendChild(topBtn);
+        topContainer.appendChild(topBtn);
+        contentDiv.appendChild(topContainer);
 
         // スクロールイベントの登録（TOPボタンの表示制御）
         contentDiv.addEventListener('scroll', () => {
             if (state.currentTab === 'zukan' && !state.detailCharId) {
-                if (contentDiv.scrollTop > 500) {
+                if (contentDiv.scrollTop > 300) {
                     topBtn.classList.add('visible');
                 } else {
                     topBtn.classList.remove('visible');
@@ -1260,7 +1251,19 @@ function renderZukanLayout() {
             }
         });
 
-        // Call renderZukanList after FAB is in DOM so badge updates correctly
+        const grid = document.createElement('div');
+        grid.id = 'zukan-grid';
+        contentDiv.appendChild(grid);
+
+        // Filter FAB (必須: renderZukanListの前に配置してバッジ更新を可能にする)
+        const fab = document.createElement('div');
+        fab.id = 'filter-fab';
+        fab.className = 'filter-fab';
+        fab.onclick = openFilterModal;
+        fab.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg><span id="fab-badge" class="fab-badge" style="display:none;">0</span>`;
+        contentDiv.appendChild(fab);
+
+        // Call renderZukanList
         renderZukanList(grid);
 
 

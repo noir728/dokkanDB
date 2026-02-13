@@ -2185,31 +2185,42 @@ body {
 }
 
 .filter-fab.active {
-    background: var(--accent-str);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    background: var(--accent-teq);
 }
 
 /* TOPへボタン */
+.scroll-top-container {
+    position: sticky;
+    top: 135px;
+    /* zukan-headerの高さを考慮して調整 */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 95;
+    margin-top: -30px;
+    /* リストに重なるように配置 */
+    height: 30px;
+}
+
 .scroll-top-fab {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    /* FABと反対側 */
-    width: 50px;
-    height: 50px;
-    background: #444;
+    background: rgba(68, 68, 68, 0.9);
     color: #fff;
-    border-radius: 50%;
+    padding: 4px 15px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 90;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    pointer-events: auto;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(20px);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    border: 1px solid #555;
+    backdrop-filter: blur(4px);
 }
 
 .scroll-top-fab.visible {
