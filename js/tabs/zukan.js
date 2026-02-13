@@ -1380,23 +1380,28 @@ function renderZukanList(targetGrid) {
     if (isSubSelectMode) {
         const team = state.teams[state.currentTeamIndex];
         const leaderId = team.slots[0];
+        const friendId = team.slots[6];
+        const currentSlot = state.selectingSlot;
 
-        if (leaderId) {
-            const leader = DB.find(c => c.id === leaderId);
-            if (leader) {
-                displayDB.forEach(c => {
-                    c.tempLsBoost = calcLeaderBoost(leader, c);
-                });
-                // 倍率降順 -> 実装日新しい順
-                displayDB.sort((a, b) => {
-                    if (b.tempLsBoost !== a.tempLsBoost) return b.tempLsBoost - a.tempLsBoost;
-                    return getLatestDate(b).localeCompare(getLatestDate(a));
-                });
-            }
-        } else {
-            // リーダー未設定の場合、倍率は0
-            displayDB.forEach(c => c.tempLsBoost = 0);
-        }
+        const leader = leaderId ? DB.find(c => c.id === leaderId) : null;
+        const friend = friendId ? DB.find(c => c.id === friendId) : null;
+
+        displayDB.forEach(c => {
+            let totalBoost = 0;
+            // リーダーの補正値を加算
+            if (leader) totalBoost += calcLeaderBoost(leader, c);
+
+            // フレンドの補正値を加算 (現在フレンド選択中でない場合のみ)
+            if (friend && currentSlot !== 6) totalBoost += calcLeaderBoost(friend, c);
+
+            c.tempLsBoost = totalBoost;
+        });
+
+        // 倍率降順 -> 実装日新しい順
+        displayDB.sort((a, b) => {
+            if (b.tempLsBoost !== a.tempLsBoost) return b.tempLsBoost - a.tempLsBoost;
+            return getLatestDate(b).localeCompare(getLatestDate(a));
+        });
     } else if (f.sort) {
         displayDB.sort((a, b) => {
             const dateA = getLatestDate(a);
