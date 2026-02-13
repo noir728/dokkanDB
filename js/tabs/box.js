@@ -467,7 +467,7 @@ function openSettingsModal() {
                 <div class="settings-section about">
                     <h4 class="settings-section-title">${t('about')}</h4>
                     <p class="disclaimer">${t('disclaimer').replace(/\n/g, '<br>')}</p>
-                    <p class="version">Version 1.0.0</p>
+                    <p class="version">Version 0.1.0</p>
                 </div>
             </div>
         </div>
