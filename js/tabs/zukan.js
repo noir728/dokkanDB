@@ -2376,10 +2376,10 @@ function renderCharacterDetail(id) {
                     nextStep.medals.forEach(medal => {
                         let bgHtml = '';
                         if (medal.bg) {
-                            bgHtml = `<img src="assets/medals/${medal.bg}.png" class="medal-bg" onerror="this.style.display='none'">`;
+                            bgHtml = `<img src="assets/items/medals/${medal.bg}.png" class="medal-bg" onerror="this.style.display='none'">`;
                         }
 
-                        let medalImg = `<img src="assets/medals/${medal.name}.png" class="medal-img" onload="if(this.naturalWidth >= 300) this.style.transform='scale(1.0)';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`;
+                        let medalImg = `<img src="assets/items/medals/${medal.name}.png" class="medal-img" onload="if(this.naturalWidth >= 300) this.style.transform='scale(1.0)';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`;
                         let medalFallback = `<div class="req-icon-fallback" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#fff;font-size:8px;">M</div>`;
 
                         awkContent += `<div class="req-item"><div class="req-icon" title="${medal.name}">${bgHtml}${medalImg}${medalFallback}</div><div class="req-count">x${medal.count}</div></div>`;
