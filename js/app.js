@@ -367,6 +367,8 @@ function initTeams() {
         // Migrate old data: ensure all teams have memo field
         state.teams.forEach(team => {
             if (team.memo === undefined) team.memo = '';
+            if (team.supportItems === undefined) team.supportItems = [null, null, null, null];
+            if (team.supportMemory === undefined) team.supportMemory = null;
             if (!team.id) team.id = Date.now() + Math.random();
         });
     } else {
@@ -376,6 +378,8 @@ function initTeams() {
             name: 'チーム 1',
             label: '汎用',
             slots: [null, null, null, null, null, null, null],
+            supportItems: [null, null, null, null],
+            supportMemory: null,
             memo: ''
         }];
     }

@@ -93,8 +93,9 @@ function getStepIconHtml(step, parentChar) {
     const displayRarity = step.rank;
     // Inherit type/class
     const displayType = parentChar.type;
-    // SSR usually uses normal type icon, others use Super/Extreme if available
-    const displayClass = (step.rank === 'SSR') ? null : parentChar.class;
+    // 覚醒ルートの先頭（一番左）であれば簡易属性アイコンを表示
+    const isFirstStep = parentChar.awakening && parentChar.awakening[0] === step;
+    const displayClass = isFirstStep ? null : parentChar.class;
 
     let typeColor = getAttributeColor(displayType);
 

@@ -138,7 +138,12 @@ function renderTeamCard(team, teamIndex) {
                 <div class="team-card-title">
                     <span class="team-card-name">${team.name || 'チーム'}</span>
                     <span class="team-card-label-badge">${team.label || '汎用'}</span>
-                    <span class="team-card-edit-btn" onclick="event.stopPropagation(); openTeamEditModal(${teamIndex})">✏️</span>
+                    <span class="team-card-edit-btn" onclick="event.stopPropagation(); openTeamEditModal(${teamIndex})">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </span>
                 </div>
                 <span class="team-card-arrow">${isExpanded ? '▲' : '▼'}</span>
             </div>
@@ -153,14 +158,8 @@ function renderTeamCard(team, teamIndex) {
             <div class="team-expanded-content">
                 <div class="team-stats-qr-row">
                     <div class="team-stats-section">
-                        <div class="team-stat-item">
-                            <span class="team-stat-label">TOTAL HP</span>
-                            <span class="team-stat-value">${stats.hp.toLocaleString()}</span>
-                        </div>
-                        <div class="team-stat-item">
-                            <span class="team-stat-label">COST</span>
-                            <span class="team-stat-value">${stats.cost}</span>
-                        </div>
+                        ${renderSupportItemsSection(team, teamIndex)}
+                        ${renderSupportMemorySection(team, teamIndex)}
                     </div>
                     <div class="team-qr-section">
                         <div id="qr-container-${teamIndex}" class="team-qr-container"></div>
@@ -300,6 +299,8 @@ function addNewTeam() {
         name: `チーム ${state.teams.length + 1}`,
         label: currentLabelFilter !== '全て' ? currentLabelFilter : '汎用',
         slots: [null, null, null, null, null, null, null],
+        supportItems: [null, null, null, null],
+        supportMemory: null,
         memo: ''
     };
     state.teams.push(newTeam);
@@ -1680,3 +1681,300 @@ function confirmTeamEditModal() {
 window.openTeamEditModal = openTeamEditModal;
 window.closeTeamEditModal = closeTeamEditModal;
 window.confirmTeamEditModal = confirmTeamEditModal;
+
+// --- Support Items & Memories Rendering & Selection ---
+
+function renderSupportItemsSection(team, teamIndex) {
+    let itemsHtml = '<div class="support-items-grid">';
+    for (let i = 0; i < 4; i++) {
+        const itemId = team.supportItems[i];
+        let slotContent = '';
+        if (itemId) {
+            const item = support_items.find(it => it.id === itemId);
+            if (item) {
+                const rarityBg = `./assets/items/support_items/rarity/${item.rerity}.png`;
+                const itemImg = `./assets/items/support_items/id/${item.id}.png`;
+                slotContent = `
+                    <img src="${rarityBg}" class="support-slot-bg">
+                    <img src="${itemImg}" class="support-item-img">
+                `;
+            }
+        } else {
+            slotContent = `<img src="./assets/items/support_items/rarity/slot.png" class="support-slot-bg">`;
+        }
+        itemsHtml += `
+            <div class="support-slot" onclick="event.stopPropagation(); openSupportItemModal(${teamIndex})">
+                ${slotContent}
+            </div>
+        `;
+    }
+    itemsHtml += '</div>';
+
+    return `
+        <div class="team-stat-item">
+            <span class="team-stat-label">ITEMS</span>
+            <div class="team-stat-value">${itemsHtml}</div>
+        </div>
+    `;
+}
+
+function renderSupportMemorySection(team, teamIndex) {
+    const memory = team.supportMemory;
+    let slotContent = '';
+    if (memory) {
+        const memoryData = support_memories.flat().find(m => m.id === memory.id);
+        if (memoryData) {
+            const memoryImg = `./assets/items/support_memories/id/${memory.id.toString().substring(0, 5)}.png`;
+            slotContent = `
+                <div class="support-memory-slot" onclick="event.stopPropagation(); openSupportMemoryModal(${teamIndex})">
+                    <img src="${memoryImg}">
+                    <div class="support-memory-lv">Lv.${memory.level}</div>
+                </div>
+            `;
+        }
+    } else {
+        slotContent = `
+            <div class="support-memory-slot" onclick="event.stopPropagation(); openSupportMemoryModal(${teamIndex})">
+                <img src="./assets/items/support_memories/slot.PNG">
+            </div>
+        `;
+    }
+
+    return `
+        <div class="team-stat-item">
+            <span class="team-stat-label">MEMORY</span>
+            <div class="team-stat-value">${slotContent}</div>
+        </div>
+    `;
+}
+
+// --- Support Item Modal Logic ---
+let supportModalState = null;
+
+function openSupportItemModal(teamIndex) {
+    const team = state.teams[teamIndex];
+    supportModalState = {
+        type: 'item',
+        teamIndex: teamIndex,
+        tempSelected: [...team.supportItems]
+    };
+    renderSupportModal();
+}
+
+function openSupportMemoryModal(teamIndex) {
+    const team = state.teams[teamIndex];
+    supportModalState = {
+        type: 'memory',
+        teamIndex: teamIndex,
+        tempSelected: team.supportMemory ? { ...team.supportMemory } : null
+    };
+    renderSupportModal();
+}
+
+function renderSupportModal() {
+    if (!supportModalState) return;
+    const { type, tempSelected } = supportModalState;
+
+    let itemsHtml = '';
+    if (type === 'item') {
+        support_items.forEach(item => {
+            const isSelected = tempSelected.includes(item.id);
+            const rarityBg = `./assets/items/support_items/rarity/${item.rerity}.png`;
+            const itemImg = `./assets/items/support_items/id/${item.id}.png`;
+            itemsHtml += `
+                <div class="support-select-item ${isSelected ? 'selected' : ''}" 
+                     onclick="toggleSupportItemSelect('${item.id}')"
+                     onmousedown="handleSupportLongPress(event, 'item', '${item.id}')"
+                     ontouchstart="handleSupportLongPress(event, 'item', '${item.id}')">
+                    <img src="${rarityBg}" style="position:absolute; top:0; left:0; width:100%; height:100%;">
+                    <img src="${itemImg}" style="position:absolute; top:0; left:0; width:100%; height:100%;">
+                </div>
+            `;
+        });
+    } else {
+        const seen = new Set();
+        support_memories.flat().forEach(m => {
+            if (seen.has(m.name)) return;
+            seen.add(m.name);
+            const isSelected = tempSelected && (tempSelected.id.toString().substring(0, 5) === m.id.toString().substring(0, 5));
+            const memoryImg = `./assets/items/support_memories/id/${m.id.toString().substring(0, 5)}.png`;
+            itemsHtml += `
+                <div class="support-select-item ${isSelected ? 'selected' : ''}" 
+                     onclick="selectSupportMemory('${m.id}')"
+                     onmousedown="handleSupportLongPress(event, 'memory', '${m.id}')"
+                     ontouchstart="handleSupportLongPress(event, 'memory', '${m.id}')">
+                    <img src="${memoryImg}">
+                </div>
+            `;
+        });
+    }
+
+    const modalHtml = `
+        <div class="support-modal-overlay" onclick="closeSupportModal()">
+            <div class="support-modal" onclick="event.stopPropagation()">
+                <div class="support-modal-header">
+                    <div class="support-modal-title">${type === 'item' ? 'サポートアイテム選択' : 'サポートメモリー選択'}</div>
+                    <div class="support-modal-count">${type === 'item' ? tempSelected.filter(id => id).length + ' / 4' : ''}</div>
+                </div>
+                <div class="support-modal-grid">
+                    ${itemsHtml}
+                </div>
+                <div class="support-modal-footer">
+                    <button class="support-modal-btn cancel" onclick="closeSupportModal()">キャンセル</button>
+                    <button class="support-modal-btn confirm" onclick="confirmSupportSelection()">完了</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const existing = document.querySelector('.support-modal-overlay');
+    if (existing) existing.remove();
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function toggleSupportItemSelect(itemId) {
+    const idx = supportModalState.tempSelected.indexOf(itemId);
+    if (idx !== -1) {
+        supportModalState.tempSelected[idx] = null;
+    } else {
+        const emptyIdx = supportModalState.tempSelected.indexOf(null);
+        if (emptyIdx !== -1) {
+            supportModalState.tempSelected[emptyIdx] = itemId;
+        }
+    }
+    renderSupportModal();
+}
+
+function selectSupportMemory(memoryId) {
+    if (supportModalState.tempSelected && supportModalState.tempSelected.id.toString().substring(0, 5) === memoryId.toString().substring(0, 5)) {
+        supportModalState.tempSelected = null;
+    } else {
+        supportModalState.tempSelected = { id: parseInt(memoryId), level: 1 };
+    }
+    renderSupportModal();
+}
+
+function confirmSupportSelection() {
+    const { type, teamIndex, tempSelected } = supportModalState;
+    if (type === 'item') {
+        state.teams[teamIndex].supportItems = tempSelected;
+    } else {
+        state.teams[teamIndex].supportMemory = tempSelected;
+    }
+    saveTeamState();
+    closeSupportModal();
+    renderTeamLayout();
+}
+
+function closeSupportModal() {
+    supportModalState = null;
+    const overlay = document.querySelector('.support-modal-overlay');
+    if (overlay) overlay.remove();
+}
+
+// --- Long Press & Popover Logic ---
+let supportLongPressTimer = null;
+
+function handleSupportLongPress(e, type, id) {
+    clearTimeout(supportLongPressTimer);
+    supportLongPressTimer = setTimeout(() => {
+        showSupportPopover(e, type, id);
+    }, 500);
+
+    const clear = () => {
+        clearTimeout(supportLongPressTimer);
+        document.removeEventListener('mouseup', clear);
+        document.removeEventListener('touchend', clear);
+    };
+    document.addEventListener('mouseup', clear);
+    document.addEventListener('touchend', clear);
+}
+
+function showSupportPopover(e, type, id) {
+    let data = null;
+    let baseId = id.toString().substring(0, 5);
+    let allLevels = [];
+
+    if (type === 'item') {
+        data = support_items.find(it => it.id === id);
+    } else {
+        allLevels = support_memories.flat().filter(m => m.id.toString().substring(0, 5) === baseId);
+        // Find current level if already selected, otherwise level 1
+        const currentSelected = supportModalState?.tempSelected;
+        const currentLevel = (currentSelected && currentSelected.id.toString().substring(0, 5) === baseId) ? currentSelected.id : parseInt(baseId);
+        data = allLevels.find(m => m.id === currentLevel) || allLevels[0];
+    }
+
+    if (!data) return;
+
+    hideSupportPopover();
+
+    const popover = document.createElement('div');
+    popover.className = 'support-popover';
+    popover.style.pointerEvents = 'auto'; // Make it interactive
+
+    let levelHtml = '';
+    if (type === 'memory' && allLevels.length > 1) {
+        levelHtml = '<div class="popover-levels" style="margin-top:10px; display:flex; gap:5px; flex-wrap:wrap;">';
+        allLevels.forEach(lv => {
+            const isCurrent = lv.id === data.id;
+            levelHtml += `
+                <div class="lv-btn" style="padding:4px 8px; background:${isCurrent ? 'var(--highlight)' : '#444'}; color:${isCurrent ? '#000' : '#fff'}; border-radius:4px; font-size:10px; cursor:pointer;"
+                     onclick="event.stopPropagation(); changeMemoryLevel('${lv.id}')">
+                    Lv.${lv.level}
+                </div>
+            `;
+        });
+        levelHtml += '</div>';
+    }
+
+    popover.innerHTML = `
+        <div class="popover-name">${data.name}</div>
+        <div class="popover-effect">${data.description || data.effect || ''}</div>
+        ${levelHtml}
+    `;
+
+    document.body.appendChild(popover);
+
+    const rect = e.target.getBoundingClientRect();
+    const x = Math.min(window.innerWidth - 280, Math.max(10, rect.left - 100));
+    const y = rect.top - 150;
+    popover.style.left = x + 'px';
+    popover.style.top = (y > 10 ? y : rect.bottom + 10) + 'px';
+
+    // Auto-hide logic refined: don't hide if clicking inside popover
+    const hideOnOutside = (event) => {
+        if (!popover.contains(event.target)) {
+            hideSupportPopover();
+            document.removeEventListener('mousedown', hideOnOutside);
+            document.removeEventListener('touchstart', hideOnOutside);
+        }
+    };
+    setTimeout(() => {
+        document.addEventListener('mousedown', hideOnOutside);
+        document.addEventListener('touchstart', hideOnOutside);
+    }, 100);
+}
+
+function changeMemoryLevel(levelId) {
+    if (supportModalState && supportModalState.type === 'memory') {
+        const memoryData = support_memories.flat().find(m => m.id === parseInt(levelId));
+        if (memoryData) {
+            supportModalState.tempSelected = { id: memoryData.id, level: memoryData.level };
+            renderSupportModal();
+            // Re-show popover with updated data
+            const rect = document.querySelector(`.support-select-item.selected`)?.getBoundingClientRect();
+            if (rect) {
+                const mockEvent = { target: document.querySelector(`.support-select-item.selected`), targetRect: rect };
+                // Override rect calculation in showSupportPopover or just pass enough data
+                // For now, simple re-show
+                showSupportPopover({ target: document.querySelector(`.support-select-item.selected`), currentTarget: document.querySelector(`.support-select-item.selected`) }, 'memory', levelId);
+            }
+        }
+    }
+}
+
+function hideSupportPopover() {
+    const popover = document.querySelector('.support-popover');
+    if (popover) popover.remove();
+}
