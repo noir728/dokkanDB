@@ -36,21 +36,21 @@ const CHARACTER_DATA = [
         // ==========================================
         awakening: [
             { rank: "SSR", id: 1000010 }, // 1段階目 (SSR)
-            { 
-                rank: "UR", id: 1000020, 
-                medals: [{name:"超激戦", count:35}] // URへの覚醒メダル
+            {
+                rank: "UR", id: 1000020,
+                medals: [{ name: "超激戦", count: 35 }] // URへの覚醒メダル
             },
-            { 
-                rank: "LR", id: 1000030, 
-                medals: [{name:"最強の光臨2", bg: "bg", count:35}, {name:"最強の光臨1", bg: "bg", count:35}] // LRへの覚醒メダル
+            {
+                rank: "LR", id: 1000030,
+                medals: [{ name: "最強の光臨2", bg: "bg", count: 35 }, { name: "最強の光臨1", bg: "bg", count: 35 }] // LRへの覚醒メダル
             },
-            { 
+            {
                 rank: "EZA", id: 1000030, // 極限Z覚醒
-                medals: [{name:"銅", count:15}, {name:"銀", count:40}, {name:"金", count:30}, {name:"虹", count:30}]
+                medals: [{ name: "銅", count: 15 }, { name: "銀", count: 40 }, { name: "金", count: 30 }, { name: "虹", count: 30 }]
             },
-            { 
+            {
                 rank: "SEZA", id: 1000030, // 超極限Z覚醒 (なければこのブロックごと削除)
-                medals: [{name:"星", count:30}] // (仮のメダル)
+                medals: [{ name: "星", count: 30 }] // (仮のメダル)
             }
         ],
 
@@ -71,22 +71,22 @@ const CHARACTER_DATA = [
                     // 100%解放 (虹)
                     rainbow: { hp: 0, atk: 0, def: 0 },
                     // 55%解放 (潜在ルート解放なし)
-                    fifty:   { hp: 0, atk: 0, def: 0 }, 
+                    fifty: { hp: 0, atk: 0, def: 0 },
                     // 0%解放 (LvMaxのみ)
-                    base:    { hp: 0, atk: 0, def: 0 }
+                    base: { hp: 0, atk: 0, def: 0 }
                 },
 
                 // 必殺技 (複数可)
                 superAttacks: [
-                    { 
-                        ki: "12~", maxLv: 20, type: "気弾", 
-                        name: "必殺技名", 
-                        effect: "1ターンATKが上昇し、相手に極大ダメージを与える" 
+                    {
+                        ki: "12~", maxLv: 20, type: "気弾",
+                        name: "必殺技名",
+                        effect: "1ターンATKが上昇し、相手に極大ダメージを与える"
                     },
-                    { 
-                        ki: "18~", maxLv: 25, type: "格闘", 
-                        name: "超必殺技名", 
-                        effect: "1ターンATKとDEFが大幅上昇し、相手に超極大ダメージを与える" 
+                    {
+                        ki: "18~", maxLv: 25, type: "格闘",
+                        name: "超必殺技名",
+                        effect: "1ターンATKとDEFが大幅上昇し、相手に超極大ダメージを与える"
                     }
                 ],
 
@@ -127,9 +127,9 @@ const CHARACTER_DATA = [
                     // 100%解放 (虹)
                     rainbow: { hp: 0, atk: 0, def: 0 },
                     // 55%解放 (潜在ルート解放なし)
-                    fifty:   { hp: 0, atk: 0, def: 0 }, 
+                    fifty: { hp: 0, atk: 0, def: 0 },
                     // 0%解放 (LvMaxのみ)
-                    base:    { hp: 0, atk: 0, def: 0 }
+                    base: { hp: 0, atk: 0, def: 0 }
                 }, // ステータスが変わる場合は変更
 
                 // アクティブスキル
@@ -168,9 +168,9 @@ const CHARACTER_DATA = [
                     // 100%解放 (虹)
                     rainbow: { hp: 0, atk: 0, def: 0 },
                     // 55%解放 (潜在ルート解放なし)
-                    fifty:   { hp: 0, atk: 0, def: 0 }, 
+                    fifty: { hp: 0, atk: 0, def: 0 },
                     // 0%解放 (LvMaxのみ)
-                    base:    { hp: 0, atk: 0, def: 0 }
+                    base: { hp: 0, atk: 0, def: 0 }
                 }, // ステータス上昇
 
                 superAttacks: [
@@ -198,9 +198,9 @@ const CHARACTER_DATA = [
                     // 100%解放 (虹)
                     rainbow: { hp: 0, atk: 0, def: 0 },
                     // 55%解放 (潜在ルート解放なし)
-                    fifty:   { hp: 0, atk: 0, def: 0 }, 
+                    fifty: { hp: 0, atk: 0, def: 0 },
                     // 0%解放 (LvMaxのみ)
-                    base:    { hp: 0, atk: 0, def: 0 }
+                    base: { hp: 0, atk: 0, def: 0 }
                 }, // ステータスが変わる場合は変更
 
                 // アクティブスキル
@@ -233,15 +233,15 @@ const CHARACTER_DATA = [
         // まだ実装されていない場合は削除
         forms_seza: [
             {
-            label: "変身前",
+                label: "変身前",
                 name: "キャラクター名 (極限)",
                 stats: {
                     // 100%解放 (虹)
                     rainbow: { hp: 0, atk: 0, def: 0 },
                     // 55%解放 (潜在ルート解放なし)
-                    fifty:   { hp: 0, atk: 0, def: 0 }, 
+                    fifty: { hp: 0, atk: 0, def: 0 },
                     // 0%解放 (LvMaxのみ)
-                    base:    { hp: 0, atk: 0, def: 0 }
+                    base: { hp: 0, atk: 0, def: 0 }
                 }, // ステータス上昇
 
                 superAttacks: [
@@ -269,9 +269,9 @@ const CHARACTER_DATA = [
                     // 100%解放 (虹)
                     rainbow: { hp: 0, atk: 0, def: 0 },
                     // 55%解放 (潜在ルート解放なし)
-                    fifty:   { hp: 0, atk: 0, def: 0 }, 
+                    fifty: { hp: 0, atk: 0, def: 0 },
                     // 0%解放 (LvMaxのみ)
-                    base:    { hp: 0, atk: 0, def: 0 }
+                    base: { hp: 0, atk: 0, def: 0 }
                 }, // ステータスが変わる場合は変更
 
                 // アクティブスキル
