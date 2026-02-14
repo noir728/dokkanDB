@@ -1,4 +1,4 @@
-const support_items = [
+window.support_items = [
     {
         "id": "00001",
         "name": "回復ドリンク",
